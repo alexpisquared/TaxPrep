@@ -48,7 +48,8 @@
         <Label      Grid.Row="4"  Margin="3" Grid.Column="0" Content="Src:"/>
         <TextBlock  Grid.Row="4"  Margin="3" Grid.Column="1" Text="{Binding TxMoneySrc.Name}"                                />
         <Label      Grid.Row="5"  Margin="3" Grid.Column="0" Content="Result Amt:"/>
-        <TextBlock  Grid.Row="5"  Margin="3" Grid.Column="1" Text="{Binding ResultAmt}"                                   />
+        <TextBlock  Grid.Row="5"  Margin="3" Grid.Column="1" Text="{Binding ResultAmt}"     Tag="NotMapped Ext"                              />
+        <TextBlock  Grid.Row="5"  Margin="3" Grid.Column="1" Text="{Binding CurBalance}"    Tag="always 0 - ???"  HorizontalAlignment="Right"    />
 
         <Label      Grid.Row="6"  Margin="3" Grid.Column="0" Content="Fit Id:"/>
         <TextBlock  Grid.Row="6"  Margin="3" Grid.Column="1" Text="{Binding FitId}"																				/>

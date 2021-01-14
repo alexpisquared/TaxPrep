@@ -140,9 +140,7 @@ namespace HistoricalChartSet
     {
       switch (e.HitTestResult.ChartElementType)
       {
-        case ChartElementType.DataPoint:
-          var balOrTxn = e.HitTestResult.Series.ChartType == SeriesChartType.StepLine ? "Balance" : "Txn";
-          e.Text = $"{DateTime.FromOADate(e.HitTestResult.Series.Points[e.HitTestResult.PointIndex].XValue):yyyy-MM-dd HH:mm ddd}\r\n {balOrTxn}: {e.HitTestResult.Series.Points[e.HitTestResult.PointIndex].YValues[0],12:C}"; break;
+        case ChartElementType.DataPoint: e.Text = $"{DateTime.FromOADate(e.HitTestResult.Series.Points[e.HitTestResult.PointIndex].XValue):yyyy-MM-dd HH:mm ddd}\r\n {(e.HitTestResult.Series.ChartType == SeriesChartType.StepLine ? "Balance" : "Txn")}: {e.HitTestResult.Series.Points[e.HitTestResult.PointIndex].YValues[0],12:C}"; break;
         case ChartElementType.ScrollBarLargeDecrement: e.Text = "A scrollbar large decrement button"; break;
         case ChartElementType.ScrollBarZoomReset: e.Text = "The ZoomReset button of a scrollbar"; break;
         case ChartElementType.Axis: e.Text = e.HitTestResult.Axis.Name; break;
