@@ -1,0 +1,1243 @@
+namespace Db.FinDemo.DbModel
+{
+  using System;
+  using System.Data.Entity;
+  using System.ComponentModel.DataAnnotations.Schema;
+  using System.Linq;
+
+  public partial class A0DbContext : DbContext
+  {
+    //public A0DbContext()
+    //    : base("name=A0DbContext")
+    //{
+    //}
+
+    public virtual DbSet<BalAmtHist> BalAmtHists { get; set; }
+    public virtual DbSet<Contribution> Contributions { get; set; }
+    public virtual DbSet<ExpenseGroup> ExpenseGroups { get; set; }
+    public virtual DbSet<FinEngine> FinEngines { get; set; }
+    public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+    public virtual DbSet<TxCategory> TxCategories { get; set; }
+    public virtual DbSet<TxCore> TxCores { get; set; }
+    public virtual DbSet<TxCore_CiVi> TxCore_CiVi { get; set; }
+    public virtual DbSet<TxCore_PcMc> TxCore_PcMc { get; set; }
+    public virtual DbSet<TxCore_TdCt> TxCore_TdCt { get; set; }
+    public virtual DbSet<TxCoreAudit> TxCoreAudits { get; set; }
+    public virtual DbSet<TxCoreDetail> TxCoreDetails { get; set; }
+    public virtual DbSet<TxCoreV2> TxCoreV2 { get; set; }
+    public virtual DbSet<TxEnvelope> TxEnvelopes { get; set; }
+    public virtual DbSet<TxMoneySrc> TxMoneySrcs { get; set; }
+    public virtual DbSet<TxSupplier> TxSuppliers { get; set; }
+    public virtual DbSet<UnitPrice> UnitPrices { get; set; }
+    public virtual DbSet<zTest> zTests { get; set; }
+    public virtual DbSet<Vw_Dupes> Vw_Dupes { get; set; }
+    public virtual DbSet<Vw_Dupes_Detail> Vw_Dupes_Detail { get; set; }
+    public virtual DbSet<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b> Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b { get; set; }
+    public virtual DbSet<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b> Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b { get; set; }
+    public virtual DbSet<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b> Vw_Exp_2010_2011_2012_2013_2014_vs_2015b { get; set; }
+    public virtual DbSet<Vw_Exp_2010_2011_2012_2013_vs_2014b> Vw_Exp_2010_2011_2012_2013_vs_2014b { get; set; }
+    public virtual DbSet<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD> Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD { get; set; }
+    public virtual DbSet<Vw_Exp_2010_2011_2012_vs_2013b> Vw_Exp_2010_2011_2012_vs_2013b { get; set; }
+    public virtual DbSet<Vw_Exp_2010_2011_vs_2012> Vw_Exp_2010_2011_vs_2012 { get; set; }
+    public virtual DbSet<Vw_Exp_2010_2011_vs_2012b> Vw_Exp_2010_2011_vs_2012b { get; set; }
+    public virtual DbSet<Vw_Exp_2010_vs_2011> Vw_Exp_2010_vs_2011 { get; set; }
+    public virtual DbSet<Vw_Exp_Hist_vs_2018> Vw_Exp_Hist_vs_2018 { get; set; }
+    public virtual DbSet<Vw_Exp_Hist_vs_2018_Alx> Vw_Exp_Hist_vs_2018_Alx { get; set; }
+    public virtual DbSet<Vw_Exp_Hist_vs_2018_Mei> Vw_Exp_Hist_vs_2018_Mei { get; set; }
+    public virtual DbSet<Vw_Exp_Hist_vs_2018_Ndn> Vw_Exp_Hist_vs_2018_Ndn { get; set; }
+    public virtual DbSet<Vw_Exp_Hist_vs_2018_Zoe> Vw_Exp_Hist_vs_2018_Zoe { get; set; }
+    public virtual DbSet<Vw_TaxLiqReport> Vw_TaxLiqReport { get; set; }
+    public virtual DbSet<Vw_TaxLiqReport_2010> Vw_TaxLiqReport_2010 { get; set; }
+    public virtual DbSet<Vw_TaxLiqReport_2011> Vw_TaxLiqReport_2011 { get; set; }
+    public virtual DbSet<Vw_TaxLiqReport_2012> Vw_TaxLiqReport_2012 { get; set; }
+    public virtual DbSet<Vw_TaxLiqReport_2012_> Vw_TaxLiqReport_2012_ { get; set; }
+    public virtual DbSet<Vw_TaxLiqReport_2014> Vw_TaxLiqReport_2014 { get; set; }
+    public virtual DbSet<Vw_TaxLiqReport_2014_V2> Vw_TaxLiqReport_2014_V2 { get; set; }
+    public virtual DbSet<Vw_TaxLiqReport_2103> Vw_TaxLiqReport_2103 { get; set; }
+    public virtual DbSet<Vw_TxCore> Vw_TxCore { get; set; }
+
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    {
+      modelBuilder.Entity<BalAmtHist>()
+          .Property(e => e.BalAmt)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<BalAmtHist>()
+          .Property(e => e.BalTpe)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<BalAmtHist>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Contribution>()
+          .Property(e => e.TranAmount)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Contribution>()
+          .Property(e => e.UnitPrice)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Contribution>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<ExpenseGroup>()
+          .Property(e => e.Id)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<ExpenseGroup>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<ExpenseGroup>()
+          .Property(e => e.Note)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<ExpenseGroup>()
+          .HasMany(e => e.TxCategories)
+          .WithRequired(e => e.ExpenseGroup)
+          .HasForeignKey(e => e.ExpGroupId)
+          .WillCascadeOnDelete(false);
+
+      modelBuilder.Entity<FinEngine>()
+          .Property(e => e.DescrName)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<FinEngine>()
+          .Property(e => e.AccountNumber)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<FinEngine>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<FinEngine>()
+          .HasMany(e => e.Contributions)
+          .WithRequired(e => e.FinEngine)
+          .WillCascadeOnDelete(false);
+
+      modelBuilder.Entity<FinEngine>()
+          .HasMany(e => e.UnitPrices)
+          .WithRequired(e => e.FinEngine)
+          .WillCascadeOnDelete(false);
+
+      modelBuilder.Entity<TxCategory>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCategory>()
+          .Property(e => e.ExpGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCategory>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCategory>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCategory>()
+          .HasMany(e => e.TxCores)
+          .WithRequired(e => e.TxCategory)
+          .WillCascadeOnDelete(false);
+
+      modelBuilder.Entity<TxCategory>()
+          .HasMany(e => e.TxCoreV2)
+          .WithRequired(e => e.TxCategory)
+          .WillCascadeOnDelete(false);
+
+      modelBuilder.Entity<TxCore>()
+          .Property(e => e.TxCategoryIdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore>()
+          .Property(e => e.TxAmount)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxCore>()
+          .Property(e => e.ProductService)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore>()
+          .Property(e => e.History)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore>()
+          .Property(e => e.TxAmountOrg)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxCore>()
+          .HasMany(e => e.TxCoreDetails)
+          .WithRequired(e => e.TxCore)
+          .WillCascadeOnDelete(false);
+
+      modelBuilder.Entity<TxCore_CiVi>()
+          .Property(e => e.Details)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_CiVi>()
+          .Property(e => e.Credit)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxCore_CiVi>()
+          .Property(e => e.Debit)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxCore_CiVi>()
+          .Property(e => e.FitId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_CiVi>()
+          .Property(e => e.F6)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_CiVi>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_PcMc>()
+          .Property(e => e.Billing_Amount)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxCore_PcMc>()
+          .Property(e => e.Merchant)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_PcMc>()
+          .Property(e => e.Merchant_City)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_PcMc>()
+          .Property(e => e.Merchant_State)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_PcMc>()
+          .Property(e => e.Merchant_Zip)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_PcMc>()
+          .Property(e => e.Reference_Number)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_PcMc>()
+          .Property(e => e.Debit_Credit_Flag)
+          .IsFixedLength()
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_PcMc>()
+          .Property(e => e.SICMCC_Code)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_PcMc>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_TdCt>()
+          .Property(e => e.TxDescrn)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_TdCt>()
+          .Property(e => e.TxAmountCrt)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxCore_TdCt>()
+          .Property(e => e.TxAmountDbt)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxCore_TdCt>()
+          .Property(e => e.TxAmountBlnc)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxCore_TdCt>()
+          .Property(e => e.AccountId)
+          .IsFixedLength()
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCore_TdCt>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCoreAudit>()
+          .Property(e => e.UpToDateTxAmount)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxCoreAudit>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCoreDetail>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCoreV2>()
+          .Property(e => e.FitId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCoreV2>()
+          .Property(e => e.TxAmount)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxCoreV2>()
+          .Property(e => e.TxDetail)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCoreV2>()
+          .Property(e => e.MemoPP)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCoreV2>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCoreV2>()
+          .Property(e => e.TxCategoryIdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxCoreV2>()
+          .Property(e => e.CurBalance)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxEnvelope>()
+          .Property(e => e.Total)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxEnvelope>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxEnvelope>()
+          .Property(e => e.Note)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxMoneySrc>()
+          .Property(e => e.Owner)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxMoneySrc>()
+          .Property(e => e.Fla)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxMoneySrc>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxMoneySrc>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxMoneySrc>()
+          .Property(e => e.IniBalance)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<TxMoneySrc>()
+          .HasMany(e => e.BalAmtHists)
+          .WithRequired(e => e.TxMoneySrc)
+          .WillCascadeOnDelete(false);
+
+      modelBuilder.Entity<TxMoneySrc>()
+          .HasMany(e => e.TxCores)
+          .WithRequired(e => e.TxMoneySrc)
+          .WillCascadeOnDelete(false);
+
+      modelBuilder.Entity<TxMoneySrc>()
+          .HasMany(e => e.TxCoreV2)
+          .WithRequired(e => e.TxMoneySrc)
+          .WillCascadeOnDelete(false);
+
+      modelBuilder.Entity<TxSupplier>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxSupplier>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<TxSupplier>()
+          .HasMany(e => e.TxCores)
+          .WithRequired(e => e.TxSupplier)
+          .WillCascadeOnDelete(false);
+
+      modelBuilder.Entity<UnitPrice>()
+          .Property(e => e.Value)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<UnitPrice>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<zTest>()
+          .Property(e => e.Value)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<zTest>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Dupes>()
+          .Property(e => e.TxCategoryIdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Dupes>()
+          .Property(e => e.TxAmount)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Dupes>()
+          .Property(e => e.ProductService)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Dupes>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Dupes>()
+          .Property(e => e.History)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Dupes>()
+          .Property(e => e.TxAmountOrg)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Dupes_Detail>()
+          .Property(e => e.TxAmount)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Dupes_Detail>()
+          .Property(e => e.TxCategoryIdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Dupes_Detail>()
+          .Property(e => e.ProductService)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Dupes_Detail>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Dupes_Detail>()
+          .Property(e => e.Supplier)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Dupes_Detail>()
+          .Property(e => e.MoneySrc)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Dupes_Detail>()
+          .Property(e => e.History)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.ExpenseGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.Exp2013)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.Exp2014)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.Exp2015)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.Exp2016)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.Exp2017)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.MaxPrev)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
+          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .HasPrecision(38, 6);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.ExpenseGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.Exp2013)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.Exp2014)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.Exp2015)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.Exp2016)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.MaxPrev)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
+          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .HasPrecision(38, 6);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
+          .Property(e => e.ExpenseGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
+          .Property(e => e.Exp2013)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
+          .Property(e => e.Exp2014)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
+          .Property(e => e.Exp2015)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
+          .Property(e => e.MaxPrev)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
+          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .HasPrecision(38, 6);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
+          .Property(e => e.ExpenseGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
+          .Property(e => e.Exp2013)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
+          .Property(e => e.Exp2014)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
+          .Property(e => e.MaxPrev)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
+          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
+          .Property(e => e.ExpenseGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
+          .Property(e => e.Exp2013)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
+          .Property(e => e.Exp2014)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
+          .Property(e => e.MaxPrev)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
+          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_vs_2013b>()
+          .Property(e => e.ExpenseGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_vs_2013b>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_vs_2013b>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_vs_2013b>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_vs_2013b>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_vs_2013b>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_vs_2013b>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_vs_2013b>()
+          .Property(e => e.Exp2013)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_vs_2013b>()
+          .Property(e => e.MaxPrev)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_2012_vs_2013b>()
+          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012>()
+          .Property(e => e.Avg2010to2011)
+          .HasPrecision(21, 5);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012>()
+          .Property(e => e.PercIncreaseAvg2010to2011to2012)
+          .HasPrecision(38, 15);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012b>()
+          .Property(e => e.ExpenseGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012b>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012b>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012b>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012b>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012b>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012b>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012b>()
+          .Property(e => e.Avg2010to2011)
+          .HasPrecision(21, 5);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012b>()
+          .Property(e => e.PercIncreaseAvg2010to2011to2012)
+          .HasPrecision(38, 18);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012b>()
+          .Property(e => e.Max2010to2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012b>()
+          .Property(e => e.PercIncreaseMax2010to2011to2012)
+          .HasPrecision(38, 19);
+
+      modelBuilder.Entity<Vw_Exp_2010_vs_2011>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_vs_2011>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_2010_vs_2011>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_2010_vs_2011>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.ExpenseGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.Exp2013)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.Exp2014)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.Exp2015)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.Exp2016)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.Exp2017)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.Exp2018)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.MaxPrev)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
+          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .HasPrecision(38, 6);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.ExpenseGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.Exp2013)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.Exp2014)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.Exp2015)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.Exp2016)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.Exp2017)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.Exp2018)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.MaxPrev)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
+          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .HasPrecision(38, 6);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.ExpenseGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.Exp2013)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.Exp2014)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.Exp2015)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.Exp2016)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.Exp2017)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.Exp2018)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.MaxPrev)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
+          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .HasPrecision(38, 6);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.ExpenseGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.Exp2013)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.Exp2014)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.Exp2015)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.Exp2016)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.Exp2017)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.Exp2018)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.MaxPrev)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
+          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .HasPrecision(38, 6);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.ExpenseGroupId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.Name)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.IdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.Exp2010)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.Exp2011)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.Exp2012)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.Exp2013)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.Exp2014)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.Exp2015)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.Exp2016)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.Exp2017)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.Exp2018)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.MaxPrev)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
+          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .HasPrecision(38, 6);
+
+      modelBuilder.Entity<Vw_TaxLiqReport>()
+          .Property(e => e.Group)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport>()
+          .Property(e => e.PartCalcShow)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2010>()
+          .Property(e => e.Group)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2010>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2010>()
+          .Property(e => e.PartCalcShow)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2011>()
+          .Property(e => e.Group)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2011>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2011>()
+          .Property(e => e.PartCalcShow)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2012>()
+          .Property(e => e.Group)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2012>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2012>()
+          .Property(e => e.PartCalcShow)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2012_>()
+          .Property(e => e.Group)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2012_>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2012_>()
+          .Property(e => e.PartCalcShow)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2014>()
+          .Property(e => e.Group)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2014>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2014>()
+          .Property(e => e.PartCalcShow)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2014_V2>()
+          .Property(e => e.Group)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2014_V2>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2014_V2>()
+          .Property(e => e.PartCalcShow)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2103>()
+          .Property(e => e.Group)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2103>()
+          .Property(e => e.Category)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TaxLiqReport_2103>()
+          .Property(e => e.PartCalcShow)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TxCore>()
+          .Property(e => e.TxCategoryIdTxt)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TxCore>()
+          .Property(e => e.TxAmount)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_TxCore>()
+          .Property(e => e.TxDetail)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TxCore>()
+          .Property(e => e.ProductService)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TxCore>()
+          .Property(e => e.Notes)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TxCore>()
+          .Property(e => e.MemoPP)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TxCore>()
+          .Property(e => e.History)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TxCore>()
+          .Property(e => e.FitId)
+          .IsUnicode(false);
+
+      modelBuilder.Entity<Vw_TxCore>()
+          .Property(e => e.CurBalance)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_TxCore>()
+          .Property(e => e.TxAmountOrg)
+          .HasPrecision(19, 4);
+    }
+  }
+}

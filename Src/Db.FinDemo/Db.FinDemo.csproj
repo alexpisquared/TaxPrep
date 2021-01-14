@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AACDE791-4EDD-4867-A58E-B09C74AC58A8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Db.FinDemo</RootNamespace>
+    <AssemblyName>Db.FinDemo</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;rls</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\AAV.Shared\Src\AsLink\Ext.DbContext.cs">
+      <Link>AsLink\Ext.DbContext.cs</Link>
+    </Compile>
+    <Compile Include="DbModel.Ext\A0DbContext.Ext.cs" />
+    <Compile Include="DbModel.Ext\TxCoreV2.cs" />
+    <Compile Include="DbModel\A0DbContext.cs" />
+    <Compile Include="DbModel\BalAmtHist.cs" />
+    <Compile Include="DbModel\Contribution.cs" />
+    <Compile Include="DbModel\ExpenseGroup.cs" />
+    <Compile Include="DbModel\FinEngine.cs" />
+    <Compile Include="DbModel\sysdiagram.cs" />
+    <Compile Include="DbModel\TxCategory.cs" />
+    <Compile Include="DbModel\TxCore.cs" />
+    <Compile Include="DbModel\TxCoreAudit.cs" />
+    <Compile Include="DbModel\TxCoreDetail.cs" />
+    <Compile Include="DbModel\Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b.cs" />
+    <Compile Include="DbModel\Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b.cs" />
+    <Compile Include="DbModel\Vw_Exp_2010_2011_2012_2013_2014_vs_2015b.cs" />
+    <Compile Include="DbModel\Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD.cs" />
+    <Compile Include="DbModel\Vw_Exp_Hist_vs_2018.cs" />
+    <Compile Include="DbModel\Vw_Exp_Hist_vs_2018_Alx.cs" />
+    <Compile Include="DbModel\Vw_Exp_Hist_vs_2018_Mei.cs" />
+    <Compile Include="DbModel\Vw_Exp_Hist_vs_2018_Ndn.cs" />
+    <Compile Include="DbModel\Vw_Exp_Hist_vs_2018_Zoe.cs" />
+    <Compile Include="DbModel\Vw_Exp_Hist_vs_2019.cs" />
+    <Compile Include="DbModel\Vw_TaxLiqReport_2014.cs" />
+    <Compile Include="DbModel\Vw_TaxLiqReport_2014_V2.cs" />
+    <Compile Include="DbModel\Vw_TaxLiqReport_Alx.cs" />
+    <Compile Include="DbModel\Vw_TaxLiqReport_Mei.cs" />
+    <Compile Include="DbModel\Vw_TxCore.cs" />
+    <Compile Include="PartExt\TxCoreV2.cs" />
+    <Compile Include="DbModel\TxCoreV2.cs" />
+    <Compile Include="DbModel\TxCore_CiVi.cs" />
+    <Compile Include="DbModel\TxCore_PcMc.cs" />
+    <Compile Include="DbModel\TxCore_TdCt.cs" />
+    <Compile Include="DbModel\TxEnvelope.cs" />
+    <Compile Include="DbModel\TxMoneySrc.cs" />
+    <Compile Include="DbModel\TxSupplier.cs" />
+    <Compile Include="DbModel\UnitPrice.cs" />
+    <Compile Include="DbModel\Vw_Dupes.cs" />
+    <Compile Include="DbModel\Vw_Dupes_Detail.cs" />
+    <Compile Include="DbModel\Vw_Exp_2010_2011_2012_2013_vs_2014b.cs" />
+    <Compile Include="DbModel\Vw_Exp_2010_2011_2012_vs_2013b.cs" />
+    <Compile Include="DbModel\Vw_Exp_2010_2011_vs_2012.cs" />
+    <Compile Include="DbModel\Vw_Exp_2010_2011_vs_2012b.cs" />
+    <Compile Include="DbModel\Vw_Exp_2010_vs_2011.cs" />
+    <Compile Include="DbModel\Vw_TaxLiqReport.cs" />
+    <Compile Include="DbModel\Vw_TaxLiqReport_2010.cs" />
+    <Compile Include="DbModel\Vw_TaxLiqReport_2011.cs" />
+    <Compile Include="DbModel\Vw_TaxLiqReport_2012.cs" />
+    <Compile Include="DbModel\Vw_TaxLiqReport_2012_.cs" />
+    <Compile Include="DbModel\Vw_TaxLiqReport_2103.cs" />
+    <Compile Include="DbModel\zTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DevBak\2015-02.FinDemo.bak" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SQL\Vw_TxMoneySrc_LastTx.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net6.0\AAV.Sys\AAV.Sys.csproj">
+      <Project>{8a04f97e-f9ac-4bd2-b4a1-12cc2c46f3a9}</Project>
+      <Name>AAV.Sys</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

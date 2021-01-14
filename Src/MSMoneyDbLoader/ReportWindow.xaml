@@ -1,0 +1,68 @@
+﻿<lnk:WindowBase xmlns:lnk="clr-namespace:AAV.WPF.Base;assembly=AAV.WPF" x:Name="wnd" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:DbModel="clr-namespace:Db.FinDemo.DbModel;assembly=Db.FinDemo" mc:Ignorable="d" x:Class="MSMoneyDbLoader.DbLoaderReportWindow"
+                xmlns:cnv="clr-namespace:AsLink;assembly=" 
+                xmlns:local="clr-namespace:MSMoneyDbLoader;assembly=MSMoneyDbLoader" 
+                AllowDrop="True" Drop="onWindowDrop"                  
+                Title="MSMoney File DB Loader" Height="180" Width="800" Icon="Assets/dollar.ico" 
+                Background="#123"
+                >
+                <!--Style="{DynamicResource MouseOverMakesOpagueStyle}"--> 
+  <WindowChrome.WindowChrome>
+    <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />
+  </WindowChrome.WindowChrome>
+  <lnk:WindowBase.Resources>
+    <CollectionViewSource x:Key="txCoreV2ViewSource" d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCoreV2}, CreateList=True}"/>
+  </lnk:WindowBase.Resources>
+  <Grid DataContext="{StaticResource txCoreV2ViewSource}" >
+    
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="5"/>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="5"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <TextBlock Grid.Row="0" Grid.Column="1" Name="tbInfo" FontSize="14" FontWeight="SemiBold" Foreground="#4df" Text="Loading ..." HorizontalAlignment="Left"/>
+    <TextBlock Grid.Row="0" Grid.Column="1" Name="tbExpn" FontSize="11" FontWeight="SemiBold" Foreground="#d40" Text="           " HorizontalAlignment="Center" VerticalAlignment="Top" TextWrapping="WrapWithOverflow" MaxWidth="600" Margin="33 0"/>
+
+    <StackPanel Grid.Row="0" Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Name="ctrlPnl">
+      <Button Name="btn_DoAllDirs"	Content=" _Do __In Dir "        Click="onDoInbox"         ToolTip=" Load all files from the InBox folder: &#10; ~ C:\Users\Alex\Documents\0\MF\DnLds\_In\... " Foreground="#f80" IsDefault="True" />
+      <Button Name="btn_SeeCharts"	Content=" _Charts "             Click="onShowChart"       ToolTip="Show charts" Foreground="#f80" />
+      <Button Name="btnLoadFromDB"	Content=" Show _All "			    	Click="onLoadFromDB"      ToolTip="Load/Show everything from DB"/>
+      <!--ton Name="btnRenameFils"	Content=" _Rename All Files "		Click="onRenameFiles"     ToolTip="Rename all Files to DbDone" />
+      <Button Name="btnLoadFolder"	Content=" _Load whole Folder "	Click="onReadFolder"      ToolTip="Load whole Folder"/>-->
+      <Button Name="btnCheckPend"		Content=" Chec_k DB "			      Click="onCheckDbPendSave" ToolTip="Check DB for pending changes" />
+      <Button Name="btnSynchToDB"		Content=" _Save to DB "			    Click="onSaveToDB"        ToolTip="Save new records to DB;&#10;Rename all files to DbDone" />
+      <TextBlock Name="tbComp" FontSize="10" FontWeight="SemiBold" Foreground="#48f"          Text="1.1.1.1.dbX" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8 -2 0 0" />
+      <Button Name="btnCloseWin"		Content=" 577 _X "			        Click="onClose"           ToolTip="Close this window" Foreground="#800" MinWidth="50"/>
+    </StackPanel>
+
+    <!--<TextBlock Grid.Row="1" Grid.Column="1" Name="tbInfoC" FontSize="16" FontWeight="SemiBold" Foreground="#08d" Text="Loading ..." HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+
+    <DataGrid  Grid.Row="1" Grid.Column="1" x:Name="txCoreV2DataGrid" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" >
+      <DataGrid.Resources>
+        <Style TargetType="DataGridRow">
+          <!--
+          <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.IsInDb, Converter={cnv:Bool TrueColor=Gray, FalseColor=#f80}}" />
+          <Setter Property="Foreground" Value="{Binding IsInDb, Converter={cnv:Bool TrueColor=Green, FalseColor=#f80}}" /> //todo: fix that Feb2019          -->
+          <Setter Property="Foreground" Value="{Binding IsInDb}" />
+        </Style>
+      </DataGrid.Resources>
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Posted"	IsReadOnly="True" 	Binding="{Binding TxDate, StringFormat={}{0:yyyy-MM-dd}}" Foreground="#333"  />
+        <DataGridTextColumn Header="Amount"	IsReadOnly="True" 	Binding="{Binding TxAmount}" ElementStyle="{StaticResource RightAlignStyle}" FontWeight="SemiBold" Foreground="#222" Width="60" />
+        <DataGridTextColumn Header="Detail"	IsReadOnly="True" 	Binding="{Binding TxDetail}"	/>
+        <DataGridTextColumn Header="Memo++"	IsReadOnly="True" 	Binding="{Binding MemoPP}"		/>
+        <DataGridTextColumn Header="Fit Id"	IsReadOnly="True" 	Binding="{Binding FitId}"/>
+        <DataGridTextColumn Header="Notes "	IsReadOnly="False" 	Binding="{Binding Notes}"/>
+        <!--
+        <DataGridTextColumn Header="In DB "	IsReadOnly="True" 	Binding="{Binding IsInDb, Converter={cnv:Bool TrueText='Yes', FalseText='NEW' }}" /> //todo: fix that Feb2019          -->
+        <DataGridTextColumn Header="In DB "	IsReadOnly="True" 	Binding="{Binding IsInDb}" />
+        <DataGridTextColumn Header="Src Fl"	IsReadOnly="True" 	Binding="{Binding SrcFile}"   Width="*"	/>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+</lnk:WindowBase>

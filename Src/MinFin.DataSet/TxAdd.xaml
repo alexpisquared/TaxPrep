@@ -1,0 +1,243 @@
+﻿<lnk:WindowBase xmlns:lnk="clr-namespace:AAV.WPF.Base;assembly=AAV.WPF" x:Name="wnd" 
+                x:Class="MinFin.DataSet.TxAdd" 
+                xmlns:local="clr-namespace:MinFin.DataSet;assembly=" 
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TxAdd" xmlns:my="clr-namespace:MinFin.DataSet" Loaded="Window_Loaded" 
+				mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Closing="Window_Closing" 
+				Height="1065" Width="1862"
+				Icon="/MinFin.DataSet;component/Money.ico"
+				WindowStartupLocation="CenterScreen" 
+				WindowStyle="None" AllowsTransparency="True" Background="#111" ResizeMode="CanResizeWithGrip" 
+				>
+  <WindowChrome.WindowChrome>
+    <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />
+  </WindowChrome.WindowChrome>
+  <lnk:WindowBase.Resources>
+		<Style x:Key="RightAlignStyle" TargetType="{x:Type TextBlock}">
+			<Setter Property="TextAlignment" Value="Right" />
+		</Style>
+
+		<Style TargetType="{x:Type DataGridCell}">
+			<!--//tu: tooltips for datagridtextcolumn; unfortunately, one column for the whole row -->
+			<Setter Property="ToolTip" Value="{Binding Notes}"/>
+		</Style>
+
+		<Style TargetType="Button">
+			<Setter Property="Margin" Value="3" />
+		</Style>
+		<my:FinDemoDataSet_Jan2015 x:Key="minFinDS" />
+		<CollectionViewSource x:Key="txCoreViewSource" Source="{Binding Path=TxCore, Source={StaticResource minFinDS}}" />
+		<CollectionViewSource x:Key="txCategoryViewSource" Source="{Binding Path=TxCategory, Source={StaticResource minFinDS}}" />
+		<CollectionViewSource x:Key="txMoneySrcViewSource" Source="{Binding Path=TxMoneySrc, Source={StaticResource minFinDS}}" />
+		<CollectionViewSource x:Key="txSupplierViewSource" Source="{Binding Path=TxSupplier, Source={StaticResource minFinDS}}" />
+		<CollectionViewSource x:Key="txCoreSimilarTxsViewSource" Source="{Binding Path=TxCoreSimilarTxs, Source={StaticResource minFinDS}}" />
+	</lnk:WindowBase.Resources>
+	<Grid DataContext="{StaticResource txCoreViewSource}" Margin="3" >
+    <Grid.LayoutTransform>
+      <TransformGroup>
+        <ScaleTransform ScaleX="{Binding ZV, ElementName=wnd, FallbackValue=1}" ScaleY="{Binding ZV, ElementName=wnd, FallbackValue=1}" />
+        <SkewTransform AngleX="0" AngleY="0" />
+        <RotateTransform Angle="0" />
+        <TranslateTransform X="0" Y="0" />
+      </TransformGroup>
+    </Grid.LayoutTransform>
+    <Grid.RowDefinitions>
+			<RowDefinition Height="270" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="1*" />
+		</Grid.ColumnDefinitions>
+
+		<Grid Grid.RowSpan="3">
+			<Grid Grid.Column="1" Margin="3" Background="#111" VerticalAlignment="Stretch">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="2*" />
+				</Grid.ColumnDefinitions>
+				<DockPanel Grid.Column="0" Margin="0" >
+					<StackPanel Margin="4 10 4 4" Orientation="Horizontal" HorizontalAlignment="Center"  DockPanel.Dock="Top" >
+						<Label Content="$ " FontWeight="Bold" FontSize="18" />
+						<TextBox Name="txAmountTextBox" Width="135" FontWeight="Bold" FontSize="20" TextChanged="txAmountTextBox_TextChanged" />
+					</StackPanel>
+					<DatePicker Name="txDateDatePicker" Margin="5" SelectedDateFormat="Short" FontSize="14" DateValidationError="txDateDatePicker_DateValidationError"  DockPanel.Dock="Top" DisplayDateEnd="2014-12-31" DisplayDateStart="2014-01-01" FirstDayOfWeek="Monday" />
+					<ListBox Margin="4" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource txMoneySrcViewSource}}" Name="txMoneySrcIdListBox" SelectedValuePath="Id" />
+				</DockPanel>
+				<DockPanel Grid.Column="1" >
+					<DockPanel Margin="6 -4 6 3" DockPanel.Dock="Bottom" >
+						<Label Content="Supplie_r" Target="{Binding ElementName=tbxNewSup}" FontSize="7" Width="25" >
+							<Label.LayoutTransform>
+								<RotateTransform Angle="-90"  />
+							</Label.LayoutTransform>
+						</Label>
+						<CheckBox Content="_Pin" FontSize="8" DockPanel.Dock="Right" IsTabStop="False">
+							<CheckBox.LayoutTransform>
+								<RotateTransform Angle="-90"  />
+							</CheckBox.LayoutTransform>
+						</CheckBox>
+						<TextBox IsTabStop="False" TextChanged="tbxNewSup_TextChanged" Name="tbxNewSup" Height="25" />
+					</DockPanel>
+					<ListBox Margin="4" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource txSupplierViewSource}}" Name="txSupplierIdListBox" SelectedValuePath="Id"  />
+				</DockPanel>
+				<DockPanel Grid.Column="2" >
+					<DockPanel Margin="6 -4 6 3"  DockPanel.Dock="Bottom" >
+						<Label Content="_Catgory" Target="{Binding ElementName=tbxNewCtg}" FontSize="7" Width="25" >
+							<Label.LayoutTransform>
+								<RotateTransform Angle="-90"  />
+							</Label.LayoutTransform>
+						</Label>
+						<CheckBox Content="P_in" FontSize="8" DockPanel.Dock="Right" IsTabStop="False">
+							<CheckBox.LayoutTransform>
+								<RotateTransform Angle="-90"  />
+							</CheckBox.LayoutTransform>
+						</CheckBox>
+						<TextBox IsTabStop="False" TextChanged="tbxNewCtg_TextChanged" Name="tbxNewCtg" Height="25" />
+					</DockPanel>
+					<ListBox Margin="4" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource txCategoryViewSource}}" Name="txCategoryIdListBox" SelectedValuePath="Id" />
+				</DockPanel>
+
+			</Grid>
+		</Grid>
+
+
+		<Grid Grid.Column="1" Margin="3" Background="#111" VerticalAlignment="Stretch">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1" />
+				<ColumnDefinition Width="1" />
+				<ColumnDefinition Width="1" />
+				<ColumnDefinition Width="200" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="3" Margin="6" >
+				<Label Content="Prod/Serv:" />
+				<TextBox Name="productServiceTextBox" AutoWordSelection="True" TextWrapping="WrapWithOverflow" Height="56" FontSize="14" ToolTip="Description of product or service"/>
+				<Label Content="Note:" />
+				<TextBox Height="100" Name="notesTextBox" TextWrapping="Wrap" />
+				<StackPanel Margin="6" Orientation="Horizontal" HorizontalAlignment="Right">
+					<Button Name="btnNewSaveLoad"   Click="btnAdd_ENTERED_VALUES_AS_TxCoreRecord_Click"   Content="_Add" IsDefault="True" ToolTip="Adds to list but does not save to DB" FontSize="22">
+						<!--<Button.Triggers>
+						<EventTrigger RoutedEvent="Button.Click">
+							<BeginStoryboard>
+								<Storyboard>
+									<DoubleAnimation 	Storyboard.TargetName="theTransform"											
+																		Storyboard.TargetProperty="(RotateTransform.Angle)" 											
+																		From="0" To="360" Duration="0:0:0.6" AutoReverse="False" AccelerationRatio=".2" DecelerationRatio=".3"/>
+									<MediaTimeline Source="C:\Windows\Media\Calligraphy\Windows Critical Stop.wav" Storyboard.TargetName="myMediaElement"  />
+								</Storyboard>
+							</BeginStoryboard>
+						</EventTrigger>
+					</Button.Triggers>-->
+					</Button>
+					<MediaElement Name="myMediaElement" >
+						<MediaElement.Triggers>
+							<EventTrigger RoutedEvent="MediaElement.Unloaded">
+								<EventTrigger.Actions>
+									<BeginStoryboard>
+										<Storyboard>
+
+											<!-- The MediaTimeline has a RepeatBehavior="Forever" which makes the media play
+                     over and over indefinitely.-->
+											<MediaTimeline Source="C:\Windows\Media\Calligraphy\Windows Critical Stop.wav" Storyboard.TargetName="myMediaElement"  />
+
+										</Storyboard>
+									</BeginStoryboard>
+								</EventTrigger.Actions>
+							</EventTrigger>
+						</MediaElement.Triggers>
+					</MediaElement>
+				</StackPanel>
+			</StackPanel>
+
+			<DataGrid Grid.Column="4" AutoGenerateColumns="False" EnableRowVirtualization="True" MinHeight="100" 
+										ItemsSource="{Binding Source={StaticResource txCoreSimilarTxsViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" 
+										Margin="6,6,6,13" Background="#FF333333" CanUserAddRows="False" RowBackground="Yellow" BorderThickness="0">
+				<DataGrid.Columns>
+					<DataGridTextColumn Binding="{Binding Path=Id}" Header="Id" IsReadOnly="True" Width="Auto" Visibility="Collapsed" />
+					<DataGridTextColumn Binding="{Binding Path=TxAmount, StringFormat={}{0:N2}}"         Header="Amount" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"   />
+					<DataGridTextColumn Binding="{Binding Path=TxDate, StringFormat={}{0:dd-MMM-yy H}}"  Header="Date"   Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"   />
+					<DataGridTextColumn Binding="{Binding Path=PaidBy}" Header="Paid by" IsReadOnly="True" Width="Auto" />
+					<DataGridTextColumn Binding="{Binding Path=From}" Header="Supplier" IsReadOnly="True" Width="Auto" FontSize="7" />
+					<DataGridTextColumn Binding="{Binding Path=ProductService}" Header="Prod-Svc" Width="Auto" FontSize="7" />
+					<DataGridTextColumn Binding="{Binding Path=Notes}" Header="Notes" Width="*" FontSize="7" />
+				</DataGrid.Columns>
+			</DataGrid>
+			<Border Grid.Column="4" BorderBrush="#bb0" BorderThickness="1" CornerRadius="3"  Margin="0,6,5,0" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#111" Width="47">
+				<StackPanel Orientation="Horizontal" Width="44">
+					<Label Content=" Ra_nge" Target="{Binding ElementName=tbRnage}" FontSize="7" Width="22" >
+						<Label.LayoutTransform>
+							<RotateTransform Angle="-90"  />
+						</Label.LayoutTransform>
+					</Label>
+					<TextBox Name="tbRnage" Text="0.01" Width="33" Height="20" />
+				</StackPanel>
+			</Border>
+		</Grid>
+
+		<GridSplitter Grid.Column="0" Grid.RowSpan="3" Width="3" Background="#222" VerticalAlignment="Stretch" HorizontalAlignment="Right" />
+		<GridSplitter Grid.Column="1"                 Height="3" Background="#222" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" />
+
+		<Border Grid.Column="1" Margin="3" Padding="5" CornerRadius="5" Background="{DynamicResource WindowBackgroundBrush_Darker}" Grid.Row="1" >
+			<DataGrid Background="{DynamicResource WindowBackgroundBrush_Darker}" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Name="txCoreDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="False" IsTabStop="False" CanUserAddRows="False" BorderThickness="0">
+				<DataGrid.Columns>
+					<DataGridTextColumn Binding="{Binding Path=Id}" Header="Id" IsReadOnly="True" Width="SizeToCells" />
+					<DataGridTextColumn Binding="{Binding Path=TxDate, StringFormat='{}{0:dd/MMM/yyyy}'}" Header="TxDate" Width="Auto" />
+					<DataGridTextColumn Binding="{Binding Path=TxAmount, StringFormat='{}{0:N2}'}"  Header="Tx Amount" Width="Auto" />
+					<DataGridTextColumn Binding="{Binding Path=TxMoneySrcId}" Header="MoneySrc" Width="Auto" />
+					<DataGridTextColumn Binding="{Binding Path=TxSupplierId}" Header="Supplier" Width="Auto" />
+					<DataGridTextColumn Binding="{Binding Path=TxCategoryIdTxt}" Header="Category" Width="Auto" />
+					<DataGridTextColumn Binding="{Binding Path=ProductService}" Header="Product Service" Width="Auto" />
+					<DataGridTextColumn Binding="{Binding Path=Notes}" Header="Notes" Width="*" />
+					<!--
+					//todo: present the Name from the lookup table TxSupplier:
+					<DataGridTextColumn Binding="{Binding TxSupplier[0].Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding TxSupplier.Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding TxSupplier/Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding Path=TxSupplier[0].Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding Path=TxSupplier.Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding Path=TxSupplier/Name}"  Header="Supplier" Width="Auto"   />
+
+					<DataGridTextColumn Binding="{Binding FK_TxCore_TxCategory/TxSupplier[0].Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding FK_TxCore_TxCategory/TxSupplier.Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding FK_TxCore_TxCategory/TxSupplier/Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding Path=FK_TxCore_TxCategory/TxSupplier[0].Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding Path=FK_TxCore_TxCategory/TxSupplier.Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding Path=FK_TxCore_TxCategory/TxSupplier/Name}"  Header="Supplier" Width="Auto"   />
+
+					<DataGridTextColumn Binding="{Binding FK_TxCore_TxCategory.TxSupplier[0].Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding FK_TxCore_TxCategory.TxSupplier.Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding FK_TxCore_TxCategory.TxSupplier/Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding Path=FK_TxCore_TxCategory.TxSupplier[0].Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding Path=FK_TxCore_TxCategory.TxSupplier.Name}"  Header="Supplier" Width="Auto"   />
+					<DataGridTextColumn Binding="{Binding Path=FK_TxCore_TxCategory.TxSupplier/Name}"  Header="Supplier" Width="Auto"   />
+					-->
+					<!--
+					<DataGridTextColumn Binding="{Binding Path=ModifiedAt, StringFormat='{}{0:dd/MMM/yyyy}'}" Header="ModifiedAt" Width="Auto" />
+					<DataGridTextColumn  Binding="{Binding Path=History}" Header="History" Width="111" />
+					<DataGridTextColumn  Binding="{Binding Path=TxAmountOrg}" Header="Tx Amount Org" Width="Auto" />-->
+				</DataGrid.Columns>
+			</DataGrid>
+		</Border>
+
+		<Border Grid.Column="1" Margin="3 3 3 8" Padding="0" CornerRadius="5" Background="{DynamicResource WindowBackgroundBrush_Darker}" Grid.Row="2">
+			<StackPanel Orientation="Horizontal" Margin="6 1" HorizontalAlignment="Right" >
+				<Button IsTabStop="False" Name="btnShowReport" Content="Report" Click="btnShowReport_Click" />
+				<Button IsTabStop="False" Name="btnLoadBakXml" Content="_Load" Click="btnLoadBakXml_Click" />
+				<Button IsTabStop="False" Name="btnSaveToDb" Click="btnSaveToDb_Click" Content="_Save" />
+				<Button Margin="6" Width="22" Height="15" Click="btnLoseChanges_Click"  Content="Lose" IsTabStop="False" ToolTip="Quit without saving" FontSize="8" />
+				<Button Click="btnSaveExit_Click" Content="_Done" IsCancel="True" IsTabStop="False" />
+			</StackPanel>
+		</Border>
+
+		<!-- makes things different - binds row to the upper listboxes - go figure...
+		<Grid Visibility="Collapsed">
+			<ComboBox ItemsSource="{Binding Source={StaticResource txMoneySrcViewSource}}" SelectedValue="{Binding Path=TxMoneySrcId}" DisplayMemberPath="Name" SelectedValuePath="Id" />
+			<ComboBox ItemsSource="{Binding Source={StaticResource txCategoryViewSource}}" SelectedValue="{Binding Path=TxCategoryId}" DisplayMemberPath="Name" SelectedValuePath="Id" />
+			<ComboBox ItemsSource="{Binding Source={StaticResource txSupplierViewSource}}" SelectedValue="{Binding Path=TxSupplierId}" DisplayMemberPath="Name" SelectedValuePath="Id" />
+		</Grid>-->
+
+	</Grid>
+</lnk:WindowBase>

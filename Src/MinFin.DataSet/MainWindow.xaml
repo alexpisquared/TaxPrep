@@ -1,0 +1,96 @@
+﻿<Window x:Class="MinFin.DataSet.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="429" Width="1059" xmlns:my="clr-namespace:MinFin.DataSet" Loaded="Window_Loaded">
+	<Window.Resources>
+		<my:FinDemoDataSet_Jan2015 x:Key="minFinDS" />
+		<CollectionViewSource x:Key="txCoreViewSource" Source="{Binding Path=TxCore, Source={StaticResource minFinDS}}" />
+		<CollectionViewSource x:Key="txCategoryViewSource" Source="{Binding Path=TxCategory, Source={StaticResource minFinDS}}" />
+		<CollectionViewSource x:Key="txMoneySrcViewSource" Source="{Binding Path=TxMoneySrc, Source={StaticResource minFinDS}}" />
+		<CollectionViewSource x:Key="txSupplierViewSource" Source="{Binding Path=TxSupplier, Source={StaticResource minFinDS}}" />
+	</Window.Resources>
+	<WrapPanel DataContext="{StaticResource txCoreViewSource}">
+		<DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="200" ItemsSource="{Binding}" Name="txCoreDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+			<DataGrid.Columns>
+				<DataGridTextColumn Binding="{Binding Path=Id}" Header="Id" IsReadOnly="True" Width="SizeToCells" />
+				<DataGridTextColumn Binding="{Binding Path=TxMoneySrcId}" Header="MoneySrc" Width="Auto" />
+				<DataGridTextColumn Binding="{Binding Path=TxCategoryIdTxt}" Header="Category" Width="Auto" />
+				<DataGridTextColumn Binding="{Binding Path=TxSupplierId}" Header="Supplier" Width="Auto" />
+				<DataGridTextColumn Binding="{Binding Path=TxAmount}" Header="Tx Amount" Width="Auto" />
+				<DataGridTextColumn Binding="{Binding Path=TxDate, StringFormat='{}{0:dd/MMM/yyyy}'}" Header="TxDate" Width="Auto" />
+				<DataGridTextColumn  Binding="{Binding Path=ProductService}" Header="Product Service" Width="Auto" />
+				<DataGridTextColumn Binding="{Binding Path=CreatedAt, StringFormat='{}{0:dd/MMM/yyyy}'}" Header="CreatedAt" Width="Auto" />
+				<DataGridTextColumn  Binding="{Binding Path=Notes}" Header="Notes" Width="*" />
+				<DataGridTextColumn Binding="{Binding Path=ModifiedAt, StringFormat='{}{0:dd/MMM/yyyy}'}" Header="ModifiedAt" Width="Auto" />
+				<DataGridTextColumn  Binding="{Binding Path=History}" Header="History" Width="111" />
+				<DataGridTextColumn  Binding="{Binding Path=TxAmountOrg}" Header="Tx Amount Org" Width="Auto" />
+			</DataGrid.Columns>
+		</DataGrid>
+
+
+
+
+		<StackPanel Orientation="Horizontal" >
+			<TextBox Margin="3" Name="productServiceTextBox" Text="{Binding Path=ProductService, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" Width="155" AutoWordSelection="True" TextWrapping="WrapWithOverflow" />
+			<StackPanel >
+				<ListBox Margin="3" MinWidth="150" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource txSupplierViewSource}}" Name="txSupplierIdListBox" SelectedValue="{Binding Path=TxSupplierId}" SelectedValuePath="Id" Height="133" />
+				<StackPanel Grid.Column="6" Grid.Row="3" Orientation="Horizontal">
+					<TextBox Grid.Column="6" Grid.Row="2" Name="tbxNewSup" Width="111" Margin="3" IsTabStop="True"></TextBox>
+					<Button Grid.Column="6" Grid.Row="3" Name="btnAddSup" Click="btnAddSup_Click" Margin="3" IsTabStop="False" IsEnabled="False">Add</Button>
+				</StackPanel>
+			</StackPanel>
+			<StackPanel >
+				<ListBox Margin="3" MinWidth="150" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource txCategoryViewSource}}" Name="txCategoryIdListBox" SelectedValue="{Binding Path=TxCategoryId}" SelectedValuePath="Id" Height="133" />
+				<StackPanel Grid.Column="5" Grid.Row="3" Orientation="Horizontal">
+					<TextBox Name="tbxNewCtg" Margin="3" IsTabStop="True" Width="111" HorizontalAlignment="Stretch"></TextBox>
+					<Button Name="btnAddCtg" Click="btnAddCtg_Click" Margin="3" IsTabStop="False" IsEnabled="False">Add</Button>
+				</StackPanel>
+			</StackPanel>
+			<ListBox Margin="3" MinWidth="150" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource txMoneySrcViewSource}}" Name="txMoneySrcIdListBox" SelectedValue="{Binding Path=TxMoneySrcId}" SelectedValuePath="Id" />
+			<StackPanel Margin="3">
+				<Label Content="$$ / Date / Note" />
+				<TextBox Name="txAmountTextBox" Text="{Binding Path=TxAmount, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+				<DatePicker Name="txDateDatePicker" SelectedDate="{Binding Path=TxDate, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+				<TextBox Height="99" Name="notesTextBox" Text="{Binding Path=Notes, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" TextWrapping="Wrap" />
+			</StackPanel>
+			<StackPanel >
+				<Button Name="btnNewSaveLoad"   Click="btnAddBlankTxCoreRecord_Click"   Content="Add Blank _New" IsDefault="True" ToolTip="Also Saves to DB">
+					<!--<Button.Triggers>
+						<EventTrigger RoutedEvent="Button.Click">
+							<BeginStoryboard>
+								<Storyboard>
+									<DoubleAnimation 	Storyboard.TargetName="theTransform"											
+																		Storyboard.TargetProperty="(RotateTransform.Angle)" 											
+																		From="0" To="360" Duration="0:0:0.6" AutoReverse="False" AccelerationRatio=".2" DecelerationRatio=".3"/>
+									<MediaTimeline Source="C:\Windows\Media\Calligraphy\Windows Critical Stop.wav" Storyboard.TargetName="myMediaElement"  />
+								</Storyboard>
+							</BeginStoryboard>
+						</EventTrigger>
+					</Button.Triggers>-->
+				</Button>
+				<MediaElement Name="myMediaElement" >
+					<MediaElement.Triggers>
+						<EventTrigger RoutedEvent="MediaElement.Unloaded">
+							<EventTrigger.Actions>
+								<BeginStoryboard>
+									<Storyboard>
+
+										<!-- The MediaTimeline has a RepeatBehavior="Forever" which makes the media play
+                     over and over indefinitely.-->
+										<MediaTimeline Source="C:\Windows\Media\Calligraphy\Windows Critical Stop.wav" Storyboard.TargetName="myMediaElement"  />
+
+									</Storyboard>
+								</BeginStoryboard>
+							</EventTrigger.Actions>
+						</EventTrigger>
+					</MediaElement.Triggers>
+				</MediaElement>
+			</StackPanel>
+			<StackPanel >
+				<Button IsTabStop="False" Name="btnSaveToDb" Click="btnSaveToDb_Click" Content="_Save to DB" />
+				<Button IsTabStop="False" Name="btnReLoadFromDb" Click="btnReLoadFromDb_Click" Content="_Reload from DB" />
+				<Button IsTabStop="False" Name="btnCopyIntoNew" Click="btnCopyIntoNew_Click" Content="_Copy into New" />
+			</StackPanel>
+		</StackPanel>
+	</WrapPanel>
+</Window>

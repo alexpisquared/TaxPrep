@@ -1,0 +1,6 @@
+﻿<Application x:Class="MSMoneyDbLoader.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+	<Application.Resources>
+		<ResourceDictionary Source="/MSMoneyDbLoader;component/AsLink/UX/CommonDark.xaml" />
+	</Application.Resources>
+</Application>
+<!--<ResourceDictionary Source="/AAV.AsLink;component/AsLink\Common.xaml" />-->

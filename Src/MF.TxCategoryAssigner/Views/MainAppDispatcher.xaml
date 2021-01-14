@@ -1,0 +1,74 @@
+﻿<lnk:WindowBase xmlns:lnk="clr-namespace:AAV.WPF.Base;assembly=AAV.WPF" x:Name="wnd" x:Class="MF.TxCategoryAssigner.Views.MainAppDispatcher" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                xmlns:local="clr-namespace:MF.TxCategoryAssigner.Views;assembly=" mc:Ignorable="d" Title="Main App Dispatcher" 
+                Style="{StaticResource WindowStyle_Aav0}" 
+                Icon="/MinFin;component/US-dollar.ico" >
+  <!--          Style="{StaticResource MouseOverMakesOpagueStyle}"
+  -->
+  <WindowChrome.WindowChrome>
+    <WindowChrome CaptionHeight="0" ResizeBorderThickness="25" />
+  </WindowChrome.WindowChrome>
+  <Border CornerRadius="10" Padding="10" BorderThickness="1" BorderBrush="#080" >
+    <Border.Background>
+      <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#676" Offset="0.11"/>
+        <GradientStop Color="#565" Offset="0.22"/>
+        <GradientStop Color="#565" Offset="0.98"/>
+        <GradientStop Color="#676" Offset="0.999"/>
+      </LinearGradientBrush>
+    </Border.Background>
+    <Border.Resources>
+      <Style TargetType="Button" BasedOn="{StaticResource m5}">
+        <Setter Property="FontFamily"                   Value="Courier New" />
+        <Setter Property="HorizontalContentAlignment"   Value="Left" />
+        <Setter Property="FontSize"                     Value="18" />
+        <Setter Property="Height"                       Value="32" />
+        <Setter Property="VerticalAlignment"            Value="Stretch" />
+        <Setter Property="Background"                   Value="Transparent" />
+        <Setter Property="BorderBrush"                  Value="Transparent" />
+        <Setter Property="FontWeight"                   Value="SemiBold" />
+      </Style>
+      <Style TargetType="TextBlock" BasedOn="{StaticResource m5}">
+        <Setter Property="FontFamily"                   Value="Courier New" />
+        <Setter Property="FontSize"                     Value="18" />
+        <Setter Property="FontWeight"                   Value="SemiBold" />
+      </Style>
+    </Border.Resources>
+
+    <Viewbox>
+      <StackPanel Orientation="Vertical" >
+        <TextBlock x:Name="tbver" Margin="0 -10 3 -20" FontFamily="Courier New" FontSize="14" Foreground="#bbb" Text="ver" HorizontalAlignment="Right" />
+        <StackPanel Orientation="Horizontal" Margin="10">
+          <Image Source="/MinFin;component/US-dollar.ico" Height="32" />
+          <TextBlock x:Name="tbTitl0" Margin="22 0" FontSize="32" Text="MinFin" FontWeight="Bold" >
+            <TextBlock.Foreground>
+              <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF94DB1A" Offset="0"/>
+                <GradientStop Color="#FF63B135" Offset="1"/>
+              </LinearGradientBrush>
+            </TextBlock.Foreground>
+          </TextBlock>
+          <Button Content="  _X  " Foreground="#a00" x:Name="bClose" Click="BClose_Click" ToolTip="Show Assign" Margin="222 0 0 0"/>
+        </StackPanel>
+
+        <Button Content=" _1 td,cibc: MS Money.OFX     "	    Foreground="#c00" x:Name="b1" Click="onX" 
+              ToolTip=" CIBC: IntuitQuicken.QFX: seems to be OK (Aug 2018) &#10;&#10; TD: MS Money - OFX &#10;&#10; Amzn: - QIF" />
+        <Button Content=" _2 Charts            - HistoricalChartSet"     Foreground="#0a0" x:Name="b2" Click="onX" ToolTip="Show Charts" />
+        <Button Content=" _3 Assign            - TxCategoryAssigner"     Foreground="#cc0" x:Name="b3" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" _4 Manual Entry      - Crude but better"       Foreground="#08f" x:Name="b4" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" _5 Annual Report     - MinFin.Report.WinForm"  Foreground="#d60" x:Name="b5" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" _6 Annual Report Alx - MinFin.Report.WinForm"  Foreground="#d60" x:Name="b6" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" _7 Annual Report Mei - MinFin.Report.WinForm"  Foreground="#d60" x:Name="b7" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" _8 Historical Review - MinFin.Review.DS     "  Foreground="#80a" x:Name="b8" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" _9 Manual Entry      - Legacy TxCore tbl only" Foreground="#222" x:Name="b9" Click="onX" ToolTip="Show Assign" />
+
+
+        <TextBlock VerticalAlignment="Center" Margin="3" HorizontalAlignment="Center">         
+        <Hyperlink NavigateUri="0\MF\DnLds" RequestNavigate="onNavigate">
+          <TextBlock Text="Explore Src Folder" FontStyle="Italic" TextDecorations="Underline" /></Hyperlink>					              
+      </TextBlock>
+
+      </StackPanel>
+    </Viewbox>
+
+  </Border>
+</lnk:WindowBase>
