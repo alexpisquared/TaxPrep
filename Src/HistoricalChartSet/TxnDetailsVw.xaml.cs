@@ -35,6 +35,6 @@ namespace HistoricalChartSet
     void btnPrev_Click(object s, RoutedEventArgs e) => reShow(--_idx);
     void btnNext_Click(object s, RoutedEventArgs e) => reShow(++_idx);
     void btnSave_Click(object s, RoutedEventArgs e) => Close();
-    void btnQuit_Click(object s, RoutedEventArgs e) => Close();
+    void btnQuit_Click(object s, RoutedEventArgs e) { e.Handled = true; Close(); }
   }
 }

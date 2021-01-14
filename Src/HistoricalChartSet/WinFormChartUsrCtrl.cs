@@ -63,9 +63,10 @@ namespace HistoricalChartSet
     }
     internal (decimal calcBal, decimal histBal) AddSeries(string tmsFla, decimal tmsIniBalance, List<TxCoreV2> txn, List<BalAmtHist> bah)
     {
-      var txsSrs = new Series { Name = "Txn", LegendText = tmsFla, Color = _srsClr[(1 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.Column, MarkerStyle = MarkerStyle.None };
-      var curSrs = new Series { Name = "Cur", LegendText = tmsFla, Color = _srsClr[(0 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.StepLine, MarkerStyle = MarkerStyle.Diamond, MarkerSize = 12 };
-      var bahSrs = new Series { Name = "BaH", LegendText = tmsFla, Color = _srsClr[(1 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.StepLine, MarkerStyle = MarkerStyle.None, BorderWidth = 5, BorderDashStyle = ChartDashStyle.Solid };
+      var srsCount = chart1.Series.Count;
+      var txsSrs = new Series { Name = $"Txn {srsCount}", LegendText = tmsFla, Color = _srsClr[(1 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.Column, MarkerStyle = MarkerStyle.None };
+      var curSrs = new Series { Name = $"Cur {srsCount}", LegendText = tmsFla, Color = _srsClr[(0 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.StepLine, MarkerStyle = MarkerStyle.Diamond, MarkerSize = 12 };
+      var bahSrs = new Series { Name = $"BaH {srsCount}", LegendText = tmsFla, Color = _srsClr[(1 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.StepLine, MarkerStyle = MarkerStyle.None, BorderWidth = 5, BorderDashStyle = ChartDashStyle.Solid };
 
       var calcBal = tmsIniBalance;
       var histBal = tmsIniBalance;
