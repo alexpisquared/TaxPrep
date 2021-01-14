@@ -67,11 +67,14 @@
           <Button			x:Name="btnPrev" Foreground="#03a" Content="_Prev &lt;" Click="btnPrev_Click" Width="50" />
           <TextBlock	x:Name="tbIdx"   Foreground="#03a" Text="1/3"                                     />
           <Button			x:Name="btnNext" Foreground="#03a" Content="&gt; _Next" Click="btnNext_Click" Width="50" />
-          <Button			x:Name="btnSave" Foreground="#a40" Content="_Save" Click="btnSave_Click" Width="50" IsDefault="True" />
-          <Button			x:Name="btnQuit" Foreground="#a40" Content="_Quit" Click="btnQuit_Click" Width="50" IsCancel="True"  />
+          <Button			x:Name="btnSave" Foreground="#a40" Content="_Save" Click="btnSave_Click" Width="50" IsDefault="True" IsEnabled="False" />
+          <Button			x:Name="btnQuit" Foreground="#a40" Content="_Quit" Click="btnQuit_Click" Width="50" IsCancel="True"  IsEnabled="False" />
         </StackPanel>
 
       </Grid>
+
+      <Button Content="  _X  " Foreground="#a00" IsCancel="True" Click="btnQuit_Click" Margin="3" Grid.ColumnSpan="3" Grid.RowSpan="4" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+
     </Grid>
   </Border>
 </Window>

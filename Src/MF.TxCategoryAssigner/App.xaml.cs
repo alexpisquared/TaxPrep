@@ -28,7 +28,7 @@ namespace MF.TxCategoryAssigner
       Tracer.SetupTracingOptions("MinFin", AppTraceLevel_Config);
 #endif
 
-#if DEBUG
+#if _DEBUG
       //new ReportWindow(MSMoneyDbLoader.App.GetCmndLineArgsInclClickOnce())
       //new HstProcessorVw()
 

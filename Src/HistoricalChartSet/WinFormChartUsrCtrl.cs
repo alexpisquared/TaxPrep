@@ -1,9 +1,9 @@
 ﻿using AAV.WPF.Ext;
-using AsLink;
 using Db.FinDemo.DbModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -61,15 +61,15 @@ namespace HistoricalChartSet
       }
       catch (Exception ex) { ex.Pop(); }
     }
-    internal (decimal calcBal, decimal histBal) AddSeries(string tmsFla, decimal tmsIniBalance, List<TxCoreV2> txs, List<BalAmtHist> bah)
+    internal (decimal calcBal, decimal histBal) AddSeries(string tmsFla, decimal tmsIniBalance, List<TxCoreV2> txn, List<BalAmtHist> bah)
     {
-      var txsSrs = new Series { LegendText = tmsFla, Color = _srsClr[(1 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, MarkerStyle = MarkerStyle.None, ChartType = SeriesChartType.Column };
-      var curSrs = new Series { LegendText = tmsFla, Color = _srsClr[(0 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, MarkerStyle = MarkerStyle.Diamond, ChartType = SeriesChartType.StepLine, MarkerSize = 12 };
-      var bahSrs = new Series { LegendText = tmsFla, Color = _srsClr[(1 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, MarkerStyle = MarkerStyle.None, ChartType = SeriesChartType.StepLine, BorderWidth = 5, BorderDashStyle = ChartDashStyle.Solid };
+      var txsSrs = new Series { Name = "Txn", LegendText = tmsFla, Color = _srsClr[(1 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.Column, MarkerStyle = MarkerStyle.None };
+      var curSrs = new Series { Name = "Cur", LegendText = tmsFla, Color = _srsClr[(0 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.StepLine, MarkerStyle = MarkerStyle.Diamond, MarkerSize = 12 };
+      var bahSrs = new Series { Name = "BaH", LegendText = tmsFla, Color = _srsClr[(1 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.StepLine, MarkerStyle = MarkerStyle.None, BorderWidth = 5, BorderDashStyle = ChartDashStyle.Solid };
 
       var calcBal = tmsIniBalance;
       var histBal = tmsIniBalance;
-      foreach (var tx in txs.OrderBy(r => r.TxDate))
+      foreach (var tx in txn.OrderBy(r => r.TxDate))
       {
         txsSrs.Points.AddXY(tx.TxDate, -tx.TxAmount);
         curSrs.Points.AddXY(tx.TxDate, tx.CurBalance = (calcBal -= tx.TxAmount));
@@ -81,9 +81,9 @@ namespace HistoricalChartSet
         histBal = -ba.BalAmt;
       }
 
-      chart1.Series.Add(txsSrs);
-      chart1.Series.Add(curSrs);
-      chart1.Series.Add(bahSrs);
+      chart1.Series.Add(txsSrs); // index: 1
+      chart1.Series.Add(curSrs); // index: 2 
+      chart1.Series.Add(bahSrs); // index: 3
 
       return (calcBal, histBal);
     }
@@ -108,44 +108,30 @@ namespace HistoricalChartSet
       catch (Exception ex) { ex.Pop(); }
     }
 
-    #region SeriesColors
-    const int scX = 255, sc5 = 128, sc0 = 0;
-    readonly Color[] _srsClr = new Color[] {
-      Color.FromArgb(255,  sc0, sc0, scX),
-      Color.FromArgb( 60,  sc0, sc0, scX),
-      Color.FromArgb(255,  sc0, sc5, sc0),
-      Color.FromArgb( 60,  sc0, sc5, sc0),
-      Color.FromArgb(255,  sc5, sc0, scX),
-      Color.FromArgb( 60,  sc5, sc0, scX),
-      Color.FromArgb(255,  sc5, sc0, sc0),
-      Color.FromArgb( 60,  sc5, sc0, sc0),
-      Color.FromArgb(255,  scX, sc0, sc0),
-      Color.FromArgb( 60,  scX, sc0, sc0),
-
-      Color.FromArgb(255,  sc0, sc5, sc5),
-      Color.FromArgb(255,  sc0, sc5, scX),
-      Color.FromArgb(255, sc5, scX, sc5),
-      Color.FromArgb(255, sc5,  sc0, sc5),
-      Color.FromArgb(255, sc5,  sc0, scX),
-      Color.FromArgb(255, sc5, sc5, scX),
-      Color.FromArgb(255, sc5, sc5,  sc0),
-      Color.FromArgb(255, scX, sc5,  sc0),
-      Color.FromArgb(255, sc5, sc5, scX),
-      Color.FromArgb(255, sc5, sc5,  sc0),
-      Color.FromArgb(255, scX, sc5,  sc0),
-    };
-    #endregion
-
     void chart1_GetToolTipText(object s, ToolTipEventArgs e)
     {
-      switch (e.HitTestResult.ChartElementType)
+      try
       {
-        case ChartElementType.DataPoint: e.Text = $"{DateTime.FromOADate(e.HitTestResult.Series.Points[e.HitTestResult.PointIndex].XValue):yyyy-MM-dd HH:mm ddd}\r\n {(e.HitTestResult.Series.ChartType == SeriesChartType.StepLine ? "Balance" : "Txn")}: {e.HitTestResult.Series.Points[e.HitTestResult.PointIndex].YValues[0],12:C}"; break;
-        case ChartElementType.ScrollBarLargeDecrement: e.Text = "A scrollbar large decrement button"; break;
-        case ChartElementType.ScrollBarZoomReset: e.Text = "The ZoomReset button of a scrollbar"; break;
-        case ChartElementType.Axis: e.Text = e.HitTestResult.Axis.Name; break;
-        default: e.Text = e.HitTestResult.ChartElementType.ToString(); break;
+        switch (e.HitTestResult.ChartElementType)
+        {
+          case ChartElementType.DataPoint:
+            e.Text = $"{DateTime.FromOADate(e.HitTestResult.Series.Points[e.HitTestResult.PointIndex].XValue):yyyy-MM-dd HH:mm ddd}   -   {e.HitTestResult.Series.Name}" +
+              $"\r\nY-Trans-n \t {(chart1.Series.Count > 1 && chart1.Series[1]?.Points?.Count > e.HitTestResult.PointIndex ? chart1.Series[1].Points[e.HitTestResult.PointIndex]?.YValues[0] : null),12:N2}" + // only 1st series, so nogo for multi-series show.
+              $"\r\nY-Balance \t {e.HitTestResult.Series.Points[e.HitTestResult.PointIndex].YValues[0],12:N2}" +
+              $"";
+            Debug.WriteLine(
+              $" ** {(chart1.Series[0]?.Points?.Count > e.HitTestResult.PointIndex ? chart1.Series[0]?.Points[e.HitTestResult.PointIndex]?.YValues[0] : null)}" +
+              $" ** {(chart1.Series[1]?.Points?.Count > e.HitTestResult.PointIndex ? chart1.Series[1]?.Points[e.HitTestResult.PointIndex]?.YValues[0] : null),12:N2}" +
+              $" ** {(chart1.Series[2]?.Points?.Count > e.HitTestResult.PointIndex ? chart1.Series[2]?.Points[e.HitTestResult.PointIndex]?.YValues[0] : null),12:N2}" +
+              $" ** ");
+            break;
+          case ChartElementType.ScrollBarLargeDecrement: e.Text = "A scrollbar large decrement button"; break;
+          case ChartElementType.ScrollBarZoomReset: e.Text = "The ZoomReset button of a scrollbar"; break;
+          case ChartElementType.Axis: e.Text = e.HitTestResult.Axis.Name; break;
+          default: e.Text = e.HitTestResult.ChartElementType.ToString(); break;
+        }
       }
+      catch (Exception ex) { ex.Pop(); }
     }
     void chart1_MouseMove(object s, MouseEventArgs e)
     {
@@ -198,5 +184,34 @@ namespace HistoricalChartSet
       //	MessageBox.Show(this, "Selected Element is: " + result.ChartElementType.ToString());
       //}
     }
+
+    #region SeriesColors
+    const int scX = 255, sc5 = 128, sc0 = 0;
+    readonly Color[] _srsClr = new Color[] {
+      Color.FromArgb(255,  sc0, sc0, scX),
+      Color.FromArgb( 60,  sc0, sc0, scX),
+      Color.FromArgb(255,  sc0, sc5, sc0),
+      Color.FromArgb( 60,  sc0, sc5, sc0),
+      Color.FromArgb(255,  sc5, sc0, scX),
+      Color.FromArgb( 60,  sc5, sc0, scX),
+      Color.FromArgb(255,  sc5, sc0, sc0),
+      Color.FromArgb( 60,  sc5, sc0, sc0),
+      Color.FromArgb(255,  scX, sc0, sc0),
+      Color.FromArgb( 60,  scX, sc0, sc0),
+
+      Color.FromArgb(255,  sc0, sc5, sc5),
+      Color.FromArgb(255,  sc0, sc5, scX),
+      Color.FromArgb(255, sc5, scX, sc5),
+      Color.FromArgb(255, sc5,  sc0, sc5),
+      Color.FromArgb(255, sc5,  sc0, scX),
+      Color.FromArgb(255, sc5, sc5, scX),
+      Color.FromArgb(255, sc5, sc5,  sc0),
+      Color.FromArgb(255, scX, sc5,  sc0),
+      Color.FromArgb(255, sc5, sc5, scX),
+      Color.FromArgb(255, sc5, sc5,  sc0),
+      Color.FromArgb(255, scX, sc5,  sc0),
+    };
+    #endregion
+
   }
 }
