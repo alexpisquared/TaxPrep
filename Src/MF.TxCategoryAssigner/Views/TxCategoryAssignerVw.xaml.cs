@@ -222,7 +222,7 @@ namespace MF.TxCategoryAssigner
       }
 
       choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
-      choiceBelow.Content = $"_2 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
+      choiceBelow.Content = $"_3 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
 
       updateTitle();
     }
