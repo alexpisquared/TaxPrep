@@ -26,7 +26,7 @@ namespace MinFin.Review.DS
     void dgCore_SelnChgd(object s, SelectionChangedEventArgs e)
     {
       if (e.AddedItems.Count > 0)
-        dbHist.ItemsSource = _db.Vw_TxCore.Local.Where(r => string.Compare(r.TxCategoryIdTxt, ((Vw_Exp_Hist_vs_2019)((object[])e.AddedItems)[0]).IdTxt, true) == 0).OrderByDescending(r => r.TxDate);
+        dbHist.ItemsSource = _db.Vw_TxCore.Local.Where(r => string.Compare(r.TxCategoryIdTxt, ((Vw_Exp_Hist_vs_Last)((object[])e.AddedItems)[0]).IdTxt, true) == 0).OrderByDescending(r => r.TxDate);
     }
 
     void onUserChecked(object s, RoutedEventArgs e)

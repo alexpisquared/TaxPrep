@@ -75,11 +75,12 @@
         <DataGridTextColumn  Binding="{Binding Exp2016, StringFormat='{}{0,9:N0}'}"  Header="2016"  ElementStyle="{StaticResource RightAlignStyle}" />
         <DataGridTextColumn  Binding="{Binding Exp2017, StringFormat='{}{0,9:N0}'}"  Header="2017"  ElementStyle="{StaticResource RightAlignStyle}" />
         <DataGridTextColumn  Binding="{Binding Exp2018, StringFormat='{}{0,9:N0}'}"  Header="2018"  ElementStyle="{StaticResource RightAlignStyle}" />
+        <DataGridTextColumn  Binding="{Binding Exp2019, StringFormat='{}{0,9:N0}'}"  Header="2019"  ElementStyle="{StaticResource RightAlignStyle}" FontWeight="Bold" />
         <!--<DataGridTextColumn  Binding="{Binding PercIncrease2010to2011, StringFormat='{}{0,9:N0}'}"  Header="Perc Increase 2010 to 2011" />
 				<DataGridTextColumn  Binding="{Binding Avg2010to2011, StringFormat='{}{0,9:N0}'}"  Header="Avg 2010 to 2011" />
 				<DataGridTextColumn  Binding="{Binding PercIncreaseAvg2010to2011to2012, StringFormat='{}{0,9:N0}'}"  Header="Perc Increase Avg 2010 to 2011 to 2012" />-->
         <DataGridTextColumn  Binding="{Binding MaxPrev, StringFormat='{}{0,9:N0}'}"  Header="Max"   ElementStyle="{StaticResource RightAlignStyle}" Foreground="DarkRed"/>
-        <DataGridTextColumn  Binding="{Binding Exp2019, StringFormat='{}{0,9:N0}'}"  Header="2019"  ElementStyle="{StaticResource RightAlignStyle}" FontWeight="Bold" />
+        <DataGridTextColumn  Binding="{Binding Exp2020, StringFormat='{}{0,9:N0}'}"  Header="2019"  ElementStyle="{StaticResource RightAlignStyle}" FontWeight="Bold" />
         <DataGridTextColumn  Binding="{Binding PercIncreaseMaxPrevToCurrent, StringFormat='{}{0,9:N1} '}"  Header="Last/Max"  FontWeight="Bold" >
           <DataGridTextColumn.ElementStyle>
             <Style TargetType="{x:Type TextBlock}">

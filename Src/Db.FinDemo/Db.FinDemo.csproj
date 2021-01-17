@@ -98,7 +98,7 @@
     <Compile Include="DbModel\Vw_Exp_Hist_vs_2018_Mei.cs" />
     <Compile Include="DbModel\Vw_Exp_Hist_vs_2018_Ndn.cs" />
     <Compile Include="DbModel\Vw_Exp_Hist_vs_2018_Zoe.cs" />
-    <Compile Include="DbModel\Vw_Exp_Hist_vs_2019.cs" />
+    <Compile Include="DbModel\Vw_Exp_Hist_vs_Last.cs" />
     <Compile Include="DbModel\Vw_TaxLiqReport_2014.cs" />
     <Compile Include="DbModel\Vw_TaxLiqReport_2014_V2.cs" />
     <Compile Include="DbModel\Vw_TaxLiqReport_Alx.cs" />
@@ -135,9 +135,6 @@
     </None>
     <None Include="DevBak\2015-02.FinDemo.bak" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SQL\Vw_TxMoneySrc_LastTx.sql" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\AAV.Shared\Src\Net6.0\AAV.Sys\AAV.Sys.csproj">

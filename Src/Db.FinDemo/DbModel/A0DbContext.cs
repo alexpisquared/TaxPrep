@@ -46,7 +46,7 @@ namespace Db.FinDemo.DbModel
     public virtual DbSet<Vw_Exp_Hist_vs_2018_Mei> Vw_Exp_Hist_vs_2018_Mei { get; set; }
     public virtual DbSet<Vw_Exp_Hist_vs_2018_Ndn> Vw_Exp_Hist_vs_2018_Ndn { get; set; }
     public virtual DbSet<Vw_Exp_Hist_vs_2018_Zoe> Vw_Exp_Hist_vs_2018_Zoe { get; set; }
-    public virtual DbSet<Vw_Exp_Hist_vs_2019> Vw_Exp_Hist_vs_2019 { get; set; }
+    public virtual DbSet<Vw_Exp_Hist_vs_Last> Vw_Exp_Hist_vs_2019 { get; set; }
     public virtual DbSet<Vw_TaxLiqReport> Vw_TaxLiqReport { get; set; }
     public virtual DbSet<Vw_TaxLiqReport_2010> Vw_TaxLiqReport_2010 { get; set; }
     public virtual DbSet<Vw_TaxLiqReport_2011> Vw_TaxLiqReport_2011 { get; set; }
@@ -1106,67 +1106,71 @@ namespace Db.FinDemo.DbModel
           .Property(e => e.PercIncreaseMaxPrevToCurrent)
           .HasPrecision(38, 6);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.ExpenseGroupId)
           .IsUnicode(false);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.Name)
           .IsUnicode(false);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.IdTxt)
           .IsUnicode(false);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.Category)
           .IsUnicode(false);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.Exp2010)
           .HasPrecision(19, 4);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.Exp2011)
           .HasPrecision(19, 4);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.Exp2012)
           .HasPrecision(19, 4);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.Exp2013)
           .HasPrecision(19, 4);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.Exp2014)
           .HasPrecision(19, 4);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.Exp2015)
           .HasPrecision(19, 4);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.Exp2016)
           .HasPrecision(19, 4);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.Exp2017)
           .HasPrecision(19, 4);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.Exp2018)
           .HasPrecision(19, 4);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.Exp2019)
           .HasPrecision(19, 4);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
+          .Property(e => e.Exp2020)
+          .HasPrecision(19, 4);
+
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.MaxPrev)
           .HasPrecision(19, 4);
 
-      modelBuilder.Entity<Vw_Exp_Hist_vs_2019>()
+      modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
           .Property(e => e.PercIncreaseMaxPrevToCurrent)
           .HasPrecision(38, 6);
 
