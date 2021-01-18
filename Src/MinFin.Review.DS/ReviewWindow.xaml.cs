@@ -1,7 +1,8 @@
-﻿using AsLink;
+﻿using AAV.Sys.Helpers;
 using Db.FinDemo.DbModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,13 +16,15 @@ namespace MinFin.Review.DS
 
     public ReviewWindow(string owner) { _owner = owner; InitializeComponent(); }
 
-    void onLoaded(object s, RoutedEventArgs e)
+    async void onLoaded(object s, RoutedEventArgs e)
     {
       _db = A0DbContext.Create();
-      _db.Vw_TxCore.Load();
-      _db.Vw_Exp_Hist_vs_2019.Load();
-      dgTxVs.ItemsSource = _db.Vw_Exp_Hist_vs_2019.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq__);
+      await Task.Yield();// displays window 
+      await _db.Vw_TxCore.LoadAsync(); 
+      await _db.Vw_Exp_Hist_vs_2019.LoadAsync(); 
+      dgTxVs.ItemsSource = _db.Vw_Exp_Hist_vs_2019.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq__); 
       dgTxVs.Focus();
+      Bpr.BeepShort();
     }
     void dgCore_SelnChgd(object s, SelectionChangedEventArgs e)
     {

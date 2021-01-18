@@ -43,13 +43,12 @@ namespace MF.TxCategoryAssigner.Views
       ((Button)FindName($"b{cb + 1}")).IsDefault = true;
       Settings.Default.LastBtnNo = cb;
       Settings.Default.Save();
-      Bpr.BeepClk();
+      Bpr.BeepShortFaF();
     }
 
     async void onX(object s, RoutedEventArgs e)
     {
       ((Button)s).IsEnabled = false;
-      AAV.Sys.Helpers.Bpr.BeepClk();
       switch (((Button)s).Name)
       {
         case "b1": setDefault(0); new DbLoaderReportWindow(MSMoneyDbLoader.App.GetCmndLineArgsInclClickOnce()).ShowDialog(); break;

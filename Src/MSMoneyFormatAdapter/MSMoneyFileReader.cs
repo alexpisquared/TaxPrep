@@ -54,7 +54,8 @@ namespace MSMoneyFormatAdapter
               //MemoPP = mm + cs + td + si,
               TxCategoryIdTxt = PreSet.__UnKn,
               TxMoneySrcId = txMoneySrcId,
-              SrcFile = Path.GetFileNameWithoutExtension(file)
+              SrcFile = Path.GetFileNameWithoutExtension(file),
+              Notes = $"{file}" // 2021-01
             });
           }
         }

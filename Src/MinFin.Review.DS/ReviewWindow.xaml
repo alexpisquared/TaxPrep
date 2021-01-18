@@ -121,6 +121,7 @@
         <DataGridTextColumn  Binding="{Binding TxAmount, StringFormat={}{0:N2}}"				  Header="Amount" FontWeight="Bold" ElementStyle="{StaticResource RightAlignStyle}" />
         <DataGridTextColumn  Binding="{Binding ProductService}"													  Header="Product Service" Width="*"/>
         <DataGridTextColumn  Binding="{Binding Notes}"																	  Header="Notes" Width="*"/>
+        <DataGridTextColumn  Binding="{Binding TxMoneySrcId}"							                Header="Money Src" />
         <DataGridTextColumn  Binding="{Binding TxMoneySrc.Name}"							            Header="Money Src" />
         <DataGridTextColumn  Binding="{Binding CreatedAt, StringFormat={}{0:yyyy-MM-dd}}" Header="Created" />
         <!--<DataGridTextColumn  Binding="{Binding History}" Header="History" />-->
