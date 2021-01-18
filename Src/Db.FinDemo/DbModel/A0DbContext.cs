@@ -46,7 +46,7 @@ namespace Db.FinDemo.DbModel
     public virtual DbSet<Vw_Exp_Hist_vs_2018_Mei> Vw_Exp_Hist_vs_2018_Mei { get; set; }
     public virtual DbSet<Vw_Exp_Hist_vs_2018_Ndn> Vw_Exp_Hist_vs_2018_Ndn { get; set; }
     public virtual DbSet<Vw_Exp_Hist_vs_2018_Zoe> Vw_Exp_Hist_vs_2018_Zoe { get; set; }
-    public virtual DbSet<Vw_Exp_Hist_vs_Last> Vw_Exp_Hist_vs_2019 { get; set; }
+    public virtual DbSet<Vw_Exp_Hist_vs_Last> Vw_Exp_Hist_vs_Last { get; set; }
     public virtual DbSet<Vw_TaxLiqReport> Vw_TaxLiqReport { get; set; }
     public virtual DbSet<Vw_TaxLiqReport_2010> Vw_TaxLiqReport_2010 { get; set; }
     public virtual DbSet<Vw_TaxLiqReport_2011> Vw_TaxLiqReport_2011 { get; set; }

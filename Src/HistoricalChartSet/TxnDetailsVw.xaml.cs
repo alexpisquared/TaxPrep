@@ -12,7 +12,8 @@ namespace HistoricalChartSet
 
     public TxnDetailsVw()
     {
-      InitializeComponent(); MouseLeftButtonDown += (s, e) => DragMove();
+      InitializeComponent(); 
+      MouseLeftButtonDown += (s, e) => DragMove();
       //KeyDown += (s, ves) => { switch (ves.Key) { case Key.Escape: Close(); break; } };
       tbNote.Focus();
     }
@@ -22,6 +23,7 @@ namespace HistoricalChartSet
     public int PointIndex { get; internal set; }
     public TxCoreV2 Txn { set => DataContext = value; }
     public List<TxCoreV2> Txns { set { _txs = value; reShow(_idx = 0); } }
+    
     void reShow(int idx)
     {
       tbIdx.Text = string.Format(" {0} / {1} ", idx + 1, _txs.Count);
@@ -31,7 +33,6 @@ namespace HistoricalChartSet
     }
 
     void Window_Loaded(object s, RoutedEventArgs e) { }
-
     void btnPrev_Click(object s, RoutedEventArgs e) => reShow(--_idx);
     void btnNext_Click(object s, RoutedEventArgs e) => reShow(++_idx);
     void btnSave_Click(object s, RoutedEventArgs e) => Close();

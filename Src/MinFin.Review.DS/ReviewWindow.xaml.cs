@@ -12,17 +12,17 @@ namespace MinFin.Review.DS
   public partial class ReviewWindow : AAV.WPF.Base.WindowBase
   {
     A0DbContext _db;
-    string _owner; // this is not done yet ... but really any value there?
+    string _owner; 
 
     public ReviewWindow(string owner) { _owner = owner; InitializeComponent(); }
 
     async void onLoaded(object s, RoutedEventArgs e)
     {
       _db = A0DbContext.Create();
-      await Task.Yield();// displays window 
-      await _db.Vw_TxCore.LoadAsync(); 
-      await _db.Vw_Exp_Hist_vs_2019.LoadAsync(); 
-      dgTxVs.ItemsSource = _db.Vw_Exp_Hist_vs_2019.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq__); 
+      await Task.Yield();                         // displays window now - not after db loads.
+      await _db.Vw_TxCore.LoadAsync();            // TxCoreV2 would show the MoneySrc.Name in Binding
+      await _db.Vw_Exp_Hist_vs_Last.LoadAsync(); 
+      dgTxVs.ItemsSource = _db.Vw_Exp_Hist_vs_Last.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq__); 
       dgTxVs.Focus();
       Bpr.BeepShort();
     }
@@ -40,7 +40,7 @@ namespace MinFin.Review.DS
         case "Mei": _db.Vw_Exp_Hist_vs_2018_Mei.Load(); dgTxVs.ItemsSource = _db.Vw_Exp_Hist_vs_2018_Mei.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq__); break;
         case "Ndn": _db.Vw_Exp_Hist_vs_2018_Ndn.Load(); dgTxVs.ItemsSource = _db.Vw_Exp_Hist_vs_2018_Ndn.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq__); break;
         case "Zoe": _db.Vw_Exp_Hist_vs_2018_Zoe.Load(); dgTxVs.ItemsSource = _db.Vw_Exp_Hist_vs_2018_Zoe.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq__); break;
-        default: _db.Vw_Exp_Hist_vs_2019.Load(); dgTxVs.ItemsSource = _db.Vw_Exp_Hist_vs_2019.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq__); break;
+        default: _db.Vw_Exp_Hist_vs_Last.Load(); dgTxVs.ItemsSource = _db.Vw_Exp_Hist_vs_Last.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq__); break;
       }
 
       CollectionViewSource.GetDefaultView(dgTxVs.ItemsSource).Refresh(); //tu: refresh bound datagrid

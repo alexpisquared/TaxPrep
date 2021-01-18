@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Speech.Synthesis;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace MF.TxCategoryAssigner
     public TxCategoryAssignerVw() => InitializeComponent();
     async void onLoaded(object s, RoutedEventArgs e)
     {
-      App.Synth.Rate = +7; 
+      App.Synth.Rate = +7;
       App.Synth.SelectVoiceByHints(VoiceGender.Female);
       App.Synth.SpeakAsync("Loading...");
 
@@ -43,17 +44,19 @@ namespace MF.TxCategoryAssigner
       _txCoreV2_Root_VwSrc = ((CollectionViewSource)FindResource("txCoreV2_Root_VwSrc"));
 
       tbxSearch.Focus();
-      App.Synth.SpeakAsync("Done!");
       var y = DateTime.Today.Year;
       cbxSingleYr.ItemsSource = new int[] { y, y - 1, y - 2, y - 3, y - 4, y - 5, y - 6, y - 7, y - 8, y - 9 };
-      cbxSingleYr.SelectedIndex = 1;
+      cbxSingleYr.SelectedIndex = 2;
+      chkInfer.IsChecked = true; 
 
       _txCatgry = null;
       _targetYr = null;
       btAssign.IsEnabled = false;
 
       _loaded = true;
-    } 
+      chkSingleYr.IsChecked = true;      // invokes the 1st search
+      App.Synth.SpeakAsync("Done!");
+    }
     protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
     {
       if (_db.HasUnsavedChanges())
@@ -76,6 +79,8 @@ namespace MF.TxCategoryAssigner
     async Task reLoadTxCore()
     {
       if (!_loaded) return;
+
+      Debug.WriteLine($"■■■   reLoadTxCore()");
 
       try
       {
@@ -104,23 +109,28 @@ namespace MF.TxCategoryAssigner
       }
       catch (Exception ex) { ex.Pop(); }
     }
-    async Task filterStart(string combi)
+    async Task filterStart(string csvFilterString)
     {
       if (!_loaded) return;
+
+      Debug.WriteLine($"■■■ filterStart()");
 
       App.Synth.SpeakAsyncCancelAll();
 
       await reLoadTxCore();
 
-      if (string.IsNullOrEmpty(combi))
+      if (string.IsNullOrEmpty(csvFilterString))
       {
-        App.Synth.SpeakAsync("Clear!"); filterTxns(combi, _txCatgry);
+        App.Synth.SpeakAsync("Clear!"); 
+        filterTxns(csvFilterString, _txCatgry);
       }
       else
       {
-        var ta = combi.Split(new[] { '`', '>', '\\', '/' });
+        var ta = csvFilterString.Split(new[] { '`', '>', '\\', '/' });
         if (ta.Length > 1)
         {
+          App.Synth.SpeakAsync($"{ta.Length}-part filter");
+
           if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { App.Synth.SpeakAsync("Still Empty."); return; }
           if (!string.IsNullOrEmpty(ta[0]))
           {
@@ -128,29 +138,28 @@ namespace MF.TxCategoryAssigner
 
             if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
             //App.Synth.SpeakAsync("Multi.");
-            filterTxns(combi.Substring(ta[0].Length + 1), _txCatgry, amt, rng);
+            filterTxns(csvFilterString.Substring(ta[0].Length + 1), _txCatgry, amt, rng);
           }
           else if (!string.IsNullOrEmpty(ta[1])) // explicit by string
           {
-            //App.Synth.SpeakAsync("By text.");
+            App.Synth.SpeakAsync("Filter by text.");
             filterTxns(ta[1], _txCatgry);
           }
         }
         else // == 1
         {
-          if (decimal.TryParse(combi, out var amt))
+          if (decimal.TryParse(csvFilterString, out var amt))
           {
             if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
-            //App.Synth.SpeakAsync("By money.");
+            App.Synth.SpeakAsync("Filter by money.");
             filterTxns("", _txCatgry, amt, rng);
           }
           else
           {
-            //App.Synth.SpeakAsync("By text.");
-            filterTxns(combi, _txCatgry);
+            App.Synth.SpeakAsync("Filter by text.");
+            filterTxns(csvFilterString, _txCatgry);
           }
         }
-        Bpr.BeepOk();
       }
 
       _txCoreV2_Root_VwSrc.Source = _core;
@@ -162,6 +171,7 @@ namespace MF.TxCategoryAssigner
       }
 
       updateTitle();
+      Bpr.OkFaF();
     }
     void filterTxns(string strFilter, string txCatgoryId)
     {
@@ -193,7 +203,6 @@ namespace MF.TxCategoryAssigner
         &&
         (string.IsNullOrEmpty(txCatgoryId) || string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0)).OrderByDescending(r => r.TxDate));
     }
-
     void filterCategoryByIdList(IEnumerable<int> catIds) => updateCtgrList(_db.TxCategories.Local.Where(r => catIds.Contains(r.Id)));
     void filterCategoryByTxtMatch(string namePart) => updateCtgrList(_db.TxCategories.Local.Where(r => r.Name.ToLower().Contains(namePart) || r.IdTxt.ToLower().Contains(namePart)));
 
@@ -227,7 +236,7 @@ namespace MF.TxCategoryAssigner
       updateTitle();
     }
 
-    async Task<bool> isStillTyping(TextBox textbox) { var tx = textbox.Text.ToLower(); await Task.Delay(500); return tx != textbox.Text.ToLower(); }
+    async Task<bool> isStillTyping(TextBox textbox) { var tx = textbox.Text.ToLower(); await Task.Delay(750); return tx != textbox.Text.ToLower(); }
     void updateTitle() => Title = $"Ctgry: {_loadedCatgry}      {_core.Count()} rows    sum: {_core.Sum(r => r.TxAmount):C}    selects: {_selectTtl:C}       ";
 
     async void onReLoad(object s, RoutedEventArgs e)
@@ -289,7 +298,7 @@ namespace MF.TxCategoryAssigner
     async void onTxCatgry_UnChckd(object s, RoutedEventArgs e)           /**/ { _txCatgry = null;                                 /**/ await filterStart(tbxSearch.Text); }
     async void onTxCatgry_Changed(object s, SelectionChangedEventArgs e) /**/ { _txCatgry = (string)cbxTxCatgry.SelectedValue;    /**/ await filterStart(tbxSearch.Text); }
 
-    void /**/  onSingleYr_Checked(object s, RoutedEventArgs e) { cbxSingleYr.Focus(); onSingleYr_Changed(s, null); }
+    void /**/  onSingleYr_Checked(object s, RoutedEventArgs e)           /**/ { cbxSingleYr?.Focus(); onSingleYr_Changed(s, null); }
     async void onSingleYr_UnChckd(object s, RoutedEventArgs e)           /**/ { _targetYr = null;                                 /**/ await filterStart(tbxSearch.Text); }
     async void onSingleYr_Changed(object s, SelectionChangedEventArgs e) /**/ { _targetYr = (int)cbxSingleYr.SelectedValue;       /**/ await filterStart(tbxSearch.Text); }
 
@@ -337,7 +346,7 @@ namespace MF.TxCategoryAssigner
       }
 
       tbxSearch.Focus();
-      Bpr.BeepOk();
+      Bpr.OkFaF();
     }
   }
 }

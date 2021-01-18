@@ -104,10 +104,10 @@
       <TextBox    Grid.Column="3"  Grid.Row="2" Foreground="#080" FontSize="18"			  TextChanged="onTextChangedFuz" x:Name="tRng" Text="1.00" />
       <TextBlock  Grid.Column="4"  Grid.Row="2" Foreground="#18d" FontSize="18"		    x:Name="tbkFlt" Background="#def" MinWidth="22" ToolTip="Search 1 - Main/Central" />
       <CheckBox   Grid.Column="5"  Grid.Row="1" Foreground="#808" x:Name="chkTxCatgry" Content="Ca_tgry" Checked="onTxCatgry_Checked" Unchecked="onTxCatgry_UnChckd" />
-      <ComboBox   Grid.Column="5"  Grid.Row="2"                   x:Name="cbxTxCatgry" IsEnabled="{Binding ElementName=chkTxCatgry, Path=IsChecked}" ItemsSource="{Binding Source={StaticResource txCategoryVwSrcComBox}}" DisplayMemberPath="Name" SelectedValuePath="IdTxt" SelectionChanged="onTxCatgry_Changed" />
+      <ComboBox   Grid.Column="5"  Grid.Row="2"                    x:Name="cbxTxCatgry" IsEnabled="{Binding ElementName=chkTxCatgry, Path=IsChecked}" ItemsSource="{Binding Source={StaticResource txCategoryVwSrcComBox}}" DisplayMemberPath="Name" SelectedValuePath="IdTxt" SelectionChanged="onTxCatgry_Changed" />
                                    
       <CheckBox   Grid.Column="7"  Grid.Row="1" Foreground="#c04" x:Name="chkSingleYr" Content="1 _Yr  " Checked="onSingleYr_Checked" Unchecked="onSingleYr_UnChckd" />
-      <ComboBox   Grid.Column="7"  Grid.Row="2"                   x:Name="cbxSingleYr" IsEnabled="{Binding ElementName=chkSingleYr, Path=IsChecked}" SelectionChanged="onSingleYr_Changed" />
+      <ComboBox   Grid.Column="7"  Grid.Row="2"                    x:Name="cbxSingleYr" IsEnabled="{Binding ElementName=chkSingleYr, Path=IsChecked}" SelectionChanged="onSingleYr_Changed" />
                                    
       <Button     Grid.Column="9"  Grid.Row="2" Foreground="#18d" Content="  _Clear  " Click="onClear1" />
       <Button     Grid.Column="11" Grid.Row="2" Foreground="#d81" Content=" _Manual "	 Click="onManualTxnAdd" ToolTip="Add a txn manually. " />
@@ -126,7 +126,7 @@
         <Button Content="_3"		  Width="75" Click="onAssign2" x:Name="choiceBelow" IsTabStop="False" Height="25" FontWeight="Bold" Background="#ff0" IsEnabled="False" Margin="2 1 0 0" />
       </StackPanel>
 
-      <CheckBox Foreground="#808" Content="_PreHist" x:Name="chkInfer" Checked="onInfer_Checked" Unchecked="onClear2"  FlowDirection="RightToLeft" Margin="20" ToolTip="Infer from previous ctgr assignments." IsChecked="False" />
+      <CheckBox Foreground="#808" Content="In_ferRT" x:Name="chkInfer" Checked="onInfer_Checked" Unchecked="onClear2"  FlowDirection="RightToLeft" Margin="20" ToolTip="Infer real-time from previous ctgr assignments." />
       <Button   Foreground="#800" Content="_Re-Load"	 Click="onReLoad" ToolTip=": L K J  ???" />
 
     </StackPanel>
@@ -145,6 +145,31 @@
         <DataGridTextColumn     Header="Amount"			Binding="{Binding TxAmount,  StringFormat='{}{0:##,###.#0  }'}" ElementStyle="{StaticResource RightAlignStyle}" FontWeight="SemiBold" />
         <!--Foreground="#080"-->
 
+        <DataGridTemplateColumn Header="Category"		SortMemberPath="TxCategoryIdTxt">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxMoneySrc.Notes}" HorizontalAlignment="Center" 
+                         Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=LightYellow, BrushFalse=Blue}, ConverterParameter='UnKn'}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+
+        <DataGridTemplateColumn Header="Src FLA"		  SortMemberPath="TxMoneySrc.Fla">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding TxMoneySrc.Fla}" ToolTip="{Binding TxMoneySrc.Notes}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+
+        <DataGridTemplateColumn Header="$$ Src"		  SortMemberPath="TxMoneySrc.Name">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding TxMoneySrc.Name}" ToolTip="{Binding TxMoneySrc.Notes}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+
         <DataGridTemplateColumn Header="TxDetail"   SortMemberPath="TxDetail" CanUserSort="True" >
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
@@ -160,8 +185,6 @@
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
-        
-        
 
         <DataGridTemplateColumn Header="Notes"   SortMemberPath="Notes" CanUserSort="True" Width="*" >
           <DataGridTemplateColumn.CellTemplate>
@@ -170,33 +193,6 @@
                 <stb:HighlightableTextBlock FontSize="12" Text="{Binding Notes}" SearchText="{Binding ElementName=tbkFlt, Path=Text}"  />
                 <TextBox      Margin="-2 0" FontSize="12" Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MouseOverMakesOpagueTbxStyle}" />
               </Grid>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-        <!--<DataGridTextColumn Binding="{Binding Notes}"			  Header="Notes (edtbl)" FontSize="8" />-->
-        
-        
-
-        <DataGridTemplateColumn Header="Category"		SortMemberPath="TxCategoryIdTxt">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxMoneySrc.Notes}" />                           <!--Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=Red, BrushFalse=Gray}, ConverterParameter='UnKn'}"-->
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn Header="Src FLA"		  SortMemberPath="TxMoneySrc.Fla">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding TxMoneySrc.Fla}" ToolTip="{Binding TxMoneySrc.Notes}" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn Header="Src Name"		  SortMemberPath="TxMoneySrc.Name">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding TxMoneySrc.Name}" ToolTip="{Binding TxMoneySrc.Notes}" />
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
