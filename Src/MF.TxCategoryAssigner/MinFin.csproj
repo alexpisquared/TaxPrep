@@ -308,6 +308,8 @@
     <Content Include="sql\HST.2020.sql" />
     <Content Include="sql\TxMoneySrc-OrderBy-LastTxn.sql" />
     <Content Include="sql\InvoiceTxnMatcher.sql" />
+    <Content Include="sql\Vw_Exp_Hist_vs_Last.sql" />
+    <Content Include="sql\Vw_TaxLiqReport_Alx.sql" />
     <Content Include="sql\Vw_TxMoneySrc_LastTx.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
