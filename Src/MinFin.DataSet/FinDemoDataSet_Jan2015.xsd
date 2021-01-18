@@ -785,7 +785,7 @@ SELECT Id, FinEngineId, Date, Value, Notes FROM UnitPrice WHERE (Id = @Id)</Comm
               <DbSource ConnectionRef="FinDemoConnectionString (Settings)" DbObjectName="FinDemo.dbo.Vw_Exp_2010_2011_2012_2013_vs_2014b" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT TaxLiq##, ExpenseGroupId, Name, IdTxt, Category, Exp2010, Exp2011, Exp2012, Exp2013, Exp2014, MaxPrev, PercIncreaseMaxPrevToCurrent FROM dbo.Vw_Exp_2010_2011_2012_2013_vs_2014b</CommandText>
+                    <CommandText>SELECT TaxLiq##, ExpenseGroupId, Name, IdTxt, Category, Exp2010, Exp2011, Exp2012, Exp2013, Exp2014, MaxPrev, Cur2Max FROM dbo.Vw_Exp_2010_2011_2012_2013_vs_2014b</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -803,7 +803,7 @@ SELECT Id, FinEngineId, Date, Value, Notes FROM UnitPrice WHERE (Id = @Id)</Comm
               <Mapping SourceColumn="Exp2013" DataSetColumn="Exp2013" />
               <Mapping SourceColumn="Exp2014" DataSetColumn="Exp2014" />
               <Mapping SourceColumn="MaxPrev" DataSetColumn="MaxPrev" />
-              <Mapping SourceColumn="PercIncreaseMaxPrevToCurrent" DataSetColumn="PercIncreaseMaxPrevToCurrent" />
+              <Mapping SourceColumn="Cur2Max" DataSetColumn="Cur2Max" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -812,7 +812,7 @@ SELECT Id, FinEngineId, Date, Value, Notes FROM UnitPrice WHERE (Id = @Id)</Comm
               <DbSource ConnectionRef="FinDemoConnectionString (Settings)" DbObjectName="FinDemo.dbo.Vw_Exp_2010_2011_2012_vs_2013b" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT TaxLiq##, ExpenseGroupId, Name, IdTxt, Category, Exp2010, Exp2011, Exp2012, Exp2013, MaxPrev, PercIncreaseMaxPrevToCurrent FROM dbo.Vw_Exp_2010_2011_2012_vs_2013b</CommandText>
+                    <CommandText>SELECT TaxLiq##, ExpenseGroupId, Name, IdTxt, Category, Exp2010, Exp2011, Exp2012, Exp2013, MaxPrev, Cur2Max FROM dbo.Vw_Exp_2010_2011_2012_vs_2013b</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -829,7 +829,7 @@ SELECT Id, FinEngineId, Date, Value, Notes FROM UnitPrice WHERE (Id = @Id)</Comm
               <Mapping SourceColumn="Exp2012" DataSetColumn="Exp2012" />
               <Mapping SourceColumn="Exp2013" DataSetColumn="Exp2013" />
               <Mapping SourceColumn="MaxPrev" DataSetColumn="MaxPrev" />
-              <Mapping SourceColumn="PercIncreaseMaxPrevToCurrent" DataSetColumn="PercIncreaseMaxPrevToCurrent" />
+              <Mapping SourceColumn="Cur2Max" DataSetColumn="Cur2Max" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -1454,7 +1454,7 @@ ORDER BY TxCore.TxAmount</CommandText>
               <xs:element name="Exp2013" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnExp2013" msprop:Generator_ColumnPropNameInRow="Exp2013" msprop:Generator_ColumnPropNameInTable="Exp2013Column" msprop:Generator_UserColumnName="Exp2013" type="xs:decimal" minOccurs="0" />
               <xs:element name="Exp2014" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnExp2014" msprop:Generator_ColumnPropNameInRow="Exp2014" msprop:Generator_ColumnPropNameInTable="Exp2014Column" msprop:Generator_UserColumnName="Exp2014" type="xs:decimal" minOccurs="0" />
               <xs:element name="MaxPrev" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMaxPrev" msprop:Generator_ColumnPropNameInRow="MaxPrev" msprop:Generator_ColumnPropNameInTable="MaxPrevColumn" msprop:Generator_UserColumnName="MaxPrev" type="xs:decimal" minOccurs="0" />
-              <xs:element name="PercIncreaseMaxPrevToCurrent" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPercIncreaseMaxPrevToCurrent" msprop:Generator_ColumnPropNameInRow="PercIncreaseMaxPrevToCurrent" msprop:Generator_ColumnPropNameInTable="PercIncreaseMaxPrevToCurrentColumn" msprop:Generator_UserColumnName="PercIncreaseMaxPrevToCurrent" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Cur2Max" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPercIncreaseMaxPrevToCurrent" msprop:Generator_ColumnPropNameInRow="Cur2Max" msprop:Generator_ColumnPropNameInTable="PercIncreaseMaxPrevToCurrentColumn" msprop:Generator_UserColumnName="Cur2Max" type="xs:decimal" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -1495,7 +1495,7 @@ ORDER BY TxCore.TxAmount</CommandText>
               <xs:element name="Exp2012" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnExp2012" msprop:Generator_ColumnPropNameInRow="Exp2012" msprop:Generator_ColumnPropNameInTable="Exp2012Column" msprop:Generator_UserColumnName="Exp2012" type="xs:decimal" minOccurs="0" />
               <xs:element name="Exp2013" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnExp2013" msprop:Generator_ColumnPropNameInRow="Exp2013" msprop:Generator_ColumnPropNameInTable="Exp2013Column" msprop:Generator_UserColumnName="Exp2013" type="xs:decimal" minOccurs="0" />
               <xs:element name="MaxPrev" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMaxPrev" msprop:Generator_ColumnPropNameInRow="MaxPrev" msprop:Generator_ColumnPropNameInTable="MaxPrevColumn" msprop:Generator_UserColumnName="MaxPrev" type="xs:decimal" minOccurs="0" />
-              <xs:element name="PercIncreaseMaxPrevToCurrent" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPercIncreaseMaxPrevToCurrent" msprop:Generator_ColumnPropNameInRow="PercIncreaseMaxPrevToCurrent" msprop:Generator_ColumnPropNameInTable="PercIncreaseMaxPrevToCurrentColumn" msprop:Generator_UserColumnName="PercIncreaseMaxPrevToCurrent" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Cur2Max" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPercIncreaseMaxPrevToCurrent" msprop:Generator_ColumnPropNameInRow="Cur2Max" msprop:Generator_ColumnPropNameInTable="PercIncreaseMaxPrevToCurrentColumn" msprop:Generator_UserColumnName="Cur2Max" type="xs:decimal" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

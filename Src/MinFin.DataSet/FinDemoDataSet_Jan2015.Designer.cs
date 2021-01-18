@@ -5397,7 +5397,7 @@ namespace MinFin.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Vw_Exp_2010_2011_2012_2013_vs_2014bRow AddVw_Exp_2010_2011_2012_2013_vs_2014bRow(int _TaxLiq__, string ExpenseGroupId, string Name, string IdTxt, string Category, decimal Exp2010, decimal Exp2011, decimal Exp2012, decimal Exp2013, decimal Exp2014, decimal MaxPrev, decimal PercIncreaseMaxPrevToCurrent) {
+            public Vw_Exp_2010_2011_2012_2013_vs_2014bRow AddVw_Exp_2010_2011_2012_2013_vs_2014bRow(int _TaxLiq__, string ExpenseGroupId, string Name, string IdTxt, string Category, decimal Exp2010, decimal Exp2011, decimal Exp2012, decimal Exp2013, decimal Exp2014, decimal MaxPrev, decimal Cur2Max) {
                 Vw_Exp_2010_2011_2012_2013_vs_2014bRow rowVw_Exp_2010_2011_2012_2013_vs_2014bRow = ((Vw_Exp_2010_2011_2012_2013_vs_2014bRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         _TaxLiq__,
@@ -5411,7 +5411,7 @@ namespace MinFin.DataSet {
                         Exp2013,
                         Exp2014,
                         MaxPrev,
-                        PercIncreaseMaxPrevToCurrent};
+                        Cur2Max};
                 rowVw_Exp_2010_2011_2012_2013_vs_2014bRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowVw_Exp_2010_2011_2012_2013_vs_2014bRow);
                 return rowVw_Exp_2010_2011_2012_2013_vs_2014bRow;
@@ -5453,7 +5453,7 @@ namespace MinFin.DataSet {
                 this.columnExp2013 = base.Columns["Exp2013"];
                 this.columnExp2014 = base.Columns["Exp2014"];
                 this.columnMaxPrev = base.Columns["MaxPrev"];
-                this.columnPercIncreaseMaxPrevToCurrent = base.Columns["PercIncreaseMaxPrevToCurrent"];
+                this.columnPercIncreaseMaxPrevToCurrent = base.Columns["Cur2Max"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5483,7 +5483,7 @@ namespace MinFin.DataSet {
                 base.Columns.Add(this.columnExp2014);
                 this.columnMaxPrev = new global::System.Data.DataColumn("MaxPrev", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMaxPrev);
-                this.columnPercIncreaseMaxPrevToCurrent = new global::System.Data.DataColumn("PercIncreaseMaxPrevToCurrent", typeof(decimal), null, global::System.Data.MappingType.Element);
+                this.columnPercIncreaseMaxPrevToCurrent = new global::System.Data.DataColumn("Cur2Max", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPercIncreaseMaxPrevToCurrent);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnExpenseGroupId,
@@ -5817,7 +5817,7 @@ namespace MinFin.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Vw_Exp_2010_2011_2012_vs_2013bRow AddVw_Exp_2010_2011_2012_vs_2013bRow(int _TaxLiq__, string ExpenseGroupId, string Name, string IdTxt, string Category, decimal Exp2010, decimal Exp2011, decimal Exp2012, decimal Exp2013, decimal MaxPrev, decimal PercIncreaseMaxPrevToCurrent) {
+            public Vw_Exp_2010_2011_2012_vs_2013bRow AddVw_Exp_2010_2011_2012_vs_2013bRow(int _TaxLiq__, string ExpenseGroupId, string Name, string IdTxt, string Category, decimal Exp2010, decimal Exp2011, decimal Exp2012, decimal Exp2013, decimal MaxPrev, decimal Cur2Max) {
                 Vw_Exp_2010_2011_2012_vs_2013bRow rowVw_Exp_2010_2011_2012_vs_2013bRow = ((Vw_Exp_2010_2011_2012_vs_2013bRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         _TaxLiq__,
@@ -5830,7 +5830,7 @@ namespace MinFin.DataSet {
                         Exp2012,
                         Exp2013,
                         MaxPrev,
-                        PercIncreaseMaxPrevToCurrent};
+                        Cur2Max};
                 rowVw_Exp_2010_2011_2012_vs_2013bRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowVw_Exp_2010_2011_2012_vs_2013bRow);
                 return rowVw_Exp_2010_2011_2012_vs_2013bRow;
@@ -5871,7 +5871,7 @@ namespace MinFin.DataSet {
                 this.columnExp2012 = base.Columns["Exp2012"];
                 this.columnExp2013 = base.Columns["Exp2013"];
                 this.columnMaxPrev = base.Columns["MaxPrev"];
-                this.columnPercIncreaseMaxPrevToCurrent = base.Columns["PercIncreaseMaxPrevToCurrent"];
+                this.columnPercIncreaseMaxPrevToCurrent = base.Columns["Cur2Max"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5899,7 +5899,7 @@ namespace MinFin.DataSet {
                 base.Columns.Add(this.columnExp2013);
                 this.columnMaxPrev = new global::System.Data.DataColumn("MaxPrev", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMaxPrev);
-                this.columnPercIncreaseMaxPrevToCurrent = new global::System.Data.DataColumn("PercIncreaseMaxPrevToCurrent", typeof(decimal), null, global::System.Data.MappingType.Element);
+                this.columnPercIncreaseMaxPrevToCurrent = new global::System.Data.DataColumn("Cur2Max", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPercIncreaseMaxPrevToCurrent);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnExpenseGroupId,
@@ -11553,13 +11553,13 @@ namespace MinFin.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal PercIncreaseMaxPrevToCurrent {
+            public decimal Cur2Max {
                 get {
                     try {
                         return ((decimal)(this[this.tableVw_Exp_2010_2011_2012_2013_vs_2014b.PercIncreaseMaxPrevToCurrentColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PercIncreaseMaxPrevToCurrent\' in table \'Vw_Exp_2010_2011_20" +
+                        throw new global::System.Data.StrongTypingException("The value for column \'Cur2Max\' in table \'Vw_Exp_2010_2011_20" +
                                 "12_2013_vs_2014b\' is DBNull.", e);
                     }
                 }
@@ -11827,13 +11827,13 @@ namespace MinFin.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal PercIncreaseMaxPrevToCurrent {
+            public decimal Cur2Max {
                 get {
                     try {
                         return ((decimal)(this[this.tableVw_Exp_2010_2011_2012_vs_2013b.PercIncreaseMaxPrevToCurrentColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PercIncreaseMaxPrevToCurrent\' in table \'Vw_Exp_2010_2011_20" +
+                        throw new global::System.Data.StrongTypingException("The value for column \'Cur2Max\' in table \'Vw_Exp_2010_2011_20" +
                                 "12_vs_2013b\' is DBNull.", e);
                     }
                 }
@@ -19389,7 +19389,7 @@ SELECT Id, FinEngineId, Date, Value, Notes FROM UnitPrice WHERE (Id = @Id)";
             tableMapping.ColumnMappings.Add("Exp2013", "Exp2013");
             tableMapping.ColumnMappings.Add("Exp2014", "Exp2014");
             tableMapping.ColumnMappings.Add("MaxPrev", "MaxPrev");
-            tableMapping.ColumnMappings.Add("PercIncreaseMaxPrevToCurrent", "PercIncreaseMaxPrevToCurrent");
+            tableMapping.ColumnMappings.Add("Cur2Max", "Cur2Max");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -19407,7 +19407,7 @@ SELECT Id, FinEngineId, Date, Value, Notes FROM UnitPrice WHERE (Id = @Id)";
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT TaxLiq##, ExpenseGroupId, Name, IdTxt, Category, Exp2010, Exp2011, Exp2012" +
-                ", Exp2013, Exp2014, MaxPrev, PercIncreaseMaxPrevToCurrent FROM dbo.Vw_Exp_2010_2" +
+                ", Exp2013, Exp2014, MaxPrev, Cur2Max FROM dbo.Vw_Exp_2010_2" +
                 "011_2012_2013_vs_2014b";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
@@ -19568,7 +19568,7 @@ SELECT Id, FinEngineId, Date, Value, Notes FROM UnitPrice WHERE (Id = @Id)";
             tableMapping.ColumnMappings.Add("Exp2012", "Exp2012");
             tableMapping.ColumnMappings.Add("Exp2013", "Exp2013");
             tableMapping.ColumnMappings.Add("MaxPrev", "MaxPrev");
-            tableMapping.ColumnMappings.Add("PercIncreaseMaxPrevToCurrent", "PercIncreaseMaxPrevToCurrent");
+            tableMapping.ColumnMappings.Add("Cur2Max", "Cur2Max");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -19586,7 +19586,7 @@ SELECT Id, FinEngineId, Date, Value, Notes FROM UnitPrice WHERE (Id = @Id)";
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT TaxLiq##, ExpenseGroupId, Name, IdTxt, Category, Exp2010, Exp2011, Exp2012" +
-                ", Exp2013, MaxPrev, PercIncreaseMaxPrevToCurrent FROM dbo.Vw_Exp_2010_2011_2012_" +
+                ", Exp2013, MaxPrev, Cur2Max FROM dbo.Vw_Exp_2010_2011_2012_" +
                 "vs_2013b";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }

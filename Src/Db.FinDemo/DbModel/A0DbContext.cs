@@ -487,7 +487,7 @@ namespace Db.FinDemo.DbModel
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b>()
-          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .Property(e => e.Cur2Max)
           .HasPrecision(38, 6);
 
       modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
@@ -539,7 +539,7 @@ namespace Db.FinDemo.DbModel
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b>()
-          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .Property(e => e.Cur2Max)
           .HasPrecision(38, 6);
 
       modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
@@ -587,7 +587,7 @@ namespace Db.FinDemo.DbModel
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_2014_vs_2015b>()
-          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .Property(e => e.Cur2Max)
           .HasPrecision(38, 6);
 
       modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
@@ -631,7 +631,7 @@ namespace Db.FinDemo.DbModel
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b>()
-          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .Property(e => e.Cur2Max)
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
@@ -675,7 +675,7 @@ namespace Db.FinDemo.DbModel
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD>()
-          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .Property(e => e.Cur2Max)
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_2010_2011_2012_vs_2013b>()
@@ -715,7 +715,7 @@ namespace Db.FinDemo.DbModel
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_2010_2011_2012_vs_2013b>()
-          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .Property(e => e.Cur2Max)
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_2010_2011_vs_2012>()
@@ -863,7 +863,7 @@ namespace Db.FinDemo.DbModel
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_Hist_vs_2018>()
-          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .Property(e => e.Cur2Max)
           .HasPrecision(38, 6);
 
       modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
@@ -923,7 +923,7 @@ namespace Db.FinDemo.DbModel
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Alx>()
-          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .Property(e => e.Cur2Max)
           .HasPrecision(38, 6);
 
       modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
@@ -983,7 +983,7 @@ namespace Db.FinDemo.DbModel
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Mei>()
-          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .Property(e => e.Cur2Max)
           .HasPrecision(38, 6);
 
       modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
@@ -1043,7 +1043,7 @@ namespace Db.FinDemo.DbModel
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Ndn>()
-          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .Property(e => e.Cur2Max)
           .HasPrecision(38, 6);
 
       modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
@@ -1103,7 +1103,7 @@ namespace Db.FinDemo.DbModel
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_Hist_vs_2018_Zoe>()
-          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .Property(e => e.Cur2Max)
           .HasPrecision(38, 6);
 
       modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
@@ -1171,7 +1171,7 @@ namespace Db.FinDemo.DbModel
           .HasPrecision(19, 4);
 
       modelBuilder.Entity<Vw_Exp_Hist_vs_Last>()
-          .Property(e => e.PercIncreaseMaxPrevToCurrent)
+          .Property(e => e.Cur2Max)
           .HasPrecision(38, 6);
 
       modelBuilder.Entity<Vw_TaxLiqReport>()

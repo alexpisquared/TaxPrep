@@ -63,6 +63,6 @@ namespace Db.FinDemo.DbModel
         public decimal? MaxPrev { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? PercIncreaseMaxPrevToCurrent { get; set; }
+        public decimal? Cur2Max { get; set; }
     }
 }
