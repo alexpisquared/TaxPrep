@@ -28,7 +28,7 @@ namespace MF.TxCategoryAssigner
     string _txCatgry = "UnKn", _loadedCatgry = "?", _choiceAbove, _choiceBelow;
     decimal _selectTtl = 0;
     bool _loaded = false;
-    int? _targetYr;
+    int? _cutOffYr, _trgTaxYr = DateTime.Today.Year - 1;
 
     public TxCategoryAssignerVw() => InitializeComponent();
     async void onLoaded(object s, RoutedEventArgs e)
@@ -47,10 +47,10 @@ namespace MF.TxCategoryAssigner
       var y = DateTime.Today.Year;
       cbxSingleYr.ItemsSource = new int[] { y, y - 1, y - 2, y - 3, y - 4, y - 5, y - 6, y - 7, y - 8, y - 9 };
       cbxSingleYr.SelectedIndex = 2;
-      chkInfer.IsChecked = true; 
+      chkInfer.IsChecked = true;
 
       _txCatgry = null;
-      _targetYr = null;
+      _cutOffYr = null;
       btAssign.IsEnabled = false;
 
       _loaded = true;
@@ -86,7 +86,7 @@ namespace MF.TxCategoryAssigner
       {
         if (chkTxCatgry.IsChecked == true && chkSingleYr.IsChecked == true)
         {
-          await _db.TxCoreV2.Where(r => r.TxDate.Year >= _targetYr && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).LoadAsync();
+          await _db.TxCoreV2.Where(r => r.TxDate.Year >= _cutOffYr && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).LoadAsync();
           _loadedCatgry = _txCatgry;
         }
         else if (chkTxCatgry.IsChecked == true)
@@ -96,7 +96,7 @@ namespace MF.TxCategoryAssigner
         }
         else if (chkSingleYr.IsChecked == true)
         {
-          await _db.TxCoreV2.Where(r => r.TxDate.Year >= _targetYr).LoadAsync();
+          await _db.TxCoreV2.Where(r => r.TxDate.Year >= _cutOffYr).LoadAsync();
         }
         else
         {
@@ -121,7 +121,7 @@ namespace MF.TxCategoryAssigner
 
       if (string.IsNullOrEmpty(csvFilterString))
       {
-        App.Synth.SpeakAsync("Clear!"); 
+        App.Synth.SpeakAsync("Clear!");
         filterTxns(csvFilterString, _txCatgry);
       }
       else
@@ -183,9 +183,16 @@ namespace MF.TxCategoryAssigner
         (!string.IsNullOrEmpty(r.MemoPP) && r.MemoPP.ToLower().Contains(strFilter.ToLower())) ||
         (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(strFilter.ToLower())))
         &&
-        (_targetYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _targetYr)
+        (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr)
         &&
-        (string.IsNullOrEmpty(txCatgoryId) || string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0)).OrderByDescending(r => r.TxDate));
+        (
+          string.IsNullOrEmpty(txCatgoryId) ||
+          (
+            (r.TxDate.Year >= _trgTaxYr && string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0) || // show selected txCtgry only for target tax year; aimed at UnKn (2021-01-18)
+            (r.TxDate.Year < _trgTaxYr)
+          )
+        )
+      ).OrderByDescending(r => r.TxDate));
     }
     void filterTxns(string strFilter, string txCatgoryId, decimal amt, decimal rng)
     {
@@ -199,7 +206,7 @@ namespace MF.TxCategoryAssigner
         (!string.IsNullOrEmpty(r.MemoPP) && r.MemoPP.ToLower().Contains(strFilter.ToLower())) ||
         (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(strFilter.ToLower())))
         &&
-        (_targetYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _targetYr)
+        (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr)
         &&
         (string.IsNullOrEmpty(txCatgoryId) || string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0)).OrderByDescending(r => r.TxDate));
     }
@@ -294,13 +301,14 @@ namespace MF.TxCategoryAssigner
       }
       catch (Exception ex) { ex.Pop(); }
     }
+
     void /**/  onTxCatgry_Checked(object s, RoutedEventArgs e) { cbxTxCatgry.Focus(); onTxCatgry_Changed(s, null); }
     async void onTxCatgry_UnChckd(object s, RoutedEventArgs e)           /**/ { _txCatgry = null;                                 /**/ await filterStart(tbxSearch.Text); }
     async void onTxCatgry_Changed(object s, SelectionChangedEventArgs e) /**/ { _txCatgry = (string)cbxTxCatgry.SelectedValue;    /**/ await filterStart(tbxSearch.Text); }
 
     void /**/  onSingleYr_Checked(object s, RoutedEventArgs e)           /**/ { cbxSingleYr?.Focus(); onSingleYr_Changed(s, null); }
-    async void onSingleYr_UnChckd(object s, RoutedEventArgs e)           /**/ { _targetYr = null;                                 /**/ await filterStart(tbxSearch.Text); }
-    async void onSingleYr_Changed(object s, SelectionChangedEventArgs e) /**/ { _targetYr = (int)cbxSingleYr.SelectedValue;       /**/ await filterStart(tbxSearch.Text); }
+    async void onSingleYr_UnChckd(object s, RoutedEventArgs e)           /**/ { _cutOffYr = null;                                 /**/ await filterStart(tbxSearch.Text); }
+    async void onSingleYr_Changed(object s, SelectionChangedEventArgs e) /**/ { _cutOffYr = (int)cbxSingleYr.SelectedValue;       /**/ await filterStart(tbxSearch.Text); }
 
     void OnLbxSelectionChanged(object s, SelectionChangedEventArgs e) { if (e.AddedItems.Count < 1) return; updateTitle(); Title += string.Format(" - {0}", ((TxCategory)(txCategoryListBox.SelectedItems[0])).Name); }
     async void onInfer_Checked(object s, RoutedEventArgs e) => await filterStart(tbkFlt.Text);
