@@ -165,19 +165,30 @@ namespace MSMoneyDbLoader
       int txMoneySrcId;
       foreach (var txFs in MSMoneyFileReader.ReadTxs(_db, file, out acntFolder, out txMoneySrcId))
       {
-        var txDb = _db.TxCoreV2.Local.FirstOrDefault(db => string.Compare(db.FitId, txFs.FitId) == 0 || db.FitId.Contains(txFs.FitId))
-                      ?? _db.TxCoreV2.FirstOrDefault(db => string.Compare(db.FitId, txFs.FitId) == 0 || db.FitId.Contains(txFs.FitId));
+        var txDb = _db.TxCoreV2.Local.FirstOrDefault(db => string.Compare(db.FitId, txFs.FitId) == 0 || db.FitId.Contains(txFs.FitId)) ??
+                   _db.TxCoreV2./**/  FirstOrDefault(db => string.Compare(db.FitId, txFs.FitId) == 0 || db.FitId.Contains(txFs.FitId));
         if (txDb == null)
           _db.TxCoreV2.Add(txFs);
         else
         {
           if (txDb.TxMoneySrcId != txFs.TxMoneySrcId)
           {
-            txDb.Notes += $"TxMoneySrcId changed from {txDb.TxMoneySrcId} to {txFs.TxMoneySrcId} on {MSMoneyFileReader._batchTimeNow}. \n";
-            txDb.TxMoneySrcId = txFs.TxMoneySrcId;
-            txDb.ModifiedAt = MSMoneyFileReader._batchTimeNow;
+            if (txDb.TxAmount == txFs.TxAmount) // must be the same txn since ids and $$ match. //todo: must go over all the records and restore those with 'TxMoneySrcId changed from .. to .. on ... ' or re-load the source files.
+            {
+              txDb.Notes += $" Same FitId & amount: changing TxMoneySrc {txDb.TxMoneySrcId} to {txFs.TxMoneySrcId} on {MSMoneyFileReader._batchTimeNow}   ({txDb.TxMoneySrc.Name} -> {txFs.TxMoneySrc.Name}   <== file-fitid:{file}-{txFs.FitId}).";
+              txDb.TxMoneySrcId = txFs.TxMoneySrcId;
+              txDb.ModifiedAt = MSMoneyFileReader._batchTimeNow;
+            }
+            else
+            {
+              txFs.Notes += $" Same FitId: {txFs.FitId}  appending  '-{MSMoneyFileReader._batchTimeNow}'   <== file-fitid:{file}-{txFs.FitId}).";
+              txFs.FitId += $"-{MSMoneyFileReader._batchTimeNow}";
+              _db.TxCoreV2.Add(txFs);
+            }
+
+            Trace.WriteLine(txDb.Notes);
           }
-#if !true // swap the sign (Jan 2019)
+#if swap_the_sign_2019_01
           if (txDb.TxAmount == -txFs.TxAmount)
           {
             txDb.Notes += $" +- ";

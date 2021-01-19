@@ -1,6 +1,5 @@
 using System;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Db.FinDemo.DbModel
@@ -13,7 +12,7 @@ namespace Db.FinDemo.DbModel
       : base()
     {
       Database.Connection.ConnectionString = conStr; //tu: remove CREATE TABLE permissin neeed - Database.SetInitializer<A0DbContext>(null);
-      Trace.WriteLine(DbName);
+      //``System.Diagnostics.Trace.WriteLine($" ** db from con str:{DbName}");
     }
 
     public static string DbName => conStr.Split(';').ToList().FirstOrDefault(r => r.Split('=')[0].Equals("initial catalog", StringComparison.OrdinalIgnoreCase))?.Split('=')[1];
