@@ -142,7 +142,7 @@ namespace MF.TxCategoryAssigner
           }
           else if (!string.IsNullOrEmpty(ta[1])) // explicit by string
           {
-            App.Synth.SpeakAsync("Filter by text.");
+            //App.Synth.SpeakAsync("Filter by text.");
             filterTxns(ta[1], _txCatgry);
           }
         }
@@ -156,7 +156,7 @@ namespace MF.TxCategoryAssigner
           }
           else
           {
-            App.Synth.SpeakAsync("Filter by text.");
+            //App.Synth.SpeakAsync("Filter by text.");
             filterTxns(csvFilterString, _txCatgry);
           }
         }
@@ -188,7 +188,10 @@ namespace MF.TxCategoryAssigner
         (
           string.IsNullOrEmpty(txCatgoryId) ||
           (
-            (r.TxDate.Year >= _trgTaxYr && string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0) || // show selected txCtgry only for target tax year; aimed at UnKn (2021-01-18)
+            (
+              (!string.IsNullOrEmpty(strFilter) || 
+               r.TxDate.Year >= _trgTaxYr && string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0)
+              ) || 
             (r.TxDate.Year < _trgTaxYr)
           )
         )
