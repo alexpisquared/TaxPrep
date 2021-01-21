@@ -1,0 +1,154 @@
+                                       IMPORTANT DATA - TAX YEAR 2020
+                                       ******************************
+From  accountactivity.ofx
+  to  2020-01-13 - 2021-01-08. DB-Synced on 2021-01-12.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity.ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\TdPi\2020-01-13 - 2021-01-08. DB-Synced on 2021-01-12.ofx
+     267 rows saved in   0.3s
+21.01.12 11:48:15> CurrentDispatcherUnhandledException: s: Dispatcher.  - Object reference not set to an instance of an object.
+
+From  accountactivity.ofx
+  to  2020-11-23 - 2021-01-11. DB-Synced on 2021-01-12.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity.ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\TdCo\2020-11-23 - 2021-01-11. DB-Synced on 2021-01-12.ofx
+      14 rows saved in   0.2s
+
+From  cibc.ofx
+  to  2020-08-28 - 2021-01-12. DB-Synced on 2021-01-13.ofx
+From  C:\Users\alexp\OneDrive\Downloads\cibc.ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\7615\2020-08-28 - 2021-01-12. DB-Synced on 2021-01-13.ofx
+      68 rows saved in   0.2s
+       1 rows saved in   0.0s
+
+From  transactionExport.qfx
+  to  2020-09-15 - 2021-01-09. DB-Synced on 2021-01-13.qfx
+From  C:\Users\alexp\OneDrive\Downloads\transactionExport.qfx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\PcMc\2020-09-15 - 2021-01-09. DB-Synced on 2021-01-13.qfx
+      18 rows saved in   0.1s
+       1 rows saved in   0.0s
+
+From  accountactivity (1).ofx
+  to  2020-12-15 - 2021-01-04. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity (1).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\6785\2020-12-15 - 2021-01-04. DB-Synced on 2021-01-14.ofx
+From  accountactivity (2).ofx
+  to  2020-11-10 - 2020-11-30. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity (2).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\6785\2020-11-10 - 2020-11-30. DB-Synced on 2021-01-14.ofx
+From  accountactivity (3).ofx
+  to  2020-11-10 - 2020-11-30. DB-Synced on 2021-01-14~.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity (3).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\6785\2020-11-10 - 2020-11-30. DB-Synced on 2021-01-14~.ofx
+From  accountactivity (4).ofx
+  to  2020-07-06 - 2020-07-30. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity (4).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\1783\2020-07-06 - 2020-07-30. DB-Synced on 2021-01-14.ofx
+From  accountactivity (5).ofx
+  to  2020-08-04 - 2020-09-04. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity (5).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\1783\2020-08-04 - 2020-09-04. DB-Synced on 2021-01-14.ofx
+From  accountactivity (6).ofx
+  to  2020-09-15 - 2020-10-02. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity (6).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\1783\2020-09-15 - 2020-10-02. DB-Synced on 2021-01-14.ofx
+From  accountactivity (7).ofx
+  to  2020-10-22 - 2020-10-31. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity (7).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\1783\2020-10-22 - 2020-10-31. DB-Synced on 2021-01-14.ofx
+From  accountactivity (8).ofx
+  to  2020-11-20 - 2020-12-04. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity (8).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\1783\2020-11-20 - 2020-12-04. DB-Synced on 2021-01-14.ofx
+From  accountactivity (9).ofx
+  to  2020-12-09 - 2020-12-24. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity (9).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\1783\2020-12-09 - 2020-12-24. DB-Synced on 2021-01-14.ofx
+From  accountactivity.ofx
+  to  2020-01-13 - 2021-01-11. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity.ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\1629\2020-01-13 - 2021-01-11. DB-Synced on 2021-01-14.ofx
+     347 rows saved in   0.2s
+MainAppDispatcher.xml: 1st time: Window Positions - all zeros!   3840x1570 is this the screen dims?
+   MainHistChart.xml: 1st time: Window Positions - all zeros!   3840x1570 is this the screen dims?
+TxCategoryAssignerVw.xml: 1st time: Window Positions - all zeros!   3840x1570 is this the screen dims?
+       3 rows saved in   0.2s
+       2 rows saved in   0.1s
+      24 rows saved in   0.1s
+21.01.14 17:31:06.4 ██  - A chart element with the name 'Txn' already exists in the 'SeriesCollection'.      ArgumentException at C:\g\TaxPrep\Src\HistoricalChartSet\MainHistChart.xaml.cs(104): addSeries() 
+21.01.14 17:44:37.1 ██  - A chart element with the name 'Txn' already exists in the 'SeriesCollection'.      ArgumentException at C:\g\TaxPrep\Src\HistoricalChartSet\MainHistChart.xaml.cs(104): addSeries() 
+DbLoaderReportWindow.xml: 1st time: Window Positions - all zeros!   3840x1570 is this the screen dims?
+From  pcbanking (1).ofx
+  to  2020-01-27 - 2021-01-11. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\pcbanking (1).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\0314\2020-01-27 - 2021-01-11. DB-Synced on 2021-01-14.ofx
+From  pcbanking (2).ofx
+  to  2020-02-06 - 2021-01-09. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\pcbanking (2).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\2010\2020-02-06 - 2021-01-09. DB-Synced on 2021-01-14.ofx
+From  pcbanking (3).ofx
+  to  2020-01-17 - 2021-01-05. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\pcbanking (3).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\0017\2020-01-17 - 2021-01-05. DB-Synced on 2021-01-14.ofx
+From  pcbanking.ofx
+  to  2020-01-13 - 2021-01-05. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\pcbanking.ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\4222\2020-01-13 - 2021-01-05. DB-Synced on 2021-01-14.ofx
+     348 rows saved in   0.2s
+21.01.14 18:31:23.1 ██  - A chart element with the name 'Txn' already exists in the 'SeriesCollection'.      ArgumentException at C:\g\TaxPrep\Src\HistoricalChartSet\MainHistChart.xaml.cs(104): addSeries() 
+21.01.14 18:32:22.2 ██  - A chart element with the name 'Txn' already exists in the 'SeriesCollection'.      ArgumentException at C:\g\TaxPrep\Src\HistoricalChartSet\MainHistChart.xaml.cs(104): addSeries() 
+21.01.14 18:33:01.9 ██  - A chart element with the name 'Txn' already exists in the 'SeriesCollection'.      ArgumentException at C:\g\TaxPrep\Src\HistoricalChartSet\MainHistChart.xaml.cs(104): addSeries() 
+       1 rows saved in   0.1s
+From  accountactivity (1).ofx
+  to  2020-01-31 - 2020-12-31. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity (1).ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\1372\2020-01-31 - 2020-12-31. DB-Synced on 2021-01-14.ofx
+From  accountactivity.ofx
+  to  2020-01-31 - 2020-12-31. DB-Synced on 2021-01-14.ofx
+From  C:\Users\alexp\OneDrive\Downloads\accountactivity.ofx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\8526\2020-01-31 - 2020-12-31. DB-Synced on 2021-01-14.ofx
+From  SIMPLII (2).qfx
+  to  2020-01-14 - 2020-03-12. DB-Synced on 2021-01-14.qfx
+From  C:\Users\alexp\OneDrive\Downloads\SIMPLII (2).qfx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\6110\2020-01-14 - 2020-03-12. DB-Synced on 2021-01-14.qfx
+From  SIMPLII (3).qfx
+  to  2019-12-31 - 2020-03-31. DB-Synced on 2021-01-14.qfx
+From  C:\Users\alexp\OneDrive\Downloads\SIMPLII (3).qfx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\6029\2019-12-31 - 2020-03-31. DB-Synced on 2021-01-14.qfx
+From  SIMPLII.qfx
+  to  2020-01-14 - 2020-12-31. DB-Synced on 2021-01-14.qfx
+From  C:\Users\alexp\OneDrive\Downloads\SIMPLII.qfx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\2505\2020-01-14 - 2020-12-31. DB-Synced on 2021-01-14.qfx
+From  transactionExport.qfx
+  to  2020-01-15 - 2021-01-08. DB-Synced on 2021-01-14.qfx
+From  C:\Users\alexp\OneDrive\Downloads\transactionExport.qfx
+  to  C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\1273\2020-01-15 - 2021-01-08. DB-Synced on 2021-01-14.qfx
+     311 rows saved in   0.1s
+       1 rows saved in   0.0s
+       1 rows saved in   0.1s
+21.01.14 22:15:03.9 ██  - A chart element with the name 'Txn 7' already exists in the 'SeriesCollection'.      ArgumentException at C:\g\TaxPrep\Src\HistoricalChartSet\MainHistChart.xaml.cs(104): addSeries() 
+21.01.14 22:15:12.5 ██  - A chart element with the name 'Txn 4' already exists in the 'SeriesCollection'.      ArgumentException at C:\g\TaxPrep\Src\HistoricalChartSet\MainHistChart.xaml.cs(104): addSeries() 
+21.01.14 22:15:14.5 ██  - A chart element with the name 'Txn 4' already exists in the 'SeriesCollection'.      ArgumentException at C:\g\TaxPrep\Src\HistoricalChartSet\MainHistChart.xaml.cs(104): addSeries() 
+21.01.14 22:15:16.5 ██  - A chart element with the name 'Txn 4' already exists in the 'SeriesCollection'.      ArgumentException at C:\g\TaxPrep\Src\HistoricalChartSet\MainHistChart.xaml.cs(104): addSeries() 
+       3 rows saved in   0.2s
+      24 rows saved in   0.2s
+       4 rows saved in   0.1s
+      24 rows saved in   0.2s
+    ReviewWindow.xml: 1st time: Window Positions - all zeros!   3840x1570 is this the screen dims?
+21.01.17 16:51:38> CurrentDispatcherUnhandledException: s: Dispatcher.  - An error occurred while executing the command definition. See the inner exception for details.
+ - Invalid column name 'Exp2020'.
+Decided NOT to continue: Application.Current.Shutdown();
+21.01.17 16:51:43> CurrentDispatcherUnhandledException: s: Dispatcher.  - Object reference not set to an instance of an object.
+Decided NOT to continue: Application.Current.Shutdown();
+21.01.17 17:04:59> CurrentDispatcherUnhandledException: s: Dispatcher.  - An error occurred while executing the command definition. See the inner exception for details.
+ - Invalid column name 'Exp2020'.
+Decided NOT to continue: Application.Current.Shutdown();
+21.01.17 17:05:04> CurrentDispatcherUnhandledException: s: Dispatcher.  - Object reference not set to an instance of an object.
+Decided NOT to continue: Application.Current.Shutdown();
+       7 rows saved in   0.2s
+      53 rows saved in   0.2s
+21.01.18 18:02:38> CurrentDispatcherUnhandledException: s: Dispatcher.  - Object reference not set to an instance of an object.
+Decided NOT to continue: Application.Current.Shutdown();
+21.01.18 18:02:46> CurrentDispatcherUnhandledException: s: Dispatcher.  - Object reference not set to an instance of an object.
+Decided NOT to continue: Application.Current.Shutdown();
+TxCategoryAssignerVw.xml: 1st time: Window Positions - all zeros!   3840x1570 is this the screen dims?
+  ManualTxnEntry.xml: 1st time: Window Positions - all zeros!   3840x1570 is this the screen dims?
