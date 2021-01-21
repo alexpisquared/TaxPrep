@@ -215,7 +215,7 @@
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
 
-        <DataGridTemplateColumn Header="Name"   SortMemberPath="Name" CanUserSort="True" >
+        <DataGridTemplateColumn Header="Name"   SortMemberPath="Name" CanUserSort="True" Width="*" >
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
               <stb:HighlightableTextBlock Text="{Binding Name}" SearchText="{Binding ElementName=tSrch2, Path=Text}"  />

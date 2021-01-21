@@ -1,6 +1,6 @@
 ﻿<lnk:WindowBase xmlns:lnk="clr-namespace:AAV.WPF.Base;assembly=AAV.WPF" x:Name="wnd" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                 xmlns:local="clr-namespace:MinFin.Review.DS" x:Class="MinFin.Review.DS.ReviewWindow" WindowStartupLocation="CenterScreen"
-                Title="MainWindow" Height="900" Width="1900" Loaded="onLoaded" AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip" Background="#def">
+                Title="Historical Review" Height="900" Width="1900" Loaded="onLoaded" AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip" Background="#def">
   <WindowChrome.WindowChrome>
     <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />
   </WindowChrome.WindowChrome>

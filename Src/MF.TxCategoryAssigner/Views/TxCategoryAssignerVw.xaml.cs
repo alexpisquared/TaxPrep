@@ -76,39 +76,6 @@ namespace MF.TxCategoryAssigner
       base.OnClosing(e);
     }
 
-    async Task reLoadTxCore()
-    {
-      if (!_loaded) return;
-
-      Debug.WriteLine($"■■■   reLoadTxCore()");
-
-      try
-      {
-        if (chkTxCatgry.IsChecked == true && chkSingleYr.IsChecked == true)
-        {
-          await _db.TxCoreV2.Where(r => r.TxDate.Year >= _cutOffYr && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).LoadAsync();
-          _loadedCatgry = _txCatgry;
-        }
-        else if (chkTxCatgry.IsChecked == true)
-        {
-          await _db.TxCoreV2.Where(r => r.TxDate >= _yrStart2004 && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).LoadAsync();
-          _loadedCatgry = _txCatgry;
-        }
-        else if (chkSingleYr.IsChecked == true)
-        {
-          await _db.TxCoreV2.Where(r => r.TxDate.Year >= _cutOffYr).LoadAsync();
-        }
-        else
-        {
-          await _db.TxCoreV2.Where(r => r.TxDate >= _yrStart2004).LoadAsync();
-          _loadedCatgry = _txCatgry = null;
-        }
-
-        if (dgTxCore.ItemsSource != null)
-          CollectionViewSource.GetDefaultView(dgTxCore.ItemsSource).Refresh(); //tu:            
-      }
-      catch (Exception ex) { ex.Pop(); }
-    }
     async Task filterStart(string csvFilterString)
     {
       if (!_loaded) return;
@@ -116,6 +83,7 @@ namespace MF.TxCategoryAssigner
       Debug.WriteLine($"■■■ filterStart()");
 
       App.Synth.SpeakAsyncCancelAll();
+      Bpr.BeepFD(12000, 33); // wake monitor speakers
 
       await reLoadTxCore();
 
@@ -151,7 +119,7 @@ namespace MF.TxCategoryAssigner
           if (decimal.TryParse(csvFilterString, out var amt))
           {
             if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
-            App.Synth.SpeakAsync("Filter by money.");
+            //App.Synth.SpeakAsync("Filter by money.");
             filterTxns("", _txCatgry, amt, rng);
           }
           else
@@ -172,6 +140,39 @@ namespace MF.TxCategoryAssigner
 
       updateTitle();
       Bpr.OkFaF();
+    }
+    async Task reLoadTxCore() // limit txns by chkboxs' filters
+    {
+      if (!_loaded) return;
+
+      Debug.WriteLine($"■■■   reLoadTxCore()");
+
+      try
+      {
+        if (chkTxCatgry.IsChecked == true && chkSingleYr.IsChecked == true)
+        {
+          await _db.TxCoreV2.Where(r => r.TxDate.Year >= _cutOffYr && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).LoadAsync();
+          _loadedCatgry = _txCatgry;
+        }
+        else if (chkTxCatgry.IsChecked == true)
+        {
+          await _db.TxCoreV2.Where(r => r.TxDate >= _yrStart2004 && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).LoadAsync();
+          _loadedCatgry = _txCatgry;
+        }
+        else if (chkSingleYr.IsChecked == true)
+        {
+          await _db.TxCoreV2.Where(r => r.TxDate.Year >= _cutOffYr).LoadAsync();
+        }
+        else
+        {
+          await _db.TxCoreV2.Where(r => r.TxDate >= _yrStart2004).LoadAsync();
+          _loadedCatgry = _txCatgry = null;
+        }
+
+        if (dgTxCore.ItemsSource != null)
+          CollectionViewSource.GetDefaultView(dgTxCore.ItemsSource).Refresh(); //tu:            
+      }
+      catch (Exception ex) { ex.Pop(); }
     }
     void filterTxns(string strFilter, string txCatgoryId)
     {
