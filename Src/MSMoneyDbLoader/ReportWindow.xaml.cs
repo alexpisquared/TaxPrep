@@ -1,5 +1,6 @@
 ﻿using AAV.Sys.Ext;
 using AAV.Sys.Helpers;
+using AAV.WPF.Ext;
 using AsLink;
 using Db.FinDemo.DbModel;
 using MF.Common;
@@ -154,7 +155,7 @@ namespace MSMoneyDbLoader
 
       Bpr.Beep2of2();
 
-      var rs = DbSaveMsgBox.TrySaveAsk(_db);
+      var rs = DbSaveMsgBox.TrySaveAsk(_db, nameof(doSingleFolder));
       tbInfo.Text += $" {rs,3} rows saved ";
     }
     static IEnumerable<string> getFinFiles(string folder) => Directory.GetFiles(folder, "*.?fx").Union(Directory.GetFiles(folder, "*.qif")).Union(Directory.GetFiles(folder, "*.csv"));
@@ -310,7 +311,7 @@ namespace MSMoneyDbLoader
 
         Bpr.Beep2of2();
       }
-      catch (Exception ex) { ex.Log(newf); throw; }
+      catch (Exception ex) { ex.Pop($"renameFileToDbDone({webFile}, {acntFolder}) ===> {newf}"); }
       finally { ctrlPnl.IsEnabled = true; }
     }
   }

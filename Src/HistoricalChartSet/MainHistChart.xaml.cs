@@ -94,7 +94,7 @@ namespace HistoricalChartSet
         bBalance.Content = $"_Rebalance '{tmsFla}'";
 
         tbk_____.Text = _balDelta == 0 ? $"{tmsFla} is balanced" : $"{histBal:N0}  -  {calcBal:N0}  =  ";
-        tBalance.Text = _balDelta == 0 ? $"" : $"{tmsFla} is  off by {_balDelta:N0}";
+        tBalance.Text = _balDelta == 0 ? $"" : $"{tmsFla} is  off by {_balDelta:N4}";
         tbk_____.Foreground = tBalance.Foreground = new SolidColorBrush(_balDelta == 0 ? Colors.Green : Colors.Red);
 
         tTxRange.Text =

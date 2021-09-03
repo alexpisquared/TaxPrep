@@ -350,7 +350,7 @@ namespace MF.TxCategoryAssigner
         }
       }
 
-      if (DbSaveMsgBox.TrySaveAsk(_db) > 0)//== (int)MsgBoxDbRslt.Yes)
+      if (DbSaveMsgBox.TrySaveAsk(_db, $"class TxCategoryAssignerVw.assign()") > 0)//== (int)MsgBoxDbRslt.Yes)
       {
         await reLoadTxCore();
         onClear1();
