@@ -61,7 +61,7 @@ namespace MF.TxCategoryAssigner
       done:
 #endif
 
-      App.Current.Shutdown();
+      App.Current?.Shutdown();
     }
     protected override void OnExit(ExitEventArgs e) => base.OnExit(e);      //DateTime tbkFlt = DateTime.Now;			//Trace.WriteLine(string.Format("{0:dd HH:mm:ss} - finished; has been on for {1:N2} min.", tbkFlt, (tbkFlt - t0).TotalMinutes));
     static SpeechSynthesizer _synth = null; public static SpeechSynthesizer Synth { get => _synth ?? (_synth = new SpeechSynthesizer { Rate = 7 }); set => _synth = value; }
