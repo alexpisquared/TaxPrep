@@ -18,12 +18,12 @@ namespace MSMoneyFormatAdapter
     private const string _separtor = "\",\"";
     private const string _header = "\"Merchant Name\",\"Card Used For Transaction\",\"Date\",\"Time\",\"Amount\"";
 
-    public static List<TxCoreV2> ReadTxs(A0DbContext db, string file, out string fla_acntDir, out int txMoneySrcId)
+    public static List<TxCoreV2> ReadTxs(A0DbContext db, string file, out string fla_acntDir, out TxMoneySrc txMoneySrc)
     {
       Debug.WriteLine(Path.GetFileName(file), "\n\n");
 
       var txns = new List<TxCoreV2>();
-      txMoneySrcId = -1;
+      txMoneySrc = null;
 
       try
       {
@@ -34,7 +34,7 @@ namespace MSMoneyFormatAdapter
           if (!lines[0].Equals(_header)) { fla_acntDir = $"Is not a known fin file: {file}"; return txns; }
 
           var acntId = lines[1].Split(new[] { _separtor }, StringSplitOptions.RemoveEmptyEntries)[1].Replace("*", "");
-          txMoneySrcId = getCreateTxMoneySrc(db, out fla_acntDir, acntId, Path.GetFileName(file));
+          txMoneySrc = getCreateTxMoneySrc(db, out fla_acntDir, acntId, Path.GetFileName(file));
 
           foreach (var line in lines)
           {
@@ -53,7 +53,8 @@ namespace MSMoneyFormatAdapter
               TxDetail = cells[0].Substring(1),
               //MemoPP = mm + cs + td + si,
               TxCategoryIdTxt = PreSet.__UnKn,
-              TxMoneySrcId = txMoneySrcId,
+              TxMoneySrc = txMoneySrc,
+              TxMoneySrcId = txMoneySrc.Id,
               SrcFile = Path.GetFileNameWithoutExtension(file),
               Notes = $"{file}" // 2021-01
             });
@@ -63,11 +64,11 @@ namespace MSMoneyFormatAdapter
         {
           var blocks = File.ReadAllText(file).Split(new string[] { "^" }, StringSplitOptions.RemoveEmptyEntries);
           var acntId = "amzn"; //only for amazon since no other formats available; note: no CC # in qif ==> use for amazon only.
-          txMoneySrcId = getCreateTxMoneySrc(db, out fla_acntDir, acntId, Path.GetFileName(file));
+          txMoneySrc = getCreateTxMoneySrc(db, out fla_acntDir, acntId, Path.GetFileName(file));
 
           foreach (var block in blocks)
             if (block.Contains("\nD"))
-              txns.Add(doTxnBlockQif(block, file, txMoneySrcId));
+              txns.Add(doTxnBlockQif(block, file, txMoneySrc));
         }
         else // .ofx .qfx .aso
         {
@@ -77,11 +78,11 @@ namespace MSMoneyFormatAdapter
           if (acntId?.Length > 20) // Jun2017: elements not always are one per line.
             acntId = getElCont(acntId, PreSet.AcntIdTAg);
 
-          txMoneySrcId = getCreateTxMoneySrc(db, out fla_acntDir, acntId, Path.GetFileName(file));
+          txMoneySrc = getCreateTxMoneySrc(db, out fla_acntDir, acntId, Path.GetFileName(file));
 
           foreach (var block in blocks)
             if (block.Contains("<STMTTRN>"))
-              txns.Add(doTxnBlock(block.Replace("\n", "").Replace("\r", ""), file, txMoneySrcId));
+              txns.Add(doTxnBlock(block.Replace("\n", "").Replace("\r", ""), file, txMoneySrc));
         }
       }
       catch (Exception ex) { ex.Log(); fla_acntDir = "Exceptioned"; }
@@ -89,7 +90,7 @@ namespace MSMoneyFormatAdapter
       return txns;
     }
 
-    static int getCreateTxMoneySrc(A0DbContext db, out string acntDir, string acntId, string filename)
+    static TxMoneySrc getCreateTxMoneySrc(A0DbContext db, out string acntDir, string acntId, string filename)
     {
       var ad = acntDir = PreSet.GetAcntFolder((acntId ?? "AcntUnknown").Replace(PreSet.AcntIdTAg, "").Trim());
       var txMoneySrcs = db.TxMoneySrcs.FirstOrDefault(r => string.Compare(ad, r.Fla, true) == 0);
@@ -109,11 +110,11 @@ namespace MSMoneyFormatAdapter
           throw new NullReferenceException($"Unable to establich source account. Exiting");
       }
 
-      return txMoneySrcs.Id;
+      return txMoneySrcs;
     }
 
     public const string LedgerBal = "LEDGERBAL", AvailbBal = "AVAILBAL";
-    public static List<BalAmtHist> ReadBAH(string file, int txMoneySrcId, string balTpe = LedgerBal) // for all files, or AVAILBAL for VIsa, TD only.
+    public static List<BalAmtHist> ReadBAH(string file, TxMoneySrc txMoneySrc, string balTpe = LedgerBal) // for all files, or AVAILBAL for VIsa, TD only.
     {
       var rv = new List<BalAmtHist>();
 
@@ -122,7 +123,7 @@ namespace MSMoneyFormatAdapter
       var blocks = File.ReadAllText(file).Split(new string[] { tagEnd }, StringSplitOptions.RemoveEmptyEntries);
       foreach (var block in blocks)
         if (block.Contains(tagBgn))
-          rv.Add(doBalAmtBlock(block.Replace("\n", "").Replace("\r", ""), txMoneySrcId, tagBgn, balTpe));
+          rv.Add(doBalAmtBlock(block.Replace("\n", "").Replace("\r", ""), txMoneySrc, tagBgn, balTpe));
 
       return rv;
     }
@@ -149,7 +150,7 @@ namespace MSMoneyFormatAdapter
         case PreSet.__JMMc: return 13;
       }
     }
-    static BalAmtHist doBalAmtBlock(string block, int txMoneySrcId, string tagBgn, string balTpe)
+    static BalAmtHist doBalAmtBlock(string block, TxMoneySrc txMoneySrc, string tagBgn, string balTpe)
     {
       var start = block.IndexOf(tagBgn);
       if (start < 0) return null;
@@ -164,12 +165,13 @@ namespace MSMoneyFormatAdapter
         AsOfDate = parseTxnDate(dp),
         BalAmt = -parseTA(ta),
         BalTpe = balTpe,
-        TxMoneySrcId = txMoneySrcId // inferTxMoneySrcId(file), // fix this Jan 30 2019
+        TxMoneySrc = txMoneySrc,
+        TxMoneySrcId = txMoneySrc.Id // inferTxMoneySrcId(file), // fix this Jan 30 2019
       };
 
       return rv;
     }
-    static TxCoreV2 doTxnBlockQif(string block, string file, int txMoneySrcId)
+    static TxCoreV2 doTxnBlockQif(string block, string file, TxMoneySrc txMoneySrc)
     {
       try
       {
@@ -178,15 +180,16 @@ namespace MSMoneyFormatAdapter
         var rv = new TxCoreV2
         {
           Id = --_cntr,
-          CreatedAt       /**/ = _batchTimeNow,
-          FitId           /**/ = ls.FirstOrDefault(r => r[0] == 'N').Substring(1),
-          TxDate          /**/ = parseTxnDate(ls.FirstOrDefault(r => r[0] == 'D').Substring(1)),
-          TxAmount        /**/ = -parseTA(ls.FirstOrDefault(r => r[0] == 'T').Substring(1)),
-          TxDetail        /**/ = ls.FirstOrDefault(r => r[0] == 'P').Substring(1),
-          MemoPP          /**/ = string.Join(", ", ls.Where(r => r[0] == 'A' && r.Length > 1).Select(r => r.Substring(1))) + ". ",
-          TxCategoryIdTxt /**/ = PreSet.__UnKn,
-          TxMoneySrcId    /**/ = txMoneySrcId, // inferTxMoneySrcId(file),
-          SrcFile         /**/ = Path.GetFileNameWithoutExtension(file)
+          CreatedAt =          /**/  _batchTimeNow,
+          FitId =              /**/  ls.FirstOrDefault(r => r[0] == 'N').Substring(1),
+          TxDate =             /**/  parseTxnDate(ls.FirstOrDefault(r => r[0] == 'D').Substring(1)),
+          TxAmount =           /**/  -parseTA(ls.FirstOrDefault(r => r[0] == 'T').Substring(1)),
+          TxDetail =           /**/  ls.FirstOrDefault(r => r[0] == 'P').Substring(1),
+          MemoPP =             /**/  string.Join(", ", ls.Where(r => r[0] == 'A' && r.Length > 1).Select(r => r.Substring(1))) + ". ",
+          TxCategoryIdTxt =    /**/  PreSet.__UnKn,
+          TxMoneySrc =         /**/  txMoneySrc,
+          TxMoneySrcId =       /**/  txMoneySrc.Id, // inferTxMoneySrcId(file),
+          SrcFile =            /**/  Path.GetFileNameWithoutExtension(file)
         };
 
         Debug.WriteLine(rv);
@@ -197,7 +200,7 @@ namespace MSMoneyFormatAdapter
 
       return null;
     }
-    static TxCoreV2 doTxnBlock(string block, string file, int txMoneySrcId)
+    static TxCoreV2 doTxnBlock(string block, string file, TxMoneySrc txMoneySrc)
     {
       var start = block.IndexOf("<STMTTRN>");
       if (start < 0) return null;
@@ -227,7 +230,8 @@ namespace MSMoneyFormatAdapter
         TxDetail = dt,
         MemoPP = mm + cs + td + si,
         TxCategoryIdTxt = PreSet.__UnKn,
-        TxMoneySrcId = txMoneySrcId, // inferTxMoneySrcId(file),
+        TxMoneySrc = txMoneySrc,
+        TxMoneySrcId = txMoneySrc.Id, // inferTxMoneySrcId(file),
         SrcFile = Path.GetFileNameWithoutExtension(file)
       };
 

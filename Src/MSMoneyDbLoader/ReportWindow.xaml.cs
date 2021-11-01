@@ -163,8 +163,8 @@ namespace MSMoneyDbLoader
     {
       Trace.WriteLine(file, "file %$#>");
       string acntFolder;
-      int txMoneySrcId;
-      foreach (var txFs in MSMoneyFileReader.ReadTxs(_db, file, out acntFolder, out txMoneySrcId))
+      TxMoneySrc txMoneySrc;
+      foreach (var txFs in MSMoneyFileReader.ReadTxs(_db, file, out acntFolder, out txMoneySrc))
       {
         var txDb = _db.TxCoreV2.Local.FirstOrDefault(db => string.Compare(db.FitId, txFs.FitId) == 0 || db.FitId.Contains(txFs.FitId)) ??
                    _db.TxCoreV2./**/  FirstOrDefault(db => string.Compare(db.FitId, txFs.FitId) == 0 || db.FitId.Contains(txFs.FitId));
@@ -200,14 +200,14 @@ namespace MSMoneyDbLoader
         }
       }
 
-      insUpdBah(file, txMoneySrcId, MSMoneyFileReader.LedgerBal);
-      insUpdBah(file, txMoneySrcId, MSMoneyFileReader.AvailbBal);
+      insUpdBah(file, txMoneySrc, MSMoneyFileReader.LedgerBal);
+      insUpdBah(file, txMoneySrc, MSMoneyFileReader.AvailbBal);
 
       return acntFolder;
     }
-    void insUpdBah(string file, int txMoneySrcId, string balType)
+    void insUpdBah(string file, TxMoneySrc txMoneySrc, string balType)
     {
-      foreach (var txFs in MSMoneyFileReader.ReadBAH(file, txMoneySrcId, balType))
+      foreach (var txFs in MSMoneyFileReader.ReadBAH(file, txMoneySrc, balType))
       {
         var txDb = _db.BalAmtHists.FirstOrDefault(r => r.AsOfDate == txFs.AsOfDate && r.BalAmt == txFs.BalAmt && r.BalTpe == balType);
         if (txDb == null)
