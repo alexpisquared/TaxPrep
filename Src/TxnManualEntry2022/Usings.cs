@@ -1,0 +1,28 @@
+﻿global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Text;
+global using System.Threading.Tasks;
+global using System.Runtime.Serialization;
+global using System.Windows;
+global using TxnManualEntry2022.Exceptions;
+global using TxnManualEntry2022.Models;
+global using System;
+global using System.Collections.ObjectModel;
+global using System.ComponentModel;
+global using System.Data;
+global using System.Diagnostics;
+global using System.Linq;
+global using System.Media;
+global using System.Threading.Tasks;
+global using System.Windows;
+global using System.Windows.Data;
+global using System.Windows.Input;
+//global using Microsoft.EntityFrameworkCore; //todo: !!!NOT!!! using System.Data.Entity;   ==> // The source IQueryable doesn't implement IDbAsyncEnumerable. Only sources that implement IDbAsyncEnumerable can be used for Entity Framework asynchronous operations. 
+global using static System.Diagnostics.Trace;
+global using System.Windows.Controls;
+global using System.ComponentModel.DataAnnotations;
+//global using Microsoft.Extensions.Configuration;
+//global using Microsoft.Toolkit.Mvvm.ComponentModel;
+//global using Microsoft.Toolkit.Mvvm.Input;
+

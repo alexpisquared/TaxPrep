@@ -1,0 +1,8 @@
+{
+  "solution": {
+    "path": "MinFin.New.sln",
+    "projects": [
+      "TxnManualEntry2022\\TxnManualEntry2022.csproj"
+    ]
+  }
+}
