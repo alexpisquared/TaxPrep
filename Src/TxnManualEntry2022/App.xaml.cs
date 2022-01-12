@@ -12,12 +12,14 @@ public partial class App : Application
     {
       acnt.AddTxn(new AccountTxn(new TxnTypeID(1, "Gifts"), new DateTime(2000, 1, 1), UserID));
       acnt.AddTxn(new AccountTxn(new TxnTypeID(2, "Foods"), new DateTime(2000, 2, 2), UserID));
-      acnt.AddTxn(new AccountTxn(new TxnTypeID(2, "Foods"), new DateTime(2000, 2, 2), UserID));
+      //acnt.AddTxn(new AccountTxn(new TxnTypeID(2, "Foods"), new DateTime(2000, 2, 2), UserID));
     }
     catch (TxnConflictException ex) { WriteLine($"!!> {ex}"); if (Debugger.IsAttached) Debugger.Break(); throw; }
     catch (Exception ex) { WriteLine($"!!> {ex}"); if (Debugger.IsAttached) Debugger.Break(); throw; }
 
     var resultTxns = acnt.GetTxnxForUser(UserID);
+
+    new MainWindow().Show();  
 
     base.OnStartup(e);
   }

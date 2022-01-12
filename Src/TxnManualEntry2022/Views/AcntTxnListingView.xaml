@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="TxnManualEntry2022.Views.AcntTxnListingView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" 
+             xmlns:local="clr-namespace:TxnManualEntry2022.Views"
+             d:DesignHeight="450" d:DesignWidth="800">
+  <Grid Grid.IsSharedSizeScope="True">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    
+    <TextBlock Text="View Txn" Foreground="#00e" FontSize="22" />
+    <Button Content="Add Txn" Command="{Binding AddTxnCommand}" HorizontalAlignment="Right" />
+
+    <DataGrid Grid.Row="1" ItemsSource="{Binding Txns}" AutoGenerateColumns="True" />
+
+    <StackPanel Grid.Row="2"  >
+
+      <TextBlock  Text="Name" Foreground="#00e" />
+      <TextBox    Text="{Binding Name}"/>
+      <TextBlock  Text="When" Foreground="#00e" />
+      <DatePicker SelectedDate="{Binding TxnTime}" />
+      <TextBlock  Text="When" Foreground="#00e" />
+      <TextBox    />
+      <TextBlock  Text="When" Foreground="#00e" />
+      <TextBox    />
+      <TextBlock  Text="When" Foreground="#00e" />
+      <TextBox    />
+    </StackPanel>
+  </Grid>
+</UserControl>

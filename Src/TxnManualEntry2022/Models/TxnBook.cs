@@ -6,6 +6,7 @@ internal class TxnBook // res. book
 {
   readonly List<AccountTxn> _accountTxns = new List<AccountTxn>();
 
+  public IEnumerable<AccountTxn> GetAllTxnx() => _accountTxns.ToList();
   public IEnumerable<AccountTxn> GetTxnxForUser(string userid) => _accountTxns.Where(r => r.UserID.Equals(userid)).ToList();
 
   public void AddTxn(AccountTxn accountTxn)
