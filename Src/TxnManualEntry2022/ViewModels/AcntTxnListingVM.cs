@@ -6,6 +6,9 @@ internal class AcntTxnListingVM : ViewModelBase
   public AcntTxnListingVM()
   {
     _txns = new ObservableCollection<AccountTxnVM>();
+
+    _txns.Add(new AccountTxnVM(new AccountTxn(new TxnTypeID(1, "Auto"), DateTime.Now, "Not used.")));
+    _txns.Add(new AccountTxnVM(new AccountTxn(new TxnTypeID(2, "Food"), DateTime.Now, "Not used.")));
   }
 
   internal IEnumerable<AccountTxnVM> Txns => _txns;
