@@ -7,12 +7,12 @@ public class MakeAcntTxnVM : ViewModelBase, INotifyDataErrorInfo
   decimal txnAmnt;
   DateTime txnTime;
 
-  public MakeAcntTxnVM(BankAccountStore bankAccountStore, NavigationService makeAcntTcnViewnavigationService)
+  public MakeAcntTxnVM(BankAccountStore bankAccountStore, NavigationService<AcntTxnListingVM> makeAcntTcnViewnavigationService)
   {
     //_bankAccountStore = bankAccountStore;
 
     SubmitCommand = new MakeAcntTxnCommand(this, bankAccountStore, makeAcntTcnViewnavigationService);
-    CancelCommand = new NavigateCommand(makeAcntTcnViewnavigationService);
+    CancelCommand = new NavigateCommand<AcntTxnListingVM>(makeAcntTcnViewnavigationService);
 
     TxnAmnt = DateTime.Now.Hour + .01m * DateTime.Now.Minute;
     TxnTime = DateTime.Today;

@@ -3,10 +3,10 @@
 public class MakeAcntTxnCommand : AsyncCommandBase
 {
   readonly BankAccountStore _bankAccountStore;
-  private readonly NavigationService _makeAcntTcnViewnavigationService;
   readonly MakeAcntTxnVM _makeAcntTxnVM;
+  readonly NavigationService<AcntTxnListingVM> _makeAcntTcnViewnavigationService;
 
-  public MakeAcntTxnCommand(MakeAcntTxnVM makeAcntTxnVM, BankAccountStore bankAccountStore, NavigationService makeAcntTcnViewnavigationService)
+  public MakeAcntTxnCommand(MakeAcntTxnVM makeAcntTxnVM, BankAccountStore bankAccountStore, NavigationService<AcntTxnListingVM> makeAcntTcnViewnavigationService)
   {
     _makeAcntTxnVM = makeAcntTxnVM;
     _bankAccountStore = bankAccountStore;

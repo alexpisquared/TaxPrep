@@ -26,15 +26,15 @@ public class AcntTxnListingVM : ViewModelBase
   public ICommand LoadAcntTxnsCommand { get; }
   public ICommand MakeAcntTxnCommand { get; }
 
-  public AcntTxnListingVM(BankAccountStore bankAccountStore, NavigationService makeAcntTcnViewnavigationService)
+  public AcntTxnListingVM(BankAccountStore bankAccountStore, NavigationService<MakeAcntTxnVM> makeAcntTcnViewnavigationService)
   {
     _bankAccountStore = bankAccountStore;
     _accountTxnVMs = new ObservableCollection<AccountTxnVM>();
 
     LoadAcntTxnsCommand = new LoadReservationCommand(this, bankAccountStore);
-    MakeAcntTxnCommand = new NavigateCommand(makeAcntTcnViewnavigationService);
+    MakeAcntTxnCommand = new NavigateCommand<MakeAcntTxnVM>(makeAcntTcnViewnavigationService);
 
-    AddTxnCommand = new NavigateCommand(makeAcntTcnViewnavigationService); //?? not in the org: https://youtu.be/ZQadPrZ7E_A?list=PLA8ZIAm2I03hS41Fy4vFpRw8AdYNBXmNm&t=482
+    AddTxnCommand = new NavigateCommand<MakeAcntTxnVM>(makeAcntTcnViewnavigationService); //todo: ?? not in the org: https://youtu.be/ZQadPrZ7E_A?list=PLA8ZIAm2I03hS41Fy4vFpRw8AdYNBXmNm&t=482
 
     bankAccountStore.AccountTxnsMade += OnAccountTxnsMade;
   }
@@ -54,7 +54,7 @@ public class AcntTxnListingVM : ViewModelBase
 
   }
 
-  public static AcntTxnListingVM LoadViewModel(BankAccountStore bankAccountStore, NavigationService makeAcntTcnViewnavigationService) //tu: unloading ctors from work!!!!!!!!
+  public static AcntTxnListingVM LoadViewModel(BankAccountStore bankAccountStore, NavigationService<MakeAcntTxnVM> makeAcntTcnViewnavigationService) //tu: unloading ctors from work!!!!!!!!
   {
     var viewModel = new AcntTxnListingVM(bankAccountStore, makeAcntTcnViewnavigationService);
     viewModel.LoadAcntTxnsCommand.Execute(null);
