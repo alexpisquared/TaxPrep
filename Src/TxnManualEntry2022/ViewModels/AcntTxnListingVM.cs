@@ -7,6 +7,22 @@ public class AcntTxnListingVM : ViewModelBase
 
   public IEnumerable<AccountTxnVM> AccountTxnVMs => _accountTxnVMs;
 
+  private string _e;
+
+  public string ErrorMessage
+  {
+    get { return _e; }
+    set
+    {
+      _e = value;
+      OnPropertyChanged(nameof(ErrorMessage));
+      OnPropertyChanged(nameof(HasErrorMessage));
+    }
+  }
+  public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
+
+  bool _l; public bool IsLoading { get { return _l; } set { _l = value; OnPropertyChanged(nameof(IsLoading)); } }
+
   public ICommand LoadAcntTxnsCommand { get; }
   public ICommand MakeAcntTxnCommand { get; }
 
@@ -38,7 +54,7 @@ public class AcntTxnListingVM : ViewModelBase
 
   }
 
-  public static AcntTxnListingVM LoadViewModel(BankAccountStore bankAccountStore,     NavigationService makeAcntTcnViewnavigationService) //tu: unloading ctors from work!!!!!!!!
+  public static AcntTxnListingVM LoadViewModel(BankAccountStore bankAccountStore, NavigationService makeAcntTcnViewnavigationService) //tu: unloading ctors from work!!!!!!!!
   {
     var viewModel = new AcntTxnListingVM(bankAccountStore, makeAcntTcnViewnavigationService);
     viewModel.LoadAcntTxnsCommand.Execute(null);

@@ -10,7 +10,7 @@ public class TxnBook // res. book
     (_reservationProvider, _reservationCreator, _reservationConflictValidator) =
        (reservationProvider, reservationCreator, reservationConflictValidator);
 
-  public async Task<IEnumerable<AccountTxn>> GetAllTxnx() => await _reservationProvider.GetAllAccountsAsync(); // _accountTxns.ToList();
+  public async Task<IEnumerable<AccountTxn>> GetAllTxnx() => await _reservationProvider.GetAllAccountTxnsAsync(); // _accountTxns.ToList();
 
   public async Task AddTxn(AccountTxn accountTxn)
   {

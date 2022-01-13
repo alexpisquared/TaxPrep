@@ -7,7 +7,7 @@ public class LoadReservationCommand : AsyncCommandBase //tu: async void (#2)
   readonly BankAccountStore _bankAccountStore;
   readonly AcntTxnListingVM _vm;
 
-  public LoadReservationCommand( AcntTxnListingVM vm, BankAccountStore bankAccountStore)
+  public LoadReservationCommand(AcntTxnListingVM vm, BankAccountStore bankAccountStore)
   {
     _bankAccountStore = bankAccountStore;
     _vm = vm;
@@ -15,11 +15,22 @@ public class LoadReservationCommand : AsyncCommandBase //tu: async void (#2)
 
   public override async Task ExecuteAsync(object? parameter)
   {
+    _vm.IsLoading = true;
+    _vm.ErrorMessage = "";
     try
     {
       await _bankAccountStore.Load();
+
+      //throw new Exception("@@@@@@@@@@@ Testing Testing Testing Testing Testing @@@@@@@@@@@@");
+      
       _vm.UpdateReservations(_bankAccountStore.AccountTxns);
     }
-    catch (Exception ex) { WriteLine($"!!> {ex}"); if (Debugger.IsAttached) Debugger.Break(); MessageBox.Show(ex.Message, "Failed to load Txns"); }
+    catch (Exception ex)
+    {
+      WriteLine($"!!> {ex}"); if (Debugger.IsAttached) Debugger.Break();
+      _vm.ErrorMessage = $"Failed to load Txns   {ex.Message}";
+    }
+
+    _vm.IsLoading = false;
   }
 }

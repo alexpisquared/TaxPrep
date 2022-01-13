@@ -2,5 +2,5 @@
 
 public interface IReservationProvider
 {
-  Task<IEnumerable<AccountTxn>> GetAllAccountsAsync();
+  Task<IEnumerable<AccountTxn>> GetAllAccountTxnsAsync();
 }

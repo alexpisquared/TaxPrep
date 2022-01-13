@@ -5,12 +5,12 @@ namespace TxnManualEntry2022.Stores;
 public class BankAccountStore
 {
   readonly BankAccount _bankAccount;
-  readonly Lazy<Task> _initializeLazy; //tu: runs once only 
   readonly List<AccountTxn> _accountTxns;
+  Lazy<Task> _initializeLazy; //tu: runs once only 
 
   public IEnumerable<AccountTxn> AccountTxns => _accountTxns;
 
-  public event Action <AccountTxn> AccountTxnsMade;
+  public event Action<AccountTxn> AccountTxnsMade;
 
   public BankAccountStore(BankAccount bankAccount)
   {
@@ -21,11 +21,19 @@ public class BankAccountStore
 
   public async Task Load()
   {
-   await _initializeLazy.Value; //tu: runs once only 
+    try
+    {
+      await _initializeLazy.Value; //tu: runs once only 
+    }
+    catch (Exception)
+    {
+      _initializeLazy = new Lazy<Task>(Initialize);
+      throw;
+    }
   }
 
   public async Task MakeReservation(AccountTxn accountTxn)
-{
+  {
     await _bankAccount.AddTxn(accountTxn);
 
     _accountTxns.Add(accountTxn);
@@ -33,8 +41,8 @@ public class BankAccountStore
     OnAccountTxnMade(accountTxn);
   }
 
-  private void OnAccountTxnMade(AccountTxn accountTxn )
-{
+  private void OnAccountTxnMade(AccountTxn accountTxn)
+  {
     AccountTxnsMade?.Invoke(accountTxn);
   }
 
@@ -44,5 +52,7 @@ public class BankAccountStore
 
     _accountTxns.Clear();
     _accountTxns.AddRange(accountTxns);
+
+    throw new Exception("@@@@@@@@@@@ Testing Testing Testing Testing Testing @@@@@@@@@@@@");
   }
 }
