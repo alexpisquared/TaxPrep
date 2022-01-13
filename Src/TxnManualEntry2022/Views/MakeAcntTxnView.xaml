@@ -14,17 +14,16 @@
     </Grid.RowDefinitions>
       
     <TextBlock Text="Make Account Txn" Foreground="#080" FontSize="22" />
-    <StackPanel Grid.Row="2" >
 
+    <StackPanel Grid.Row="2" >
       <TextBlock  Text="Name" Foreground="#080" />
-      <TextBox    Text="{Binding TxnAmnt}"/>
+      <TextBox    Text="{Binding TxnAmnt, UpdateSourceTrigger=PropertyChanged}"/>
       
       <TextBlock  Text="When" Foreground="#080" />
-      <DatePicker SelectedDate="{Binding TxnTime}" />
-      
+      <DatePicker SelectedDate="{Binding TxnTime, UpdateSourceTrigger=PropertyChanged}" />     
     </StackPanel>
 
-    <StackPanel Grid.Row="4" HorizontalAlignment="Right" >
+    <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" >
       <Button Content="_Submit" Command="{Binding SubmitCommand}"/>
       <Button Content="_Cancel" Command="{Binding CancelCommand}"/>
     </StackPanel>

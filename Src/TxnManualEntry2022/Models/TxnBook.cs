@@ -18,6 +18,12 @@ internal class TxnBook // res. book
         throw new TxnConflictException(existingTxn, accountTxn);
       }
     }
-    _accountTxns.Add(accountTxn);
+    try
+    {
+      _accountTxns.Add(accountTxn);
+    }
+    catch (Exception ex) {
+    MessageBox.Show(ex.Message);
+    }
   }
 }
