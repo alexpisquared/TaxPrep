@@ -4,18 +4,18 @@
   {
     public TxnTypeID(int iD, string name)
     {
-      ID = iD;
-      Name = name;
+      FloorNum = iD;
+      RoomNum = name;
     }
 
-    public int ID { get;  }
-    public string Name { get; } = default!;
+    public int FloorNum { get;  }
+    public string RoomNum { get; } = default!;
 
-    public override bool Equals(object? obj) => obj is TxnTypeID tti && ID == tti.ID;
+    public override bool Equals(object? obj) => obj is TxnTypeID tti && FloorNum == tti.FloorNum;
 
-    override public int GetHashCode() => HashCode.Combine(Name, ID);
+    override public int GetHashCode() => HashCode.Combine(RoomNum, FloorNum);
 
-    public override string ToString() => $":/> {ID} {Name}";
+    public override string ToString() => $":/> {FloorNum} {RoomNum}";
 
     public static bool operator ==(TxnTypeID? t1, TxnTypeID? t2)
     {

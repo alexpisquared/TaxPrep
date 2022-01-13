@@ -29,4 +29,12 @@ global using TxnManualEntry2022.Commands;
 global using TxnManualEntry2022.ViewModels;
 global using TxnManualEntry2022.Stores;
 global using TxnManualEntry2022.Service;
+global using Microsoft.EntityFrameworkCore;
+global using TxnManualEntry2022.DTOs;
+global using TxnManualEntry2022.DbContexts;
+global using TxnManualEntry2022.Service;
+global using TxnManualEntry2022.Service.ReservationConflictValidators;
+global using TxnManualEntry2022.Service.ReservationCreators;
+
+
 
