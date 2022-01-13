@@ -17,8 +17,7 @@ public class AcntTxnListingVM : ViewModelBase
     LoadAcntTxnsCommand = new LoadReservationCommand(this, bankAccount);
     MakeAcntTxnCommand = new NavigateCommand(makeAcntTcnViewnavigationService);
 
-    //AddTxnCommand = new NavigateCommand(makeAcntTcnViewnavigationService);
-    //    UpdateReservations();
+    AddTxnCommand = new NavigateCommand(makeAcntTcnViewnavigationService);
   }
 
   public static AcntTxnListingVM LoadViewModel(BankAccount bankAccount, NavigationService makeAcntTcnViewnavigationService) //tu: unloading ctors from work!!!!!!!!
