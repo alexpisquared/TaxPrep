@@ -5,6 +5,7 @@ public partial class App : Application
   private const string ConnectionString = "Data Source=tme.db";
   readonly BankAccount _bankAccount;
   readonly NavigationStore _navigationStore;
+  readonly BankAccountStore _bankAccountStore;
   TmeDbContextFactory _tmeDbContextFactory;
 
   public App()
@@ -16,6 +17,7 @@ public partial class App : Application
 
     TxnBook txnBook = new TxnBook(reservationProvider, reservationCreator, reservationConflictValidator);
     _bankAccount = new BankAccount("Good Account Name", txnBook);
+    _bankAccountStore = new BankAccountStore(_bankAccount);
     _navigationStore = new NavigationStore();
   }
 
@@ -39,5 +41,5 @@ public partial class App : Application
 
   
   //tu: async viod / ctor:  ... ListingVM() => new AcntTxnListingVM          (_bankAccount, new NavigationService(_navigationStore, CreateMakeAcntTxnVM));
-  AcntTxnListingVM CreateAcntTxnListingVM() => AcntTxnListingVM.LoadViewModel(_bankAccount, new NavigationService(_navigationStore, CreateMakeAcntTxnVM));
+  AcntTxnListingVM CreateAcntTxnListingVM() => AcntTxnListingVM.LoadViewModel(_bankAccountStore, new NavigationService(_navigationStore, CreateMakeAcntTxnVM));
 }

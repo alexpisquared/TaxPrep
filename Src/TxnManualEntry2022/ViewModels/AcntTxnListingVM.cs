@@ -10,19 +10,19 @@ public class AcntTxnListingVM : ViewModelBase
   public ICommand MakeAcntTxnCommand { get; }
 
 
-  public AcntTxnListingVM(BankAccount bankAccount, NavigationService makeAcntTcnViewnavigationService)
+  public AcntTxnListingVM(BankAccountStore bankAccountStore, NavigationService makeAcntTcnViewnavigationService)
   {
     _txns = new ObservableCollection<AccountTxnVM>();
 
-    LoadAcntTxnsCommand = new LoadReservationCommand(this, bankAccount);
+    LoadAcntTxnsCommand = new LoadReservationCommand(this, bankAccountStore);
     MakeAcntTxnCommand = new NavigateCommand(makeAcntTcnViewnavigationService);
 
     AddTxnCommand = new NavigateCommand(makeAcntTcnViewnavigationService);
   }
 
-  public static AcntTxnListingVM LoadViewModel(BankAccount bankAccount, NavigationService makeAcntTcnViewnavigationService) //tu: unloading ctors from work!!!!!!!!
+  public static AcntTxnListingVM LoadViewModel(BankAccountStore bankAccountStore, NavigationService makeAcntTcnViewnavigationService) //tu: unloading ctors from work!!!!!!!!
   {
-    AcntTxnListingVM viewModel = new AcntTxnListingVM(bankAccount, makeAcntTcnViewnavigationService);
+    AcntTxnListingVM viewModel = new AcntTxnListingVM(bankAccountStore, makeAcntTcnViewnavigationService);
     viewModel.LoadAcntTxnsCommand.Execute(null);
     return viewModel;
   }

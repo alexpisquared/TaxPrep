@@ -4,12 +4,12 @@ namespace TxnManualEntry2022.Commands;
 
 public class LoadReservationCommand : AsyncCommandBase //tu: async void (#2)
 {
-  readonly BankAccount _bankAccount;
+  readonly BankAccountStore _bankAccountStore;
   readonly AcntTxnListingVM _vm;
 
-  public LoadReservationCommand( AcntTxnListingVM vm, BankAccount bankAccount)
+  public LoadReservationCommand( AcntTxnListingVM vm, BankAccountStore bankAccountStore)
   {
-    _bankAccount = bankAccount;
+    _bankAccountStore = bankAccountStore;
     _vm = vm;
   }
 
@@ -17,8 +17,8 @@ public class LoadReservationCommand : AsyncCommandBase //tu: async void (#2)
   {
     try
     {
-      IEnumerable<AccountTxn> accountTxns = await _bankAccount.GetAllTxnx();
-      _vm.UpdateReservations(accountTxns);
+      await _bankAccountStore.Load();
+      _vm.UpdateReservations(_bankAccountStore.AccountTxns);
     }
     catch (Exception ex) { WriteLine($"!!> {ex}"); if (Debugger.IsAttached) Debugger.Break(); MessageBox.Show(ex.Message, "Failed to load Txns"); }
   }
