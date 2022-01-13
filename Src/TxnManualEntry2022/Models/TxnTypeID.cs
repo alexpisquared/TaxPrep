@@ -1,6 +1,6 @@
 ﻿namespace TxnManualEntry2022.Models
 {
-  internal class TxnTypeID // room id
+  public class TxnTypeID // room id
   {
     public TxnTypeID(int iD, string name)
     {

@@ -1,17 +1,19 @@
-﻿using TxnManualEntry2022.ViewModels;
+﻿using TxnManualEntry2022.Service;
+using TxnManualEntry2022.ViewModels;
 
 namespace TxnManualEntry2022.Commands
 {
-  internal class MakeAcntTxnCommand : CommandBase
+  public class MakeAcntTxnCommand : CommandBase
   {
     readonly BankAccount _bankAccount;
+    private readonly NavigationService _makeAcntTcnViewnavigationService;
     readonly MakeAcntTxnVM _makeAcntTxnVM;
 
-    public MakeAcntTxnCommand(MakeAcntTxnVM makeAcntTxnVM, BankAccount bankAccount)
+    public MakeAcntTxnCommand(MakeAcntTxnVM makeAcntTxnVM, BankAccount bankAccount, NavigationService makeAcntTcnViewnavigationService)
     {
       _makeAcntTxnVM = makeAcntTxnVM;
       _bankAccount = bankAccount;
-
+      _makeAcntTcnViewnavigationService = makeAcntTcnViewnavigationService;
       _makeAcntTxnVM.PropertyChanged += OnMakeAcntTxnVM_PropertyChanged;
     }
 
@@ -37,6 +39,8 @@ namespace TxnManualEntry2022.Commands
       {
         _bankAccount.AddTxn(accountTxn);
         MessageBox.Show("Success adding Txn");
+
+        _makeAcntTcnViewnavigationService.Navigate();
       }
       catch (TxnConflictException) { WriteLine($"!!> Txn already there "); if (Debugger.IsAttached) Debugger.Break(); MessageBox.Show($"!!> Txn already there "); }
       catch (Exception ex) { WriteLine($"!!> {ex}"); if (Debugger.IsAttached) Debugger.Break(); MessageBox.Show(ex.Message); }

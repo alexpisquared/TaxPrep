@@ -1,6 +1,6 @@
 ﻿namespace TxnManualEntry2022.Stores
 {
-  internal class NavigationStore
+  public class NavigationStore
   {
     private ViewModelBase _currentModel;
 

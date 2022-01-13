@@ -1,6 +1,6 @@
 ﻿namespace TxnManualEntry2022.ViewModels;
 
-internal class AccountTxnVM : ViewModelBase
+public class AccountTxnVM : ViewModelBase
 {
   readonly AccountTxn _accountTxn;
 

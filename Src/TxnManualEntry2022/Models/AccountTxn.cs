@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TxnManualEntry2022.Models
 {
-  internal class AccountTxn // res-n
+  public class AccountTxn // res-n
   {
     public AccountTxn(TxnTypeID txnTypeID, DateTime txnTime, string userID)
     {
@@ -20,7 +20,7 @@ namespace TxnManualEntry2022.Models
     public decimal TxnAmount { get; }
     public string UserID { get; }
 
-    internal bool Conflicts(AccountTxn accountTxn)
+    public bool Conflicts(AccountTxn accountTxn)
     {
       return 
         accountTxn.TxnTime - TxnTime < new TimeSpan(24, 0, 0) &&  // if on the same date

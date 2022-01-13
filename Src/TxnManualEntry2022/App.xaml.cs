@@ -21,7 +21,7 @@ public partial class App : Application
     base.OnStartup(e);
   }
 
-  MakeAcntTxnVM CreateMakeAcntTxnVM() => new MakeAcntTxnVM(_bankAccount, _navigationStore, CreateAcntTxnListingVM);
+  MakeAcntTxnVM CreateMakeAcntTxnVM() => new MakeAcntTxnVM(_bankAccount, new NavigationService ( _navigationStore, CreateAcntTxnListingVM));
 
-  AcntTxnListingVM CreateAcntTxnListingVM() => new AcntTxnListingVM(_navigationStore, CreateMakeAcntTxnVM);
+  AcntTxnListingVM CreateAcntTxnListingVM() => new AcntTxnListingVM(_bankAccount, new NavigationService (_navigationStore, CreateMakeAcntTxnVM));
 }

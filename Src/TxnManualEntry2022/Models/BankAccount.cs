@@ -1,6 +1,6 @@
 ﻿namespace TxnManualEntry2022.Models;
 
-internal class BankAccount
+public class BankAccount
 {
   TxnBook _txnBook;
   public string Name { get; }

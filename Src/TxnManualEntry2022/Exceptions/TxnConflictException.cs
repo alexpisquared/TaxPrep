@@ -3,7 +3,7 @@
 namespace TxnManualEntry2022.Exceptions;
 
 [Serializable]
-internal class TxnConflictException : Exception
+public class TxnConflictException : Exception
 {
   public AccountTxn ExistingAccountTxn { get; }
   public AccountTxn IncomingAccountTxn { get; }

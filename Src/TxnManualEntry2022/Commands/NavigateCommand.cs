@@ -1,17 +1,16 @@
-﻿namespace TxnManualEntry2022.Commands
+﻿using TxnManualEntry2022.Service;
+
+namespace TxnManualEntry2022.Commands;
+
+public class NavigateCommand : CommandBase
 {
-  internal class NavigateCommand : CommandBase
+  private readonly NavigationService _navigationService;
+
+  public NavigateCommand(NavigationService navigationService)
   {
-    readonly NavigationStore _navigationStore;
-    private readonly Func<ViewModelBase> _createVM;
-
-    public NavigateCommand(NavigationStore navigationStore, Func<ViewModelBase> createVM)
-    {
-      _navigationStore = navigationStore;
-      _createVM = createVM;
-    }
-
-    public override void Execute(object? parameter) =>
-      _navigationStore.CurrentModel = _createVM();
+    _navigationService = navigationService;
   }
+
+  public override void Execute(object? parameter) =>
+    _navigationService.Navigate();
 }

@@ -1,6 +1,6 @@
 ﻿namespace TxnManualEntry2022.ViewModels;
 
-internal class ViewModelBase : INotifyPropertyChanged
+public class ViewModelBase : INotifyPropertyChanged
 {
   public event PropertyChangedEventHandler? PropertyChanged;
 

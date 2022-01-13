@@ -28,3 +28,5 @@ global using System.ComponentModel.DataAnnotations;
 global using TxnManualEntry2022.Commands;
 global using TxnManualEntry2022.ViewModels;
 global using TxnManualEntry2022.Stores;
+global using TxnManualEntry2022.Service;
+

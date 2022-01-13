@@ -1,20 +1,30 @@
 ﻿namespace TxnManualEntry2022.ViewModels;
 
-internal class AcntTxnListingVM : ViewModelBase
+public class AcntTxnListingVM : ViewModelBase
 {
   readonly ObservableCollection<AccountTxnVM> _txns;
+  readonly BankAccount _bankAccount;
 
-  public AcntTxnListingVM(NavigationStore navigationStore, Func<MakeAcntTxnVM> createMakeAcntTxnVM)
+  public AcntTxnListingVM(BankAccount bankAccount, NavigationService makeAcntTcnViewnavigationService)
   {
     _txns = new ObservableCollection<AccountTxnVM>();
 
-    AddTxnCommand = new NavigateCommand( navigationStore, createMakeAcntTxnVM);
+    AddTxnCommand = new NavigateCommand(makeAcntTcnViewnavigationService);
 
-    _txns.Add(new AccountTxnVM(new AccountTxn(new TxnTypeID(1, "Auto"), DateTime.Now, "Not used 1.")));
-    _txns.Add(new AccountTxnVM(new AccountTxn(new TxnTypeID(2, "Food"), DateTime.Now, "Not used 2.")));
+    _bankAccount = bankAccount;
+    UpdateReservations();
   }
 
-  internal ObservableCollection<AccountTxnVM> Txns => _txns;
+  void UpdateReservations()
+  {
+    _txns.Clear();
+    foreach (var txn in _bankAccount.GetAllTxnx())
+    {
+      _txns.Add(new AccountTxnVM(txn));
+    }
+  }
+
+  public ObservableCollection<AccountTxnVM> Txns => _txns;
 
   public ICommand AddTxnCommand { get; }
 }

@@ -2,7 +2,7 @@
 
 namespace TxnManualEntry2022.Models;
 
-internal class TxnBook // res. book
+public class TxnBook // res. book
 {
   readonly List<AccountTxn> _accountTxns = new List<AccountTxn>();
 

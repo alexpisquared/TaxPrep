@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TxnManualEntry2022.Commands
 {
-  internal abstract class CommandBase : ICommand
+  public abstract class CommandBase : ICommand
   {
     public event EventHandler? CanExecuteChanged;
 

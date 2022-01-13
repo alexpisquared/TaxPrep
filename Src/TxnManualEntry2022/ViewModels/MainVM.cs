@@ -1,6 +1,6 @@
 ﻿namespace TxnManualEntry2022.ViewModels;
 
-internal class MainVM : ViewModelBase
+public class MainVM : ViewModelBase
 {
   readonly NavigationStore _navigationStore;
 
