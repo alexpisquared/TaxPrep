@@ -6,20 +6,20 @@ namespace TxnManualEntry2022.ViewModels;
 
 public class MakeAcntTxnVM : ViewModelBase
 {
-  readonly BankAccount _bankAccount;
+  //readonly BankAccountStore _bankAccountStore;
 
   decimal txnAmnt;
   DateTime txnTime;
 
-  public MakeAcntTxnVM(BankAccount bankAccount, NavigationService makeAcntTcnViewnavigationService)
+  public MakeAcntTxnVM(BankAccountStore bankAccountStore, NavigationService makeAcntTcnViewnavigationService)
   {
-    _bankAccount = bankAccount;
+    //_bankAccountStore = bankAccountStore;
 
-    SubmitCommand = new MakeAcntTxnCommand(this, _bankAccount, makeAcntTcnViewnavigationService);
+    SubmitCommand = new MakeAcntTxnCommand(this, bankAccountStore, makeAcntTcnViewnavigationService);
     CancelCommand = new NavigateCommand(makeAcntTcnViewnavigationService);
 
     TxnAmnt = 123.45m;
-    TxnTime = DateTime.Now;
+    TxnTime = DateTime.Today;
   }
 
   public decimal TxnAmnt { get => txnAmnt; set { txnAmnt = value; OnPropertyChanged(nameof(TxnAmnt)); } }

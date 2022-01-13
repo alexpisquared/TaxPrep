@@ -1,25 +1,40 @@
 ﻿using TxnManualEntry2022.Models;
+using TxnManualEntry2022.ViewModels;
 
 namespace TxnManualEntry2022.Stores;
 
 public class BankAccountStore
 {
   readonly BankAccount _bankAccount;
+  readonly Lazy<Task> _initializeLazy; //tu: runs once only 
   readonly List<AccountTxn> _accountTxns;
+
   public IEnumerable<AccountTxn> AccountTxns => _accountTxns;
 
   public BankAccountStore(BankAccount bankAccount)
   {
-    _bankAccount = bankAccount; 
+    _bankAccount = bankAccount;
+    _initializeLazy = new Lazy<Task>(Initialize);
     _accountTxns = new List<AccountTxn>();
   }
 
   public async Task Load()
-{
-    IEnumerable<AccountTxn> accountTxns = await  _bankAccount.GetAllTxnx();
-
-    _accountTxns.Clear(); 
-    _accountTxns.AddRange(accountTxns);
+  {
+   await _initializeLazy.Value; //tu: runs once only 
   }
 
+  public async Task MakeReservation(AccountTxn accountTxn)
+{
+    await _bankAccount.AddTxn(accountTxn);
+
+    _accountTxns.Add(accountTxn);
+  }
+
+  private async Task Initialize()
+  {
+    IEnumerable<AccountTxn> accountTxns = await _bankAccount.GetAllTxnx();
+
+    _accountTxns.Clear();
+    _accountTxns.AddRange(accountTxns);
+  }
 }

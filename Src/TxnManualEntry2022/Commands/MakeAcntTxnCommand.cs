@@ -2,14 +2,14 @@
 
 public class MakeAcntTxnCommand : AsyncCommandBase
 {
-  readonly BankAccount _bankAccount;
+  readonly BankAccountStore _bankAccountStore;
   private readonly NavigationService _makeAcntTcnViewnavigationService;
   readonly MakeAcntTxnVM _makeAcntTxnVM;
 
-  public MakeAcntTxnCommand(MakeAcntTxnVM makeAcntTxnVM, BankAccount bankAccount, NavigationService makeAcntTcnViewnavigationService)
+  public MakeAcntTxnCommand(MakeAcntTxnVM makeAcntTxnVM, BankAccountStore bankAccountStore, NavigationService makeAcntTcnViewnavigationService)
   {
     _makeAcntTxnVM = makeAcntTxnVM;
-    _bankAccount = bankAccount;
+    _bankAccountStore = bankAccountStore;
     _makeAcntTcnViewnavigationService = makeAcntTcnViewnavigationService;
     _makeAcntTxnVM.PropertyChanged += OnMakeAcntTxnVM_PropertyChanged;
   }
@@ -34,7 +34,7 @@ public class MakeAcntTxnCommand : AsyncCommandBase
 
     try
     {
-      await _bankAccount.AddTxn(accountTxn);
+      await _bankAccountStore.MakeReservation(accountTxn);
 
       MessageBox.Show("Success adding Txn");
 

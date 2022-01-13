@@ -37,7 +37,7 @@ public partial class App : Application
     base.OnStartup(e);
   }
 
-  MakeAcntTxnVM CreateMakeAcntTxnVM() => new MakeAcntTxnVM(_bankAccount, new NavigationService(_navigationStore, CreateAcntTxnListingVM));
+  MakeAcntTxnVM CreateMakeAcntTxnVM() => new MakeAcntTxnVM(_bankAccountStore, new NavigationService(_navigationStore, CreateAcntTxnListingVM));
 
   
   //tu: async viod / ctor:  ... ListingVM() => new AcntTxnListingVM          (_bankAccount, new NavigationService(_navigationStore, CreateMakeAcntTxnVM));
