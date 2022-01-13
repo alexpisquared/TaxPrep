@@ -2,8 +2,8 @@
         xmlns:views="clr-namespace:TxnManualEntry2022.Views"
         xmlns:vms="clr-namespace:TxnManualEntry2022.ViewModels" 
         d:DataContext="{d:DesignInstance Type=vms:MainVM}"
-        Title="MainWindow" Height="450" Width="500" Background="#888">
-  <Grid Margin="22">
+        Title="MainWindow" Height="600" Width="500" Background="#888">
+  <Grid Margin="10">
     <Grid.Resources>
       <DataTemplate DataType="{x:Type vms:MakeAcntTxnVM}">
         <views:MakeAcntTxnView />

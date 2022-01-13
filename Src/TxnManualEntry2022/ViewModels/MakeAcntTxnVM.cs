@@ -18,7 +18,7 @@ public class MakeAcntTxnVM : ViewModelBase
     SubmitCommand = new MakeAcntTxnCommand(this, bankAccountStore, makeAcntTcnViewnavigationService);
     CancelCommand = new NavigateCommand(makeAcntTcnViewnavigationService);
 
-    TxnAmnt = 123.45m;
+    TxnAmnt = DateTime.Now.Hour + .01m * DateTime.Now.Minute;
     TxnTime = DateTime.Today;
   }
 

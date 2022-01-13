@@ -8,4 +8,6 @@ public class ViewModelBase : INotifyPropertyChanged
   {
     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
   }
+
+  public virtual void Dispose() { }
 }

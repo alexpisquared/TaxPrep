@@ -1,5 +1,4 @@
 ﻿using TxnManualEntry2022.Models;
-using TxnManualEntry2022.ViewModels;
 
 namespace TxnManualEntry2022.Stores;
 
@@ -10,6 +9,8 @@ public class BankAccountStore
   readonly List<AccountTxn> _accountTxns;
 
   public IEnumerable<AccountTxn> AccountTxns => _accountTxns;
+
+  public event Action <AccountTxn> AccountTxnsMade;
 
   public BankAccountStore(BankAccount bankAccount)
   {
@@ -28,6 +29,13 @@ public class BankAccountStore
     await _bankAccount.AddTxn(accountTxn);
 
     _accountTxns.Add(accountTxn);
+
+    OnAccountTxnMade(accountTxn);
+  }
+
+  private void OnAccountTxnMade(AccountTxn accountTxn )
+{
+    AccountTxnsMade?.Invoke(accountTxn);
   }
 
   private async Task Initialize()

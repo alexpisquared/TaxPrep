@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace TxnManualEntry2022.Views
 {
-  /// <summary>
-  /// Interaction logic for MakeAcntTxnView.xaml
-  /// </summary>
   public partial class MakeAcntTxnView : UserControl
   {
     public MakeAcntTxnView()

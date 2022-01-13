@@ -8,6 +8,7 @@
     {
       get => _currentModel; set
       {
+        _currentModel?.Dispose();
         _currentModel = value;
         OnCurrentViewModelChanged();
       }

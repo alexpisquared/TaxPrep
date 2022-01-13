@@ -13,7 +13,7 @@ public partial class App : Application
     _tmeDbContextFactory = new TmeDbContextFactory(ConnectionString);
     IReservationProvider reservationProvider = new DatabaseReservationProvider(_tmeDbContextFactory);
     IReservationCreator reservationCreator = new DatabaseReservationCreator(_tmeDbContextFactory);
-    IReservationConflictValidator reservationConflictValidator = new  DatabaseReservationConflictValidator(_tmeDbContextFactory);
+    IReservationConflictValidator reservationConflictValidator = new DatabaseReservationConflictValidator(_tmeDbContextFactory);
 
     TxnBook txnBook = new TxnBook(reservationProvider, reservationCreator, reservationConflictValidator);
     _bankAccount = new BankAccount("Good Account Name", txnBook);
@@ -39,7 +39,7 @@ public partial class App : Application
 
   MakeAcntTxnVM CreateMakeAcntTxnVM() => new MakeAcntTxnVM(_bankAccountStore, new NavigationService(_navigationStore, CreateAcntTxnListingVM));
 
-  
+
   //tu: async viod / ctor:  ... ListingVM() => new AcntTxnListingVM          (_bankAccount, new NavigationService(_navigationStore, CreateMakeAcntTxnVM));
   AcntTxnListingVM CreateAcntTxnListingVM() => AcntTxnListingVM.LoadViewModel(_bankAccountStore, new NavigationService(_navigationStore, CreateMakeAcntTxnVM));
 }
