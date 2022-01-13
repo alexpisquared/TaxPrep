@@ -37,3 +37,5 @@ global using TxnManualEntry2022.Service.ReservationConflictValidators;
 global using TxnManualEntry2022.Service.ReservationCreators;
 global using System.Globalization;
 global using System.Collections;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.DependencyInjection;

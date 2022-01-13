@@ -27,7 +27,7 @@ public class BankAccountStore
     }
     catch (Exception)
     {
-      _initializeLazy = new Lazy<Task>(Initialize);
+      _initializeLazy = new Lazy<Task>(Initialize); // in case of failure on loading - restart the lazy to be able to load again.
       throw;
     }
   }
@@ -53,6 +53,6 @@ public class BankAccountStore
     _accountTxns.Clear();
     _accountTxns.AddRange(accountTxns);
 
-    throw new Exception("@@@@@@@@@@@ Testing Testing Testing Testing Testing @@@@@@@@@@@@");
+    //throw new Exception("@@@@@@@@@@@ Testing Testing Testing Testing Testing @@@@@@@@@@@@");
   }
 }

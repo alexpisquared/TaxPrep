@@ -1,37 +1,49 @@
-﻿namespace TxnManualEntry2022;
+﻿using TxnManualEntry2022.Stores;
+
+namespace TxnManualEntry2022;
 
 public partial class App : Application
 {
-  private const string ConnectionString = "Data Source=tme.db";
-  readonly BankAccount _bankAccount;
-  readonly NavigationStore _navigationStore;
-  readonly BankAccountStore _bankAccountStore;
-  TmeDbContextFactory _tmeDbContextFactory;
+  const string ConnectionString = "Data Source=tme.db";
+  //TmeDbContextFactory _tmeDbContextFactory;
+  //readonly BankAccount _bankAccount;
+  //readonly NavigationStore _navigationStore;
+  //readonly BankAccountStore _bankAccountStore;
+  IHost _host;
 
   public App()
   {
-    _tmeDbContextFactory = new TmeDbContextFactory(ConnectionString);
-    IReservationProvider reservationProvider = new DatabaseReservationProvider(_tmeDbContextFactory);
-    IReservationCreator reservationCreator = new DatabaseReservationCreator(_tmeDbContextFactory);
-    IReservationConflictValidator reservationConflictValidator = new DatabaseReservationConflictValidator(_tmeDbContextFactory);
+    _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
+    {
+      services.AddSingleton<TmeDbContextFactory>(new TmeDbContextFactory(ConnectionString));          //_tmeDbContextFactory = new TmeDbContextFactory(ConnectionString);
+      services.AddSingleton<IReservationProvider, DatabaseReservationProvider>();                     //IReservationProvider reservationProvider = new DatabaseReservationProvider(_tmeDbContextFactory);
+      services.AddSingleton<IReservationCreator, DatabaseReservationCreator>();                       //IReservationCreator reservationCreator = new DatabaseReservationCreator(_tmeDbContextFactory);
+      services.AddSingleton<IReservationConflictValidator, DatabaseReservationConflictValidator>();   //IReservationConflictValidator reservationConflictValidator = new DatabaseReservationConflictValidator(_tmeDbContextFactory); 
+      services.AddTransient<TxnBook>();                                                               // TxnBook txnBook = new TxnBook(reservationProvider, reservationCreator, reservationConflictValidator);
+      services.AddSingleton<BankAccount>((s) => new BankAccount("CIBC Viza", s.GetRequiredService<TxnBook>()));  //_bankAccount = new BankAccount("CIBC Viza", txnBook);
+      services.AddSingleton<BankAccountStore>();                                                      //_bankAccountStore = new BankAccountStore(_bankAccount);
+      services.AddSingleton<NavigationStore>();                                                       //_navigationStore = new NavigationStore();
 
-    TxnBook txnBook = new TxnBook(reservationProvider, reservationCreator, reservationConflictValidator);
-    _bankAccount = new BankAccount("Good Account Name", txnBook);
-    _bankAccountStore = new BankAccountStore(_bankAccount);
-    _navigationStore = new NavigationStore();
+      services.AddSingleton<MainVM>();
+      services.AddSingleton(s => new MainWindow() { DataContext = s.GetRequiredService<MainVM>() });
+
+    }).Build();
   }
 
   protected override void OnStartup(StartupEventArgs e)
   {
+    _host.Start();
+
     //DbContextOptions options = new DbContextOptionsBuilder().UseSqlite(ConnectionString).Options;
-    using (TmeDbContext dbContext = _tmeDbContextFactory.CreateDbContext())
+    using (TmeDbContext dbContext = _host.Services.GetRequiredService<TmeDbContextFactory>().CreateDbContext())
     {
       dbContext.Database.Migrate();
     }
 
-    _navigationStore.CurrentModel = CreateAcntTxnListingVM();
+    var navigationStore = _host.Services.GetRequiredService<NavigationStore>();
+    navigationStore.CurrentModel = CreateAcntTxnListingVM();
 
-    MainWindow = new MainWindow() { DataContext = new MainVM(_navigationStore) };
+    MainWindow = _host.Services.GetRequiredService<MainWindow>(); // new MainWindow() { DataContext = new MainVM(navigationStore) };
     MainWindow.Show();
 
     base.OnStartup(e);
