@@ -1,4 +1,5 @@
-﻿using TxnManualEntry2022.Commands;
+﻿using System;
+using TxnManualEntry2022.Commands;
 
 namespace TxnManualEntry2022.ViewModels;
 
@@ -9,12 +10,12 @@ internal class MakeAcntTxnVM : ViewModelBase
   decimal txnAmnt;
   DateTime txnTime;
 
-  public MakeAcntTxnVM(BankAccount bankAccount)
+  public MakeAcntTxnVM(BankAccount bankAccount, NavigationStore navigationStore, Func<AcntTxnListingVM> createVAcntTxnListingVM)
   {
     _bankAccount = bankAccount;
 
     SubmitCommand = new MakeAcntTxnCommand(this, _bankAccount);
-    CancelCommand = new CancelAddTxnCommand();
+    CancelCommand = new NavigateCommand(navigationStore, createVAcntTxnListingVM);
 
     TxnAmnt = 123.45m;
     TxnTime = DateTime.Now;

@@ -8,7 +8,7 @@
     </Grid.RowDefinitions>
     
     <TextBlock Text="View Txn" Foreground="#00e" FontSize="22" />
-    <Button Content="Add Txn" Command="{Binding AddTxnCommand}" HorizontalAlignment="Right" />
+    <Button Content="  _Add Txn  " Command="{Binding AddTxnCommand}" HorizontalAlignment="Right" />
 
     <DataGrid Grid.Row="1" ItemsSource="{Binding Txns}" AutoGenerateColumns="True" />
 

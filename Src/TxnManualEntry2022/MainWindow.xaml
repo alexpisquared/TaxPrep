@@ -1,10 +1,23 @@
 ﻿<Window x:Class="TxnManualEntry2022.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
         xmlns:views="clr-namespace:TxnManualEntry2022.Views"
-        Title="MainWindow" Height="450" Width="500">
+        xmlns:vms="clr-namespace:TxnManualEntry2022.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=vms:MainVM}"
+        Title="MainWindow" Height="450" Width="500" Background="#888">
   <Grid Margin="22">
+    <Grid.Resources>
+      <DataTemplate DataType="{x:Type vms:MakeAcntTxnVM}">
+        <views:MakeAcntTxnView />
+      </DataTemplate>
+      <DataTemplate DataType="{x:Type vms:AcntTxnListingVM}">
+        <views:AcntTxnListingView />
+      </DataTemplate>
+    </Grid.Resources>
 
-    <!--<views:MakeAcntTxnView DataContext="{Binding CurrentVM}" />-->
+    <ContentControl Content="{Binding CurrentVM}" Background="#500" />
+
+    <!--<views:MakeAcntTxnView DataContext="{Binding CurrentVM}" />
     <views:AcntTxnListingView DataContext="{Binding CurrentVM}" />
+    -->
     
     <Button IsCancel="True" Click="OnClose" VerticalAlignment="Top" HorizontalAlignment="Right" />
   </Grid>

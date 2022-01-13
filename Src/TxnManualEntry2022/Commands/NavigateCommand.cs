@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TxnManualEntry2022.Commands
+﻿namespace TxnManualEntry2022.Commands
 {
   internal class NavigateCommand : CommandBase
   {
-    public override void Execute(object? parameter) => throw new NotImplementedException();
+    readonly NavigationStore _navigationStore;
+    private readonly Func<ViewModelBase> _createVM;
+
+    public NavigateCommand(NavigationStore navigationStore, Func<ViewModelBase> createVM)
+    {
+      _navigationStore = navigationStore;
+      _createVM = createVM;
+    }
+
+    public override void Execute(object? parameter) =>
+      _navigationStore.CurrentModel = _createVM();
   }
 }

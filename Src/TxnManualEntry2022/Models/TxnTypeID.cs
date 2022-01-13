@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TxnManualEntry2022.Models
+﻿namespace TxnManualEntry2022.Models
 {
   internal class TxnTypeID // room id
   {

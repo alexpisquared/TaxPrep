@@ -1,16 +1,14 @@
-﻿using TxnManualEntry2022.Commands;
-
-namespace TxnManualEntry2022.ViewModels;
+﻿namespace TxnManualEntry2022.ViewModels;
 
 internal class AcntTxnListingVM : ViewModelBase
 {
   readonly ObservableCollection<AccountTxnVM> _txns;
 
-  public AcntTxnListingVM()
+  public AcntTxnListingVM(NavigationStore navigationStore, Func<MakeAcntTxnVM> createMakeAcntTxnVM)
   {
     _txns = new ObservableCollection<AccountTxnVM>();
 
-    AddTxnCommand = new NavigateCommand();
+    AddTxnCommand = new NavigateCommand( navigationStore, createMakeAcntTxnVM);
 
     _txns.Add(new AccountTxnVM(new AccountTxn(new TxnTypeID(1, "Auto"), DateTime.Now, "Not used 1.")));
     _txns.Add(new AccountTxnVM(new AccountTxn(new TxnTypeID(2, "Food"), DateTime.Now, "Not used 2.")));

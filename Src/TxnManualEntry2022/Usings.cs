@@ -25,4 +25,6 @@ global using System.ComponentModel.DataAnnotations;
 //global using Microsoft.Extensions.Configuration;
 //global using Microsoft.Toolkit.Mvvm.ComponentModel;
 //global using Microsoft.Toolkit.Mvvm.Input;
-
+global using TxnManualEntry2022.Commands;
+global using TxnManualEntry2022.ViewModels;
+global using TxnManualEntry2022.Stores;

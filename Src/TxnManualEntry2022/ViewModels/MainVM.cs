@@ -2,12 +2,29 @@
 
 internal class MainVM : ViewModelBase
 {
-  public MainVM(BankAccount bankAccount)
+  readonly NavigationStore _navigationStore;
+
+  public MainVM(NavigationStore navigationStore)
   {
-    CurrentVM = new
-      AcntTxnListingVM();
-    //MakeAcntTxnVM      (bankAccount);
+    _navigationStore = navigationStore;
+    _navigationStore.CurrentViewModelChanged += OnNavigationStore_CurrentViewModelChanged; ;
   }
 
-  public ViewModelBase CurrentVM { get; }
+  private void OnNavigationStore_CurrentViewModelChanged() => OnPropertyChanged(nameof(CurrentVM));
+
+  public ViewModelBase CurrentVM => _navigationStore.CurrentModel;
+
+  //protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+  //{
+  //  if (!Equals(field, newValue))
+  //  {
+  //    field = newValue;
+  //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+  //    return true;
+  //  }
+
+  //  return false;
+  //}
+
+  //object currentViewModel;  public object CurrentViewModel { get => currentViewModel; set => SetProperty(ref currentViewModel, value); }
 }
