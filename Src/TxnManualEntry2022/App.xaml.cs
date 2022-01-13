@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using TxnManualEntry2022.HostBuilders;
 
 namespace TxnManualEntry2022;
 
@@ -7,9 +8,10 @@ public partial class App : Application
   readonly IHost _host;
 
   public App() => _host = Host.CreateDefaultBuilder()
-    //.ConfigureAppConfiguration((builder) => { 
+    //.ConfigureAppConfiguration((builder) => { // appsetttings is build-in 
     //  //builder.Configuration. 
     //  })      
+    .AddViewModels() // move away for better ..structure
     .ConfigureServices((hostContext, services) =>
     {
       var ConnectionString = hostContext.Configuration.GetConnectionString("Default");
@@ -19,16 +21,10 @@ public partial class App : Application
       services.AddSingleton<IReservationCreator, DatabaseReservationCreator>();                       //IReservationCreator reservationCreator = new DatabaseReservationCreator(_tmeDbContextFactory);
       services.AddSingleton<IReservationConflictValidator, DatabaseReservationConflictValidator>();   //IReservationConflictValidator reservationConflictValidator = new DatabaseReservationConflictValidator(_tmeDbContextFactory); 
       services.AddTransient<TxnBook>();                                                               // TxnBook txnBook = new TxnBook(reservationProvider, reservationCreator, reservationConflictValidator);
-      services.AddSingleton<BankAccount>((s) => new BankAccount("CIBC Viza", s.GetRequiredService<TxnBook>()));  //_bankAccount = new BankAccount("CIBC Viza", txnBook);
 
-      services.AddTransient((s) => CreateAcntTxnListingVM(s));
-      services.AddSingleton<Func<AcntTxnListingVM>>((s) => () => s.GetRequiredService<AcntTxnListingVM>());
-      services.AddSingleton<NavigationService<AcntTxnListingVM>>();
-
-      services.AddTransient<MakeAcntTxnVM>();
-      services.AddSingleton<Func<MakeAcntTxnVM>>((s) => () => s.GetRequiredService<MakeAcntTxnVM>()); // https://youtu.be/dgJ1nS2CLpQ?list=PLA8ZIAm2I03hS41Fy4vFpRw8AdYNBXmNm&t=549
-      services.AddSingleton<NavigationService<MakeAcntTxnVM>>();
-
+      var acntName = hostContext.Configuration.GetValue<string>("BankAccountName");
+      services.AddSingleton<BankAccount>((s) => new BankAccount(acntName, s.GetRequiredService<TxnBook>()));  //_bankAccount = new BankAccount("CIBC Viza", txnBook);
+        
       services.AddSingleton<BankAccountStore>();                                                      //_bankAccountStore = new BankAccountStore(_bankAccount);
       services.AddSingleton<NavigationStore>();                                                       //_navigationStore = new NavigationStore();
 
@@ -36,11 +32,6 @@ public partial class App : Application
       services.AddSingleton(s => new MainWindow() { DataContext = s.GetRequiredService<MainVM>() });
 
     }).Build();
-
-  AcntTxnListingVM CreateAcntTxnListingVM(IServiceProvider s) =>
-    AcntTxnListingVM.LoadViewModel(
-      s.GetRequiredService<BankAccountStore>(),
-      s.GetRequiredService<NavigationService<MakeAcntTxnVM>>());
 
   protected override void OnStartup(StartupEventArgs e)
   {
