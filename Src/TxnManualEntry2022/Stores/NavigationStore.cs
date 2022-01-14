@@ -2,11 +2,12 @@
 {
   public class NavigationStore
   {
-    private ViewModelBase _currentModel;
+    ViewModelBase? _currentModel;
 
-    public ViewModelBase CurrentModel
+    public ViewModelBase? CurrentModel
     {
-      get => _currentModel; set
+      get => _currentModel; 
+      set
       {
         _currentModel?.Dispose();
         _currentModel = value;

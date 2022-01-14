@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using TxnManualEntry2022.HostBuilders;
-
-namespace TxnManualEntry2022;
+﻿namespace TxnManualEntry2022;
 
 public partial class App : Application
 {

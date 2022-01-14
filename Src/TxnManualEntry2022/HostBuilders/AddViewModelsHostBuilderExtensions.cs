@@ -1,5 +1,4 @@
-﻿
-namespace TxnManualEntry2022.HostBuilders;
+﻿namespace TxnManualEntry2022.HostBuilders;
 
 public static class AddViewModelsHostBuilderExtensions
 {
@@ -19,11 +18,8 @@ public static class AddViewModelsHostBuilderExtensions
     return hostBuilder;
   }
 
- static AcntTxnListingVM CreateAcntTxnListingVM(IServiceProvider s) =>
-  AcntTxnListingVM.LoadViewModel(
-    s.GetRequiredService<BankAccountStore>(),
-    s.GetRequiredService<NavigationService<MakeAcntTxnVM>>());
-
-
-
+  static AcntTxnListingVM CreateAcntTxnListingVM(IServiceProvider s) =>
+    AcntTxnListingVM.LoadViewModel(
+     s.GetRequiredService<BankAccountStore>(),
+     s.GetRequiredService<NavigationService<MakeAcntTxnVM>>());
 }
