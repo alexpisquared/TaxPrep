@@ -34,13 +34,12 @@ public partial class App : Application
   {
     _host.Start();
 
-    //DbContextOptions options = new DbContextOptionsBuilder().UseSqlite(ConnectionString).Options;
-    using (var dbContext = _host.Services.GetRequiredService<TmeDbContextFactory>().CreateDbContext())
+    using (var dbContext = _host.Services.GetRequiredService<TmeDbContextFactory>().CreateDbContext()) //<~DbContextOptions options = new DbContextOptionsBuilder().UseSqlite(ConnectionString).Options;
     {
       dbContext.Database.Migrate();
     }
 
-    var navigationService = _host.Services.GetRequiredService<NavigationService<AcntTxnListingVM>>(); // initial naviation to the startup page.
+    var navigationService = _host.Services.GetRequiredService<NavigationService<AcntTxnListingVM>>(); // initial navigation to the startup page.
     navigationService.Navigate();
 
     MainWindow = _host.Services.GetRequiredService<MainWindow>(); // new MainWindow() { DataContext = new MainVM(navigationStore) };
