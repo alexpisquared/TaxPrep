@@ -1,8 +1,7 @@
 ﻿<lnk:WindowBase xmlns:lnk="clr-namespace:AAV.WPF.Base;assembly=AAV.WPF" x:Name="wnd" x:Class="HistoricalChartSet.MainHistChart" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"        
-                xmlns:local="clr-namespace:HistoricalChartSet;assembly="  
                 xmlns:cnv="clr-namespace:AsLink"                          	 			
                 xmlns:wfuc="clr-namespace:HistoricalChartSet" Title="Main Hist Chart" Height="400" Width="1600" WindowStyle="None" ResizeMode="CanResize" 
-                Background="#e4f4e4">
+                Background="#ccc">
   <!--          Background="#e0f0e0"> <== color of the chart iself: keep it a touch differerent to have visible dragable area. -->
   <WindowChrome.WindowChrome>
     <WindowChrome CaptionHeight="0" ResizeBorderThickness="12" GlassFrameThickness="0" NonClientFrameEdges="None" />
@@ -36,14 +35,14 @@
         <Button Content="_All ++" Click="onShowAll"  Width="37" Margin="1 5" />
         <Button Content="A_ll --" Click="onClearAll" Width="37" Margin="1 5" />
       </StackPanel >
-      <ListView  x:Name="lbMnySrc_Flas" Foreground="#00f" MinWidth="80" MinHeight="99" SelectionChanged="onSelChanged" SelectionMode="Multiple" Margin="0 5" >
+      <ListView  x:Name="lbMnySrc_Flas" Foreground="#00f" MinWidth="80" MinHeight="99" SelectionChanged="onSelChanged" SelectionMode="Multiple" Margin="0 0" Background="#999" >
         <ListView.ItemTemplate>
           <!--<DataTemplate x:DataType="lcl:MediaInfo">-->
           <DataTemplate>
-            <Grid Width="96" Height="40" ToolTip="{Binding Notes}" Margin="-2 4" Background="{Binding LastTx, Converter={cnv:AgeToColorConverter}}">
-              <TextBlock   Text="{Binding Fla}"                                     Margin="0" FontSize="15" VerticalAlignment="Top"    />
-              <TextBlock   Text="{Binding LastTx, StringFormat='{}{0:yy`MM.dd}'}"   Margin="0" FontSize="15" VerticalAlignment="Top"    Foreground="#a00" FontWeight="SemiBold" HorizontalAlignment="Right" />
-              <TextBlock   Text="{Binding Name}"                                    Margin="0" FontSize="15" VerticalAlignment="Bottom" Foreground="#050" FontWeight="SemiBold" />
+            <Grid Width="99" Height="38" ToolTip="{Binding Notes}" Background="{Binding LastTx, Converter={cnv:AgeToColorConverter}}">
+              <TextBlock   Text="{Binding Fla}"                                     Margin="2 0" FontSize="15" VerticalAlignment="Top"    />
+              <TextBlock   Text="{Binding LastTx, StringFormat='{}{0:yy`MM.dd}'}"   Margin="2 0" FontSize="15" VerticalAlignment="Top"    Foreground="#a00" FontWeight="SemiBold" HorizontalAlignment="Right" />
+              <TextBlock   Text="{Binding Name}"                                    Margin="8 0" FontSize="15" VerticalAlignment="Bottom" Foreground="#050" FontWeight="SemiBold" />
             </Grid>
           </DataTemplate>
         </ListView.ItemTemplate>

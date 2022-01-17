@@ -120,11 +120,11 @@ namespace HistoricalChartSet
               $"\r\nY-Trans-n \t {(chart1.Series.Count > 1 && chart1.Series[1]?.Points?.Count > e.HitTestResult.PointIndex ? chart1.Series[1].Points[e.HitTestResult.PointIndex]?.YValues[0] : null),12:N2}" + // only 1st series, so nogo for multi-series show.
               $"\r\nY-Balance \t {e.HitTestResult.Series.Points[e.HitTestResult.PointIndex].YValues[0],12:N2}" +
               $"";
-            Debug.WriteLine(
-              $" ** {(chart1.Series[0]?.Points?.Count > e.HitTestResult.PointIndex ? chart1.Series[0]?.Points[e.HitTestResult.PointIndex]?.YValues[0] : null)}" +
-              $" ** {(chart1.Series[1]?.Points?.Count > e.HitTestResult.PointIndex ? chart1.Series[1]?.Points[e.HitTestResult.PointIndex]?.YValues[0] : null),12:N2}" +
-              $" ** {(chart1.Series[2]?.Points?.Count > e.HitTestResult.PointIndex ? chart1.Series[2]?.Points[e.HitTestResult.PointIndex]?.YValues[0] : null),12:N2}" +
-              $" ** ");
+            //Debug.WriteLine(
+            //  $" ** {(chart1.Series[0]?.Points?.Count > e.HitTestResult.PointIndex ? chart1.Series[0]?.Points[e.HitTestResult.PointIndex]?.YValues[0] : null)}" +
+            //  $" ** {(chart1.Series[1]?.Points?.Count > e.HitTestResult.PointIndex ? chart1.Series[1]?.Points[e.HitTestResult.PointIndex]?.YValues[0] : null),12:N2}" +
+            //  $" ** {(chart1.Series[2]?.Points?.Count > e.HitTestResult.PointIndex ? chart1.Series[2]?.Points[e.HitTestResult.PointIndex]?.YValues[0] : null),12:N2}" +
+            //  $" ** ");
             break;
           case ChartElementType.ScrollBarLargeDecrement: e.Text = "A scrollbar large decrement button"; break;
           case ChartElementType.ScrollBarZoomReset: e.Text = "The ZoomReset button of a scrollbar"; break;
