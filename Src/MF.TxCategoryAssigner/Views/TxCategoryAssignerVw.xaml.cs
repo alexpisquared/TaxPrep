@@ -239,6 +239,7 @@ namespace MF.TxCategoryAssigner
       {
         _choiceAbove = _catg.First().IdTxt;
         _choiceBelow = _catg.Last().IdTxt;
+        btAssign.IsEnabled = _choiceAbove == _choiceBelow;
       }
 
       choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
@@ -295,6 +296,7 @@ namespace MF.TxCategoryAssigner
           {
             var trg = lv.Where(r => r.TxCategory.IdTxt != "UnKn")?.FirstOrDefault();
             _choiceAbove = _choiceBelow = trg?.TxCategory.IdTxt ?? "";
+            btAssign.IsEnabled = true;
           }
         }
 
