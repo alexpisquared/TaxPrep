@@ -1,5 +1,4 @@
 ﻿<lnk:WindowBase xmlns:lnk="clr-namespace:AAV.WPF.Base;assembly=AAV.WPF" x:Name="wnd" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        
         xmlns:DbModel="clr-namespace:Db.FinDemo.DbModel;assembly=Db.FinDemo" x:Class="MF.TxCategoryAssigner.Views.ManualTxnEntry" mc:Ignorable="d"
         Title="ManualTxnEntry" Height="333" Width="1600" Loaded="onLoaded" Icon="/MinFin;component/US-dollar.ico" Background="#94c9ff">
   <lnk:WindowBase.Resources>
@@ -32,29 +31,11 @@
       <ColumnDefinition Width="2*"/>
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
-      <RowDefinition Height="48"/>
+      <RowDefinition Height="36"/>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
 
-    <DataGrid Grid.Column="2" x:Name="txCoreV2DataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1" ItemsSource="{Binding}" 
-              EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="True" AddingNewItem="onAddingNewItem">
-      <DataGrid.Columns>
-        <DataGridTextColumn Header="Tx Date"    Binding="{Binding TxDate, StringFormat='{}{0:yyyy-MM-dd}'}"/>
-        <DataGridTextColumn Header="Amount"     Binding="{Binding TxAmount, StringFormat={}{:N2}}"/>
-        <DataGridTextColumn Header="Tx Detail"  Binding="{Binding TxDetail}"  Width="*" />
-        <DataGridTextColumn Header="Memo PP"    Binding="{Binding MemoPP}"    Width="*" />
-        <DataGridTextColumn Header="Notes"      Binding="{Binding Notes}"     Width="*" />
-        <DataGridTextColumn Header="Category"   Binding="{Binding TxCategoryIdTxt}"/>
-        <DataGridTextColumn Header="$$ Src"     Binding="{Binding TxMoneySrcId}"/>
-        <DataGridTextColumn Header="$$ Src"     Binding="{Binding TxMoneySrc.Name}"/>
-
-        <DataGridTextColumn Header="Id"         Binding="{Binding Id}"/>
-        <DataGridTextColumn Header="Fit Id"     Binding="{Binding FitId}"/>
-        <DataGridTextColumn Header="Created"    Binding="{Binding CreatedAt, StringFormat='{}{0:yyyy-MM-dd}'}"/>
-      </DataGrid.Columns>
-    </DataGrid>
-    
     <Grid   Grid.Column="0" Grid.Row="1" >
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto"/>
@@ -86,14 +67,35 @@
       <!--<TextBox               Grid.Row="6" Grid.Column="1" Text="{Binding TxCategoryIdTxt, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"                      />-->
       <Label Content="$$ Src:"   Grid.Row="7" />
       <!--<TextBox               Grid.Row="7" Grid.Column="1" Text="{Binding TxMoneySrcId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"                         />-->
-      <ComboBox                  Grid.Row="7" Grid.Column="1" DisplayMemberPath="Fla"  ItemsSource="{Binding Source={StaticResource txMoneySrcViewSource}}" SelectedValuePath="Id" SelectedValue="{Binding TxMoneySrcId}"       />
+      <ComboBox                  Grid.Row="7" Grid.Column="1" DisplayMemberPath="Fla"  ItemsSource="{Binding Source={StaticResource txMoneySrcViewSource}}" SelectedValuePath="Id" SelectedValue="{Binding TxMoneySrcId}" Foreground="#f08"       />
     </Grid>
+
+    <DataGrid Grid.Column="2" x:Name="txCoreV2DataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="True" AddingNewItem="onAddingNewItem">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Tx Date"    Binding="{Binding TxDate, StringFormat='{}{0:yyyy-MM-dd}'}"/>
+        <DataGridTextColumn Header="$$"     Binding="{Binding TxAmount, StringFormat={}{0,9:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#080" Width="Auto" />
+        <DataGridTextColumn Header="Tx Detail"  Binding="{Binding TxDetail}"  Width="3*" />
+        <DataGridTextColumn Header="Memo PP"    Binding="{Binding MemoPP}"    Width="2*" />
+        <DataGridTextColumn Header="Notes"      Binding="{Binding Notes}"     Width="1*" />
+        <DataGridTextColumn Header="Category"   Binding="{Binding TxCategoryIdTxt}"/>
+        <DataGridTextColumn Header="Src Id"     Binding="{Binding TxMoneySrcId}"    Foreground="#f08" />
+        <DataGridTextColumn Header="Src Nm"     Binding="{Binding TxMoneySrc.Fla}"  Foreground="#f08" />
+        <DataGridTextColumn Header="Src Nm"     Binding="{Binding TxMoneySrc.Name}" Foreground="#f08" />
+
+        <DataGridTextColumn Header="Id"         Binding="{Binding Id}"/>
+        <DataGridTextColumn Header="Fit Id"     Binding="{Binding FitId}"/>
+        <DataGridTextColumn Header="Created"    Binding="{Binding CreatedAt, StringFormat='{}{0:yyyy-MM-dd}'}"/>
+      </DataGrid.Columns>
+    </DataGrid>
 
     <TextBlock Grid.Row="2" Grid.ColumnSpan="2" x:Name="tbkTitle" Background="Yellow" Foreground="Red" Text="Err" HorizontalAlignment="Center" TextWrapping="Wrap" />
 
     <StackPanel Grid.Column="2"                             Orientation="Horizontal" HorizontalAlignment="Left">
       <!--<Button Content="   _Save   " Click="onSave"   />-->
-      <Button Content="   _Add    "         Click="onAddTxn" x:Name="btnAddNewRcrd" IsDefault="True" />
+      <Button Content="   _Add    "         Click="onAddTxn" x:Name="btnAddNewRcrd" IsDefault="True" ToolTip="Add empty row for editing"/>
+      <TextBox Text="2021" x:Name="tbYear" Margin="39 0 0 0" Height="26" />
+      <ComboBox x:Name="cbSrc" Margin="5" Width="120" Height="26" DisplayMemberPath="Fla" SelectedValuePath="Id" Foreground="#f08" SelectionChanged="cbSrc_SelectionChanged" />
+      <Button Content="   _TD    " x:Name="btnTD" IsEnabled="False" Click="onReadTD" Height="26" ToolTip="Read TD bill from clipboard &#10; JAN 4 JAN 5 PAYMENT - THANK YOU -$56.50 &#10; JAN 4 JAN 5 PAYMENT - THANK YOU -$56.50 &#10; JAN 4 JAN 5 PAYMENT - THANK YOU -$56.50"/>
       <Button Content="   _Back to Menu   " Click="onMenu"   x:Name="btnBackToMenu" Visibility="Collapsed" />
     </StackPanel>
 

@@ -1,13 +1,14 @@
-﻿using AAV.WPF.Ext;
-using AsLink;
-using Db.FinDemo.DbModel;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Speech.Synthesis;
 using System.Windows;
 using System.Windows.Data;
+using AAV.WPF.Ext;
+using AsLink;
+using Db.FinDemo.DbModel;
 
 namespace MF.TxCategoryAssigner.Views
 {
@@ -15,6 +16,7 @@ namespace MF.TxCategoryAssigner.Views
   {
     readonly A0DbContext _db;
     readonly bool _toDispose;
+    readonly DateTime _now = DateTime.Now;
 
     public ManualTxnEntry(bool showBackToMenuBtn) : this(db: null) => btnBackToMenu.Visibility = showBackToMenuBtn ? Visibility.Visible : Visibility.Collapsed;
     public ManualTxnEntry(A0DbContext db) : this() => _db = (_toDispose = db == null) ? A0DbContext.Create() : db;
@@ -47,13 +49,15 @@ namespace MF.TxCategoryAssigner.Views
         App.Synth.Rate = +7; App.Synth.SelectVoiceByHints(VoiceGender.Female);
         App.Synth.SpeakAsync("Loading...!");
 
-        await _db.TxCoreV2.Where(r => r.TxDate.Year >= 2018).OrderByDescending(r => r.Id).Take(5).LoadAsync();
+        await _db.TxCoreV2.Where(r => r.TxDate.Year >= 2021).OrderByDescending(r => r.Id).Take(2).LoadAsync();
         await _db.TxCategories.LoadAsync();
         await _db.TxMoneySrcs.LoadAsync();
 
-        ((CollectionViewSource)(FindResource("txCoreV2ViewSource"))).Source = _db.TxCoreV2.Local;
+        ((CollectionViewSource)(FindResource("txCoreV2ViewSource"))).Source = _db.TxCoreV2.Local;//.OrderBy(r => r.Id);
         ((CollectionViewSource)(FindResource("txMoneySrcViewSource"))).Source = _db.TxMoneySrcs.Local;
         ((CollectionViewSource)(FindResource("txCategoryViewSource"))).Source = _db.TxCategories.Local.OrderBy(r => r.Name);
+
+        cbSrc.ItemsSource = _db.TxMoneySrcs.Local;
 
         btnAddNewRcrd.Focus();
 
@@ -62,27 +66,78 @@ namespace MF.TxCategoryAssigner.Views
       catch (Exception ex) { ex.Pop(); }
     }
     void onSave(object sender = null, RoutedEventArgs e = null) => tbkTitle.Text = _db.TrySaveReport().report;
+    void onAddingNewItem(object sender, System.Windows.Controls.AddingNewItemEventArgs e) => e.NewItem = createNewTxn(); //tu: pre-fill new record with valid values on the fly.
+    void onMenu(object s, RoutedEventArgs e) { Hide(); new Views.MainAppDispatcher().ShowDialog(); }
+
+    TxCoreV2 createNewTxn() => new TxCoreV2
+    {
+      CreatedAt = _now,
+      FitId = $"{_now:yyyyMMdd-HHmmss.fff}_ManualAdd",
+      TxDate = _now.Date,
+      TxCategoryIdTxt = "UnKn",
+      TxDetail = "..."
+    };
+
     void onAddTxn(object s, RoutedEventArgs e)
     {
       _db.TxCoreV2.Local.Add(createNewTxn());
       ((CollectionViewSource)(FindResource("txCoreV2ViewSource"))).View.MoveCurrentToLast();
       tbxMemo.Focus();
     }
-    void onAddingNewItem(object sender, System.Windows.Controls.AddingNewItemEventArgs e) => e.NewItem = createNewTxn(); //tu: pre-fill new record with valid values on the fly.
-    void onMenu(object s, RoutedEventArgs e) { Hide(); new Views.MainAppDispatcher().ShowDialog(); }
-
-    TxCoreV2 createNewTxn()
+    void onReadTD(object s, RoutedEventArgs e)
     {
-      var now = DateTime.Now;
-      return new TxCoreV2
+      try
       {
-        CreatedAt = now,
-        FitId = $"{now:yyyyMMdd-HHmmss.fff}_ManualAdd",
-        TxDate = now.Date,
-        TxCategoryIdTxt = "UnKn",
-        TxDetail = "..."
-      };
+        if (!Clipboard.ContainsText())
+        {
+          MessageBox.Show("Clipboard is empty");
+          return;
+        }
+
+        var cb = Clipboard.GetText();
+
+        var i = 0;
+        foreach (var line in cb.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries))
+        {
+          var words = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+          if (words.Length < 5)
+          {
+            MessageBox.Show(line, "Invalid entry");
+            continue;
+          }
+
+          var txDateStr = $"{tbYear.Text} {words[0]} {words[1]}";
+          if (!DateTime.TryParseExact(txDateStr, "yyyy MMM d", CultureInfo.InvariantCulture, DateTimeStyles.None, out var txDate))
+          {
+            MessageBox.Show(txDateStr, "Invalid Tx Date");
+            continue;
+          }
+
+          if (!decimal.TryParse(words.Last(), NumberStyles.Currency, null, out var txAmount))
+          {
+            MessageBox.Show(words.Last(), "Invalid Tx Amount");
+            continue;
+          }
+
+          _db.TxCoreV2.Local.Add(new TxCoreV2
+          {
+            CreatedAt = _now,
+            FitId = $"{DateTime.Now:yyMMdd-HHmmss.fff}-{++i}_ManualAdd",
+            TxDate = txDate,
+            TxAmount = txAmount,
+            TxMoneySrcId = (int)cbSrc.SelectedValue,
+            TxCategoryIdTxt = "UnKn",
+            TxDetail = line.Substring(12),
+            Notes = line
+          });
+          ((CollectionViewSource)(FindResource("txCoreV2ViewSource"))).View.MoveCurrentToLast();
+          tbxMemo.Focus();
+        }
+      }
+      catch (Exception ex) { ex.Pop(); }
     }
+
+    void cbSrc_SelectionChanged(object s, System.Windows.Controls.SelectionChangedEventArgs e) => btnTD.IsEnabled = int.TryParse(tbYear.Text, out var yr) && yr > 2000 && cbSrc.SelectedValue as int? > 0;
   }
 }
 /// EXEC sp_changedbowner 'sa' //tu: dbo is missing fo db diagramming
