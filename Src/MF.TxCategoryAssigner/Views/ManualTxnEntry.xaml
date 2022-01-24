@@ -73,7 +73,7 @@
     <DataGrid Grid.Column="2" x:Name="txCoreV2DataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" CanUserAddRows="True" AddingNewItem="onAddingNewItem">
       <DataGrid.Columns>
         <DataGridTextColumn Header="Tx Date"    Binding="{Binding TxDate, StringFormat='{}{0:yyyy-MM-dd}'}"/>
-        <DataGridTextColumn Header="$$"     Binding="{Binding TxAmount, StringFormat={}{0,9:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#080" Width="Auto" />
+        <DataGridTextColumn Header="$$"     Binding="{Binding TxAmount, StringFormat={}{0,9:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#0c0" FontWeight="Medium" />
         <DataGridTextColumn Header="Tx Detail"  Binding="{Binding TxDetail}"  Width="3*" />
         <DataGridTextColumn Header="Memo PP"    Binding="{Binding MemoPP}"    Width="2*" />
         <DataGridTextColumn Header="Notes"      Binding="{Binding Notes}"     Width="1*" />
@@ -82,8 +82,8 @@
         <DataGridTextColumn Header="Src Nm"     Binding="{Binding TxMoneySrc.Fla}"  Foreground="#f08" />
         <DataGridTextColumn Header="Src Nm"     Binding="{Binding TxMoneySrc.Name}" Foreground="#f08" />
 
-        <DataGridTextColumn Header="Id"         Binding="{Binding Id}"/>
-        <DataGridTextColumn Header="Fit Id"     Binding="{Binding FitId}"/>
+        <!--<DataGridTextColumn Header="Id"         Binding="{Binding Id}"/>
+        <DataGridTextColumn Header="Fit Id"     Binding="{Binding FitId}"/>-->
         <DataGridTextColumn Header="Created"    Binding="{Binding CreatedAt, StringFormat='{}{0:yyyy-MM-dd}'}"/>
       </DataGrid.Columns>
     </DataGrid>

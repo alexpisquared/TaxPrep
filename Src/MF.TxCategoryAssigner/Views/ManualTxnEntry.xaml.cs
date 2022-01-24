@@ -68,13 +68,15 @@ namespace MF.TxCategoryAssigner.Views
     void onSave(object sender = null, RoutedEventArgs e = null) => tbkTitle.Text = _db.TrySaveReport().report;
     void onAddingNewItem(object sender, System.Windows.Controls.AddingNewItemEventArgs e) => e.NewItem = createNewTxn(); //tu: pre-fill new record with valid values on the fly.
     void onMenu(object s, RoutedEventArgs e) { Hide(); new Views.MainAppDispatcher().ShowDialog(); }
+    void cbSrc_SelectionChanged(object s, System.Windows.Controls.SelectionChangedEventArgs e) => btnTD.IsEnabled = int.TryParse(tbYear.Text, out var yr) && yr > 2000 && cbSrc.SelectedValue as int? > 0;
 
     TxCoreV2 createNewTxn() => new TxCoreV2
     {
       CreatedAt = _now,
-      FitId = $"{_now:yyyyMMdd-HHmmss.fff}_ManualAdd",
+      FitId = $"{DateTime.Now:yyMMdd-HHmmss.fff}-_ManualAdd",
       TxDate = _now.Date,
       TxCategoryIdTxt = "UnKn",
+      MemoPP = "manual entry",
       TxDetail = "..."
     };
 
@@ -119,6 +121,17 @@ namespace MF.TxCategoryAssigner.Views
             continue;
           }
 
+          if(_db.TxCoreV2.Local.FirstOrDefault(r=>
+            r.TxDate == txDate &&
+            r.TxAmount == txAmount &&
+            r.TxDetail == line.Substring(12) &&
+            r.Notes == line 
+          ) != null)
+          {
+            MessageBox.Show($"The record already added:\n\n{line}", "Duplicate Ignored");
+            continue;
+          }
+          
           _db.TxCoreV2.Local.Add(new TxCoreV2
           {
             CreatedAt = _now,
@@ -128,6 +141,7 @@ namespace MF.TxCategoryAssigner.Views
             TxMoneySrcId = (int)cbSrc.SelectedValue,
             TxCategoryIdTxt = "UnKn",
             TxDetail = line.Substring(12),
+            MemoPP = "manual entry",
             Notes = line
           });
           ((CollectionViewSource)(FindResource("txCoreV2ViewSource"))).View.MoveCurrentToLast();
@@ -137,7 +151,6 @@ namespace MF.TxCategoryAssigner.Views
       catch (Exception ex) { ex.Pop(); }
     }
 
-    void cbSrc_SelectionChanged(object s, System.Windows.Controls.SelectionChangedEventArgs e) => btnTD.IsEnabled = int.TryParse(tbYear.Text, out var yr) && yr > 2000 && cbSrc.SelectedValue as int? > 0;
   }
 }
 /// EXEC sp_changedbowner 'sa' //tu: dbo is missing fo db diagramming
