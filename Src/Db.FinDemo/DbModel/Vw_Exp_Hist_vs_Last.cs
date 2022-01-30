@@ -62,6 +62,8 @@ namespace Db.FinDemo.DbModel
     [Column(TypeName = "money")] public decimal? Exp2019 { get; set; }
 
     [Column(TypeName = "money")] public decimal? Exp2020 { get; set; }
+    
+    [Column(TypeName = "money")] public decimal? Exp2021 { get; set; }
 
     [Column(TypeName = "money")]
     public decimal? MaxPrev { get; set; }
