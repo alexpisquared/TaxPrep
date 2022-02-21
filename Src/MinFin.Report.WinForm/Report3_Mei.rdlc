@@ -786,7 +786,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>findemoDataSet</rd:DataSetName>
-        <rd:SchemaPath>C:\0\0\MinFin\MinFin.Report.WinForm\findemoDataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\g\TaxPrep\Src\MinFin.Report.WinForm\findemoDataSet.xsd</rd:SchemaPath>
         <rd:TableName>Vw_TaxLiqReport</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
