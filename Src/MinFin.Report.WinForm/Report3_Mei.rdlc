@@ -205,7 +205,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!TtlExp.Value)</Value>
+                              <Value><!--=Sum(Fields!TtlExp.Value)  sum of + and - gives nonesense --></Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>

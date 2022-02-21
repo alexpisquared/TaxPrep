@@ -139,7 +139,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#000000</Color>
+                                <Color>#ff0000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -174,7 +174,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#444444</Color>
+                                <Color>#44ff44</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -205,12 +205,12 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!TtlExp.Value)</Value>
+                              <Value><!--=Sum(Fields!TtlExp.Value)  sum of + and - gives nonesense --></Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>#,###.##</Format>
-                                <Color>#444444</Color>
+                                <Color>#4444ff</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -379,7 +379,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
+                                <Color>Yellow</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
