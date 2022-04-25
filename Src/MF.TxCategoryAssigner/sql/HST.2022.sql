@@ -1,12 +1,12 @@
 /* Procedure: 
 1. Go over invoices and put them down here
-2. Dnld txns and run query C:\c\Live\MinFin\MF.TxCategoryAssigner\sql\HST.2021.sql
+2. Dnld txns and run query C:\c\Live\MinFin\MF.TxCategoryAssigner\sql\HST.2022.sql
 3. Compare/match/fixup the results */
 USE [FinDemo]
 go
---SELECT c.*, TxCategory.Name AS Ctg FROM TxCoreV2 c INNER JOIN TxCategory ON c.TxCategoryIdTxt = TxCategory.IdTxt WHERE (c.TxMoneySrcId = 3) AND (c.TxAmount < 0) AND (c.TxCategoryIdTxt <> 'BankFee') AND (c.TxDate >= CONVERT(DATETIME, '2021-01-01 00:00:00', 102)) AND (c.TxDate < CONVERT(DATETIME, '2021-04-01 00:00:00', 102)) ORDER BY c.TxDate DESC
+--SELECT c.*, TxCategory.Name AS Ctg FROM TxCoreV2 c INNER JOIN TxCategory ON c.TxCategoryIdTxt = TxCategory.IdTxt WHERE (c.TxMoneySrcId = 3) AND (c.TxAmount < 0) AND (c.TxCategoryIdTxt <> 'BankFee') AND (c.TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102)) AND (c.TxDate < CONVERT(DATETIME, '2022-04-01 00:00:00', 102)) ORDER BY c.TxDate DESC
 declare @q0 as DATETIME, @q1 as DATETIME, @q2 as DATETIME, @q3 as DATETIME, @q4 as DATETIME; 
-select @q0 = CONVERT(DATETIME, '2021-01-01 00:00:00', 102), @q1 = CONVERT(DATETIME, '2021-04-01 00:00:00', 102), @q2 = CONVERT(DATETIME, '2021-07-01 00:00:00', 102), @q3 = CONVERT(DATETIME, '2021-10-01 00:00:00', 102), @q4 = CONVERT(DATETIME, '2022-01-01 00:00:00', 102)
+select @q0 = CONVERT(DATETIME, '2022-01-01 00:00:00', 102), @q1 = CONVERT(DATETIME, '2022-04-01 00:00:00', 102), @q2 = CONVERT(DATETIME, '2022-07-01 00:00:00', 102), @q3 = CONVERT(DATETIME, '2022-10-01 00:00:00', 102), @q4 = CONVERT(DATETIME, '2023-01-01 00:00:00', 102)
 
    SELECT *                                                            FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != 'ACCT BAL REBATE' AND (TxDate >= @q0) AND (TxDate < @q1) ORDER BY TxDate 
 SELECT SUM(TxAmount) as [Revenue 1/4], SUM(TxAmount)*.088 + 300 as HST FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != 'ACCT BAL REBATE' AND (TxDate >= @q0) AND (TxDate < @q1) -- +300 for the first quarter only!!!
@@ -25,4 +25,3 @@ SELECT SUM(TxAmount) as [Anual Revenue 101], FORMAT(ROUND(SUM(TxAmount) *.088, 2
 SELECT SUM(TxAmount) [IT] FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != 'ACCT BAL REBATE' AND (TxDate >= @q0) AND (TxDate < @q4) and TxDetail  = 'IRESS MKT TECH   BPY' 
 --SELECT *                FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != 'ACCT BAL REBATE' AND (TxDate >= @q0) AND (TxDate < @q4) and TxDetail != 'IRESS MKT TECH   BPY' and TxDetail != 'ACCT BAL REBATE' ORDER BY TxDate 
 SELECT SUM(TxAmount) [RE] FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != 'ACCT BAL REBATE' AND (TxDate >= @q0) AND (TxDate < @q4) and TxDetail != 'IRESS MKT TECH   BPY' and TxDetail != 'ACCT BAL REBATE' 
-
