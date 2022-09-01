@@ -279,6 +279,12 @@ namespace MSMoneyDbLoader
         Bpr.Beep1of2();
         var fnwe = System.IO.Path.GetFileNameWithoutExtension(webFile);
         var tLst = MSMoneyFileReader.ReadTxs(_db, webFile, out acntFolder, out var txSrcId);
+        if (tLst.Count() <= 0)
+        {
+          MessageBox.Show(acntFolder , "Something wrong.  Aborting the file.", MessageBoxButton.OK, MessageBoxImage.Warning);
+          return;
+        }
+
         var dtMin = tLst.Min(r => r.TxDate);
         var dtMax = tLst.Max(r => r.TxDate);
         var newn = string.Format("{0:yyyy-MM-dd} - {1:yyyy-MM-dd}. {3} {2:yyyy-MM-dd}", dtMin, dtMax, DateTime.Today, PreSet.DbSynced);
