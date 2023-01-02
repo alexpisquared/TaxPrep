@@ -1,6 +1,7 @@
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace Db.FinDemo.DbModel
 {
@@ -29,6 +30,8 @@ namespace Db.FinDemo.DbModel
         return $@"data source=.\sqlexpress;initial catalog=FinDemo{dbg};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework";
       }
     }
+
+//todo: needs core: [DbFunction(Name = "SOUNDEX", IsBuiltIn = true)] public static string SoundsLike(string sounds) => throw new NotImplementedException(); //tu: SOUNDEX
 
     public static string SolutionCfg =>
 #if DEBUG
