@@ -1,7 +1,6 @@
 using System;
 using System.Data.Entity;
 using System.Linq;
-using System.Xml.Linq;
 
 namespace Db.FinDemo.DbModel
 {
@@ -10,15 +9,11 @@ namespace Db.FinDemo.DbModel
     public static A0DbContext Create() => new A0DbContext();
 
     A0DbContext()
-      : base()
-    {
-      Database.Connection.ConnectionString = conStr; //tu: remove CREATE TABLE permissin neeed - Database.SetInitializer<A0DbContext>(null);
-      //``System.Diagnostics.Trace.WriteLine($" ** db from con str:{DbName}");
-    }
+      : base() => Database.Connection.ConnectionString = ConStr; //tu: remove CREATE TABLE permissin neeed - Database.SetInitializer<A0DbContext>(null);//``System.Diagnostics.Trace.WriteLine($" ** db from con str:{DbName}");
 
-    public static string DbName => conStr.Split(';').ToList().FirstOrDefault(r => r.Split('=')[0].Equals("initial catalog", StringComparison.OrdinalIgnoreCase))?.Split('=')[1];
+    public static string DbName => ConStr.Split(';').ToList().FirstOrDefault(r => r.Split('=')[0].Equals("initial catalog", StringComparison.OrdinalIgnoreCase))?.Split('=')[1];
 
-    static string conStr
+    static string ConStr
     {
       get
       {
@@ -31,7 +26,7 @@ namespace Db.FinDemo.DbModel
       }
     }
 
-//todo: needs core: [DbFunction(Name = "SOUNDEX", IsBuiltIn = true)] public static string SoundsLike(string sounds) => throw new NotImplementedException(); //tu: SOUNDEX
+    //todo: needs core: [DbFunction(Name = "SOUNDEX", IsBuiltIn = true)] public static string SoundsLike(string sounds) => throw new NotImplementedException(); //tu: SOUNDEX
 
     public static string SolutionCfg =>
 #if DEBUG
@@ -41,7 +36,6 @@ namespace Db.FinDemo.DbModel
 #endif
   }
 }
-
 
 /*USE [FinDemo]
 GO
