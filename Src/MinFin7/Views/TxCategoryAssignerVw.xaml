@@ -205,7 +205,7 @@
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
 
-        <DataGridTextColumn     Header="Added"	FontSize="8" Binding="{Binding CreatedAt, StringFormat=\{0: yyyy-MM-dd \}}" Foreground="#555" ToolTipService.ToolTip="{Binding Id}"  />
+        <DataGridTextColumn     Header="Added"	FontSize="8" Binding="{Binding CreatedAt, StringFormat=\{0: yyyy-MM-dd \}}" Foreground="#555" />
         <DataGridTextColumn     Header="Id"			FontSize="8" Binding="{Binding Id}" />
       </DataGrid.Columns>
     </DataGrid>

@@ -1,4 +1,6 @@
-﻿namespace MinFin7;
+﻿using MF.TxCategoryAssigner;
+
+namespace MinFin7;
 public partial class App : Application
 {
   protected override void OnStartup(StartupEventArgs e)
@@ -35,8 +37,9 @@ public partial class App : Application
     //}
 
     ShutdownMode = ShutdownMode.OnExplicitShutdown;
-    MainWindow = new MainAppDispatcher();
-    MainWindow.ShowDialog(); // new MainWindow().ShowDialog(); //
+
+    MainWindow = new TxCategoryAssignerVw(); // new MainAppDispatcher();
+    MainWindow.ShowDialog(); 
 
     done:
 #endif

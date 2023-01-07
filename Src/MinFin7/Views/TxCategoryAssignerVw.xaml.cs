@@ -17,33 +17,37 @@ public partial class TxCategoryAssignerVw : WindowBase
   string _txCatgry = "UnKn", _loadedCatgry = "?", _choiceAbove, _choiceBelow;
   decimal _selectTtl = 0;
   bool _loaded = false;
-  private int? _cutOffYr;
+  private int? _cutOffYr = 2020;
   private readonly int? _trgTaxYr = DateTime.Today.Year - 1;
 
   public TxCategoryAssignerVw() => InitializeComponent();
   async void onLoaded(object s, RoutedEventArgs e)
   {
     await App.Synth.SpeakExpressAsync("Loading...");
+    try
+    {
+      await _db.TxCategories.LoadAsync();
 
-    await _db.TxCategories.LoadAsync();
+      (_txnCtg = (CollectionViewSource)FindResource("txCategoryVwSrcDatGrd")).Source = _db.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber);
+      ((CollectionViewSource)FindResource("txCategoryVwSrcComBox")).Source = _db.TxCategories.Local.OrderBy(r => r.Name).ThenBy(r => r.TlNumber); // cbxTxCatgry.ItemsSource = _db.TxCategories.OrderBy(r => r.Name).ToList();
+      _txCoreV2_Root_VwSrc = ((CollectionViewSource)FindResource("txCoreV2_Root_VwSrc"));
 
-    (_txnCtg = (CollectionViewSource)FindResource("txCategoryVwSrcDatGrd")).Source = _db.TxCategories.Local.OrderBy(r => r.ExpGroup.Name).ThenBy(r => r.TlNumber);
-    ((CollectionViewSource)FindResource("txCategoryVwSrcComBox")).Source = _db.TxCategories.Local.OrderBy(r => r.Name).ThenBy(r => r.TlNumber); // cbxTxCatgry.ItemsSource = _db.TxCategories.OrderBy(r => r.Name).ToList();
-    _txCoreV2_Root_VwSrc = ((CollectionViewSource)FindResource("txCoreV2_Root_VwSrc"));
+      _ = tbxSearch.Focus();
+      var y = DateTime.Today.Year;
+      cbxSingleYr.ItemsSource = new int[] { y, y - 1, y - 2, y - 3, y - 4, y - 5, y - 6, y - 7, y - 8, y - 9 };
+      cbxSingleYr.SelectedIndex = 2;
+      chkInfer.IsChecked = true;
 
-    _ = tbxSearch.Focus();
-    var y = DateTime.Today.Year;
-    cbxSingleYr.ItemsSource = new int[] { y, y - 1, y - 2, y - 3, y - 4, y - 5, y - 6, y - 7, y - 8, y - 9 };
-    cbxSingleYr.SelectedIndex = 2;
-    chkInfer.IsChecked = true;
+      _txCatgry = null;
+      _cutOffYr = null;
+      btAssign.IsEnabled = btAssig2.IsEnabled = false;
 
-    _txCatgry = null;
-    _cutOffYr = null;
-    btAssign.IsEnabled = btAssig2.IsEnabled = false;
+      _loaded = true;
+      chkSingleYr.IsChecked = true;      // invokes the 1st search
+      await App.Synth.SpeakExpressAsync("Done!");
+    }
+    catch (Exception ex) { ex.Pop(); }
 
-    _loaded = true;
-    chkSingleYr.IsChecked = true;      // invokes the 1st search
-    await App.Synth.SpeakExpressAsync("Done!");
   }
   protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
   {
@@ -138,6 +142,9 @@ public partial class TxCategoryAssignerVw : WindowBase
 
     try
     {
+      await _db.TxCoreV2s.LoadAsync();
+
+
       if (chkTxCatgry.IsChecked == true && chkSingleYr.IsChecked == true)
       {
         await _db.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).LoadAsync();
@@ -148,14 +155,14 @@ public partial class TxCategoryAssignerVw : WindowBase
         await _db.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004 && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).LoadAsync();
         _loadedCatgry = _txCatgry;
       }
-      else if (chkSingleYr.IsChecked == true)
+      else if (chkSingleYr.IsChecked == true && _cutOffYr is not null)
       {
         await _db.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr).LoadAsync();
       }
       else
       {
         await _db.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004).LoadAsync();
-        _loadedCatgry = _txCatgry = null;
+        _loadedCatgry = _txCatgry = "";
       }
 
       if (dgTxCore.ItemsSource != null)
@@ -220,7 +227,7 @@ public partial class TxCategoryAssignerVw : WindowBase
 
     if (_catg.Count() == 0)
     {
-      _catg.ClearAddRangeAuto(_db.TxCategories.Local.OrderBy(r => r.ExpGroup.Name).ThenBy(r => r.TlNumber));
+      _catg.ClearAddRangeAuto(_db.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
     }
 
     choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled = btAssig2.IsEnabled = false;
@@ -315,7 +322,7 @@ public partial class TxCategoryAssignerVw : WindowBase
   void OnLbxSelectionChanged(object s, SelectionChangedEventArgs e) { if (e.AddedItems.Count < 1) return; updateTitle(); Title += string.Format(" - {0}", ((TxCategory)(txCategoryListBox.SelectedItems[0])).Name); }
   async void onInfer_Checked(object s, RoutedEventArgs e) => await filterStart(tbkFlt.Text);
   void dgTxCtgr_MouseDblClick(object s, System.Windows.Input.MouseButtonEventArgs e) { if (btAssign.IsEnabled) onAssign0(s, null); }
- async void dgTxCore_MouseDblClick(object s, System.Windows.Input.MouseButtonEventArgs e)
+  async void dgTxCore_MouseDblClick(object s, System.Windows.Input.MouseButtonEventArgs e)
   {
     if (e.OriginalSource is System.Windows.Documents.Run run)
       Clipboard.SetText(run.Text);
