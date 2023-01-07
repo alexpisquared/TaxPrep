@@ -222,7 +222,7 @@
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
-
+  
         <DataGridTemplateColumn Header="Name"   SortMemberPath="Name" CanUserSort="True" Width="*" >
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>

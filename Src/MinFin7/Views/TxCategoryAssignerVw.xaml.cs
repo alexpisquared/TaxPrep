@@ -17,7 +17,7 @@ public partial class TxCategoryAssignerVw : WindowBase
   string _txCatgry = "UnKn", _loadedCatgry = "?", _choiceAbove, _choiceBelow;
   decimal _selectTtl = 0;
   bool _loaded = false;
-  private int? _cutOffYr = 2020;
+  private int? _cutOffYr;
   private readonly int? _trgTaxYr = DateTime.Today.Year - 1;
 
   public TxCategoryAssignerVw() => InitializeComponent();
@@ -142,9 +142,6 @@ public partial class TxCategoryAssignerVw : WindowBase
 
     try
     {
-      await _db.TxCoreV2s.LoadAsync();
-
-
       if (chkTxCatgry.IsChecked == true && chkSingleYr.IsChecked == true)
       {
         await _db.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).LoadAsync();
@@ -155,14 +152,14 @@ public partial class TxCategoryAssignerVw : WindowBase
         await _db.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004 && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).LoadAsync();
         _loadedCatgry = _txCatgry;
       }
-      else if (chkSingleYr.IsChecked == true && _cutOffYr is not null)
+      else if (chkSingleYr.IsChecked == true)
       {
         await _db.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr).LoadAsync();
       }
       else
       {
         await _db.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004).LoadAsync();
-        _loadedCatgry = _txCatgry = "";
+        _loadedCatgry = _txCatgry = null;
       }
 
       if (dgTxCore.ItemsSource != null)
