@@ -41,7 +41,7 @@
         <DataGridTextColumn      Width="Auto" Binding="{Binding TxAmount, StringFormat='{}{0:N0}'}"             Header="Tx Amount"         Foreground="Blue" />
         <DataGridTextColumn      Width="Auto" Binding="{Binding HstTakenAt, StringFormat='{}{0:yyyy-mm-dd}'}"   Header="HST Taken at"     Foreground="Blue" />
         <DataGridTextColumn      Width="Auto" Binding="{Binding TxDetail}"        Header="Tx Detail"         />
-        <DataGridTextColumn      Width="*"    Binding="{Binding MemoPP}"          Header="Memo PP"           />
+        <DataGridTextColumn      Width="*"    Binding="{Binding MemoPp}"          Header="Memo PP"           />
         <DataGridTextColumn      Width="*"    Binding="{Binding Notes}"           Header="Notes"             />
         <DataGridTextColumn      Width="Auto" Binding="{Binding CurBalance}"      Header="Cur Balance"       />
         <DataGridTextColumn      Width="Auto" Binding="{Binding ResultAmt}"       Header="Result Amt"        />

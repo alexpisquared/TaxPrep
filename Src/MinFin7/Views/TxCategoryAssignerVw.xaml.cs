@@ -1,36 +1,33 @@
-﻿using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
-using System.Runtime.CompilerServices;
+﻿using System.Data.Entity.Validation;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
+using EF.DbHelper.Lib;
 using WpfUserControlLib.Extensions;
-
 namespace MF.TxCategoryAssigner;
-
 public partial class TxCategoryAssignerVw : WindowBase
 {
   readonly FinDemoContext _db = new();
   readonly DateTime _yrStart2004 = new(2004, 1, 1), _now = DateTime.Now;
   readonly ObservableCollection<TxCoreV2> _core = new();
   readonly ObservableCollection<TxCategory> _catg = new();
-  CollectionViewSource _txnCtg, _txCoreV2_Root_VwSrc;
-  string _txCatgry = "UnKn", _loadedCatgry = "?", _choiceAbove, _choiceBelow;
+  CollectionViewSource? _txnCtg, _txCoreV2_Root_VwSrc;
+  string? _txCatgry = "UnKn", _loadedCatgry = "?", _choiceAbove, _choiceBelow;
   decimal _selectTtl = 0;
   bool _loaded = false;
-  private int? _cutOffYr;
-  private readonly int? _trgTaxYr = DateTime.Today.Year - 1;
+  int? _cutOffYr;
+  readonly int? _trgTaxYr = DateTime.Today.Year - 1;
 
   public TxCategoryAssignerVw() => InitializeComponent();
   async void onLoaded(object s, RoutedEventArgs e)
   {
-    await App.Synth.SpeakExpressAsync("Loading...");
+    App.Synth.SpeakExpressFAF("Loading...");
+
     try
     {
       await _db.TxCategories.LoadAsync();
 
       (_txnCtg = (CollectionViewSource)FindResource("txCategoryVwSrcDatGrd")).Source = _db.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber);
       ((CollectionViewSource)FindResource("txCategoryVwSrcComBox")).Source = _db.TxCategories.Local.OrderBy(r => r.Name).ThenBy(r => r.TlNumber); // cbxTxCatgry.ItemsSource = _db.TxCategories.OrderBy(r => r.Name).ToList();
-      _txCoreV2_Root_VwSrc = ((CollectionViewSource)FindResource("txCoreV2_Root_VwSrc"));
+      _txCoreV2_Root_VwSrc = (CollectionViewSource)FindResource("txCoreV2_Root_VwSrc");
 
       _ = tbxSearch.Focus();
       var y = DateTime.Today.Year;
@@ -44,11 +41,12 @@ public partial class TxCategoryAssignerVw : WindowBase
 
       _loaded = true;
       chkSingleYr.IsChecked = true;      // invokes the 1st search
-      await App.Synth.SpeakExpressAsync("Done!");
+
+      App.Synth.SpeakExpressFAF("Done!");
     }
     catch (Exception ex) { ex.Pop(); }
-
   }
+
   protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
   {
     if (_db.HasUnsavedChanges())
@@ -57,7 +55,7 @@ public partial class TxCategoryAssignerVw : WindowBase
       {
         default:
         case MessageBoxResult.Cancel: e.Cancel = true; return;
-        //case MessageBoxResult.Yes: var (success, rowsSavedCnt, report) = _db.TrySaveReport(); if (!success) MessageBox.Show(report, $"Attach to process!!!  ({rowsSavedCnt})"); break;
+        case MessageBoxResult.Yes: var (success, rowsSavedCnt, report) = _db.TrySaveReportAsync().Result; if (!success) _ = MessageBox.Show(report, $"Attach to process!!!  ({rowsSavedCnt})"); break;
         case MessageBoxResult.No: break;
       }
     }
@@ -74,14 +72,14 @@ public partial class TxCategoryAssignerVw : WindowBase
 
     Debug.WriteLine($"■■■ filterStart()");
 
-    //await App.Synth.SpeakExpressAsyncCancelAll();
+    //App.Synth.SpeakExpressFAFCancelAll();
     //Bpr.BeepFD(12000, 33); // wake monitor speakers
 
     await reLoadTxCore();
 
     if (string.IsNullOrEmpty(csvFilterString))
     {
-      await App.Synth.SpeakExpressAsync("Clear!");
+      App.Synth.SpeakExpressFAF("Clear!");
       filterTxns(csvFilterString, _txCatgry);
     }
     else
@@ -89,21 +87,21 @@ public partial class TxCategoryAssignerVw : WindowBase
       var ta = csvFilterString.Split(new[] { '`', '>', '\\', '/' });
       if (ta.Length > 1)
       {
-        await App.Synth.SpeakExpressAsync($"{ta.Length}-part filter");
+        App.Synth.SpeakExpressFAF($"{ta.Length}-part filter");
 
-        if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { await App.Synth.SpeakExpressAsync("Still Empty."); return; }
+        if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { App.Synth.SpeakExpressFAF("Still Empty."); return; }
 
         if (!string.IsNullOrEmpty(ta[0]))
         {
-          if (!decimal.TryParse(ta[0], out var amt)) { await App.Synth.SpeakExpressAsync("1st must be number."); return; }
+          if (!decimal.TryParse(ta[0], out var amt)) { App.Synth.SpeakExpressFAF("1st must be number."); return; }
 
           if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
-          //await App.Synth.SpeakExpressAsync("Multi.");
+          //App.Synth.SpeakExpressFAF("Multi.");
           filterTxns(csvFilterString[(ta[0].Length + 1)..], _txCatgry, amt, rng);
         }
         else if (!string.IsNullOrEmpty(ta[1])) // explicit by string
         {
-          //await App.Synth.SpeakExpressAsync("Filter by text.");
+          //App.Synth.SpeakExpressFAF("Filter by text.");
           filterTxns(ta[1], _txCatgry);
         }
       }
@@ -112,12 +110,12 @@ public partial class TxCategoryAssignerVw : WindowBase
         if (decimal.TryParse(csvFilterString, out var amt))
         {
           if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
-          //await App.Synth.SpeakExpressAsync("Filter by money.");
+          //App.Synth.SpeakExpressFAF("Filter by money.");
           filterTxns("", _txCatgry, amt, rng);
         }
         else
         {
-          //await App.Synth.SpeakExpressAsync("Filter by text.");
+          //App.Synth.SpeakExpressFAF("Filter by text.");
           filterTxns(csvFilterString, _txCatgry);
         }
       }
@@ -188,13 +186,13 @@ public partial class TxCategoryAssignerVw : WindowBase
       &&
       (
         string.IsNullOrEmpty(txCatgoryId) ||
-        (
-          (
-            (!string.IsNullOrEmpty(strFilter) ||
-             r.TxDate.Year >= _trgTaxYr && string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0)
-            ) ||
+
+
+            !string.IsNullOrEmpty(strFilter) ||
+             (r.TxDate.Year >= _trgTaxYr && string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0)
+             ||
           (r.TxDate.Year < _trgTaxYr)
-        )
+
       )
     ).OrderByDescending(r => r.TxDate));
   }
@@ -203,9 +201,9 @@ public partial class TxCategoryAssignerVw : WindowBase
     tbkFlt.Text = strFilter;
     tbkAmt.Text = $"{amt:N0}";
 
-    _core.ClearAddRangeAuto(_db.TxCoreV2s.Local.Where(r => (
+    _core.ClearAddRangeAuto(_db.TxCoreV2s.Local.Where(r =>
       amt - rng <= (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) && (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) <= amt + rng
-      ) && (
+       && (
       (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(strFilter.ToLower())) ||
       (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(strFilter.ToLower())) ||
       (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(strFilter.ToLower())))
@@ -264,13 +262,13 @@ public partial class TxCategoryAssignerVw : WindowBase
     await reLoadTxCore();
     onClear1(s, e);
   }
-  void onReLoad2(object s, RoutedEventArgs e) { } //  ImportToDB.DoAll();
+  void onReLoad2(object s, RoutedEventArgs e) => MessageBox.Show("Not implemented!!!!!!!\n\nSee .Net 4.8 version for details.", "ImportToDB.DoAll()");
 
-  async void onTextChangedFuz(object s, TextChangedEventArgs e) { if (!(await isStillTyping((TextBox)s))) await filterStart(tbxSearch.Text); }
-  async void onTextChangedCtg(object s, TextChangedEventArgs e) { if (!(await isStillTyping((TextBox)s))) filterCategoryByTxtMatch(((TextBox)s).Text); }
+  async void onTextChangedFuz(object s, TextChangedEventArgs e) { if (!await isStillTyping((TextBox)s)) await filterStart(tbxSearch.Text); }
+  async void onTextChangedCtg(object s, TextChangedEventArgs e) { if (!await isStillTyping((TextBox)s)) filterCategoryByTxtMatch(((TextBox)s).Text); }
 
-  void onClear1(object s = null, RoutedEventArgs e = null) => tbkFlt.Text = tbxSearch.Text = "";
-  void onClear2(object s = null, RoutedEventArgs e = null) => tSrch2.Text = "";
+  void onClear1(object s , RoutedEventArgs e ) => tbkFlt.Text = tbxSearch.Text = "";
+  void onClear2(object s , RoutedEventArgs e ) => tSrch2.Text = "";
 
   void dgTxCtgr_SelectionChanged(object s, SelectionChangedEventArgs e) => btAssign.IsEnabled = btAssig2.IsEnabled = e.AddedItems.Count == 1;
   void dgTxCore_SelectionChanged(object s, SelectionChangedEventArgs e)
@@ -294,8 +292,8 @@ public partial class TxCategoryAssignerVw : WindowBase
         }
         else
         {
-          var trg = lv.Where(r => r.TxCategoryIdTxt != "UnKn")?.FirstOrDefault();
-          _choiceAbove = _choiceBelow = trg?.TxCategoryIdTxt ?? "";
+          var trg = lv.Where(r => r.TxCategoryIdTxtNavigation.IdTxt != "UnKn")?.FirstOrDefault();
+          _choiceAbove = _choiceBelow = trg?.TxCategoryIdTxtNavigation.IdTxt ?? "";
           btAssign.IsEnabled = btAssig2.IsEnabled = txCategoryListBox.SelectedItems.Count == 1;
         }
       }
@@ -316,7 +314,7 @@ public partial class TxCategoryAssignerVw : WindowBase
   async void onSingleYr_UnChckd(object s, RoutedEventArgs e)           /**/ { _cutOffYr = null;                                 /**/ await filterStart(tbxSearch.Text); }
   async void onSingleYr_Changed(object s, SelectionChangedEventArgs e) /**/ { _cutOffYr = (int)cbxSingleYr.SelectedValue;       /**/ await filterStart(tbxSearch.Text); }
 
-  void OnLbxSelectionChanged(object s, SelectionChangedEventArgs e) { if (e.AddedItems.Count < 1) return; updateTitle(); Title += string.Format(" - {0}", ((TxCategory)(txCategoryListBox.SelectedItems[0])).Name); }
+  void OnLbxSelectionChanged(object s, SelectionChangedEventArgs e) { if (e.AddedItems.Count < 1) return; updateTitle(); Title += string.Format(" - {0}", ((TxCategory)txCategoryListBox.SelectedItems[0]).Name); }
   async void onInfer_Checked(object s, RoutedEventArgs e) => await filterStart(tbkFlt.Text);
   void dgTxCtgr_MouseDblClick(object s, System.Windows.Input.MouseButtonEventArgs e) { if (btAssign.IsEnabled) onAssign0(s, null); }
   async void dgTxCore_MouseDblClick(object s, System.Windows.Input.MouseButtonEventArgs e)
@@ -326,11 +324,11 @@ public partial class TxCategoryAssignerVw : WindowBase
     else
       Clipboard.SetText(((TxCoreV2)((System.Windows.Controls.Primitives.Selector)s).SelectedItem).TxDetail);
 
-    await App.Synth.SpeakExpressAsync("Copied!");
+    App.Synth.SpeakExpressFAF("Copied!");
   }
 
   async void onManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_db).ShowDialog(); await reLoadTxCore(); }
-  async void onAssign0(object s, RoutedEventArgs e) { if (txCategoryListBox.SelectedItems.Count == 1) await assign(((TxCategory)(txCategoryListBox.SelectedItems[0])).IdTxt); }
+  async void onAssign0(object s, RoutedEventArgs e) { if (txCategoryListBox.SelectedItems.Count == 1) await assign(((TxCategory)txCategoryListBox.SelectedItems[0]).IdTxt); }
   async void onAssign1(object s, RoutedEventArgs e) => await assign(_choiceAbove);
   async void onAssign2(object s, RoutedEventArgs e) => await assign(_choiceBelow);
   async Task assign(string IdTxt)
@@ -355,12 +353,11 @@ public partial class TxCategoryAssignerVw : WindowBase
     if (DbSaveMsgBox.TrySaveAsk(_db, $"class TxCategoryAssignerVw.assign()") > 0)//== (int)MsgBoxDbRslt.Yes)
     {
       await reLoadTxCore();
-      onClear1();
-      onClear2();
+      onClear1(default!, default!);
+      onClear2(default!, default!);
     }
 
     _ = tbxSearch.Focus();
-    //Bpr.OkFaF();
   }
 }
 /*
@@ -758,7 +755,6 @@ GO
 * 
 */
 
-
 public static class DbSaveMsgBox
 {
   public static int CheckAskSave(DbContext db, int maxRowsToShow = 32, MessageBoxButton btn = MessageBoxButton.YesNoCancel)
@@ -769,7 +765,7 @@ public static class DbSaveMsgBox
     {
       //Bpr.BeepOk();
 
-      if (!(db.ChangeTracker.Entries().Any(e => e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted)))
+      if (!db.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted))
       {
         rowsSaved = (int)MsgBoxDbRslt.NoChanges;
       }
@@ -785,7 +781,7 @@ public static class DbSaveMsgBox
     }
     catch (Exception ex)
     {
-      ex.Log();
+      _ = ex.Log();
       if (MessageBox.Show(ex.ToString(), "Exception detected - Retry saving?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
         goto retry;
     }
@@ -819,7 +815,7 @@ public static class DbSaveMsgBox
 
         foreach (var er in ex.Entries)
         {
-          sb.Append($"\r\n:>DbUpdateException:  {ex.InnerMessages()}\t");
+          _ = sb.Append($"\r\n:>DbUpdateException:  {ex.InnerMessages()}\t");
         }
 
         return sb.ToString();
@@ -852,116 +848,116 @@ public enum MsgBoxDbRslt // MsgBoxReverseRslt
   Unknown = -3,
   NoChanges = -4,
 }
-public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  ...2021-10  ...2022-05)
-{
-  public static async Task<(bool success, int rowsSavedCnt, string report)> TrySaveReportAsync(this DbContext dbx, string? info = "", [CallerMemberName] string callerName = "")
-  {
-    var report = $"■■ {info}.{callerName}()  records saved: ";
+//public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  ...2021-10  ...2022-05)
+//{
+//  public static async Task<(bool success, int rowsSavedCnt, string report)> TrySaveReportAsync(this DbContext dbx, string? info = "", [CallerMemberName] string callerName = "")
+//  {
+//    var report = $"■■ {info}.{callerName}()  records saved: ";
 
-    try
-    {
-      var stopwatch = Stopwatch.StartNew();
-      var rowsSaved = await dbx.SaveChangesAsync();
+//    try
+//    {
+//      var stopwatch = Stopwatch.StartNew();
+//      var rowsSaved = await dbx.SaveChangesAsync();
 
-      report += stopwatch.ElapsedMilliseconds < 250 ? $"{rowsSaved,7:N0} ■■" : $"{rowsSaved,7:N0} / {VersionHelper.TimeAgo(stopwatch.Elapsed, small: true)} => {rowsSaved / stopwatch.Elapsed.TotalSeconds:N0} rps ■■";
+//      report += stopwatch.ElapsedMilliseconds < 250 ? $"{rowsSaved,7:N0} ■■" : $"{rowsSaved,7:N0} / {VersionHelper.TimeAgo(stopwatch.Elapsed, small: true)} => {rowsSaved / stopwatch.Elapsed.TotalSeconds:N0} rps ■■";
 
-      WriteLine(report);
+//      WriteLine(report);
 
-      return (true, rowsSaved, report);
-    }
-    catch (DbEntityValidationException ex)                          /**/ { report += ex.Log($"\n{ValidationExceptionToString(ex)}"); }
-    catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)      /**/ { report += ex.Log($"\n{string.Join("\t", ex.Entries.Select(r => r.ToString()))}  [{ex.Entries.Count,5} rows affected]  :Core"); }
-    catch (System.Data.Entity.Infrastructure.DbUpdateException ex)  /**/ { report += ex.Log($"\n{string.Join("\t", ex.Entries.Select(r => r.ToString()))}  [{ex.Entries.Count()} rows affected]  :Infr"); }
-    catch (Exception ex)                                            /**/ { report += ex.Log(); }
+//      return (true, rowsSaved, report);
+//    }
+//    catch (DbEntityValidationException ex)                          /**/ { report += ex.Log($"\n{ValidationExceptionToString(ex)}"); }
+//    catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)      /**/ { report += ex.Log($"\n{string.Join("\t", ex.Entries.Select(r => r.ToString()))}  [{ex.Entries.Count,5} rows affected]  :Core"); }
+//    catch (System.Data.Entity.Infrastructure.DbUpdateException ex)  /**/ { report += ex.Log($"\n{string.Join("\t", ex.Entries.Select(r => r.ToString()))}  [{ex.Entries.Count()} rows affected]  :Infr"); }
+//    catch (Exception ex)                                            /**/ { report += ex.Log(); }
 
-    return (false, -88, report);
-  }
-  public static void DiscardChanges(this DbContext db) => db.ChangeTracker.Clear();
-  public static bool HasUnsavedChanges(this DbContext db) => db != null && db.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted);
-  public static string GetDbChangesReport(this DbContext db, int maxLinesToShow = 33)
-  {
-    var sb = new StringBuilder($"{db.GetType().Name}.{db.GetType().GetHashCode()}:  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Deleted),5} Del  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Added),5} Ins  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Modified),5} Upd");
+//    return (false, -88, report);
+//  }
+//  public static void DiscardChanges(this DbContext db) => db.ChangeTracker.Clear();
+//  public static bool HasUnsavedChanges(this DbContext db) => db != null && db.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted);
+//  public static string GetDbChangesReport(this DbContext db, int maxLinesToShow = 33)
+//  {
+//    var sb = new StringBuilder($"{db.GetType().Name}.{db.GetType().GetHashCode()}:  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Deleted),5} Del  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Added),5} Ins  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Modified),5} Upd");
 
-    var lineCounter = 0;
-    foreach (var modifieds in db.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified))
-    {
-      foreach (var pn in modifieds.CurrentValues.Properties)
-      {
-        var org = modifieds.OriginalValues[pn];
-        var cur = modifieds.CurrentValues[pn];
+//    var lineCounter = 0;
+//    foreach (var modifieds in db.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified))
+//    {
+//      foreach (var pn in modifieds.CurrentValues.Properties)
+//      {
+//        var org = modifieds.OriginalValues[pn];
+//        var cur = modifieds.CurrentValues[pn];
 
-        if (!Equals(modifieds.CurrentValues[pn], org))
-        {
-          if (++lineCounter <= maxLinesToShow)
-          {
-            _ = sb.Append($"\n{pn?.ToString()?.Replace("Property: ", ""),-17}  \t{SafeValue(org)} → {SafeValue(cur)}");
-          }
-          else
-          {
-            _ = sb.Append(" ...");
-            break;
-          }
-        }
-      }
+//        if (!Equals(modifieds.CurrentValues[pn], org))
+//        {
+//          if (++lineCounter <= maxLinesToShow)
+//          {
+//            _ = sb.Append($"\n{pn?.ToString()?.Replace("Property: ", ""),-17}  \t{SafeValue(org)} → {SafeValue(cur)}");
+//          }
+//          else
+//          {
+//            _ = sb.Append(" ...");
+//            break;
+//          }
+//        }
+//      }
 
-      if (lineCounter > maxLinesToShow) break;
-    }
+//      if (lineCounter > maxLinesToShow) break;
+//    }
 
-    return sb.ToString();
-  }
+//    return sb.ToString();
+//  }
 
-  public static string ValidationExceptionToString(this DbEntityValidationException ex)
-  {
-    var sb = new StringBuilder();
+//  public static string ValidationExceptionToString(this DbEntityValidationException ex)
+//  {
+//    var sb = new StringBuilder();
 
-    foreach (var eve in ex.EntityValidationErrors)
-    {
-      _ = sb.AppendLine($"""- Entity of type "{eve.Entry.Entity.GetType().FullName}" in state "{eve.Entry.State}" has the following validation errors:""");
-      foreach (var ve in eve.ValidationErrors)
-      {
-        object value;
-        if (ve.PropertyName.Contains('.'))
-        {
-          var propertyChain = ve.PropertyName.Split('.');
-          var complexProperty = eve.Entry.CurrentValues.GetValue<DbPropertyValues>(propertyChain.First());
-          value = GetComplexPropertyValue(complexProperty, propertyChain.Skip(1).ToArray());
-        }
-        else
-        {
-          value = eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName);
-        }
+//    foreach (var eve in ex.EntityValidationErrors)
+//    {
+//      _ = sb.AppendLine($"""- Entity of type "{eve.Entry.Entity.GetType().FullName}" in state "{eve.Entry.State}" has the following validation errors:""");
+//      foreach (var ve in eve.ValidationErrors)
+//      {
+//        object value;
+//        if (ve.PropertyName.Contains('.'))
+//        {
+//          var propertyChain = ve.PropertyName.Split('.');
+//          var complexProperty = eve.Entry.CurrentValues.GetValue<DbPropertyValues>(propertyChain.First());
+//          value = GetComplexPropertyValue(complexProperty, propertyChain.Skip(1).ToArray());
+//        }
+//        else
+//        {
+//          value = eve.Entry.CurrentValues.GetValue<object>(ve.PropertyName);
+//        }
 
-        _ = sb.AppendLine($"-- Property: \"{ve.PropertyName}\", Value: \"{value}\", Error: \"{ve.ErrorMessage}\"");
-      }
-    }
+//        _ = sb.AppendLine($"-- Property: \"{ve.PropertyName}\", Value: \"{value}\", Error: \"{ve.ErrorMessage}\"");
+//      }
+//    }
 
-    const int maxCombinedErrorMessageLength = 4000;
-    return sb.Length < maxCombinedErrorMessageLength ? sb.ToString() : (sb.ToString()[..maxCombinedErrorMessageLength] + " ...");
-  }
-  public static string ServerDatabase(this Microsoft.EntityFrameworkCore.DbContext dbx)
-  {
-    var constr = dbx.Database.GetConnectionString() ?? "";
-    var kvpLst = constr.Split(';').ToList();
-    return
-      GetConStrValue(kvpLst, "data source") ??
-      GetConStrValue(kvpLst, "server") ??
-      $"No server name found in the con. string  {constr} :(";
-    //return $"{(server.Equals(@"(localdb)\MSSQLLocalDB", StringComparison.OrdinalIgnoreCase) ? "" : server.Contains("database.windows.net") ? "Azure\\" : server)}{getConStrValue(kvpList, "AttachDbFilename")}{getConStrValue(kvpList, "initial catalog")}";
-  }
-  public static string SqlConStrValues(this string constr, int firstN = 10) => string.Join("·", constr.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList().Take(firstN).Select(r => r.Split('=').LastOrDefault() ?? "°"));
+//    const int maxCombinedErrorMessageLength = 4000;
+//    return sb.Length < maxCombinedErrorMessageLength ? sb.ToString() : (sb.ToString()[..maxCombinedErrorMessageLength] + " ...");
+//  }
+//  public static string ServerDatabase(this Microsoft.EntityFrameworkCore.DbContext dbx)
+//  {
+//    var constr = dbx.Database.GetConnectionString() ?? "";
+//    var kvpLst = constr.Split(';').ToList();
+//    return
+//      GetConStrValue(kvpLst, "data source") ??
+//      GetConStrValue(kvpLst, "server") ??
+//      $"No server name found in the con. string  {constr} :(";
+//    //return $"{(server.Equals(@"(localdb)\MSSQLLocalDB", StringComparison.OrdinalIgnoreCase) ? "" : server.Contains("database.windows.net") ? "Azure\\" : server)}{getConStrValue(kvpList, "AttachDbFilename")}{getConStrValue(kvpList, "initial catalog")}";
+//  }
+//  public static string SqlConStrValues(this string constr, int firstN = 10) => string.Join("·", constr.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList().Take(firstN).Select(r => r.Split('=').LastOrDefault() ?? "°"));
 
-  static string? GetConStrValue(List<string> lst, string key) => lst.FirstOrDefault(r => r.Split('=')[0].Equals(key, StringComparison.OrdinalIgnoreCase))?.Split('=')[1];
-  static object GetComplexPropertyValue(DbPropertyValues propertyValues, string[] propertyChain)
-  {
-    var propertyName = propertyChain.First();
+//  static string? GetConStrValue(List<string> lst, string key) => lst.FirstOrDefault(r => r.Split('=')[0].Equals(key, StringComparison.OrdinalIgnoreCase))?.Split('=')[1];
+//  static object GetComplexPropertyValue(DbPropertyValues propertyValues, string[] propertyChain)
+//  {
+//    var propertyName = propertyChain.First();
 
-    return propertyChain.Length == 1
-        ? propertyValues[propertyName]
-        : GetComplexPropertyValue((DbPropertyValues)propertyValues[propertyName], propertyChain.Skip(1).ToArray());
-  }
-  static string SafeValue(object? val) => val is string str ?
-    str.Length <= _maxWidth ? str : $"\r\n  {str[.._maxWidth].Replace("\n", " ").Replace("\r", " ")}...{str.Length:N0}\r\n" :
-    val?.ToString() ?? "Null";
+//    return propertyChain.Length == 1
+//        ? propertyValues[propertyName]
+//        : GetComplexPropertyValue((DbPropertyValues)propertyValues[propertyName], propertyChain.Skip(1).ToArray());
+//  }
+//  static string SafeValue(object? val) => val is string str ?
+//    str.Length <= _maxWidth ? str : $"\r\n  {str[.._maxWidth].Replace("\n", " ").Replace("\r", " ")}...{str.Length:N0}\r\n" :
+//    val?.ToString() ?? "Null";
 
-  const int _maxWidth = 42;
-}
+//  const int _maxWidth = 42;
+//}

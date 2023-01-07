@@ -59,7 +59,7 @@
       <Label Content="Detail:"   Grid.Row="3" />
       <TextBox                   Grid.Row="3" Grid.Column="1" Text="{Binding TxDetail, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"                             />
       <Label Content="Memo PP:"  Grid.Row="4" />
-      <TextBox x:Name="tbxMemo"  Grid.Row="4" Grid.Column="1" Text="{Binding MemoPP, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"                               />
+      <TextBox x:Name="tbxMemo"  Grid.Row="4" Grid.Column="1" Text="{Binding MemoPp, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"                               />
       <Label Content="Notes:"    Grid.Row="5" />
       <TextBox                   Grid.Row="5" Grid.Column="1" Text="{Binding Notes, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"                                />
       <Label Content="Category:" Grid.Row="6" />
@@ -75,7 +75,7 @@
         <DataGridTextColumn Header="Tx Date"    Binding="{Binding TxDate, StringFormat='{}{0:yyyy-MM-dd}'}"/>
         <DataGridTextColumn Header="$$"     Binding="{Binding TxAmount, StringFormat={}{0,9:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#0c0" FontWeight="Medium" />
         <DataGridTextColumn Header="Tx Detail"  Binding="{Binding TxDetail}"  Width="3*" />
-        <DataGridTextColumn Header="Memo PP"    Binding="{Binding MemoPP}"    Width="2*" />
+        <DataGridTextColumn Header="Memo PP"    Binding="{Binding MemoPp}"    Width="2*" />
         <DataGridTextColumn Header="Notes"      Binding="{Binding Notes}"     Width="1*" />
         <DataGridTextColumn Header="Category"   Binding="{Binding TxCategoryIdTxt}"/>
         <DataGridTextColumn Header="Src Id"     Binding="{Binding TxMoneySrcId}"    Foreground="#f08" />

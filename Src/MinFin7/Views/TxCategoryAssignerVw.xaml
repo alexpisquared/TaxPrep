@@ -7,25 +7,37 @@
         Title="MF.TxCategoryAssigner" Height="450" Width="1600" Loaded="onLoaded" Icon="/MinFin7;component/US-dollar.ico" Background="#ccc">
   <!--<WindowChrome.WindowChrome>    <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />  </WindowChrome.WindowChrome>-->
   <lnk:WindowBase.Resources>
-    <CollectionViewSource x:Key="txCoreV2_Root_VwSrc"		d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCoreV2},   CreateList=True}"/>
-    <CollectionViewSource x:Key="txCategoryVwSrcDatGrd"	d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCategory}, CreateList=True}"/>
-    <CollectionViewSource x:Key="txCategoryVwSrcComBox"	d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCategory}, CreateList=True}"/>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/BasicDefaultsLayout.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Base.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/ComboBox.Base.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Anime.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Dark.Google.xaml" />
+        <!--
+        -->
+      </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="stb:HighlightableTextBlock">
-      <Setter Property="ToolTipService.ShowDuration" Value="999999" />
-      <Setter Property="HighlightForeground" Value="#c00" />
-      <Setter Property="HighlightBackground" Value="#fcc" />
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="stb:HighlightableTextBlock">
-            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-              <TextBlock x:Name="PART_TEXT"/>
-            </Border>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
+      <CollectionViewSource x:Key="txCoreV2_Root_VwSrc"		d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCoreV2},   CreateList=True}"/>
+      <CollectionViewSource x:Key="txCategoryVwSrcDatGrd"	d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCategory}, CreateList=True}"/>
+      <CollectionViewSource x:Key="txCategoryVwSrcComBox"	d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCategory}, CreateList=True}"/>
 
+      <Style TargetType="stb:HighlightableTextBlock">
+        <Setter Property="ToolTipService.ShowDuration" Value="999999" />
+        <Setter Property="HighlightForeground" Value="#c00" />
+        <Setter Property="HighlightBackground" Value="#fcc" />
+        <Setter Property="Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="stb:HighlightableTextBlock">
+              <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                <TextBlock x:Name="PART_TEXT"/>
+              </Border>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+
+    </ResourceDictionary>
   </lnk:WindowBase.Resources>
   <Grid DataContext="{StaticResource txCoreV2_Root_VwSrc}"  x:Name="ZommablePanel" >
     <Grid.LayoutTransform>
@@ -144,7 +156,7 @@
       <DataGrid.Resources>
         <Style TargetType="DataGridRow">
           <!--<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.IsInDb, Converter={cnv:Bool TrueColor=Gray, FalseColor=Red}}" />-->
-          <Setter Property="Background" Value="{Binding TxCategoryIdTxt, Converter={cnv:UniConverter BrushTrue=LightGoldenrodYellow, BrushFalse=White}, ConverterParameter='UnKn'}" />
+          <Setter Property="Background" Value="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=LightGoldenrodYellow, BrushFalse=White}, ConverterParameter='UnKn'}" />
         </Style>
       </DataGrid.Resources>
       <DataGrid.Columns>
@@ -157,7 +169,7 @@
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
               <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxMoneySrc.Notes}" HorizontalAlignment="Center" 
-                         Foreground="{Binding TxCategoryIdTxt, Converter={cnv:UniConverter BrushTrue=LightYellow, BrushFalse=Blue}, ConverterParameter='UnKn'}" />
+                         Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=LightYellow, BrushFalse=Blue}, ConverterParameter='UnKn'}" />
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
@@ -186,10 +198,10 @@
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
 
-        <DataGridTemplateColumn Header="MemoPP"   SortMemberPath="MemoPP" CanUserSort="True" >
+        <DataGridTemplateColumn Header="MemoPp"   SortMemberPath="MemoPp" CanUserSort="True" >
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <stb:HighlightableTextBlock Text="{Binding MemoPP}" SearchText="{Binding ElementName=tbkFlt, Path=Text}" ToolTip="{Binding Id}" />
+              <stb:HighlightableTextBlock Text="{Binding MemoPp}" SearchText="{Binding ElementName=tbkFlt, Path=Text}" ToolTip="{Binding Id}" />
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
@@ -212,7 +224,7 @@
 
     <DataGrid x:Name="dgTxCatgry" ItemsSource="{Binding Source={StaticResource txCategoryVwSrcDatGrd}}" SelectionChanged="dgTxCtgr_SelectionChanged" MouseDoubleClick="dgTxCtgr_MouseDblClick" Grid.Row="1" Grid.Column="3" >
       <DataGrid.Columns>
-        <DataGridTextColumn Binding="{Binding TL_Number}"	  Header="TL #" />
+        <DataGridTextColumn Binding="{Binding TlNumber}"	  Header="TL #" />
         <DataGridTextColumn Binding="{Binding ExpGroupId}"	Header="Exp Group" />
 
         <DataGridTemplateColumn Header="IdTxt"   SortMemberPath="IdTxt" CanUserSort="True" >
@@ -222,7 +234,7 @@
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
-  
+
         <DataGridTemplateColumn Header="Name"   SortMemberPath="Name" CanUserSort="True" Width="*" >
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
