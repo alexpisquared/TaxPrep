@@ -5,7 +5,7 @@ public partial class App : Application
   {
     base.OnStartup(e);
     Current.DispatcherUnhandledException += UnhandledExceptionHndlr.OnCurrentDispatcherUnhandledException;
-    EventManager.RegisterClassHandler(typeof(TextBox), TextBox.GotFocusEvent, new RoutedEventHandler((s, re) => { (s as TextBox).SelectAll(); })); //tu: TextBox
+    EventManager.RegisterClassHandler(typeof(TextBox), UIElement.GotFocusEvent, new RoutedEventHandler((s, re) => ((TextBox)s).SelectAll())); //tu: TextBox
 
 #if _DEBUG
       //new ReportWindow(MSMoneyDbLoader.App.GetCmndLineArgsInclClickOnce())
