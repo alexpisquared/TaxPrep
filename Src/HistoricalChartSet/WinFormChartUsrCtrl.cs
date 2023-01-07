@@ -8,6 +8,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using AAV.WPF.Extension;
+using System.Windows;
 
 namespace HistoricalChartSet
 {
@@ -157,33 +159,38 @@ namespace HistoricalChartSet
     void chart1_MouseDown(object s, MouseEventArgs e)
     {
       var htr = chart1.HitTest(e.X, e.Y);
-
-      if (htr.ChartElementType == ChartElementType.DataPoint)
+      try
       {
-        using (var db = A0DbContext.Create())
+
+        if (htr.ChartElementType == ChartElementType.DataPoint)
         {
-          var st = DateTime.FromOADate(htr.Series.Points[htr.PointIndex].XValue);
-          var txn = db.TxCoreV2.Where(r => r.TxDate == st).ToList();
-          if (txn == null)
-            MessageBox.Show(this, "Not good: \r\n\tNo txs for this date found.");
-          else
+          using (var db = A0DbContext.Create())
           {
-            //db.Laps.Load();
-            var dlg = new TxnDetailsVw
+            var st = DateTime.FromOADate(htr.Series.Points[htr.PointIndex].XValue);
+            var txn = db.TxCoreV2.Where(r => r.TxDate == st).ToList();
+            if (txn == null)
+              System.Windows.MessageBox.Show("Not good: \r\n\tNo txs for this date found.");
+            else
             {
-              ChartRef = chart1,
-              PointIndex = htr.PointIndex,
-              HTR = htr,
-              Txns = txn
-            };
-            dlg.Show(); // MessageBox.Show(this, "DataPoint.Dialog popup is not ready\r\n\nSelected Element is: " + result.ChartElementType.ToString());
+              //db.Laps.Load();
+              var dlg = new TxnDetailsVw
+              {
+                ChartRef = chart1,
+                PointIndex = htr.PointIndex,
+                HTR = htr,
+                Txns = txn,
+                Owner = ((FrameworkElement)s).FindParentWindow()
+              };
+              dlg.Show(); // MessageBox.Show(this, "DataPoint.Dialog popup is not ready\r\n\nSelected Element is: " + result.ChartElementType.ToString());
+            }
           }
         }
+        //else if (result.ChartElementType != ChartElementType.Nothing)
+        //{
+        //	MessageBox.Show(this, "Selected Element is: " + result.ChartElementType.ToString());
+        //}
       }
-      //else if (result.ChartElementType != ChartElementType.Nothing)
-      //{
-      //	MessageBox.Show(this, "Selected Element is: " + result.ChartElementType.ToString());
-      //}
+      catch (Exception ex) { ex.Pop(); }
     }
 
     #region SeriesColors

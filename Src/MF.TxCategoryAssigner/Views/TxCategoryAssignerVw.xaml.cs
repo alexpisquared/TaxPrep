@@ -51,7 +51,7 @@ namespace MF.TxCategoryAssigner
 
       _txCatgry = null;
       _cutOffYr = null;
-      btAssign.IsEnabled = false;
+      btAssign.IsEnabled = btAssig2.IsEnabled = false;
 
       _loaded = true;
       chkSingleYr.IsChecked = true;      // invokes the 1st search
@@ -82,8 +82,8 @@ namespace MF.TxCategoryAssigner
 
       Debug.WriteLine($"■■■ filterStart()");
 
-      App.Synth.SpeakAsyncCancelAll();
-      Bpr.BeepFD(12000, 33); // wake monitor speakers
+      //App.Synth.SpeakAsyncCancelAll();
+      //Bpr.BeepFD(12000, 33); // wake monitor speakers
 
       await reLoadTxCore();
 
@@ -139,7 +139,7 @@ namespace MF.TxCategoryAssigner
       }
 
       updateTitle();
-      Bpr.OkFaF();
+      //Bpr.OkFaF();
     }
     async Task reLoadTxCore() // limit txns by chkboxs' filters
     {
@@ -170,7 +170,13 @@ namespace MF.TxCategoryAssigner
         }
 
         if (dgTxCore.ItemsSource != null)
+        {
           CollectionViewSource.GetDefaultView(dgTxCore.ItemsSource).Refresh(); //tu:            
+          Bpr.OkFaF();
+        }
+        else {
+          Bpr.ShortFaF();
+        }
       }
       catch (Exception ex) { ex.Pop(); }
     }
@@ -190,9 +196,9 @@ namespace MF.TxCategoryAssigner
           string.IsNullOrEmpty(txCatgoryId) ||
           (
             (
-              (!string.IsNullOrEmpty(strFilter) || 
+              (!string.IsNullOrEmpty(strFilter) ||
                r.TxDate.Year >= _trgTaxYr && string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0)
-              ) || 
+              ) ||
             (r.TxDate.Year < _trgTaxYr)
           )
         )
@@ -227,23 +233,23 @@ namespace MF.TxCategoryAssigner
         _catg.ClearAddRangeAuto(_db.TxCategories.Local.OrderBy(r => r.ExpenseGroup.Name).ThenBy(r => r.TL_Number));
       }
 
-      choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled = false;
+      choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled = btAssig2.IsEnabled = false;
       _choiceAbove = _choiceBelow = "";
 
       if (_catg.Count() == 1)
       {
-        btAssign.IsEnabled = true;
+        btAssign.IsEnabled = btAssig2.IsEnabled = true;
         _txnCtg.View.MoveCurrentToFirst();
       }
       else if (_catg.Count() == 2)
       {
         _choiceAbove = _catg.First().IdTxt;
         _choiceBelow = _catg.Last().IdTxt;
-        btAssign.IsEnabled = _choiceAbove == _choiceBelow;
+        btAssign.IsEnabled = btAssig2.IsEnabled = txCategoryListBox.SelectedItems.Count == 1;// _choiceAbove == _choiceBelow;
       }
 
       choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
-      choiceBelow.Content = $"_3 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
+      choiceBelow.Content = $"_7 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
 
       updateTitle();
     }
@@ -272,7 +278,7 @@ namespace MF.TxCategoryAssigner
     void onClear1(object s = null, RoutedEventArgs e = null) => tbkFlt.Text = tbxSearch.Text = "";
     void onClear2(object s = null, RoutedEventArgs e = null) => tSrch2.Text = "";
 
-    void dgTxCtgr_SelectionChanged(object s, SelectionChangedEventArgs e) => btAssign.IsEnabled = e.AddedItems.Count == 1;
+    void dgTxCtgr_SelectionChanged(object s, SelectionChangedEventArgs e) => btAssign.IsEnabled = btAssig2.IsEnabled = e.AddedItems.Count == 1;
     void dgTxCore_SelectionChanged(object s, SelectionChangedEventArgs e)
     {
       try
@@ -296,12 +302,12 @@ namespace MF.TxCategoryAssigner
           {
             var trg = lv.Where(r => r.TxCategory.IdTxt != "UnKn")?.FirstOrDefault();
             _choiceAbove = _choiceBelow = trg?.TxCategory.IdTxt ?? "";
-            btAssign.IsEnabled = true;
+            btAssign.IsEnabled = btAssig2.IsEnabled = txCategoryListBox.SelectedItems.Count == 1;
           }
         }
 
         choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
-        choiceBelow.Content = $"_2 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
+        choiceBelow.Content = $"_7 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
 
         updateTitle();
       }
@@ -330,12 +336,12 @@ namespace MF.TxCategoryAssigner
     }
 
     async void onManualTxnAdd(object s, RoutedEventArgs e) { new ManualTxnEntry(_db).ShowDialog(); await reLoadTxCore(); }
-    async void onAssign0(object s, RoutedEventArgs e) { if (txCategoryListBox.SelectedItems.Count > 0) await assign(((TxCategory)(txCategoryListBox.SelectedItems[0])).IdTxt); }
+    async void onAssign0(object s, RoutedEventArgs e) { if (txCategoryListBox.SelectedItems.Count == 1) await assign(((TxCategory)(txCategoryListBox.SelectedItems[0])).IdTxt); }
     async void onAssign1(object s, RoutedEventArgs e) => await assign(_choiceAbove);
     async void onAssign2(object s, RoutedEventArgs e) => await assign(_choiceBelow);
     async Task assign(string IdTxt)
     {
-      btAssign.IsEnabled = choiceAbove.IsEnabled = choiceBelow.IsEnabled = false;
+      btAssign.IsEnabled = btAssig2.IsEnabled = choiceAbove.IsEnabled = choiceBelow.IsEnabled = false;
 
       if (dgTxCore.SelectedItems.Count > 0)
       {
@@ -360,7 +366,7 @@ namespace MF.TxCategoryAssigner
       }
 
       tbxSearch.Focus();
-      Bpr.OkFaF();
+      //Bpr.OkFaF();
     }
   }
 }

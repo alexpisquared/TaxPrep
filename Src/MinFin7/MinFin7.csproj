@@ -1,0 +1,87 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
+    <PackageIcon>US-dollar.ico</PackageIcon>
+    <UserSecretsId>7529aff3-50c5-470e-b684-037df05974a7</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ReadMe.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ReadMe.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AsLink\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    <PackageReference Include="Microsoft.CognitiveServices.Speech" Version="1.24.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="..\..\..\..\c\AsLink\Themes\Common.xaml" Link="AsLink\Common.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\Ambience\AmbienceLib.csproj" />
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\EfDbHelperLib\EfDbHelperLib.csproj" />
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\StandardLib\StandardLib.csproj" />
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\WinFormsControlLib\WinFormsControlLib.csproj" />
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\WpfUserControlLib\WpfUserControlLib.csproj" />
+    <ProjectReference Include="..\Db.FinDemo7\Db.FinDemo7.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Bitmap1.bmp" />
+    <Resource Include="US-dollar.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TxCategoryAssignerVw.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Bitmap1.bmp">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="US-dollar.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
