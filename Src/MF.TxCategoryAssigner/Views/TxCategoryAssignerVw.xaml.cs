@@ -39,8 +39,8 @@ namespace MF.TxCategoryAssigner
 
       await _db.TxCategories.LoadAsync();
 
-      (_txnCtg = (CollectionViewSource)FindResource("txCategoryVwSrcDatGrd")).Source = _db.TxCategories.Local.OrderBy(r => r.ExpenseGroup.Name).ThenBy(r => r.TL_Number);
-      ((CollectionViewSource)FindResource("txCategoryVwSrcComBox")).Source = _db.TxCategories.Local.OrderBy(r => r.Name).ThenBy(r => r.TL_Number); // cbxTxCatgry.ItemsSource = _db.TxCategories.OrderBy(r => r.Name).ToList();
+      (_txnCtg = (CollectionViewSource)FindResource("txCategoryDGrdVwSrc")).Source = _db.TxCategories.Local.OrderBy(r => r.ExpenseGroup.Name).ThenBy(r => r.TL_Number);
+      ((CollectionViewSource)FindResource("txCategoryCmBxVwSrc")).Source = _db.TxCategories.Local.OrderBy(r => r.Name).ThenBy(r => r.TL_Number); // cbxTxCatgry.ItemsSource = _db.TxCategories.OrderBy(r => r.Name).ToList();
       _txCoreV2_Root_VwSrc = ((CollectionViewSource)FindResource("txCoreV2_Root_VwSrc"));
 
       tbxSearch.Focus();

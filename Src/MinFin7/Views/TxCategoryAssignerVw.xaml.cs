@@ -5,7 +5,7 @@ public partial class TxCategoryAssignerVw : WindowBase
   readonly DateTime _yrStart2004 = new(2004, 1, 1), _now = DateTime.Now;
   readonly ObservableCollection<TxCoreV2> _core = new();
   readonly ObservableCollection<TxCategory> _catg = new();
-  readonly CollectionViewSource _txnCtg, _txCoreV2_Root_VwSrc;
+  readonly CollectionViewSource _txCategoryCmBxVwSrc, _txCategoryDGrdVwSrc, _txCoreV2_Root_VwSrc;
   readonly int _trgTaxYr = DateTime.Today.Year - 1;
   readonly ILogger<TxCategoryAssignerVw> _lgr;
   readonly Bpr _bpr;
@@ -17,7 +17,8 @@ public partial class TxCategoryAssignerVw : WindowBase
   public TxCategoryAssignerVw(ILogger<TxCategoryAssignerVw> lgr, Bpr bpr)
   {
     InitializeComponent();
-    _txnCtg = (CollectionViewSource)FindResource("txCategoryVwSrcDatGrd");
+    _txCategoryCmBxVwSrc = (CollectionViewSource)FindResource("txCategoryCmBxVwSrc");
+    _txCategoryDGrdVwSrc = (CollectionViewSource)FindResource("txCategoryDGrdVwSrc");
     _txCoreV2_Root_VwSrc = (CollectionViewSource)FindResource("txCoreV2_Root_VwSrc");
     _lgr = lgr;
     _bpr = bpr;
@@ -31,8 +32,8 @@ public partial class TxCategoryAssignerVw : WindowBase
       await _db.TxCategories.LoadAsync();
       await _db.TxMoneySrcs.LoadAsync();
 
-      _txnCtg.Source = _db.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber);
-      ((CollectionViewSource)FindResource("txCategoryVwSrcComBox")).Source = _db.TxCategories.Local.OrderBy(r => r.Name).ThenBy(r => r.TlNumber);
+      _txCategoryDGrdVwSrc.Source = _db.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber);
+      _txCategoryCmBxVwSrc.Source = _db.TxCategories.Local.OrderBy(r => r.Name).ThenBy(r => r.TlNumber);
 
       _ = tbxSearch.Focus();
       var y = DateTime.Today.Year;
@@ -85,7 +86,7 @@ public partial class TxCategoryAssignerVw : WindowBase
       if (string.IsNullOrEmpty(csvFilterString))
       {
         App.Synth.SpeakExpressFAF("Clear!");
-        filterTxns(csvFilterString, _txCatgry);
+        FilterTxnsBy2(csvFilterString, _txCatgry);
       }
       else
       {
@@ -102,12 +103,12 @@ public partial class TxCategoryAssignerVw : WindowBase
 
             if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
             //App.Synth.SpeakExpressFAF("Multi.");
-            filterTxns(csvFilterString[(ta[0].Length + 1)..], _txCatgry, amt, rng);
+            FilterTxnsBy4(csvFilterString[(ta[0].Length + 1)..], _txCatgry, amt, rng);
           }
           else if (!string.IsNullOrEmpty(ta[1])) // explicit by string
           {
             //App.Synth.SpeakExpressFAF("Filter by text.");
-            filterTxns(ta[1], _txCatgry);
+            FilterTxnsBy2(ta[1], _txCatgry);
           }
         }
         else // == 1
@@ -116,12 +117,12 @@ public partial class TxCategoryAssignerVw : WindowBase
           {
             if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
             //App.Synth.SpeakExpressFAF("Filter by money.");
-            filterTxns("", _txCatgry, amt, rng);
+            FilterTxnsBy4("", _txCatgry, amt, rng);
           }
           else
           {
             //App.Synth.SpeakExpressFAF("Filter by text.");
-            filterTxns(csvFilterString, _txCatgry);
+            FilterTxnsBy2(csvFilterString, _txCatgry);
           }
         }
       }
@@ -142,8 +143,6 @@ public partial class TxCategoryAssignerVw : WindowBase
   async Task reLoadTxCore() // limit txns by chkboxs' filters
   {
     if (!_loaded) return;
-
-    Debug.WriteLine($"■■■   reLoadTxCore()");
 
     try
     {
@@ -179,44 +178,56 @@ public partial class TxCategoryAssignerVw : WindowBase
     }
     catch (Exception ex) { ex.Pop(); }
   }
-  void filterTxns(string strFilter, string? txCatgoryId)
+  void FilterTxnsBy2(string strFilter, string? txCatgoryId, [CallerMemberName] string? cmn = "")
   {
+    var started = Stopwatch.GetTimestamp();
     tbkFlt.Text = strFilter;
     tbkAmt.Text = "";
 
-    _core.ClearAddRangeAuto(_db.TxCoreV2s.Local.Where(r => (
-      (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(strFilter.ToLower())) ||
-      (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(strFilter.ToLower())) ||
-      (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(strFilter.ToLower())))
+    _core.ClearAddRangeAuto(_db.TxCoreV2s.Local.Where(r => 
+      (
+        (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(strFilter.ToLower())) ||
+        (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(strFilter.ToLower())) ||
+        (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(strFilter.ToLower()))
+      )
       &&
-      (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr)
+      (
+        _cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr
+      )
       &&
       (
         string.IsNullOrEmpty(txCatgoryId) ||
-
-            !string.IsNullOrEmpty(strFilter) ||
-             (r.TxDate.Year >= _trgTaxYr && string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0)
-             ||
-          (r.TxDate.Year < _trgTaxYr)
-
+        !string.IsNullOrEmpty(strFilter) ||
+        (r.TxDate.Year >= _trgTaxYr && string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0) ||
+        (r.TxDate.Year < _trgTaxYr)
       )
     ).OrderByDescending(r => r.TxDate));
+    WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
   }
-  void filterTxns(string strFilter, string? txCatgoryId, decimal amt, decimal rng)
+  void FilterTxnsBy4(string strFilter, string? txCatgoryId, decimal amt, decimal rng, [CallerMemberName] string? cmn = "")
   {
+    var started = Stopwatch.GetTimestamp();
     tbkFlt.Text = strFilter;
     tbkAmt.Text = $"{amt:N0}";
 
     _core.ClearAddRangeAuto(_db.TxCoreV2s.Local.Where(r =>
       amt - rng <= (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) && (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) <= amt + rng
-       && (
-      (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(strFilter.ToLower())) ||
-      (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(strFilter.ToLower())) ||
-      (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(strFilter.ToLower())))
+      && 
+      (
+        (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(strFilter.ToLower())) ||
+        (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(strFilter.ToLower())) ||
+        (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(strFilter.ToLower()))
+      )
       &&
-      (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr)
+      (
+        _cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr
+      )
       &&
-      (string.IsNullOrEmpty(txCatgoryId) || string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0)).OrderByDescending(r => r.TxDate));
+      (
+        string.IsNullOrEmpty(txCatgoryId) || string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0
+      )
+    ).OrderByDescending(r => r.TxDate));
+    WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
   }
   void filterCategoryByIdList(IEnumerable<int> catIds) => updateCtgrList(_db.TxCategories.Local.Where(r => catIds.Contains(r.Id)));
   void filterCategoryByTxtMatch(string namePart/**/  ) => updateCtgrList(_db.TxCategories.Local.Where(r => r.Name.ToLower().Contains(namePart) || r.IdTxt.ToLower().Contains(namePart)));
@@ -227,8 +238,8 @@ public partial class TxCategoryAssignerVw : WindowBase
 
     _catg.ClearAddRangeAuto(enu);
 
-    ArgumentNullException.ThrowIfNull(_txnCtg);
-    _txnCtg.Source = _catg;
+    ArgumentNullException.ThrowIfNull(_txCategoryDGrdVwSrc);
+    _txCategoryDGrdVwSrc.Source = _catg;
 
     if (_catg.Count() == 0)
     {
@@ -241,7 +252,7 @@ public partial class TxCategoryAssignerVw : WindowBase
     if (_catg.Count() == 1)
     {
       btAssign.IsEnabled = btAssig2.IsEnabled = true;
-      _ = _txnCtg.View.MoveCurrentToFirst();
+      _ = _txCategoryDGrdVwSrc.View.MoveCurrentToFirst();
     }
     else if (_catg.Count() == 2)
     {

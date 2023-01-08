@@ -5,8 +5,8 @@
   <!--<WindowChrome.WindowChrome>    <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />  </WindowChrome.WindowChrome>-->
   <lnk:WindowBase.Resources>
     <CollectionViewSource x:Key="txCoreV2_Root_VwSrc"		d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCoreV2},   CreateList=True}"/>
-    <CollectionViewSource x:Key="txCategoryVwSrcDatGrd"	d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCategory}, CreateList=True}"/>
-    <CollectionViewSource x:Key="txCategoryVwSrcComBox"	d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCategory}, CreateList=True}"/>
+    <CollectionViewSource x:Key="txCategoryDGrdVwSrc"	d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCategory}, CreateList=True}"/>
+    <CollectionViewSource x:Key="txCategoryCmBxVwSrc"	d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCategory}, CreateList=True}"/>
 
     <Style TargetType="stb:HighlightableTextBlock">
       <Setter Property="ToolTipService.ShowDuration" Value="999999" />
@@ -113,7 +113,7 @@
       <TextBox    Grid.Column="3"  Grid.Row="2" Foreground="#080" FontSize="18"			  TextChanged="onTextChangedFuz" x:Name="tRng" Text="1.00" />
       <TextBlock  Grid.Column="4"  Grid.Row="2" Foreground="#18d" FontSize="18"		    x:Name="tbkFlt" Background="#def" MinWidth="22" ToolTip="Search 1 - Main/Central" />
       <CheckBox   Grid.Column="5"  Grid.Row="1" Foreground="#808" x:Name="chkTxCatgry" Content="Ca_tgry" Checked="onTxCatgry_Checked" Unchecked="onTxCatgry_UnChckd" />
-      <ComboBox   Grid.Column="5"  Grid.Row="2"                    x:Name="cbxTxCatgry" IsEnabled="{Binding ElementName=chkTxCatgry, Path=IsChecked}" ItemsSource="{Binding Source={StaticResource txCategoryVwSrcComBox}}" DisplayMemberPath="Name" SelectedValuePath="IdTxt" SelectionChanged="onTxCatgry_Changed" />
+      <ComboBox   Grid.Column="5"  Grid.Row="2"                    x:Name="cbxTxCatgry" IsEnabled="{Binding ElementName=chkTxCatgry, Path=IsChecked}" ItemsSource="{Binding Source={StaticResource txCategoryCmBxVwSrc}}" DisplayMemberPath="Name" SelectedValuePath="IdTxt" SelectionChanged="onTxCatgry_Changed" />
 
       <CheckBox   Grid.Column="7"  Grid.Row="1" Foreground="#c04" x:Name="chkSingleYr" Content="1 _Yr  " Checked="onSingleYr_Checked" Unchecked="onSingleYr_UnChckd" />
       <ComboBox   Grid.Column="7"  Grid.Row="2"                    x:Name="cbxSingleYr" IsEnabled="{Binding ElementName=chkSingleYr, Path=IsChecked}" SelectionChanged="onSingleYr_Changed" />
@@ -207,7 +207,7 @@
       </DataGrid.Columns>
     </DataGrid>
 
-    <DataGrid x:Name="dgTxCatgry" ItemsSource="{Binding Source={StaticResource txCategoryVwSrcDatGrd}}" SelectionChanged="dgTxCtgr_SelectionChanged" MouseDoubleClick="dgTxCtgr_MouseDblClick" Grid.Row="1" Grid.Column="3" >
+    <DataGrid x:Name="dgTxCatgry" ItemsSource="{Binding Source={StaticResource txCategoryDGrdVwSrc}}" SelectionChanged="dgTxCtgr_SelectionChanged" MouseDoubleClick="dgTxCtgr_MouseDblClick" Grid.Row="1" Grid.Column="3" >
       <DataGrid.Columns>
         <DataGridTextColumn Binding="{Binding TL_Number}"	  Header="TL #" />
         <DataGridTextColumn Binding="{Binding ExpGroupId}"	Header="Exp Group" />
@@ -232,7 +232,7 @@
       </DataGrid.Columns>
     </DataGrid>
 
-    <ListBox	    Grid.Row="1" Grid.Column="5" x:Name="txCategoryListBox" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource txCategoryVwSrcDatGrd}}" SelectedValuePath="Id" SelectionChanged="OnLbxSelectionChanged" Margin="0,26,0,0" MinHeight="44"  />
+    <ListBox	    Grid.Row="1" Grid.Column="5" x:Name="txCategoryListBox" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource txCategoryDGrdVwSrc}}" SelectedValuePath="Id" SelectionChanged="OnLbxSelectionChanged" Margin="0,26,0,0" MinHeight="44"  />
 
     <GridSplitter Grid.RowSpan="3" Grid.Column="2"  />
     <GridSplitter Grid.RowSpan="3" Grid.Column="4"  />
