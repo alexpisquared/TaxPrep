@@ -65,7 +65,7 @@ namespace MF.TxCategoryAssigner
         {
           default:
           case MessageBoxResult.Cancel: e.Cancel = true; return;
-          case MessageBoxResult.Yes: var (success, rowsSavedCnt, report) = _db.TrySaveReport(); if (!success) MessageBox.Show(report, $"Attach to process!!!  ({rowsSavedCnt})"); break;
+          case MessageBoxResult.Yes: var (success, rowsSavedCnt, report) = _db.TrySaveReportAsync().Result; if (!success) MessageBox.Show(report, $"Attach to process!!!  ({rowsSavedCnt})"); break;
           case MessageBoxResult.No: break;
         }
       }
@@ -174,7 +174,8 @@ namespace MF.TxCategoryAssigner
           CollectionViewSource.GetDefaultView(dgTxCore.ItemsSource).Refresh(); //tu:            
           Bpr.OkFaF();
         }
-        else {
+        else
+        {
           Bpr.ShortFaF();
         }
       }

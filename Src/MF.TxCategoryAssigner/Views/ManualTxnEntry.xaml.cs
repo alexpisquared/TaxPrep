@@ -65,7 +65,7 @@ namespace MF.TxCategoryAssigner.Views
       }
       catch (Exception ex) { ex.Pop(); }
     }
-    void onSave(object sender = null, RoutedEventArgs e = null) => tbkTitle.Text = _db.TrySaveReport().report;
+    async void onSave(object sender = null, RoutedEventArgs e = null) => tbkTitle.Text = (await _db.TrySaveReportAsync()).report;
     void onAddingNewItem(object sender, System.Windows.Controls.AddingNewItemEventArgs e) => e.NewItem = createNewTxn(); //tu: pre-fill new record with valid values on the fly.
     void onMenu(object s, RoutedEventArgs e) { Hide(); new Views.MainAppDispatcher().ShowDialog(); }
     void cbSrc_SelectionChanged(object s, System.Windows.Controls.SelectionChangedEventArgs e) => btnTD.IsEnabled = int.TryParse(tbYear.Text, out var yr) && yr > 2000 && cbSrc.SelectedValue as int? > 0;
@@ -121,17 +121,17 @@ namespace MF.TxCategoryAssigner.Views
             continue;
           }
 
-          if(_db.TxCoreV2.Local.FirstOrDefault(r=>
+          if (_db.TxCoreV2.Local.FirstOrDefault(r =>
             r.TxDate == txDate &&
             r.TxAmount == txAmount &&
             r.TxDetail == line.Substring(12) &&
-            r.Notes == line 
+            r.Notes == line
           ) != null)
           {
             MessageBox.Show($"The record already added:\n\n{line}", "Duplicate Ignored");
             continue;
           }
-          
+
           _db.TxCoreV2.Local.Add(new TxCoreV2
           {
             CreatedAt = _now,

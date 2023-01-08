@@ -13,10 +13,15 @@ namespace MF.TxCategoryAssigner.Views
   public partial class MainAppDispatcher : WindowBase
   {
     const int _zeroBasedBtnCnt = 8;
+    readonly ILogger<TxCategoryAssignerVw> _logger;
+    readonly Bpr _bpr;
 
-    public MainAppDispatcher()
+    public MainAppDispatcher(ILogger<TxCategoryAssignerVw> logger, Bpr bpr)
     {
       InitializeComponent();
+
+      this._logger = logger;
+      this._bpr = bpr;
 
       KeyUp += (s, e) =>
       {
@@ -51,7 +56,7 @@ namespace MF.TxCategoryAssigner.Views
       {
         //case "b1": setDefault(0); new DbLoaderReportWindow(MSMoneyDbLoader.App.GetCmndLineArgsInclClickOnce()).ShowDialog(); break;
         //case "b2": setDefault(1); new HistoricalChartSet.MainHistChart().Show(); break;
-        case "b3": setDefault(2); new TxCategoryAssignerVw().Show(); break;
+        case "b3": setDefault(2); new TxCategoryAssignerVw(_logger, _bpr).Show(); break;
         case "b4": setDefault(3); new ManualTxnEntry(false).Show(); break;
         //case "b5": setDefault(4); MinFin7.Report.WinForm.Program.ShowBoth(); break;
         //case "b6": setDefault(5); MinFin7.Report.WinForm.Program.Show_Alx(); break;

@@ -3,8 +3,15 @@
 namespace MinFin7;
 public partial class App : Application
 {
+  static readonly DateTime Started = DateTime.Now;
+  //static readonly IConfigurationRoot? _config = ConfigHelper.AutoInitConfigFromFile();
+  ILogger<TxCategoryAssignerVw>? _logger;
   protected override void OnStartup(StartupEventArgs e)
   {
+    _logger = SeriLogHelper.InitLoggerFactory(
+      folder: FSHelper.GetCreateSafeLogFolderAndFile(@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log"),
+      levels: "+Info").CreateLogger<TxCategoryAssignerVw>();
+
     base.OnStartup(e);
     Current.DispatcherUnhandledException += UnhandledExceptionHndlr.OnCurrentDispatcherUnhandledException;
     EventManager.RegisterClassHandler(typeof(TextBox), UIElement.GotFocusEvent, new RoutedEventHandler((s, re) => ((TextBox)s).SelectAll())); //tu: TextBox
@@ -38,10 +45,10 @@ public partial class App : Application
 
     ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-    MainWindow = new TxCategoryAssignerVw(); // new MainAppDispatcher();
+    MainWindow = new TxCategoryAssignerVw(_logger, new Bpr()); // new MainAppDispatcher();
     MainWindow.ShowDialog(); 
 
-    done:
+    //done:
 #endif
 
     App.Current?.Shutdown();

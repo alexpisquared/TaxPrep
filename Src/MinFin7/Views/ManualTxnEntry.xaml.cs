@@ -1,8 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
-using EF.DbHelper.Lib;
-using MinFin7;
-using WpfUserControlLib.Extensions;
 
 namespace MF.TxCategoryAssigner.Views;
 
@@ -12,10 +9,20 @@ public partial class ManualTxnEntry : WindowBase
   readonly bool _toDispose;
   readonly DateTime _now = DateTime.Now;
 
-  public ManualTxnEntry(bool showBackToMenuBtn) : this(db: null) => btnBackToMenu.Visibility = showBackToMenuBtn ? Visibility.Visible : Visibility.Collapsed;
-  public ManualTxnEntry(FinDemoContext db) : this() => _db = (_toDispose = db == null) ? new() : db;
+  public ManualTxnEntry(bool showBackToMenuBtn) : this() => btnBackToMenu.Visibility = showBackToMenuBtn ? Visibility.Visible : Visibility.Collapsed;
+  public ManualTxnEntry(FinDemoContext db)
+  {
+    InitializeComponent();
+    _db = db;
+    _toDispose = false;
+  }
 
-  ManualTxnEntry() => InitializeComponent();
+  public ManualTxnEntry()
+  {
+    InitializeComponent();
+    _db = new FinDemoContext();
+    _toDispose = true;
+  }
 
   protected override void OnClosing(CancelEventArgs e)
   {
@@ -25,7 +32,7 @@ public partial class ManualTxnEntry : WindowBase
       {
         default:
         case MessageBoxResult.Cancel: e.Cancel = true; return;
-        case MessageBoxResult.Yes: onSave(); break;
+        case MessageBoxResult.Yes: tbkTitle.Text = _db.TrySaveReportAsync().Result.report;  break;
         case MessageBoxResult.No: break;
       }
     }
@@ -58,9 +65,9 @@ public partial class ManualTxnEntry : WindowBase
     }
     catch (Exception ex) { ex.Pop(); }
   }
-  async void onSave(object sender = null, RoutedEventArgs e = null) => tbkTitle.Text = (await _db.TrySaveReportAsync()).report;
+  async void onSave(object sender , RoutedEventArgs e ) => tbkTitle.Text = (await _db.TrySaveReportAsync()).report;
   void onAddingNewItem(object sender, System.Windows.Controls.AddingNewItemEventArgs e) => e.NewItem = createNewTxn(); //tu: pre-fill new record with valid values on the fly.
-  void onMenu(object s, RoutedEventArgs e) { Hide(); _ = new Views.MainAppDispatcher().ShowDialog(); }
+  void onMenu(object s, RoutedEventArgs e) => MessageBox.Show("N/A"); //   { Hide(); _ = new Views.MainAppDispatcher(_lgr, _bpr).ShowDialog(); }
   void cbSrc_SelectionChanged(object s, System.Windows.Controls.SelectionChangedEventArgs e) => btnTD.IsEnabled = int.TryParse(tbYear.Text, out var yr) && yr > 2000 && cbSrc.SelectedValue as int? > 0;
 
   TxCoreV2 createNewTxn() => new()

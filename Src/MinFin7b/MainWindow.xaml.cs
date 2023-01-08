@@ -1,31 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Db.FinDemo7.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace MinFin7b;
+﻿namespace MinFin7b;
 public partial class MainWindow : Window
 {
   readonly FinDemoContext _db = new();
-  public MainWindow()
-  {
-    InitializeComponent();
-  }
+  public MainWindow() => InitializeComponent();
 
-  async void OnLoaded(object sender, RoutedEventArgs e)
+  void OnLoaded(object sender, RoutedEventArgs e)
   {
     try
     {
@@ -43,11 +22,7 @@ public partial class MainWindow : Window
       Trace.WriteLine($"{ex}");
       throw;
     }
-
   }
 
-  private void OnClose(object sender, RoutedEventArgs e)
-  {
-    Close();
-  }
+  void OnClose(object sender, RoutedEventArgs e) => Close();
 }

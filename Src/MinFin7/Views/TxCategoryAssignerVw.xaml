@@ -3,7 +3,7 @@
                 xmlns:cnv="clr-namespace:WpfUserControlLib.Converters;assembly=WpfUserControlLib" 
                 xmlns:stb="clr-namespace:WpfUserControlLib.Helpers;assembly=WpfUserControlLib" 
                 xmlns:DbModel="clr-namespace:Db.FinDemo7.Models;assembly=Db.FinDemo7" mc:Ignorable="d" 
-                Title="MF.TxCategoryAssigner" Height="250" Width="1800" Loaded="onLoaded" Icon="/US-dollar.ico" Background="#ccc">
+                Title="MF.TxCategoryAssigner" Height="250" Width="1800" Loaded="OnLoaded" Icon="/US-dollar.ico" Background="#ccc">
   <!--<WindowChrome.WindowChrome>    <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />  </WindowChrome.WindowChrome>-->
   <lnk:WindowBase.Resources>
     <ResourceDictionary>
@@ -112,10 +112,10 @@
       </Grid.Resources>
 
       <StackPanel Grid.RowSpan="3" Orientation="Horizontal" Margin="20 0">
-        <Button Content="_Assign"	 Width="60" Click="onAssign0" x:Name="btAssign"    IsDefault="True"  Height="52" FontWeight="Bold" Background="#0f0" IsEnabled="False" />
+        <Button Content="_Assign"	 Width="70" Click="onAssign0" x:Name="btAssign"    IsDefault="True"  Height="52" FontWeight="Bold" Background="#0f0" IsEnabled="False" />
         <StackPanel VerticalAlignment="Center">
-          <Button Content="_1"		 Width="60" Click="onAssign1" x:Name="choiceAbove" IsTabStop="False" Height="25" FontWeight="Bold" Background="#ff0" IsEnabled="False" Margin="2 0 0 1" />
-          <Button Content="_7"		 Width="60" Click="onAssign2" x:Name="choiceBelow" IsTabStop="False" Height="25" FontWeight="Bold" Background="#ff0" IsEnabled="False" Margin="2 1 0 0" />
+          <Button Content="_1"		 Width="80" Click="onAssign1" x:Name="choiceAbove" IsTabStop="False" Height="25" FontWeight="Bold" Background="#ff0" IsEnabled="False" Margin="2 0 0 1" />
+          <Button Content="_7"		 Width="80" Click="onAssign2" x:Name="choiceBelow" IsTabStop="False" Height="25" FontWeight="Bold" Background="#ff0" IsEnabled="False" Margin="2 1 0 0" />
         </StackPanel>
       </StackPanel>
 
