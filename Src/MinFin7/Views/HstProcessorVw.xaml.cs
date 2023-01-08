@@ -14,7 +14,7 @@
       reload(0);
 
       //tSrch.Focus();
-      //Bpr.BeepOk();
+      //_bpr.BeepOk();
     }
 
     async Task reLoadTxCore()

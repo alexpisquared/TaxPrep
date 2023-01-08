@@ -271,7 +271,7 @@ namespace MF.TxCategoryAssigner
       await reLoadTxCore();
       onClear1(s, e);
     }
-    void onReLoad2(object s, RoutedEventArgs e) => ImportToDB.DoAll();
+    void onReLoad2(object s, RoutedEventArgs e) => ImportToDB.ImportAllAtOnce();
 
     async void onTextChangedFuz(object s, TextChangedEventArgs e) { if (!(await isStillTyping((TextBox)s))) await filterStart(tbxSearch.Text); }
     async void onTextChangedCtg(object s, TextChangedEventArgs e) { if (!(await isStillTyping((TextBox)s))) filterCategoryByTxtMatch(((TextBox)s).Text); }

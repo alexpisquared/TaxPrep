@@ -151,5 +151,5 @@ public partial class ManualTxnEntry : WindowBase
     catch (Exception ex) { ex.Pop(); }
   }
 }
-/// EXEC sp_changedbowner 'sa' //tu: dbo is missing fo db diagramming
+/// EXEC sp_changedbowner 'sa' //tu: dbo is missing fo _db diagramming
 /// 

@@ -38,7 +38,6 @@ namespace MinFin.Review.DS
       else
         Bpr.BeepNo();
     }
-
     void onUserChecked(object s, RoutedEventArgs e)
     {
       switch (_owner = ((RadioButton)s).Name)

@@ -267,8 +267,8 @@ public partial class TxCategoryAssignerVw : WindowBase
     UpdateTitle(Stopwatch.GetElapsedTime(started));
   }
 
-  async Task<bool> isStillTyping(TextBox textbox) { var tx = textbox.Text.ToLower(); await Task.Delay(750); return tx != textbox.Text.ToLower(); }
-  void UpdateTitle(TimeSpan timeSpan, [CallerMemberName] string? cmn = "") => WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_core.Count(),9:N0} rows    sum {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_core.Sum(r => r.TxAmount),-9:N0}    selects {_selectTtl,9:N2}  {timeSpan.TotalSeconds,4:N1}s   {cmn}");
+  static async Task<bool> IsStillTyping(TextBox textbox) { var prev = textbox.Text; await Task.Delay(750); return prev != textbox.Text; }
+  void UpdateTitle(TimeSpan took, [CallerMemberName] string? cmn = "") => WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_core.Count(),9:N0} rows    sum {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_core.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N1}s \t {cmn} \t\t {(VersionHelper.IsDbg ? "DBG" : "RLS")}");
 
   async void onReLoad(object s, RoutedEventArgs e)
   {
@@ -283,10 +283,9 @@ public partial class TxCategoryAssignerVw : WindowBase
     await reLoadTxCore();
     onClear1(s, e);
   }
-  void onReLoad2(object s, RoutedEventArgs e) => MessageBox.Show("Not implemented!!!!!!!\n\nSee .Net 4.8 version for details.", "ImportToDB.DoAll()");
 
-  async void onTextChangedFuz(object s, TextChangedEventArgs e) { if (!await isStillTyping((TextBox)s)) await FilterStart(tbxSearch.Text); }
-  async void onTextChangedCtg(object s, TextChangedEventArgs e) { if (!await isStillTyping((TextBox)s)) filterCategoryByTxtMatch(((TextBox)s).Text); }
+  async void onTextChangedFuz(object s, TextChangedEventArgs e) { if (!await IsStillTyping((TextBox)s)) await FilterStart(tbxSearch.Text); }
+  async void onTextChangedCtg(object s, TextChangedEventArgs e) { if (!await IsStillTyping((TextBox)s)) filterCategoryByTxtMatch(((TextBox)s).Text); }
 
   void onClear1(object s, RoutedEventArgs e) => tbkFlt.Text = tbxSearch.Text = "";
   void onClear2(object s, RoutedEventArgs e) => tSrch2.Text = "";
@@ -897,14 +896,14 @@ public enum MsgBoxDbRslt // MsgBoxReverseRslt
 
 //    return (false, -88, report);
 //  }
-//  public static void DiscardChanges(this DbContext db) => db.ChangeTracker.Clear();
-//  public static bool HasUnsavedChanges(this DbContext db) => db != null && db.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted);
-//  public static string GetDbChangesReport(this DbContext db, int maxLinesToShow = 33)
+//  public static void DiscardChanges(this DbContext _db) => _db.ChangeTracker.Clear();
+//  public static bool HasUnsavedChanges(this DbContext _db) => _db != null && _db.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted);
+//  public static string GetDbChangesReport(this DbContext _db, int maxLinesToShow = 33)
 //  {
-//    var sb = new StringBuilder($"{db.GetType().Name}.{db.GetType().GetHashCode()}:  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Deleted),5} Del  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Added),5} Ins  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Modified),5} Upd");
+//    var sb = new StringBuilder($"{_db.GetType().Name}.{_db.GetType().GetHashCode()}:  {_db.ChangeTracker.Entries().Count(e => e.State == EntityState.Deleted),5} Del  {_db.ChangeTracker.Entries().Count(e => e.State == EntityState.Added),5} Ins  {_db.ChangeTracker.Entries().Count(e => e.State == EntityState.Modified),5} Upd");
 
 //    var lineCounter = 0;
-//    foreach (var modifieds in db.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified))
+//    foreach (var modifieds in _db.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified))
 //    {
 //      foreach (var pn in modifieds.CurrentValues.Properties)
 //      {

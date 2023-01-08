@@ -1,10 +1,9 @@
-﻿<lnk:WindowBase x:Class="MF.TxCategoryAssigner.TxCategoryAssignerVw" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"   
+﻿<lnk:WindowBase x:Class="MF.TxCategoryAssigner.TxCategoryAssignerVw" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" 
                 xmlns:lnk="clr-namespace:WpfUserControlLib.Base;assembly=WpfUserControlLib"  x:Name="wnd" 
                 xmlns:cnv="clr-namespace:WpfUserControlLib.Converters;assembly=WpfUserControlLib" 
                 xmlns:stb="clr-namespace:WpfUserControlLib.Helpers;assembly=WpfUserControlLib" 
-                xmlns:DbModel="clr-namespace:Db.FinDemo7.Models;assembly=Db.FinDemo7" mc:Ignorable="d" 
+                xmlns:DbModel="clr-namespace:Db.FinDemo7.Models;assembly=Db.FinDemo7" 
                 Title="MF.TxCategoryAssigner" Height="250" Width="1800" Loaded="OnLoaded" Icon="/US-dollar.ico" Background="#ccc">
-  <!--<WindowChrome.WindowChrome>    <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />  </WindowChrome.WindowChrome>-->
   <lnk:WindowBase.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -17,7 +16,7 @@
         -->
       </ResourceDictionary.MergedDictionaries>
 
-      <CollectionViewSource x:Key="txCoreV2_Root_VwSrc"		d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCoreV2},   CreateList=True}"/>
+      <CollectionViewSource x:Key="txCoreV2_Root_VwSrc"	d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCoreV2},   CreateList=True}"/>
       <CollectionViewSource x:Key="txCategoryDGrdVwSrc"	d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCategory}, CreateList=True}"/>
       <CollectionViewSource x:Key="txCategoryCmBxVwSrc"	d:DesignSource="{d:DesignInstance {x:Type DbModel:TxCategory}, CreateList=True}"/>
 
@@ -134,7 +133,6 @@
 
       <Button     Grid.Column="9"  Grid.Row="2" Foreground="#18d" Content="_Clear"  Click="onClear1" />
       <Button     Grid.Column="11" Grid.Row="2" Foreground="#d81" Content="_Manual" Click="onManualTxnAdd" ToolTip="Add a txn manually. " />
-      <Button     Grid.Column="13" Grid.Row="2" Foreground="#963" Content="FS=>DB"	  Click="onReLoad2" ToolTip="This is to be done in VS with Debugger attached. " />
     </Grid>
 
 
@@ -167,24 +165,23 @@
         <DataGridTemplateColumn Header="Category"		SortMemberPath="TxCategoryIdTxt">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxMoneySrc.Notes}" HorizontalAlignment="Center" 
-                         Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=LightYellow, BrushFalse=Blue}, ConverterParameter='UnKn'}" />
+              <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxMoneySrc.Notes}" HorizontalAlignment="Center" Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=LightYellow, BrushFalse=Blue}, ConverterParameter='UnKn'}" />
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
 
-        <DataGridTemplateColumn Header="Src FLA"		  SortMemberPath="TxMoneySrc.Fla">
+        <DataGridTemplateColumn Header="Src FLA"	SortMemberPath="TxMoneySrc.Fla">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <TextBlock Text="{Binding TxMoneySrc.Fla}" ToolTip="{Binding TxMoneySrc.Notes}" />
+              <TextBlock Text="{Binding TxMoneySrc.Fla}"  ToolTip="{Binding TxMoneySrc.Owner}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=Teal, BrushFalse=Magenta}, ConverterParameter='Alx'}" />
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
 
-        <DataGridTemplateColumn Header="$$ Src"		  SortMemberPath="TxMoneySrc.Name">
+        <DataGridTemplateColumn Header="Src Name" SortMemberPath="TxMoneySrc.Name">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <TextBlock Text="{Binding TxMoneySrc.Name}" ToolTip="{Binding FitId}" />
+              <TextBlock Text="{Binding TxMoneySrc.Name}" ToolTip="{Binding TxMoneySrc.Owner}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=Magenta, BrushFalse=Teal}, ConverterParameter='Mei'}" />
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
@@ -222,7 +219,7 @@
     </DataGrid>
 
     <DataGrid x:Name="dgTxCatgry" ItemsSource="{Binding Source={StaticResource txCategoryDGrdVwSrc}}" SelectionChanged="dgTxCtgr_SelectionChanged" MouseDoubleClick="dgTxCtgr_MouseDblClick" Grid.Row="1" Grid.Column="3"
-              RowBackground="#eee"  AlternatingRowBackground="#ddd">
+              RowBackground="#ccc"  AlternatingRowBackground="#ddd">
       <DataGrid.Columns>
         <DataGridTextColumn Binding="{Binding TlNumber}"	  Header="TL #" />
         <DataGridTextColumn Binding="{Binding ExpGroupId}"	Header="Exp Group" />

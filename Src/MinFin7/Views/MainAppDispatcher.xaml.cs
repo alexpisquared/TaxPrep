@@ -37,7 +37,7 @@ namespace MF.TxCategoryAssigner.Views
       //Task.Run(async () => await new().UnitPrices.LoadAsync()); // preload to ini the EF for faster loads in views.
 
       setDefault(Settings.Default.LastBtnNo);
-      //tbver.Text = $"db:{Db.FinDemo7.Models.FinDemoContext.DbName}    -   {VerHelper.CurVerStr(".NET 4.8")}";
+      //tbver.Text = $"_db:{Db.FinDemo7.Models.FinDemoContext.DbName}    -   {VerHelper.CurVerStr(".NET 4.8")}";
     }
 
     void setDefault(int cb)
@@ -46,7 +46,7 @@ namespace MF.TxCategoryAssigner.Views
       ((Button)FindName($"b{cb + 1}")).IsDefault = true;
       Settings.Default.LastBtnNo = cb;
       Settings.Default.Save();
-      //Bpr.ShortFaF();
+      //_bpr.ShortFaF();
     }
 
     async void onX(object s, RoutedEventArgs e)

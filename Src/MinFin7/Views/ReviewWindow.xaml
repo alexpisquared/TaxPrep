@@ -1,27 +1,34 @@
-﻿<lnk:WindowBase xmlns:lnk="clr-namespace:AAV.WPF.Base;assembly=AAV.WPF" x:Name="wnd" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-                xmlns:local="clr-namespace:MinFin.Review.DS" x:Class="MinFin.Review.DS.ReviewWindow" WindowStartupLocation="CenterScreen"
-                Title="Historical Review" Height="400" Width="1900" Loaded="onLoaded" AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip" Background="#def">
+﻿<lnk:WindowBase x:Class="MinFin7.Views.ReviewWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+                xmlns:lnk="clr-namespace:WpfUserControlLib.Base;assembly=WpfUserControlLib"  x:Name="wnd" 
+                xmlns:local="clr-namespace:MinFin7.Views"
+                xmlns:cnv="clr-namespace:WpfUserControlLib.Converters;assembly=WpfUserControlLib" 
+                xmlns:stb="clr-namespace:WpfUserControlLib.Helpers;assembly=WpfUserControlLib" 
+                xmlns:DbModel="clr-namespace:Db.FinDemo7.Models;assembly=Db.FinDemo7" 
+                Title="ReviewWindow" Height="250" Width="1800" Loaded="OnLoaded" Icon="/US-dollar.ico" Background="#ccc">
   <WindowChrome.WindowChrome>
     <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />
   </WindowChrome.WindowChrome>
   <lnk:WindowBase.Resources>
-    <local:WeekDayToBkColorConverter x:Key="WeekDayToBkColorConverter" />
-    <local:IncreaseToColorConverter x:Key="IncreaseToColorConverter" />
-    <local:YearColor x:Key="YearColor" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/BasicDefaultsLayout.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Base.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/ComboBox.Base.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Anime.xaml" />
+        <!--
+        <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Dark.Google.xaml" />
+        -->
+      </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="RightAlignStyle" TargetType="{x:Type TextBlock}">
-      <Setter Property="TextAlignment" Value="Right" />
-    </Style>
-    <!--
-    <local:FinDemoDataSet x:Key="finDemoDataSet"/>
-		<CollectionViewSource x:Key="vw_Exp_AllPrev_vs_LastYr_VwSrc"											Source="{Binding Vw_Exp_2010_2011_2012_2013_2014_vs_2015b, Source={StaticResource finDemoDataSet}}"/>
-		<CollectionViewSource x:Key="vw_Exp_AllPrev_vs_LastYr__TxnCoreVwSrc"							Source="{Binding Vw_Exp_2010_2011_2012_2013_2014_vs_2015b_TxCore, Source={StaticResource vw_Exp_AllPrev_vs_LastYr_VwSrc}}"/>
-		<CollectionViewSource x:Key="vw_Exp_2010_2011_vs_2012bTxCoreTxSupplierViewSource" Source="{Binding TxCore_TxSupplier, Source={StaticResource vw_Exp_AllPrev_vs_LastYr__TxnCoreVwSrc}}"/>
-		<CollectionViewSource x:Key="vw_Exp_2010_2011_vs_2012bTxCoreTxMoneySrcViewSource" Source="{Binding TxCore_TxMoneySrc, Source={StaticResource vw_Exp_AllPrev_vs_LastYr__TxnCoreVwSrc}}"/>
+      <local:WeekDayToBkColorConverter x:Key="WeekDayToBkColorConverter" />
+      <local:IncreaseToColorConverter x:Key="IncreaseToColorConverter" />
+      <local:YearColor x:Key="YearColor" />
 
-	</lnk:WindowBase.Resources>
-	<Grid DataContext="{StaticResource vw_Exp_AllPrev_vs_LastYr_VwSrc}" >
--->
+      <Style x:Key="RightAlignStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="TextAlignment" Value="Right" />
+      </Style>
+
+    </ResourceDictionary>
   </lnk:WindowBase.Resources>
   <Grid >
     <Grid.RowDefinitions>
@@ -167,7 +174,7 @@
 			</DataGrid.Columns>
 		</DataGrid>-->
 
-    <Button Content=" _Refresh " Grid.Column="1" HorizontalAlignment="Right" Margin="40 2" Grid.Row="0" Click="onLoaded" IsDefault="True"/>
+    <Button Content=" _Refresh " Grid.Column="1" HorizontalAlignment="Right" Margin="40 2" Grid.Row="0" Click="OnLoaded" IsDefault="True"/>
 
   </Grid>
 </lnk:WindowBase>

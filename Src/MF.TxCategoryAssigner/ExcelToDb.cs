@@ -20,7 +20,7 @@ namespace MF.TxCategoryAssigner
     static readonly A0DbContext _db = A0DbContext.Create();
     static DateTime _now = DateTime.Now;
 
-    public static void DoAll()
+    public static void ImportAllAtOnce()
     {
       _now = DateTime.Now;
       LoadFolderCsvsToDb(PreSet.PathToCibcVisa, "cibccreditcard*.ofx", Vs);
