@@ -30,3 +30,7 @@ global using System.Collections.Generic;
 //global using System.Data.Entity;
 global using MF.TxCategoryAssigner.Views;
 global using MinFin7;
+global using System.Data.Entity.Validation;
+global using System.Text;
+global using EF.DbHelper.Lib;
+global using WpfUserControlLib.Extensions;

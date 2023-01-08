@@ -1,8 +1,4 @@
-﻿using System.Data.Entity.Validation;
-using System.Text;
-using EF.DbHelper.Lib;
-using WpfUserControlLib.Extensions;
-namespace MF.TxCategoryAssigner;
+﻿namespace MF.TxCategoryAssigner;
 public partial class TxCategoryAssignerVw : WindowBase
 {
   readonly FinDemoContext _db = new();
@@ -24,6 +20,7 @@ public partial class TxCategoryAssignerVw : WindowBase
     try
     {
       await _db.TxCategories.LoadAsync();
+      await _db.TxMoneySrcs.LoadAsync();
 
       (_txnCtg = (CollectionViewSource)FindResource("txCategoryVwSrcDatGrd")).Source = _db.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber);
       ((CollectionViewSource)FindResource("txCategoryVwSrcComBox")).Source = _db.TxCategories.Local.OrderBy(r => r.Name).ThenBy(r => r.TlNumber); // cbxTxCatgry.ItemsSource = _db.TxCategories.OrderBy(r => r.Name).ToList();
