@@ -1077,7 +1077,7 @@ public partial class FinDemoContext : DbContext
         modelBuilder.Entity<VwExpHistVsLast>(entity =>
         {
             entity
-                .HasNoKey()
+                //tu: patch vw-no-kwy 1/2   ...because it does not have a primary key   .HasNoKey()
                 .ToView("Vw_Exp_Hist_vs_Last");
 
             entity.Property(e => e.Category)
@@ -1327,7 +1327,7 @@ public partial class FinDemoContext : DbContext
         modelBuilder.Entity<VwTxCore>(entity =>
         {
             entity
-                .HasNoKey()
+                //tu: patch vw-no-kwy 1/2   ...because it does not have a primary key   .HasNoKey()
                 .ToView("Vw_TxCore");
 
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");

@@ -1,6 +1,4 @@
-﻿using MF.TxCategoryAssigner;
-
-namespace MinFin7;
+﻿namespace MinFin7;
 public partial class App : Application
 {
   static readonly DateTime Started = DateTime.Now;
@@ -45,7 +43,7 @@ public partial class App : Application
 
     ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-    MainWindow = new TxCategoryAssignerVw(_logger, new Bpr()); // new MainAppDispatcher();
+    MainWindow = new ReviewWindow(_logger, new Bpr(), "Mei"); //TxCategoryAssignerVw(_logger, new Bpr()); // new MainAppDispatcher();
     MainWindow.ShowDialog(); 
 
     //done:

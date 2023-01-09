@@ -1,6 +1,4 @@
-﻿using MF.TxCategoryAssigner;
-
-namespace MinFin7.Views;
+﻿namespace MinFin7.Views;
 public partial class ReviewWindow : WindowBase
 {
   readonly FinDemoContext _db = new();
@@ -17,26 +15,30 @@ public partial class ReviewWindow : WindowBase
   int? _cutOffYr = null;
   string _owner;
 
-  public ReviewWindow(ILogger<TxCategoryAssignerVw> lgr, Bpr bpr)
+  public ReviewWindow(ILogger<TxCategoryAssignerVw> lgr, Bpr bpr, string owner)
   {
     InitializeComponent();
-    _txCategoryCmBxVwSrc = (CollectionViewSource)FindResource("txCategoryCmBxVwSrc");
-    _txCategoryDGrdVwSrc = (CollectionViewSource)FindResource("txCategoryDGrdVwSrc");
-    _txCoreV2_Root_VwSrc = (CollectionViewSource)FindResource("txCoreV2_Root_VwSrc");
+    //_txCategoryCmBxVwSrc = (CollectionViewSource)FindResource("txCategoryCmBxVwSrc");
+    //_txCategoryDGrdVwSrc = (CollectionViewSource)FindResource("txCategoryDGrdVwSrc");
+    //_txCoreV2_Root_VwSrc = (CollectionViewSource)FindResource("txCoreV2_Root_VwSrc");
     _lgr = lgr;
     _bpr = bpr;
   }
 
   async void OnLoaded(object sender, RoutedEventArgs e)
   {
-    _bpr.Start();
-    await Task.Yield(); // it really shows window on .Net 4.8 !!! (2022-Jan-30)
-    await _db.VwTxCores.LoadAsync()/*.ConfigureAwait(false)*/;            // TxCoreV2 would show the MoneySrc.Name in Binding
-    await _db.VwExpHistVsLasts.LoadAsync()/*.ConfigureAwait(false)*/;
-    dgTxVs.ItemsSource = _db.VwExpHistVsLasts.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq);
-    dbHist.ItemsSource = null;
-    dgTxVs.Focus();
-    _bpr.Finish();
+    try
+    {
+      _bpr.Start();
+      await Task.Yield(); // it really shows window on .Net 4.8 !!! (2022-Jan-30)
+      await _db.VwTxCores.LoadAsync()/*.ConfigureAwait(false)*/;            // TxCoreV2 would show the MoneySrc.Name in Binding
+      await _db.VwExpHistVsLasts.LoadAsync()/*.ConfigureAwait(false)*/;
+      dgTxVs.ItemsSource = _db.VwExpHistVsLasts.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq);
+      dbHist.ItemsSource = null;
+      dgTxVs.Focus();
+      _bpr.Finish();
+    }
+    catch (Exception ex) { ex.Pop(); }
   }
   void dgCore_SelnChgd(object s, SelectionChangedEventArgs e)
   {

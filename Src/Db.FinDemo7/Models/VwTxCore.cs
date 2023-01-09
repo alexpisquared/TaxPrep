@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Db.FinDemo7.Models;
 
 public partial class VwTxCore
 {
-    public int? Id { get; set; }
+  [Key] //tu: patch vw-no-kwy 2/2   ...because it does not have a primary keypublic int? Id { get; set; }
+  public int? Id { get; set; }
 
     public int TxMoneySrcId { get; set; }
 

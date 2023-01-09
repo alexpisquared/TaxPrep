@@ -28,4 +28,6 @@ global using WpfUserControlLib.Base;
 global using WpfUserControlLib.Extensions;
 global using WpfUserControlLib.Helpers;
 global using static System.Diagnostics.Trace;
+global using MF.TxCategoryAssigner;
+global using MinFin7.Views;
 

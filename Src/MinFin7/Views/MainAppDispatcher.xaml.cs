@@ -61,7 +61,7 @@ namespace MF.TxCategoryAssigner.Views
         //case "b5": setDefault(4); MinFin7.Report.WinForm.Program.ShowBoth(); break;
         //case "b6": setDefault(5); MinFin7.Report.WinForm.Program.Show_Alx(); break;
         //case "b7": setDefault(6); MinFin7.Report.WinForm.Program.Show_Mei(); break;
-        //case "b8": setDefault(7); new MinFin7.Review.DS.ReviewWindow("Mei").Show(); break;
+        case "b8": setDefault(7); new MinFin7.Views.ReviewWindow(_logger, _bpr, "Mei").Show(); break;
         //case "b9": setDefault(8); new MinFin7.DataSet.TxAdd().Show(); break;
         default: break;
       }
