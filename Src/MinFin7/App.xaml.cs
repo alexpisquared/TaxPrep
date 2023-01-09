@@ -43,7 +43,12 @@ public partial class App : Application
 
     ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-    MainWindow = new ReviewWindow(_logger, new Bpr(), "Mei"); //TxCategoryAssignerVw(_logger, new Bpr()); // new MainAppDispatcher();
+
+    MainWindow = VersionHelper.IsDbg ? 
+      new ReviewWindow(_logger, new Bpr(), "Mei") : 
+      //new TxCategoryAssignerVw(_logger, new Bpr()) :
+      new MainAppDispatcher(_logger, new Bpr());
+    
     MainWindow.ShowDialog(); 
 
     //done:

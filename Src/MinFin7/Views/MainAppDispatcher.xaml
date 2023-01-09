@@ -7,6 +7,24 @@
   <WindowChrome.WindowChrome>
     <WindowChrome CaptionHeight="0" ResizeBorderThickness="25" />
   </WindowChrome.WindowChrome>
+  <lnk:WindowBase.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/BasicDefaultsLayout.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Base.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/ComboBox.Base.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Anime.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Dark.Google.xaml" />
+        <!--
+        -->
+      </ResourceDictionary.MergedDictionaries>
+
+      <Style x:Key="RightAlignStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="TextAlignment" Value="Right" />
+      </Style>
+
+    </ResourceDictionary>
+  </lnk:WindowBase.Resources>
   <Border CornerRadius="10" Padding="10" BorderThickness="1" BorderBrush="#080" >
     <Border.Background>
       <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -51,16 +69,15 @@
           </TextBlock>
         </StackPanel>
 
-        <Button Content=" _1 td,cibc: MS Money.OFX     "	    Foreground="#c00" x:Name="b1" Click="onX" 
-              ToolTip=" CIBC: IntuitQuicken.QFX: seems to be OK (Aug 2018) &#10;&#10; TD: MS Money - OFX &#10;&#10; Amzn: - QIF" />
-        <Button Content=" _2 Charts            - HistoricalChartSet"     Foreground="#0a0" x:Name="b2" Click="onX" ToolTip="Show Charts" />
-        <Button Content=" _3 Assign            - TxCategoryAssigner"     Foreground="#cc0" x:Name="b3" Click="onX" ToolTip="Show Assign" />
-        <Button Content=" _4 Manual Entry      - Crude but better"       Foreground="#08f" x:Name="b4" Click="onX" ToolTip="Show Assign" />
-        <Button Content=" _5 Annual Report     - MinFin7.Report.WinForm"  Foreground="#d60" x:Name="b5" Click="onX" ToolTip="Show Assign" />
-        <Button Content=" _6 Annual Report Alx - MinFin7.Report.WinForm"  Foreground="#d60" x:Name="b6" Click="onX" ToolTip="Show Assign" />
-        <Button Content=" _7 Annual Report Mei - MinFin7.Report.WinForm"  Foreground="#d60" x:Name="b7" Click="onX" ToolTip="Show Assign" />
-        <Button Content=" _8 Historical Review - MinFin7.Review.DS     "  Foreground="#80a" x:Name="b8" Click="onX" ToolTip="Show Assign" />
-        <Button Content=" _9 Manual Entry      - Legacy TxCore tbl only" Foreground="#222" x:Name="b9" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" 1 td,cibc: MS Money.OFX     "	                 Foreground="#3c00" x:Name="b1" Click="onX" ToolTip=" CIBC: IntuitQuicken.QFX: seems to be OK (Aug 2018) &#10;&#10; TD: MS Money - OFX &#10;&#10; Amzn: - QIF" />
+        <Button Content=" 2 Charts            - HistoricalChartSet"      Foreground="#30a0" x:Name="b2" Click="onX" ToolTip="Show Charts" />
+        <Button Content=" 3 Assign            - TxCategoryAssigner"      Foreground="#fcc0" x:Name="b3" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" 4 Manual Entry      - Crude but better"        Foreground="#308f" x:Name="b4" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" 5 Annual Report     - MinFin7.Report.WinForm"  Foreground="#3d60" x:Name="b5" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" 6 Annual Report Alx - MinFin7.Report.WinForm"  Foreground="#3d60" x:Name="b6" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" 7 Annual Report Mei - MinFin7.Report.WinForm"  Foreground="#3d60" x:Name="b7" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" 8 Historical Review - MinFin7.Review.DS     "  Foreground="#f80a" x:Name="b8" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" 9 Manual Entry      - Legacy TxCore tbl only"  Foreground="#3222" x:Name="b9" Click="onX" ToolTip="Show Assign" />
 
         <TextBlock VerticalAlignment="Center" Margin="3" HorizontalAlignment="Center">         
           <Hyperlink NavigateUri="0\MF\DnLds" RequestNavigate="onNavigate">
