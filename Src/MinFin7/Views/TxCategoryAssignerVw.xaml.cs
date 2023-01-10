@@ -83,7 +83,7 @@ public partial class TxCategoryAssignerVw : WindowBase
 
       //_bpr.Beep(20_000, .05); // wake monitor speakers
 
-      //await reLoadTxCore();??????????????
+      await Task.Yield(); //await reLoadTxCore();??????????????
 
       if (string.IsNullOrEmpty(csvFilterString))
       {
@@ -134,7 +134,7 @@ public partial class TxCategoryAssignerVw : WindowBase
       if (chkInfer.IsChecked == true)
       {
         var catIds = _core.Select(r => r.TxCategoryIdTxtNavigation.Id).Distinct().Where(r => r != 3); // Debug.WriteLine($"catIds.Count() = {catIds.Count()}");
-        filterCategoryByIdList(catIds);
+        FilterCategoryByIdList(catIds);
       }
 
       UpdateTitle(Stopwatch.GetElapsedTime(started));
@@ -230,8 +230,8 @@ public partial class TxCategoryAssignerVw : WindowBase
     ).OrderByDescending(r => r.TxDate));
     WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
   }
-  void filterCategoryByIdList(IEnumerable<int> catIds) => updateCtgrList(_db.TxCategories.Local.Where(r => catIds.Contains(r.Id)));
-  void filterCategoryByTxtMatch(string namePart/**/  ) => updateCtgrList(_db.TxCategories.Local.Where(r => r.Name.ToLower().Contains(namePart) || r.IdTxt.ToLower().Contains(namePart)));
+  void FilterCategoryByIdList(IEnumerable<int> catIds) => updateCtgrList(_db.TxCategories.Local.Where(r => catIds.Contains(r.Id)));
+  void FilterCategoryByTxtMatch(string namePart/**/  ) => updateCtgrList(_db.TxCategories.Local.Where(r => r.Name.ToLower().Contains(namePart) || r.IdTxt.ToLower().Contains(namePart)));
 
   void updateCtgrList(IEnumerable<TxCategory> enu)
   {
@@ -242,7 +242,7 @@ public partial class TxCategoryAssignerVw : WindowBase
     ArgumentNullException.ThrowIfNull(_txCategoryDGrdVwSrc);
     _txCategoryDGrdVwSrc.Source = _catg;
 
-    if (_catg.Count() == 0)
+    if (_catg.Count == 0)
     {
       _catg.ClearAddRangeAuto(_db.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
     }
@@ -269,9 +269,9 @@ public partial class TxCategoryAssignerVw : WindowBase
   }
 
   static async Task<bool> IsStillTyping(TextBox textbox) { var prev = textbox.Text; await Task.Delay(750); return prev != textbox.Text; }
-  void UpdateTitle(TimeSpan took, [CallerMemberName] string? cmn = "") => WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_core.Count(),9:N0} rows    sum {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_core.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t {cmn} \t\t {(VersionHelper.IsDbg ? "DBG" : "rls")}");
+  void UpdateTitle(TimeSpan took, [CallerMemberName] string? cmn = "") => WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_core.Count(),9:N0} rows    sum {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_core.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t {cmn} ");
 
-  async void onReLoad(object s, RoutedEventArgs e)
+  async void OnReLoad(object s, RoutedEventArgs e)
   {
     switch (DbSaveMsgBox.CheckAskSave(_db))
     {
@@ -282,17 +282,17 @@ public partial class TxCategoryAssignerVw : WindowBase
     }
 
     await ReLoadTxCore();
-    onClear1(s, e);
+    OnClear1(s, e);
   }
 
-  async void onTextChangedFuz(object s, TextChangedEventArgs e) { if (!await IsStillTyping((TextBox)s)) await FilterStart(tbxSearch.Text); }
-  async void onTextChangedCtg(object s, TextChangedEventArgs e) { if (!await IsStillTyping((TextBox)s)) filterCategoryByTxtMatch(((TextBox)s).Text); }
+  async void OnTextChangedFuz(object s, TextChangedEventArgs e) { if (!await IsStillTyping((TextBox)s)) await FilterStart(tbxSearch.Text); }
+  async void OnTextChangedCtg(object s, TextChangedEventArgs e) { if (!await IsStillTyping((TextBox)s)) FilterCategoryByTxtMatch(((TextBox)s).Text); }
 
-  void onClear1(object s, RoutedEventArgs e) => tbkFlt.Text = tbxSearch.Text = "";
-  void onClear2(object s, RoutedEventArgs e) => tSrch2.Text = "";
+  void OnClear1(object s, RoutedEventArgs e) => tbkFlt.Text = tbxSearch.Text = "";
+  void OnClear2(object s, RoutedEventArgs e) => tSrch2.Text = "";
 
-  void dgTxCtgr_SelectionChanged(object s, SelectionChangedEventArgs e) => btAssign.IsEnabled = btAssig2.IsEnabled = e.AddedItems.Count == 1;
-  void dgTxCore_SelectionChanged(object s, SelectionChangedEventArgs e)
+  void DgTxCtgr_SelChd(object s, SelectionChangedEventArgs e) => btAssign.IsEnabled = btAssig2.IsEnabled = e.AddedItems.Count == 1;
+  void DgTxCore_SelChd(object s, SelectionChangedEventArgs e)
   {
     try
     {
@@ -329,32 +329,32 @@ public partial class TxCategoryAssignerVw : WindowBase
     catch (Exception ex) { ex.Pop(_lgr); }
   }
 
-  async void onTxCatgry_Checked(object s, RoutedEventArgs e)      /**/ { _ = cbxTxCatgry.Focus(); await TccTsk(); }
-  async void onTxCatgry_UnChckd(object s, RoutedEventArgs e)      /**/ { if (!_loaded) return; /**/                                   _txCatgry = null;                         /**/ await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
-  async void onTxCatgry_Changed(object s, SelectionChangedEventArgs e) => await TccTsk(); async Task TccTsk() { if (!_loaded) return; _txCatgry = (string)cbxTxCatgry.SelectedValue; await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
+  async void OnTxCatgry_Checked(object s, RoutedEventArgs e)      /**/ { _ = cbxTxCatgry.Focus(); await TccTsk(); }
+  async void OnTxCatgry_UnChckd(object s, RoutedEventArgs e)      /**/ { if (!_loaded) return; /**/                                   _txCatgry = null;                         /**/ await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
+  async void OnTxCatgry_Changed(object s, SelectionChangedEventArgs e) => await TccTsk(); async Task TccTsk() { if (!_loaded) return; _txCatgry = (string)cbxTxCatgry.SelectedValue; await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
 
-  async void onSingleYr_Checked(object s, RoutedEventArgs e)      /**/ { _ = cbxSingleYr?.Focus(); await SycTsk(); }
-  async void onSingleYr_UnChckd(object s, RoutedEventArgs e)      /**/ { if (!_loaded) return; /**/                                   _cutOffYr = null;                      /**/ await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
-  async void onSingleYr_Changed(object s, SelectionChangedEventArgs e) => await SycTsk(); async Task SycTsk() { if (!_loaded) return; _cutOffYr = (int)cbxSingleYr.SelectedValue; await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
+  async void OnSingleYr_Checked(object s, RoutedEventArgs e)      /**/ { _ = cbxSingleYr?.Focus(); await SycTsk(); }
+  async void OnSingleYr_UnChckd(object s, RoutedEventArgs e)      /**/ { if (!_loaded) return; /**/                                   _cutOffYr = null;                      /**/ await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
+  async void OnSingleYr_Changed(object s, SelectionChangedEventArgs e) => await SycTsk(); async Task SycTsk() { if (!_loaded) return; _cutOffYr = (int)cbxSingleYr.SelectedValue; await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
 
-  void OnLbxSelectionChanged(object s, SelectionChangedEventArgs e) { if (e.AddedItems.Count < 1) return; var started = Stopwatch.GetTimestamp(); UpdateTitle(Stopwatch.GetElapsedTime(started)); Title += string.Format(" - {0}", ((TxCategory?)txCategoryListBox.SelectedItems[0])?.Name); }
-  async void onInfer_Checked(object s, RoutedEventArgs e) => await FilterStart(tbkFlt.Text);
-  void dgTxCtgr_MouseDblClick(object s, MouseButtonEventArgs e) { if (btAssign.IsEnabled) onAssign0(s, e); }
-  void dgTxCore_MouseDblClick(object s, MouseButtonEventArgs e)
+  void OnLbxSelChd(object s, SelectionChangedEventArgs e) { if (e.AddedItems.Count < 1) return; var started = Stopwatch.GetTimestamp(); UpdateTitle(Stopwatch.GetElapsedTime(started)); Title += string.Format(" - {0}", ((TxCategory?)txCategoryListBox.SelectedItems[0])?.Name); }
+  async void OnInfer_Checked(object s, RoutedEventArgs e) => await FilterStart(tbkFlt.Text);
+  void DgTxCtgr_MouseDblClick(object s, MouseButtonEventArgs e) { if (btAssign.IsEnabled) OnAssign0(s, e); }
+  void DgTxCore_MouseDblClick(object s, MouseButtonEventArgs e)
   {
     if (e.OriginalSource is System.Windows.Documents.Run run)
       Clipboard.SetText(run.Text);
     else
       Clipboard.SetText(((TxCoreV2)((System.Windows.Controls.Primitives.Selector)s).SelectedItem).TxDetail);
 
-    App.Synth.SpeakExpressFAF("Copied!");
+    App.Synth.SpeakExpressFAF("Copied to Clipboard.");
   }
 
-  async void onManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _db).ShowDialog(); await ReLoadTxCore(); }
-  async void onAssign0(object s, RoutedEventArgs e) { if (txCategoryListBox.SelectedItems.Count == 1) await assign(((TxCategory?)txCategoryListBox.SelectedItems[0])?.IdTxt); }
-  async void onAssign1(object s, RoutedEventArgs e) => await assign(_choiceAbove);
-  async void onAssign2(object s, RoutedEventArgs e) => await assign(_choiceBelow);
-  async Task assign(string? IdTxt)
+  async void OnManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _db).ShowDialog(); await ReLoadTxCore(); }
+  async void OnAssign0(object s, RoutedEventArgs e) { if (txCategoryListBox.SelectedItems.Count == 1) await Assign(((TxCategory?)txCategoryListBox.SelectedItems[0])?.IdTxt); }
+  async void OnAssign1(object s, RoutedEventArgs e) => await Assign(_choiceAbove);
+  async void OnAssign2(object s, RoutedEventArgs e) => await Assign(_choiceBelow);
+  async Task Assign(string? IdTxt)
   {
     ArgumentNullException.ThrowIfNull(IdTxt, "▄▀▄▀▄▀▄▀▄▀▄▀");
 
@@ -378,8 +378,8 @@ public partial class TxCategoryAssignerVw : WindowBase
     if (DbSaveMsgBox.TrySaveAsk(_db, $"class TxCategoryAssignerVw.assign()") > 0)//== (int)MsgBoxDbRslt.Yes)
     {
       await ReLoadTxCore();
-      onClear1(default!, default!);
-      onClear2(default!, default!);
+      OnClear1(default!, default!);
+      OnClear2(default!, default!);
     }
 
     _ = tbxSearch.Focus();

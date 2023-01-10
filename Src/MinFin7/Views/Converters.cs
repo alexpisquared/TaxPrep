@@ -23,7 +23,7 @@ public class WeekDayToBkColorConverter : IValueConverter // copy from EPP
 
     return new LinearGradientBrush(Colors.Gray, Colors.DarkGray, 45);//		return new BrushConverter().ConvertFromString("#ff0000");
   }
-  public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
+  public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Binding.DoNothing;
 }
 
 public class IncreaseToColorConverter : IValueConverter
@@ -41,7 +41,7 @@ public class IncreaseToColorConverter : IValueConverter
 
     return new SolidColorBrush(Colors.Yellow);
   }
-  public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
+  public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Binding.DoNothing;
 }
 
 public class YearColor : IValueConverter // copy from EPP
@@ -65,5 +65,5 @@ public class YearColor : IValueConverter // copy from EPP
 
     return new LinearGradientBrush(Colors.Gray, Colors.DarkGray, 45);//		return new BrushConverter().ConvertFromString("#ff0000");
   }
-  public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
+  public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Binding.DoNothing;
 }

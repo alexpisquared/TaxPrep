@@ -3,7 +3,7 @@
                 xmlns:lcl="clr-namespace:MinFin7.Views"
                 xmlns:cnv="clr-namespace:WpfUserControlLib.Converters;assembly=WpfUserControlLib" 
                 xmlns:stb="clr-namespace:WpfUserControlLib.Helpers;assembly=WpfUserControlLib" 
-                xmlns:DbModel="clr-namespace:Db.FinDemo7.Models;assembly=Db.FinDemo7" 
+                xmlns:mdl="clr-namespace:Db.FinDemo7.Models;assembly=Db.FinDemo7" 
                 Title="ReviewWindow" Height="250" Width="1800" Loaded="OnLoaded" Icon="/US-dollar.ico" Background="#102">
   <WindowChrome.WindowChrome>
     <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />
