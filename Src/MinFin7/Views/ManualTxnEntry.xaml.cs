@@ -1,27 +1,23 @@
-﻿using System.ComponentModel;
-using System.Globalization;
-
-namespace MF.TxCategoryAssigner.Views;
+﻿namespace MF.TxCategoryAssigner.Views;
 
 public partial class ManualTxnEntry : WindowBase
 {
   readonly FinDemoContext _db;
   readonly bool _toDispose;
   readonly DateTime _now = DateTime.Now;
+  readonly ILogger<TxCategoryAssignerVw> _lgr;
+  readonly Bpr _bpr;
 
-  public ManualTxnEntry(bool showBackToMenuBtn) : this() => btnBackToMenu.Visibility = showBackToMenuBtn ? Visibility.Visible : Visibility.Collapsed;
-  public ManualTxnEntry(FinDemoContext db)
+  public ManualTxnEntry(ILogger<TxCategoryAssignerVw> lgr, Bpr bpr, bool showBackToMenuBtn, FinDemoContext? db = null)
   {
     InitializeComponent();
-    _db = db;
-    _toDispose = false;
-  }
 
-  public ManualTxnEntry()
-  {
-    InitializeComponent();
-    _db = new FinDemoContext();
-    _toDispose = true;
+    _lgr = lgr;
+    _bpr = bpr;
+    _db = db is null ? new FinDemoContext() : db;
+    _toDispose = db is null;
+
+    btnBackToMenu.Visibility = showBackToMenuBtn ? Visibility.Visible : Visibility.Collapsed;
   }
 
   protected override void OnClosing(CancelEventArgs e)
@@ -32,7 +28,7 @@ public partial class ManualTxnEntry : WindowBase
       {
         default:
         case MessageBoxResult.Cancel: e.Cancel = true; return;
-        case MessageBoxResult.Yes: tbkTitle.Text = _db.TrySaveReportAsync().Result.report;  break;
+        case MessageBoxResult.Yes: tbkTitle.Text = _db.TrySaveReportAsync().Result.report; break;
         case MessageBoxResult.No: break;
       }
     }
@@ -47,28 +43,35 @@ public partial class ManualTxnEntry : WindowBase
   {
     try
     {
-      await App.Synth.SpeakExpressAsync("Loading...!");
+      App.Synth.SpeakExpressFAF("Loading...!");
 
       await _db.TxCoreV2s.Where(r => r.TxDate.Year >= 2021).OrderByDescending(r => r.Id).Take(2).LoadAsync();
       await _db.TxCategories.LoadAsync();
       await _db.TxMoneySrcs.LoadAsync();
 
-      ((CollectionViewSource)FindResource("txCoreV2ViewSource")).Source = _db.TxCoreV2s.Local;//.OrderBy(r => r.Id);
-      ((CollectionViewSource)FindResource("txMoneySrcViewSource")).Source = _db.TxMoneySrcs.Local;
-      ((CollectionViewSource)FindResource("txCategoryViewSource")).Source = _db.TxCategories.Local.OrderBy(r => r.Name);
+      //2023.01.09 
+      //Data binding directly to 'DbSet.Local' is not supported since it does not provide a stable ordering.
+      //For WPF, bind to 'DbSet.Local.ToObservableCollection'.
+      //For WinForms, bind to 'DbSet.Local.ToBindingList'.
+      //For ASP.NET WebForms, bind to 'DbSet.ToList' or use Model Binding.
+      //NotSupportedException at C:\g\TaxPrep\Src\MinFin7\Views\ManualTxnEntry.xaml.cs(62): onLoaded() 
 
-      cbSrc.ItemsSource = _db.TxMoneySrcs.Local;
+      ((CollectionViewSource)FindResource("txCoreV2ViewSource")).Source = _db.TxCoreV2s.Local.ToObservableCollection();//.OrderBy(r => r.Id);
+      ((CollectionViewSource)FindResource("txMoneySrcViewSource")).Source = _db.TxMoneySrcs.Local.ToObservableCollection();
+      ((CollectionViewSource)FindResource("txCategoryViewSource")).Source = _db.TxCategories.Local.ToObservableCollection().OrderBy(r => r.Name);
+
+      cbSrc.ItemsSource = _db.TxMoneySrcs.Local.ToObservableCollection();
 
       _ = btnAddNewRcrd.Focus();
 
       await App.Synth.SpeakExpressAsync("Done!");
     }
-    catch (Exception ex) { ex.Pop(); }
+    catch (Exception ex) { ex.Pop(_lgr); }
   }
-  async void onSave(object sender , RoutedEventArgs e ) => tbkTitle.Text = (await _db.TrySaveReportAsync()).report;
-  void onAddingNewItem(object sender, System.Windows.Controls.AddingNewItemEventArgs e) => e.NewItem = createNewTxn(); //tu: pre-fill new record with valid values on the fly.
-  void onMenu(object s, RoutedEventArgs e) => MessageBox.Show("N/A"); //   { Hide(); _ = new Views.MainAppDispatcher(_lgr, _bpr).ShowDialog(); }
-  void cbSrc_SelectionChanged(object s, System.Windows.Controls.SelectionChangedEventArgs e) => btnTD.IsEnabled = int.TryParse(tbYear.Text, out var yr) && yr > 2000 && cbSrc.SelectedValue as int? > 0;
+  async void onSave(object sender, RoutedEventArgs e) { _bpr.Click(); tbkTitle.Text = (await _db.TrySaveReportAsync()).report; }
+  void onAddingNewItem(object sender, AddingNewItemEventArgs e) { _bpr.Click(); e.NewItem = createNewTxn(); }//tu: pre-fill new record with valid values on the fly.
+  void onMenu(object s, RoutedEventArgs e) { _bpr.Click(); /*MessageBox.Show("N/A"); } //   {*/ Hide(); _ = new MainAppDispatcher(_lgr, _bpr).ShowDialog(); Show(); }
+  void cbSrc_SelectionChanged(object s, SelectionChangedEventArgs e) { _bpr.Click(); btnTD.IsEnabled = int.TryParse(tbYear.Text, out var yr) && yr > 2000 && cbSrc.SelectedValue as int? > 0; }
 
   TxCoreV2 createNewTxn() => new()
   {
@@ -148,7 +151,7 @@ public partial class ManualTxnEntry : WindowBase
         _ = tbxMemo.Focus();
       }
     }
-    catch (Exception ex) { ex.Pop(); }
+    catch (Exception ex) { ex.Pop(_lgr); }
   }
 }
 /// EXEC sp_changedbowner 'sa' //tu: dbo is missing fo _db diagramming

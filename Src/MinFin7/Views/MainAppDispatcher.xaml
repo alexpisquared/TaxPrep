@@ -72,7 +72,7 @@
         <Button Content=" 1 td,cibc: MS Money.OFX     "	                 Foreground="#3c00" x:Name="b1" Click="onX" ToolTip=" CIBC: IntuitQuicken.QFX: seems to be OK (Aug 2018) &#10;&#10; TD: MS Money - OFX &#10;&#10; Amzn: - QIF" />
         <Button Content=" 2 Charts            - HistoricalChartSet"      Foreground="#30a0" x:Name="b2" Click="onX" ToolTip="Show Charts" />
         <Button Content=" 3 Assign            - TxCategoryAssigner"      Foreground="#fcc0" x:Name="b3" Click="onX" ToolTip="Show Assign" />
-        <Button Content=" 4 Manual Entry      - Crude but better"        Foreground="#308f" x:Name="b4" Click="onX" ToolTip="Show Assign" />
+        <Button Content=" 4 Manual Entry      - Crude but better"        Foreground="#f08f" x:Name="b4" Click="onX" ToolTip="Show Assign" />
         <Button Content=" 5 Annual Report     - MinFin7.Report.WinForm"  Foreground="#3d60" x:Name="b5" Click="onX" ToolTip="Show Assign" />
         <Button Content=" 6 Annual Report Alx - MinFin7.Report.WinForm"  Foreground="#3d60" x:Name="b6" Click="onX" ToolTip="Show Assign" />
         <Button Content=" 7 Annual Report Mei - MinFin7.Report.WinForm"  Foreground="#3d60" x:Name="b7" Click="onX" ToolTip="Show Assign" />

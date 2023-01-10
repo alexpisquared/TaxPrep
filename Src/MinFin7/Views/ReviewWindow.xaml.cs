@@ -27,7 +27,7 @@ public partial class ReviewWindow : WindowBase
       dgTxVs.Focus();
       _bpr.Finish();
     }
-    catch (Exception ex) { ex.Pop(); }
+    catch (Exception ex) { ex.Pop(_lgr); }
   }
   void dgCore_SelnChgd(object s, SelectionChangedEventArgs e)
   {

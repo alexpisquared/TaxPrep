@@ -2,14 +2,14 @@
 public partial class MainAppDispatcher : WindowBase
 {
   const int _zeroBasedBtnCnt = 8;
-  readonly ILogger<TxCategoryAssignerVw> _logger;
+  readonly ILogger<TxCategoryAssignerVw> _lgr;
   readonly Bpr _bpr;
 
-  public MainAppDispatcher(ILogger<TxCategoryAssignerVw> logger, Bpr bpr)
+  public MainAppDispatcher(ILogger<TxCategoryAssignerVw> lgr, Bpr bpr)
   {
     InitializeComponent();
 
-    _logger = logger;
+    _lgr = lgr;
     _bpr = bpr;
 
     KeyUp += (s, e) =>
@@ -43,12 +43,12 @@ public partial class MainAppDispatcher : WindowBase
     {
       //case "b1": setDefault(0); new DbLoaderReportWindow(MSMoneyDbLoader.App.GetCmndLineArgsInclClickOnce()).ShowDialog(); break;
       //case "b2": setDefault(1); new HistoricalChartSet.MainHistChart().Show(); break;
-      case "b3": SetDefault(2); new TxCategoryAssignerVw(_logger, _bpr).Show(); break;
-      case "b4": SetDefault(3); new ManualTxnEntry(false).Show(); break;
+      case "b3": SetDefault(2); new TxCategoryAssignerVw(_lgr, _bpr).Show(); break;
+      case "b4": SetDefault(3); new ManualTxnEntry(_lgr, _bpr, false).Show(); break;
       //case "b5": setDefault(4); MinFin7.Report.WinForm.Program.ShowBoth(); break;
       //case "b6": setDefault(5); MinFin7.Report.WinForm.Program.Show_Alx(); break;
       //case "b7": setDefault(6); MinFin7.Report.WinForm.Program.Show_Mei(); break;
-      case "b8": SetDefault(7); new ReviewWindow(_logger, _bpr, "Mei").Show(); break;
+      case "b8": SetDefault(7); new ReviewWindow(_lgr, _bpr, "Mei").Show(); break;
       //case "b9": setDefault(8); new MinFin7.DataSet.TxAdd().Show(); break;
       default: _bpr.No(); break;
     }
