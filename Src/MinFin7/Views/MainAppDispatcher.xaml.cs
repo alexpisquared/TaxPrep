@@ -24,7 +24,7 @@ public partial class MainAppDispatcher : WindowBase
     }; //tu:
 
     SetDefault(Settings.Default.LastBtnNo);
-    tbver.Text = VersionHelper.IsDbg ? "DBG" : "rls";
+    tbver.Text = VersionHelper.CurVerStrYMd;
   }
 
   void SetDefault(int cb)

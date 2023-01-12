@@ -152,12 +152,12 @@ public partial class TxCategoryAssignerVw : WindowBase
     {
       if (chkTxCatgry.IsChecked == true && chkSingleYr.IsChecked == true)
       {
-        await _db.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).LoadAsync();
+        await _db.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
         _loadedCatgry = _txCatgry;
       }
       else if (chkTxCatgry.IsChecked == true)
       {
-        await _db.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004 && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).LoadAsync();
+        await _db.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004 && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
         _loadedCatgry = _txCatgry;
       }
       else if (chkSingleYr.IsChecked == true)
@@ -230,10 +230,10 @@ public partial class TxCategoryAssignerVw : WindowBase
     ).OrderByDescending(r => r.TxDate));
     WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
   }
-  void FilterCategoryByIdList(IEnumerable<int> catIds) => updateCtgrList(_db.TxCategories.Local.Where(r => catIds.Contains(r.Id)));
-  void FilterCategoryByTxtMatch(string namePart/**/  ) => updateCtgrList(_db.TxCategories.Local.Where(r => r.Name.ToLower().Contains(namePart) || r.IdTxt.ToLower().Contains(namePart)));
+  void FilterCategoryByIdList(IEnumerable<int> catIds) => UpdateCtgrList(_db.TxCategories.Local.Where(r => catIds.Contains(r.Id)));
+  void FilterCategoryByTxtMatch(string namePart/**/  ) => UpdateCtgrList(_db.TxCategories.Local.Where(r => r.Name.ToLower().Contains(namePart) || r.IdTxt.ToLower().Contains(namePart)));
 
-  void updateCtgrList(IEnumerable<TxCategory> enu)
+  void UpdateCtgrList(IEnumerable<TxCategory> enu)
   {
     var started = Stopwatch.GetTimestamp();
 
@@ -269,7 +269,7 @@ public partial class TxCategoryAssignerVw : WindowBase
   }
 
   static async Task<bool> IsStillTyping(TextBox textbox) { var prev = textbox.Text; await Task.Delay(750); return prev != textbox.Text; }
-  void UpdateTitle(TimeSpan took, [CallerMemberName] string? cmn = "") => WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_core.Count(),9:N0} rows    sum {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_core.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t {cmn} ");
+  void UpdateTitle(TimeSpan took, [CallerMemberName] string? cmn = "") => WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_core.Count(),9:N0} rows    sum {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_core.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t {cmn} \t\t {VersionHelper.CurVerStrYMd}");
 
   async void OnReLoad(object s, RoutedEventArgs e)
   {

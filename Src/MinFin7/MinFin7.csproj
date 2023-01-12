@@ -6,8 +6,9 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64</Platforms>
-    <PackageIcon>US-dollar.ico</PackageIcon>
+    <PackageIcon>theme-icon.png</PackageIcon>
     <UserSecretsId>7529aff3-50c5-470e-b684-037df05974a7</UserSecretsId>
+    <ApplicationIcon>sql.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,10 +17,18 @@
 
   <ItemGroup>
     <Content Include="ReadMe.md" />
+    <Content Include="sql.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="AsLink\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\AAV.Shared\Src\Net.CI\WpfUserControlLib\Assets\theme-icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
