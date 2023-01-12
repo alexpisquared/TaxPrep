@@ -29,6 +29,24 @@ public partial class TxCategoryAssignerVw : WindowBase
   {
     App.Synth.SpeakExpressFAF("Loading...");
 
+    /*
+     * var version = Windows.ApplicationModel.Package.Current.Id.Version;
+     * 
+You need to install the Windows 10 WinRT API pack. Install from Nuget the package: Microsoft.Windows.SDK.Contracts
+
+URL: https://www.nuget.org/packages/Microsoft.Windows.SDK.Contracts
+
+Then you can do something like this:
+
+var version = Windows.ApplicationModel.Package.Current.Id.Version;
+applicationVersion = string.Format("{0}.{1}.{2}.{3}",
+    version.Major,
+    version.Minor,
+    version.Build,
+    version.Revision);
+If you want to DEBUG or Run with the current Package available, just set your package deployment project as the Startup Project.     */
+
+
     try
     {
       await _db.TxCategories.LoadAsync();
@@ -203,7 +221,8 @@ public partial class TxCategoryAssignerVw : WindowBase
         (r.TxDate.Year < _trgTaxYr)
       )
     ).OrderByDescending(r => r.TxDate));
-    //WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
+    
+    WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
   }
   void FilterTxnsBy4(string strFilter, string? txCatgoryId, decimal amt, decimal rng, [CallerMemberName] string? cmn = "")
   {
@@ -250,12 +269,12 @@ public partial class TxCategoryAssignerVw : WindowBase
     choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled = btAssig2.IsEnabled = false;
     _choiceAbove = _choiceBelow = "";
 
-    if (_catg.Count() == 1)
+    if (_catg.Count == 1)
     {
       btAssign.IsEnabled = btAssig2.IsEnabled = true;
       _ = _txCategoryDGrdVwSrc.View.MoveCurrentToFirst();
     }
-    else if (_catg.Count() == 2)
+    else if (_catg.Count == 2)
     {
       _choiceAbove = _catg.First().IdTxt;
       _choiceBelow = _catg.Last().IdTxt;
@@ -269,7 +288,7 @@ public partial class TxCategoryAssignerVw : WindowBase
   }
 
   static async Task<bool> IsStillTyping(TextBox textbox) { var prev = textbox.Text; await Task.Delay(750); return prev != textbox.Text; }
-  void UpdateTitle(TimeSpan took, [CallerMemberName] string? cmn = "") => WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_core.Count(),9:N0} rows    sum {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_core.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t {cmn} \t\t {VersionHelper.CurVerStrYMd}");
+  void UpdateTitle(TimeSpan took, [CallerMemberName] string? cmn = "") => WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_core.Count,9:N0} rows    sum {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_core.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t {cmn} \t\t {VersionHelper.CurVerStrYMd}");
 
   async void OnReLoad(object s, RoutedEventArgs e)
   {
