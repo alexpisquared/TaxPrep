@@ -9,7 +9,7 @@
   <Identity
     Name="5070e928-6d56-44df-83ee-e0c596d5aab8"
     Publisher="CN=alexp"
-    Version="23.0.0.0" />
+    Version="23.1.12.0" />
 
   <Properties>
     <DisplayName>MinFin7a</DisplayName>
