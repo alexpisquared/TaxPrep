@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64</Platforms>
-    <PackageIcon>theme-icon.png</PackageIcon>
+    <PackageIcon>MinFinTax.png</PackageIcon>
     <UserSecretsId>7529aff3-50c5-470e-b684-037df05974a7</UserSecretsId>
     <ApplicationIcon>sql.ico</ApplicationIcon>
   </PropertyGroup>
@@ -25,10 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\AAV.Shared\Src\Net.CI\WpfUserControlLib\Assets\theme-icon.png">
+    <Resource Include="..\MinFin7a\Images\MinFinTax.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
-    </None>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
