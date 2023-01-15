@@ -113,9 +113,9 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     {
       WriteLine($"■■■ filterStart()  [[");
 
-      //_bpr.Beep(20_000, .05); // wake monitor speakers
+      _bpr.Tick(); 
 
-      await Task.Yield(); //await reLoadTxCore();??????????????
+      //await reLoadTxCore();??????????????
 
       if (string.IsNullOrEmpty(csvFilterString))
       {
@@ -172,7 +172,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       UpdateTitle(Stopwatch.GetElapsedTime(started));
     }
     catch (Exception ex) { ex.Pop(_lgr); }
-    finally { WriteLine($"■■■ filterStart()  ]]"); _bpr.Tick(); }
+    finally { WriteLine($"■■■ filterStart()  ]]"); _bpr.Tick(); await Task.Yield(); }
   }
   async Task ReLoadTxCore() // limit txns by chkboxs' filters
   {
@@ -354,17 +354,10 @@ If you want to DEBUG or Run with the current Package available, just set your pa
         }
       }
 
-      if (_choiceAbove.Length > 0 && _choiceAbove == _choiceBelow) // 2023-01-15
-      {
-        btAssign.IsEnabled = btAssig2.IsEnabled = true;
-      }
-      else
-      {
-        btAssign.IsEnabled = btAssig2.IsEnabled = false;
+      choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
+      choiceBelow.Content = $"_7 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
 
-        choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
-        choiceBelow.Content = $"_7 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
-      }
+      btAssign.IsEnabled = _choiceAbove.Length > 0 && _choiceAbove == _choiceBelow; //todo: assign does not work!!! 2023-01-15
 
       UpdateTitle(Stopwatch.GetElapsedTime(started));
     }
@@ -385,17 +378,25 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   void DgTxCore_MouseDblClick(object s, MouseButtonEventArgs e)
   {
     if (e.OriginalSource is System.Windows.Documents.Run run)
-      Clipboard.SetText(run.Text);
+      Clipboard.SetText(tbxSearch.Text = run.Text);
     else if (((TxCoreV2)((System.Windows.Controls.Primitives.Selector)s).SelectedItem) is not null)
-      Clipboard.SetText(((TxCoreV2)((System.Windows.Controls.Primitives.Selector)s).SelectedItem)?.TxDetail);
+      Clipboard.SetText(tbxSearch.Text = ((TxCoreV2)((System.Windows.Controls.Primitives.Selector)s).SelectedItem)?.TxDetail);
     else
       return;
 
-    App.Synth.SpeakExpressFAF("Copied to Clipboard.");
+    tbxSearch.Focus(); // App.Synth.SpeakExpressFAF("Also, Clipboarded.");
   }
 
-  async void OnManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _db).ShowDialog(); await ReLoadTxCore(); }
-  async void OnAssign0(object s, RoutedEventArgs e) { if (txCategoryListBox.SelectedItems.Count == 1) await Assign(((TxCategory?)txCategoryListBox.SelectedItems[0])?.IdTxt); }
+  //use main menu instead: async void OnManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _db).ShowDialog(); await ReLoadTxCore(); }
+  async void OnAssign0(object s, RoutedEventArgs e)
+  {
+    if (txCategoryListBox.SelectedItems.Count == 1)
+      await Assign(((TxCategory?)txCategoryListBox.SelectedItems[0])?.IdTxt);
+    else if (_choiceAbove?.Length > 0 && _choiceAbove == _choiceBelow)
+      await Assign(_choiceAbove);
+    else
+      App.Synth.SpeakExpressFAF("Nothing to assign.");
+  }
   async void OnAssign1(object s, RoutedEventArgs e) => await Assign(_choiceAbove);
   async void OnAssign2(object s, RoutedEventArgs e) => await Assign(_choiceBelow);
   async Task Assign(string? IdTxt)
@@ -427,6 +428,8 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     }
 
     _ = tbxSearch.Focus();
+
+    App.Synth.SpeakExpressFAF("Assigned.");
   }
 }
 /*

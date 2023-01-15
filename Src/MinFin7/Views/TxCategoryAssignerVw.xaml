@@ -57,19 +57,14 @@
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto"  />
         <ColumnDefinition Width="140"  />
-        <ColumnDefinition Width="100"  />
-        <ColumnDefinition Width="100"  />
-        <ColumnDefinition Width="100"  />
+        <ColumnDefinition Width="60"  />
+        <ColumnDefinition Width="60"  />
+        <ColumnDefinition Width="60"  />
         <ColumnDefinition Width="200"  />
         <ColumnDefinition Width="20"   />
         <ColumnDefinition Width="Auto"   />
         <ColumnDefinition Width="20"   />
         <ColumnDefinition Width="Auto"   />
-        <ColumnDefinition Width="20"   />
-        <ColumnDefinition Width="Auto"   />
-        <ColumnDefinition Width="20"   />
-        <ColumnDefinition Width="Auto"   />
-        <ColumnDefinition Width="20"   />
       </Grid.ColumnDefinitions>
       <Grid.Resources>
         <Style TargetType="TextBox" >
@@ -113,7 +108,7 @@
       <ComboBox   Grid.Column="7"  Grid.Row="2"                    x:Name="cbxSingleYr" IsEnabled="{Binding ElementName=chkSingleYr, Path=IsChecked}" SelectionChanged="OnSingleYr_Changed" />
 
       <Button     Grid.Column="9"  Grid.Row="2" Foreground="#18d" Content="_Clear"  Click="OnClear1" />
-      <Button     Grid.Column="11" Grid.Row="2" Foreground="#d81" Content="_Manual" Click="OnManualTxnAdd" ToolTip="Add a txn manually. " />
+      <!--<Button     Grid.Column="11" Grid.Row="2" Foreground="#d81" Content="_Manual" Click="OnManualTxnAdd" ToolTip="Add a txn manually. " />-->
     </Grid>
 
 
@@ -122,7 +117,7 @@
       <TextBox Foreground="#808" FontSize="18"			Width="90" TextChanged="OnTextChangedCtg" x:Name="tSrch2"  />
       <Button  Foreground="#808" Content="C_lear"		Width="32"  Click="OnClear2" IsTabStop="False" Margin="0,20,20,20" />
 
-      <Button     Content="Assig_n"	  Width="60" Click="OnAssign0" x:Name="btAssig2"    Height="52" FontWeight="Bold" Background="#0f0" IsEnabled="False" Margin="10 0" />
+      <Button     Content="Assig_n"	  Width="70" Click="OnAssign0" x:Name="btAssig2"    Height="52" FontWeight="Bold" Background="#0f0" IsEnabled="False" Margin="0" />
 
       <CheckBox Foreground="#808" Content="In_ferRT" x:Name="chkInfer" Checked="OnInfer_Checked" Unchecked="OnClear2"  FlowDirection="RightToLeft" Margin="20" ToolTip="Infer real-time from previous ctgr assignments." />
       <Button   Foreground="#800" Content="_Re-Load"	 Click="OnReLoad" Height="52" ToolTip=": L K J  ???" />
