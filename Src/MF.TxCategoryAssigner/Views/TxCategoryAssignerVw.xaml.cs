@@ -6,6 +6,7 @@ using MF.TxCategoryAssigner.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
@@ -57,7 +58,20 @@ namespace MF.TxCategoryAssigner
       chkSingleYr.IsChecked = true;      // invokes the 1st search
       App.Synth.SpeakAsync("Done!");
     }
-    protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+    async void OnSave(object s, RoutedEventArgs e) => await SaveAsync();
+    async Task SaveAsync()
+    {
+      try
+      {
+        var (success, _, report) = await _db.TrySaveReportAsync();
+        Title = report;
+
+        if (!success)
+          _ = MessageBox.Show(report, $"Attach to process to debug/fix!!! ");
+      }
+      catch (Exception ex) { ex.Pop(); }
+    }
+    protected override async void OnClosing(CancelEventArgs e)
     {
       if (_db.HasUnsavedChanges())
       {
@@ -65,7 +79,7 @@ namespace MF.TxCategoryAssigner
         {
           default:
           case MessageBoxResult.Cancel: e.Cancel = true; return;
-          case MessageBoxResult.Yes: var (success, rowsSavedCnt, report) = _db.TrySaveReportAsync().Result; if (!success) MessageBox.Show(report, $"Attach to process!!!  ({rowsSavedCnt})"); break;
+          case MessageBoxResult.Yes: await SaveAsync(); await Task.Delay(2500); break;
           case MessageBoxResult.No: break;
         }
       }

@@ -20,7 +20,20 @@ public partial class ManualTxnEntry : WindowBase
     btnBackToMenu.Visibility = showBackToMenuBtn ? Visibility.Visible : Visibility.Collapsed;
   }
 
-  protected override void OnClosing(CancelEventArgs e)
+  async void OnSave(object s, RoutedEventArgs e) => await SaveAsync();
+  async Task SaveAsync()
+  {
+    try
+    {
+      var (success, _, report) = await _db.TrySaveReportAsync();
+      tbkTitle.Text = Title = report;
+
+      if (!success)
+        _ = MessageBox.Show(report, $"Attach to process to debug/fix!!! ");
+    }
+    catch (Exception ex) { ex.Pop(_lgr); }
+  }
+  protected override async void OnClosing(CancelEventArgs e)
   {
     if (_db.HasUnsavedChanges())
     {
@@ -28,7 +41,7 @@ public partial class ManualTxnEntry : WindowBase
       {
         default:
         case MessageBoxResult.Cancel: e.Cancel = true; return;
-        case MessageBoxResult.Yes: tbkTitle.Text = _db.TrySaveReportAsync().Result.report; break;
+        case MessageBoxResult.Yes: await SaveAsync(); await Task.Delay(2500); break;
         case MessageBoxResult.No: break;
       }
     }
@@ -144,7 +157,7 @@ public partial class ManualTxnEntry : WindowBase
           TxMoneySrcId = (int)cbSrc.SelectedValue,
           TxCategoryIdTxt = "UnKn",
           TxDetail = line[12..],
-          MemoPp = "manual entry",
+          MemoPp = "manual entry from Clpbrd",
           Notes = line
         });
         _ = ((CollectionViewSource)FindResource("txCoreV2ViewSource")).View.MoveCurrentToLast();

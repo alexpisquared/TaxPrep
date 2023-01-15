@@ -70,7 +70,21 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     }
     catch (Exception ex) { ex.Pop(_lgr); }
   }
-  protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+
+  async void OnSave(object s, RoutedEventArgs e) => await SaveAsync();
+  async Task SaveAsync()
+  {
+    try
+    {
+      var (success, _, report) = await _db.TrySaveReportAsync();
+      Title = report;
+
+      if (!success)
+        _ = MessageBox.Show(report, $"Attach to process to debug/fix!!! ");
+    }
+    catch (Exception ex) { ex.Pop(_lgr); }
+  }
+  protected override async void OnClosing(CancelEventArgs e)
   {
     if (_db.HasUnsavedChanges())
     {
@@ -78,7 +92,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       {
         default:
         case MessageBoxResult.Cancel: e.Cancel = true; return;
-        case MessageBoxResult.Yes: var (success, rowsSavedCnt, report) = _db.TrySaveReportAsync().Result; if (!success) _ = MessageBox.Show(report, $"Attach to process!!!  ({rowsSavedCnt})"); break;
+        case MessageBoxResult.Yes: await SaveAsync(); await Task.Delay(2500); break;
         case MessageBoxResult.No: break;
       }
     }

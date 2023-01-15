@@ -25,6 +25,11 @@
 
   </lnk:WindowBase.Resources>
   <Grid DataContext="{StaticResource txCoreV2ViewSource}" Margin="10">
+    <Grid.LayoutTransform>
+      <TransformGroup>
+        <ScaleTransform ScaleX="{Binding ZV, ElementName=wnd, FallbackValue=1}" ScaleY="{Binding ZV, ElementName=wnd, FallbackValue=1}" />
+      </TransformGroup>
+    </Grid.LayoutTransform>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="300"/>
       <ColumnDefinition Width="10"/>
@@ -88,14 +93,15 @@
       </DataGrid.Columns>
     </DataGrid>
 
-    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" x:Name="tbkTitle" Background="Yellow" Foreground="Red" Text="Err" HorizontalAlignment="Center" TextWrapping="Wrap" />
+    <TextBlock Grid.Row="0" Grid.ColumnSpan="3" x:Name="tbkTitle" Background="Yellow" Foreground="Red" d:Text="Err" HorizontalAlignment="Right" TextWrapping="Wrap" />
 
     <StackPanel Grid.Column="2"                             Orientation="Horizontal" HorizontalAlignment="Left">
       <!--<Button Content="   _Save   " Click="onSave"   />-->
       <Button Content="   _Add    "         Click="onAddTxn" x:Name="btnAddNewRcrd" IsDefault="True" ToolTip="Add empty row for editing"/>
-      <TextBox Text="2021" x:Name="tbYear" Margin="39 0 0 0" Height="26" />
+      <TextBox Text="2022" x:Name="tbYear" Margin="139 0 0 0" Height="26" />
       <ComboBox x:Name="cbSrc" Margin="5" Width="120" Height="26" DisplayMemberPath="Fla" SelectedValuePath="Id" Foreground="#f08" SelectionChanged="cbSrc_SelectionChanged" />
-      <Button Content="   _TD    " x:Name="btnTD" IsEnabled="False" Click="onReadTD" Height="26" ToolTip="Read TD bill from clipboard &#10; JAN 4 JAN 5 PAYMENT - THANK YOU -$56.50 &#10; JAN 4 JAN 5 PAYMENT - THANK YOU -$56.50 &#10; JAN 4 JAN 5 PAYMENT - THANK YOU -$56.50"/>
+      <Button Content="   _TD    " x:Name="btnTD" Height="26" IsEnabled="False" Click="onReadTD" ToolTip="Read TD bill from clipboard &#10; JAN 4 JAN 5 PAYMENT - THANK YOU -$56.50 &#10; JAN 4 JAN 5 PAYMENT - THANK YOU -$56.50 &#10; JAN 4 JAN 5 PAYMENT - THANK YOU -$56.50"/>
+      <Button Content="  _Save   " x:Name="btnSv" Height="26" Click="OnSave" />
       <Button Content="   _Back to Menu   " Click="onMenu"   x:Name="btnBackToMenu" Visibility="Collapsed" />
     </StackPanel>
 
