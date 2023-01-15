@@ -235,7 +235,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
         (r.TxDate.Year < _trgTaxYr)
       )
     ).OrderByDescending(r => r.TxDate));
-    
+
     WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
   }
   void FilterTxnsBy4(string strFilter, string? txCatgoryId, decimal amt, decimal rng, [CallerMemberName] string? cmn = "")
@@ -354,8 +354,17 @@ If you want to DEBUG or Run with the current Package available, just set your pa
         }
       }
 
-      choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
-      choiceBelow.Content = $"_7 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
+      if (_choiceAbove.Length > 0 && _choiceAbove == _choiceBelow) // 2023-01-15
+      {
+        btAssign.IsEnabled = btAssig2.IsEnabled = true;
+      }
+      else
+      {
+        btAssign.IsEnabled = btAssig2.IsEnabled = false;
+
+        choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
+        choiceBelow.Content = $"_7 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
+      }
 
       UpdateTitle(Stopwatch.GetElapsedTime(started));
     }
@@ -377,8 +386,10 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   {
     if (e.OriginalSource is System.Windows.Documents.Run run)
       Clipboard.SetText(run.Text);
+    else if (((TxCoreV2)((System.Windows.Controls.Primitives.Selector)s).SelectedItem) is not null)
+      Clipboard.SetText(((TxCoreV2)((System.Windows.Controls.Primitives.Selector)s).SelectedItem)?.TxDetail);
     else
-      Clipboard.SetText(((TxCoreV2)((System.Windows.Controls.Primitives.Selector)s).SelectedItem).TxDetail);
+      return;
 
     App.Synth.SpeakExpressFAF("Copied to Clipboard.");
   }

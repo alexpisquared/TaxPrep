@@ -146,7 +146,7 @@
         <DataGridTemplateColumn Header="Category"		SortMemberPath="TxCategoryIdTxt">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxMoneySrc.Notes}" HorizontalAlignment="Center" Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=LightYellow, BrushFalse=Blue}, ConverterParameter='UnKn'}" />
+              <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxCategoryIdTxtNavigation.Name}" HorizontalAlignment="Center" Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=LightYellow, BrushFalse=Blue}, ConverterParameter='UnKn'}" />
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
@@ -154,7 +154,7 @@
         <DataGridTemplateColumn Header="Src FLA"	SortMemberPath="TxMoneySrc.Fla">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <TextBlock Text="{Binding TxMoneySrc.Fla}"  ToolTip="{Binding TxMoneySrc.Owner}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=Teal, BrushFalse=Magenta}, ConverterParameter='Alx'}" />
+              <TextBlock Text="{Binding TxMoneySrc.Fla}"  ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=Teal, BrushFalse=Magenta}, ConverterParameter='Alx'}" />
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
@@ -162,7 +162,7 @@
         <DataGridTemplateColumn Header="Src Name" SortMemberPath="TxMoneySrc.Name">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <TextBlock Text="{Binding TxMoneySrc.Name}" ToolTip="{Binding TxMoneySrc.Owner}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=Magenta, BrushFalse=Teal}, ConverterParameter='Mei'}" />
+              <TextBlock Text="{Binding TxMoneySrc.Name}" ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=Magenta, BrushFalse=Teal}, ConverterParameter='Mei'}" />
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
@@ -178,7 +178,18 @@
         <DataGridTemplateColumn Header="MemoPp"   SortMemberPath="MemoPp" CanUserSort="True" >
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <stb:HighlightableTextBlock Text="{Binding MemoPp}" SearchText="{Binding ElementName=tbkFlt, Path=Text}" ToolTip="{Binding Id}" />
+              <stb:HighlightableTextBlock Text="{Binding MemoPp}" SearchText="{Binding ElementName=tbkFlt, Path=Text}" >
+                <stb:HighlightableTextBlock.ToolTip>
+                  <ToolTip>
+                    <Grid Height="40">
+                      <TextBlock Text="  Added" VerticalAlignment="Top" Foreground="#888" />
+                      <TextBlock Text="{Binding CreatedAt, StringFormat=\{0:yyyy-MM-dd\}}" VerticalAlignment="Top"    Margin="64 0 10 0" Foreground="#00f" />
+                      <TextBlock Text="  Id" VerticalAlignment="Bottom" Foreground="#888" />
+                      <TextBlock Text="{Binding Id, StringFormat=\{0:N0\}}"                VerticalAlignment="Bottom" Margin="64 0 10 0" Foreground="#00f" />
+                    </Grid>
+                  </ToolTip>
+                </stb:HighlightableTextBlock.ToolTip>
+              </stb:HighlightableTextBlock>
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
@@ -194,8 +205,8 @@
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
 
-        <DataGridTextColumn     Header="Added"	FontSize="8" Binding="{Binding CreatedAt, StringFormat=\{0: yyyy-MM-dd \}}" Foreground="#555" />
-        <DataGridTextColumn     Header="Id"			FontSize="8" Binding="{Binding Id}" />
+        <!--<DataGridTextColumn     Header="Added"	FontSize="8" Binding="{Binding CreatedAt, StringFormat=\{0: yyyy-MM-dd \}}" Foreground="#555" />
+        <DataGridTextColumn     Header="Id"			FontSize="8" Binding="{Binding Id}" />-->
       </DataGrid.Columns>
     </DataGrid>
 
