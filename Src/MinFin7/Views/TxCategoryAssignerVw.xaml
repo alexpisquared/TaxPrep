@@ -100,13 +100,14 @@
       <TextBlock  Grid.Column="2"  Grid.Row="2" Foreground="#080" FontSize="18"			  x:Name="tbkAmt" Background="#def" MinWidth="22"/>
       <Label      Grid.Column="3"  Grid.Row="1" Foreground="#080" Content="+/-"	      Target="{Binding ElementName=tRng}" />
       <TextBox    Grid.Column="3"  Grid.Row="2" Foreground="#080" FontSize="18"			  TextChanged="OnTextChangedFuz" x:Name="tRng" Text="1.00" />
-      <TextBlock  Grid.Column="4"  Grid.Row="2" Foreground="#18d" FontSize="18"		    x:Name="tbkFlt" Background="#def" MinWidth="22" ToolTip="Search 1 - Main/Central" />
       <CheckBox   Grid.Column="5"  Grid.Row="1" Foreground="#808" x:Name="chkTxCatgry" Content="Ca_tgry" Checked="OnTxCatgry_Checked" Unchecked="OnTxCatgry_UnChckd" />
       <ComboBox   Grid.Column="5"  Grid.Row="2"                    x:Name="cbxTxCatgry" IsEnabled="{Binding ElementName=chkTxCatgry, Path=IsChecked}" ItemsSource="{Binding Source={StaticResource txCategoryCmBxVwSrc}}" DisplayMemberPath="Name" SelectedValuePath="IdTxt" SelectionChanged="OnTxCatgry_Changed" />
 
       <CheckBox   Grid.Column="7"  Grid.Row="1" Foreground="#c04" x:Name="chkSingleYr" Content="1 _Yr  " Checked="OnSingleYr_Checked" Unchecked="OnSingleYr_UnChckd" />
       <ComboBox   Grid.Column="7"  Grid.Row="2"                    x:Name="cbxSingleYr" IsEnabled="{Binding ElementName=chkSingleYr, Path=IsChecked}" SelectionChanged="OnSingleYr_Changed" />
 
+      <TextBlock  Grid.Column="9"  Grid.Row="2" Foreground="#18d" FontSize="18"		    x:Name="tbkFlt" Background="#def" MinWidth="22" ToolTip="Used below for highlighting" Opacity="0" />
+      
       <Button     Grid.Column="9"  Grid.Row="2" Foreground="#18d" Content="_Clear"  Click="OnClear1" />
       <!--<Button     Grid.Column="11" Grid.Row="2" Foreground="#d81" Content="_Manual" Click="OnManualTxnAdd" ToolTip="Add a txn manually. " />-->
     </Grid>

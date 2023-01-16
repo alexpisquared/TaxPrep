@@ -1097,6 +1097,7 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2019).HasColumnType("money");
             entity.Property(e => e.Exp2020).HasColumnType("money");
             entity.Property(e => e.Exp2021).HasColumnType("money");
+            entity.Property(e => e.Exp2022).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
                 .IsRequired()
                 .HasMaxLength(50)
