@@ -1,12 +1,14 @@
 USE FinDemoDbg
 GO
 /*
-SELECT count(*) FROM TxCoreV2 WHERE                                 (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
-SELECT count(*) FROM TxCoreV2 WHERE  (TxCategoryIdTxt = 'UnKn') AND (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
-UPDATE               TxCoreV2 SET     TxCategoryIdTxt = 'UnKn' WHERE (TxCategoryIdTxt <> 'UnKn') AND (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
-SELECT count(*) FROM TxCoreV2 WHERE  (TxCategoryIdTxt = 'UnKn') AND (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
+--USE FinDemoDbg
+--GO
+--SELECT count(*) FROM TxCoreV2 WHERE                                 (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
+--SELECT count(*) FROM TxCoreV2 WHERE  (TxCategoryIdTxt = 'UnKn') AND (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
+--UPDATE               TxCoreV2 SET     TxCategoryIdTxt = 'UnKn' WHERE (TxCategoryIdTxt <> 'UnKn') AND (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
+--SELECT count(*) FROM TxCoreV2 WHERE  (TxCategoryIdTxt = 'UnKn') AND (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
 
-USE FinDemoDbg
+USE FinDemo
 GO
 SET ANSI_NULLS ON
 GO
