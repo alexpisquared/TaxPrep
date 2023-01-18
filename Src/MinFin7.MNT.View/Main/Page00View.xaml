@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="MinFin7.MNT.View.Main.Page00View" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:stb="clr-namespace:WpfUserControlLib.Helpers;assembly=WpfUserControlLib" 
+             xmlns:cnv="clr-namespace:WpfUserControlLib.Converters;assembly=WpfUserControlLib"
+             xmlns:vms="clr-namespace:MinFin7.MNT.VM.VMs;assembly=MinFin7.MNT.VM" d:DataContext="{d:DesignInstance Type=vms:Page00VM}" 
+             d:DesignHeight="200" d:DesignWidth="900" Padding="8" Background="#4f0f" >
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TbkVCenteredInfoClr}" />
+    </ResourceDictionary>
+  </UserControl.Resources>
+  <UserControl.InputBindings>
+    <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="Home" CommandParameter="Mdfr-None" />
+    <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="Home" CommandParameter="Mdfr-Ctrl" Modifiers="Ctrl" />
+    <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="Home" CommandParameter="Mdfr-Alt"  Modifiers="Alt"  />
+    <KeyBinding Command="{Binding NavigatePage01Command}" Gesture="F1" />
+    <KeyBinding Command="{Binding NavigatePage02Command}" Gesture="F2" />
+    <KeyBinding Command="{Binding NavigatePage03Command}" Gesture="F3" />
+    <KeyBinding Command="{Binding NavigatePage04Command}" Gesture="F4" />
+    <KeyBinding Command="{Binding NavigatePage05Command}" Gesture="F5" />
+  </UserControl.InputBindings>
+  <Grid x:Name="ZommablePanel" Tag="//tu: Grid with round corners!!! => must be a Style. ???????">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="1*"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="40" />
+      <RowDefinition Height="20" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="30" />
+    </Grid.RowDefinitions>
+
+    <TextBlock Grid.Row="1" Text="Page00" FontSize="20" Margin="19 0" Grid.ColumnSpan="6" />
+
+    <Viewbox   Grid.Row="2" >
+    </Viewbox>
+
+    <Grid       Grid.Row="2" Margin="0,0,0,6" HorizontalAlignment="Stretch" VerticalAlignment="Center" >
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="180"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+
+      <TextBlock Grid.Column="02" FontSize="16" Text="Welcome ..." />
+      <!--<TextBlock Grid.Column="03" FontSize="16" Text="{Binding CurrentUser.FullName, StringFormat='{}{0}!'}" FontWeight="SemiBold" d:Text="CI\Alex" ToolTip="{Binding CurrentUser.Notes}" />
+          <TextBlock Grid.Column="04" FontSize="14" Text="{Binding PermisssionCSV, StringFormat='{} ({0})', FallbackValue='Loading Permissions...'}" FontStyle="Italic" FontWeight="SemiBold" ToolTip="Current permissions"/>-->
+
+      <CheckBox  Grid.Column="07" IsChecked="{Binding LetDbChg}" Content="WrD " />
+
+      <Label     Grid.Column="09" Content="SQL" />
+      <ComboBox  Grid.Column="10" ItemsSource="{Binding SqlServrs}" SelectedItem="{Binding SrvrName}" />
+      <TextBlock Grid.Column="11"        Text="{Binding SrvrName}" FontStyle="Italic" FontWeight="SemiBold" FontSize="14" />
+
+      <Label     Grid.Column="12" Content="DB" />
+      <ComboBox  Grid.Column="13" ItemsSource="{Binding DtBsNames}" SelectedItem="{Binding DtBsName}" />
+      <TextBlock Grid.Column="14"        Text="{Binding DtBsName}" FontStyle="Italic" FontWeight="SemiBold" FontSize="14" />
+
+    </Grid>
+
+    <!--<Label      Grid.Row="3" Content="{Binding GSReport}" d:Content="Page00" />-->
+    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" >
+      <Button   Content="_Import"  Command="{Binding ImportCsvCommand}" x:Name="S" />
+      <Button   Content="_Chk DB"  Command="{Binding ChkDb4CngsCommand}"   x:Name="C" />
+      <Button   Content="_Save DB" Command="{Binding Save2DbCommand}"   x:Name="T" />
+      <Button Content=" _Chk " Command="{Binding ChkDb4CngsCommand}"  ToolTip="Check DB for changes"  Foreground="#0a0" />
+      <Button Content=" _Sve " Command="{Binding Save2DbCommand}"     ToolTip="Save changes to DB"    Foreground="#f80" />
+    </StackPanel>
+
+  </Grid>
+</UserControl>
+
+  
