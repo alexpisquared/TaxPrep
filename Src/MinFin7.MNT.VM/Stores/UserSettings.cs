@@ -29,13 +29,12 @@ public class UserSettings : UserSettingsBase // ..actually, not a store/store - 
   }
   string _s = ".\\sqlEXPRESS";  /**/ public string SrvrName { get => _s; set { if (_s != value) { _s = value; SaveIfLoaded(); } } }
   string _r = "IpmUserRole__";  /**/ public string DtBsRole { get => _r; set { if (_r != value) { _r = value; SaveIfLoaded(); } } }
-  string _d = "FinDemoDbg";      /**/ public string DtBsName { get => _d; set { if (_d != value) { _d = value; SaveIfLoaded(); } } }
+  string _d = "FinDemoDbg";     /**/ public string DtBsName { get => _d; set { if (_d != value) { _d = value; SaveIfLoaded(); } } }
   string _e = "EMAILOFI_____";  /**/ public string EmailOfI { get => _e; set { if (_e != value) { _e = value; SaveIfLoaded(); } } }
-  bool _o;                      /**/ public bool LetDbChg { get => _o; set { if (_o != value) { _o = value; SaveIfLoaded(); } } }
   bool _u;                      /**/ public bool IsAudible { get => _u; set { if (_u != value) { _u = value; SaveIfLoaded(); } } }
   bool _n;                      /**/ public bool IsAnimeOn { get => _n; set { if (_n != value) { _n = value; SaveIfLoaded(); } } }
+  bool _o;                      /**/ public bool LetDbChg { get => _o; set { if (_o != value) { _o = value; SaveIfLoaded(); } } }
   int _a = -2;                  /**/ public int AplctnId { get => _a; set { if (_a != value) { _a = value; SaveIfLoaded(); } } }
-
 
   void SaveIfLoaded() { if (_loaded) { LastSave = DateTimeOffset.Now; Save(this); } }
 }

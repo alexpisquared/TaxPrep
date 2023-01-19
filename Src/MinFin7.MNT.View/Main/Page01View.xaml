@@ -71,10 +71,17 @@
     </Grid>
 
     <DataGrid Grid.Row="1" ItemsSource="{Binding PageCvs}" CurrentItem="{Binding CurrentEmail}" SelectedItem="{Binding SelectdEmail}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" x:Name="dgPage"
-              IsSynchronizedWithCurrentItem="True" SelectionChanged="dgPage_SelectionChanged" RowHeight="22" AutoGenerateColumns="True">
-        <!--
+              IsSynchronizedWithCurrentItem="True" SelectionChanged="dgPage_SelectionChanged" RowHeight="22" >
       <DataGrid.Columns>
-        <DataGridTextColumn Header=" Email (id)"  Binding="{Binding Id}"                                        MaxWidth="200" IsReadOnly="True" />
+        <DataGridTextColumn Header=" Txn Detail" Binding="{Binding TxDtl8}"                             IsReadOnly="True" MinWidth="88"/>
+        <DataGridTextColumn Header=" Cnt"     Binding="{Binding Cnt}"                                   IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#08f" />
+        <DataGridTextColumn Header=" Min"     Binding="{Binding Min, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#08f" />
+        <DataGridTextColumn Header=" Max"     Binding="{Binding Max, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#08f" />
+        <DataGridTextColumn Header=" Avg"     Binding="{Binding Avg, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#08f" />
+        <DataGridTextColumn Header=" Sum"     Binding="{Binding Sum, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#08f" />
+        <DataGridTextColumn Header=" FrstTxn" Binding="{Binding FrstTxn, StringFormat=\{0:yy-MM-dd\}}"  IsReadOnly="True" />
+        <DataGridTextColumn Header=" LastTxn" Binding="{Binding LastTxn, StringFormat=\{0:yy-MM-dd\}}"  IsReadOnly="True" Width="*" />
+        <!--
         <DataGridTextColumn Header=" Fname"       Binding="{Binding Fname}"                                     MaxWidth="100" />
         <DataGridTextColumn Header=" Country"     Binding="{Binding Country}"                                   />
         <DataGridTemplateColumn Header=" Phone"   Width="31" >
@@ -96,8 +103,8 @@
         <DataGridTextColumn Header=" Sent"        Binding="{Binding Ttl_Sent}"                                  IsReadOnly="True" ElementStyle="{StaticResource CenterAlignStyle}" Foreground="#08f" />
         <DataGridTextColumn Header=" Rcvd"        Binding="{Binding Ttl_Rcvd}"                                  IsReadOnly="True" ElementStyle="{StaticResource CenterAlignStyle}" Foreground="#fa0" />
         <DataGridTextColumn Header=" Notes"       Binding="{Binding Notes}"                                     FontSize="8" Width="*"  />
-      </DataGrid.Columns>
         -->
+      </DataGrid.Columns>
     </DataGrid>
 
     <Grid Grid.Row="3" DataContext="{Binding SelectdEmail}" Background="#4888" VerticalAlignment="Stretch" >
