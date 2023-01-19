@@ -98,6 +98,342 @@
           <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <Grid Grid.Row="1" Margin="0,0,0,6" HorizontalAlignment="Stretch" VerticalAlignment="Center" >
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <Grid.Resources>
+            <Style TargetType="{x:Type Label}"        BasedOn="{StaticResource lblTopLeft}" />
+          </Grid.Resources>
+
+          <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="16" Margin="20 -11">
+            <StackPanel.Background>
+              <ImageBrush TileMode="Tile" />
+            </StackPanel.Background>
+            <StackPanel.Resources>
+              <Style TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="Foreground" Value="#3aaa" />
+                <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                <Setter Property="RenderTransform">
+                  <Setter.Value>
+                    <RotateTransform Angle="-26" />
+                  </Setter.Value>
+                </Setter>
+              </Style>
+            </StackPanel.Resources>
+            <TextBlock Text=" Phase 2       " />
+            <TextBlock Text="          Phase 2" />
+            <TextBlock Text="Phase 2                       " />
+            <TextBlock Text=" Phase 2       " />
+            <TextBlock Text="          Phase 2" />
+            <TextBlock Text="Phase 2                       " />
+            <TextBlock Text=" Phase 2       " />
+            <TextBlock Text="          Phase 2" />
+            <TextBlock Text="Phase 2                       " />
+            <TextBlock Text=" Phase 2       " />
+            <TextBlock Text="          Phase 2" />
+            <TextBlock Text="Phase 2                       " />
+            <TextBlock Text=" Phase 2       " />
+            <TextBlock Text="          Phase 2" />
+            <TextBlock Text="Phase 2                       " />
+          </StackPanel>
+
+          <vws:BrandTitleUserControl Grid.RowSpan="3" />
+
+          <Label     Grid.Column="2" Content="Sql" />
+          <TextBlock Grid.Column="2" Text="{Binding SrvrName}" FontStyle="Italic" FontWeight="SemiBold" FontSize="14" Grid.Row="1" d:Text="SqlExprs" />
+
+          <Label     Grid.Column="4" Content="DB" />
+          <TextBlock Grid.Column="4" Text="{Binding DtBsName}" FontStyle="Italic" FontWeight="SemiBold" FontSize="14" Grid.Row="1" d:Text="SqlExprs" />
+
+          <Label     Grid.Column="6" Content="Agent" />
+          <TextBlock Grid.Column="6" Text="{Binding EmailOfI}" FontStyle="Italic" FontWeight="SemiBold" FontSize="14" Grid.Row="1" d:Text="SqlExprs" />
+
+          <Label     Grid.Column="8" Content="RW" />
+          <CheckBox  Grid.Column="8" IsChecked="{Binding LetDbChg}" Grid.Row="1" />
+
+        </Grid>
+
+        <Grid Grid.Row="3" Name="NavPlusContent" Margin="-3 0 0 0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Grid Grid.Column="1" x:Name="Shadows" Margin="2 8 2 2" d:Visibility="Visible">
+            <Border>
+              <Border.Effect>
+                <DropShadowEffect ShadowDepth="2" Color="#000" BlurRadius="6" />
+              </Border.Effect>
+            </Border>
+            <Border>
+              <Border.Effect>
+                <DropShadowEffect ShadowDepth="2" Color="#fff" BlurRadius="6" Direction="135" />
+              </Border.Effect>
+            </Border>
+          </Grid>
+
+          <Grid Grid.ColumnSpan="2" Margin="0 5 3 2" x:Name="pnlHeaderShade" Background="{StaticResource VagueHeaderPanel_Background}" Height="47" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+
+          <CheckBox x:Name="cbToggleMenu" Margin="4" Width="40" VerticalAlignment="Stretch" d:IsChecked="True" VerticalContentAlignment="Top" FocusVisualStyle="{x:Null}" ToolTip="Show/Hide text" Cursor="ScrollE" >
+            <CheckBox.Template>
+              <ControlTemplate TargetType="CheckBox">
+                <Grid Margin="0 15" Background="Transparent">
+                  <Viewbox Width="30" VerticalAlignment="Top" >
+                    <Path Data="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" Fill="{StaticResource InfoForegroundBrush}" Stretch="Fill" />
+                  </Viewbox>
+                </Grid>
+              </ControlTemplate>
+            </CheckBox.Template>
+          </CheckBox>
+          <nav:NavDrawer OpenCloseDuration="0:0:0.25" IsOpen="{Binding IsChecked, ElementName=cbToggleMenu}" Margin="0 55 0 0">
+            <nav:NavDrawer.Resources>
+              <Style TargetType="nav:NavDrawerItem">
+                <Setter Property="Padding" Value="3" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{StaticResource InfoForegroundBrush}" />
+                <Setter Property="BorderThickness" Value="4 0 0 0" />
+                <Style.Triggers>
+                  <!-- Smoother ... but conflicts with the final status color:
+                  <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard>
+                      <Storyboard>
+                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="#dbdbdb" Duration="0:0:0.1" />
+                      </Storyboard>
+                    </BeginStoryboard>
+                  </EventTrigger>
+                  <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                      <Storyboard>
+                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0.1" />
+                      </Storyboard>
+                    </BeginStoryboard>
+                  </EventTrigger>
+                  -->
+                  <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background"  Value="#2aaa" />
+                  </Trigger>
+                  <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="BorderBrush" Value="#1669bb" />
+                    <Setter Property="Background"  Value="#3aaa" />
+                  </Trigger>
+                </Style.Triggers>
+              </Style>
+              <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TbkVCenteredInfoClr}" >
+                <!--Not sure who overrides this ... but it does not color without it: -->
+                <Setter Property="Foreground" Value="{StaticResource InfoForegroundBrush}" />
+              </Style>
+            </nav:NavDrawer.Resources>
+            <nav:NavDrawer.Content>
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="*"/>
+                  <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <vws:NavigationBar DataContext="{Binding NavBarVM}" />
+
+                <Menu Grid.Row="1" ToolTip="Settings and such..." HorizontalAlignment="Left" Margin="0" >
+                  <MenuItem Padding="6 1" Width="226" >
+                    <MenuItem.Header>
+                      <Grid>
+                        <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinNavTpl.View;component/Assets/Box-grey.ico"      Width="32" />
+                        <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinNavTpl.View;component/Assets/Cog-BlackOnTransp.png" Width="22" Margin="0 1 1 0" />
+                      </Grid>
+                    </MenuItem.Header>
+                    <MenuItem   Header="_DevDbg" Visibility="{Binding IsDevDbgViz}" FontStyle="Oblique" FontWeight="Medium">
+                      <ComboBox ItemsSource="{Binding SqlServrs}" SelectedItem="{Binding SrvrName}" BorderThickness="0" />
+                      <ComboBox ItemsSource="{Binding DtBsNames}" SelectedItem="{Binding DtBsName}"  BorderThickness="0" />
+                      <!--
+                      <MenuItem Header="S_QL Server Selection..." Command="{Binding OpenAppConfigCommand}" Visibility="{Binding CanSelectSQL, Converter={cnv:UniConverter}, FallbackValue=Collapsed}" />
+                      <Separator/>
+                      <MenuItem Header="_All Cash by Group"        Command="{Binding UpdateViewCommand}" CommandParameter="AllCashByGroupVM" />
+                      <MenuItem Header="_SP Fallback Runner"       Command="{Binding UpdateViewCommand}" CommandParameter="SPFallbackRunrVM" />
+                      <MenuItem Header="_User-SP Assigner"         Command="{Binding UpdateViewCommand}" CommandParameter="UserSpAssignerVM" />
+                      <MenuItem Header="_Validation Demo "         Command="{Binding UpdateViewCommand}" CommandParameter="ValidationDemoVM" />
+                      <Separator/>
+                      <MenuItem Header="Admin Visibility Test - Yes-Admin" ToolTip="Just a test" Visibility="{Binding IsAdmin, UpdateSourceTrigger=PropertyChanged, Converter={cnv:BoolToVisibilityConverter InvertValue=False}}" />
+                      <MenuItem Header="Admin Visibility Test - Non-Admin" ToolTip="Just a test" Visibility="{Binding IsAdmin, UpdateSourceTrigger=PropertyChanged, Converter={cnv:BoolToVisibilityConverter InvertValue=True}}" />
+                      <MenuItem Header="_Toggle IsObsolete " IsCheckable="True" IsChecked="{Binding IsObsolete}"    ToolTip="Temporary feature for quick dev-t only." />
+                      <MenuItem Header="Toggle _Admin Mode " IsCheckable="True" IsChecked="{Binding IsAdmin}"       ToolTip="Temporary feature for quick dev-t only." />
+                      -->
+                      <MenuItem Header="_Experimental ..." />
+                      <MenuItem Header="Get _Busy "     IsCheckable="True" IsChecked="{Binding IsBusy}" ToolTip="Temporary feature for quick dev-t only." />
+                      <MenuItem Header="A_utosave    "  IsCheckable="True" IsChecked="True" Unchecked="OnUnchecked" ToolTip="Autosave is On: no need to remember to save your changes." />
+                      <Separator/>
+                      <MenuItem Header="_Export to XML file" InputGestureText="Ctrl+X" />
+                      <MenuItem Header="_Export to CSV file" InputGestureText="Ctrl+C" />
+                      <Separator/>
+                      <!--
+                      <MenuItem Header="_Reset DB" Command="{Binding ResetDbCommand}" CommandParameter="DevDbg" InputGestureText="Ctrl+F22" ToolTip="Delete all forever from the database!!!" />
+                      <MenuItem Header="_Check DB" Command="{Binding ChkDb4CngsCommand}" CommandParameter="DevDbg" InputGestureText="Ctrl+F11" ToolTip="..for changes" />
+                      <MenuItem Header="_Tgl Admn" Command="{Binding TglAdmnCommand}" CommandParameter="DevDbg" InputGestureText="Ctrl+F12" ToolTip="Toggle DB flag and restart the app in the new mode" />-->
+                    </MenuItem>
+                    <Separator />
+                    <xui:ThemeSelectorMenuItem x:Name="themeSelector1" Header="_Dark/Light Mode ..." />
+                    <MenuItem   Header="_Audio Feedback" IsCheckable="True" IsChecked="{Binding IsAudible}"     ToolTip="Audible feedback on app's activity." />
+                    <MenuItem   Header="_Video Feedback" IsCheckable="True" IsChecked="{Binding IsAnimeOn}"     ToolTip="Animated feedback on app's activity." />
+                    <MenuItem   Header="_Useful Links ...">
+                      <!--<MenuItem Header="_Attachments" Click="OnGoToLink" Tag="{Binding AttachmentsPath}" />
+                      <MenuItem Header="_Settings"    Click="OnGoToLink" Tag="{Binding StngFolder}" />
+                      <MenuItem Header="_Logs"        Click="OnGoToLink" Tag="{Binding LogsFolder}" />-->
+                    </MenuItem>
+                  </MenuItem>
+                </Menu>
+              </Grid>
+            </nav:NavDrawer.Content>
+          </nav:NavDrawer>
+
+          <Grid Grid.Column="1" Margin="3 8 3 2" x:Name="pnlMainContent" Background="{StaticResource VagueGradientGridBackground}">
+            <!--<Grid.Effect>
+              <BlurEffect Radius="{Binding BusyBlur, FallbackValue=0}" />
+            </Grid.Effect>-->
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+              </Grid.RowDefinitions>
+
+              <ContentControl Content="{Binding CurrentVM}" IsEnabled="{Binding IsBusy, Converter={cnv:ToBoolConverter InvertValue=True}}" Grid.Row="1" Padding="20" >
+                <ContentControl.Style>
+                  <Style TargetType="ContentControl">
+                    <Setter Property="RenderTransform">
+                      <Setter.Value>
+                        <TranslateTransform/>
+                      </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding NavAnmDirn}" Value="+1">
+                        <DataTrigger.EnterActions>
+                          <StopStoryboard BeginStoryboardName="sbBwd"/>
+                          <BeginStoryboard x:Name="sbFwd" Storyboard="{StaticResource sbFwd}"/>
+                        </DataTrigger.EnterActions>
+                        <!--<DataTrigger.ExitActions>
+                        <BeginStoryboard Storyboard="{StaticResource sbIni}"/>
+                      </DataTrigger.ExitActions>-->
+                      </DataTrigger>
+                      <DataTrigger Binding="{Binding NavAnmDirn}" Value="-1">
+                        <DataTrigger.EnterActions>
+                          <StopStoryboard BeginStoryboardName="sbFwd"/>
+                          <BeginStoryboard x:Name="sbBwd" Storyboard="{StaticResource sbBwd}"/>
+                        </DataTrigger.EnterActions>
+                        <!--<DataTrigger.ExitActions>
+                        <BeginStoryboard Storyboard="{StaticResource sbIni}"/>
+                      </DataTrigger.ExitActions>-->
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </ContentControl.Style>
+              </ContentControl>
+
+            </Grid>
+          </Grid>
+
+          <Grid x:Name="pnlIsBusy" Grid.Column="1" Margin="2,8,2,0" Cursor="Wait" Visibility="{Binding IsBusy, Converter={cnv:UniConverter}}" Background="{Binding IsAnimeOn, Converter={cnv:UniConverter BrushFalse={x:Null}, BrushTrue=#18f8}}">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="2*"/>
+              <RowDefinition Height="1*"/>
+              <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <!-- BE-194: -->
+            <TextBlock Grid.Row="1" Visibility="{Binding IsAnimeOn, Converter={cnv:UniConverter InvertValue=True}}" Text="{Binding IsBusy, Converter={cnv:UniConverter TextFalse='', TextTrue='loading...'}}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8"/>
+            <Viewbox   Grid.Row="1" Visibility="{Binding IsAnimeOn, Converter={cnv:UniConverter InvertValue=False}}">
+              <Grid>
+                <Grid.Style>
+                  <Style TargetType="Grid">
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="RenderTransform">
+                      <Setter.Value>
+                        <TranslateTransform />
+                      </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                        <DataTrigger.EnterActions>
+                          <StopStoryboard BeginStoryboardName="sbDropOu"/>
+                          <BeginStoryboard x:Name="sbDropIn" Storyboard="{StaticResource sbDropIn}"/>
+                        </DataTrigger.EnterActions>
+                      </DataTrigger>
+                      <DataTrigger Binding="{Binding IsBusy}" Value="False">
+                        <DataTrigger.EnterActions>
+                          <StopStoryboard BeginStoryboardName="sbDropIn"/>
+                          <BeginStoryboard x:Name="sbDropOu" Storyboard="{StaticResource sbDropOu}"/>
+                        </DataTrigger.EnterActions>
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </Grid.Style>
+
+                <anm:GravityAnime IsBusy="{Binding IsBusy}" Prompt="{Binding BusyMessage, FallbackValue='Wait!  Loading...'}"/>
+
+              </Grid>
+            </Viewbox>
+          </Grid>
+
+          <Rectangle x:Name="pnlReportTooltipShower" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="58" ToolTip="{Binding GSReport}" Fill="Transparent" Grid.Column="1"/>
+          <Border x:Name="pnlReport" Visibility="{Binding GSRepViz, FallbackValue=Collapsed}" d:Visibility="Visible" Background="#282828" BorderBrush="#aaa" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="13 16" Padding="1" CornerRadius="8">
+            <Border.Effect>
+              <DropShadowEffect BlurRadius="16" />
+            </Border.Effect>
+            <Grid>
+              <TextBlock Text="{Binding GSReport}" MaxHeight="160" MaxWidth="920" Background="Transparent" Margin="12 8 26 5" VerticalAlignment="Top" HorizontalAlignment="Left" d:Text="Hello! Here it is."/>
+              <!--<ListBox MaxHeight="160" MaxWidth="920" Background="Transparent" BorderThickness="0" Margin="5 8 15 5" ItemsSource="{Binding ValidationMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <ListBox.ItemContainerStyle>
+                  <Style TargetType="{x:Type ListBoxItem}" >
+                    <Setter Property="Template" Value="{StaticResource ColoredValidationMsgStyle}"/>
+                  </Style>
+                </ListBox.ItemContainerStyle>
+              </ListBox>
+              <ListBox Background="Transparent" BorderThickness="0" Margin="0 120 0 0" Visibility="Collapsed">
+                <ListBoxItem Content="123 wonderful color" Foreground="#f44" />
+                <ListBoxItem Content="123 wonderful color" Foreground="#f88" />
+                <ListBoxItem Content="123 wonderful color" Foreground="#faa" />
+              </ListBox>-->
+              <Button Content="r" FontFamily="Webdings" FontSize="18" Height="26" Padding="0 -1" Width="26" Foreground="#F00" BorderThickness="0" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{Binding HidePnlCommand}" Background="#555" Margin="0 -0" IsCancel="True" ToolTip="Close Popup" />
+            </Grid>
+          </Border>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
+          <Button Content="{Binding AppVerNumber}" Command="{Binding UpgradeSelfCommand}" d:Content="123" BorderThickness="0" Background="Transparent" FontSize="14" VerticalAlignment="Bottom" Padding="4 0 4 1" Margin="2 -4"
+                  ToolTip="{Binding AppVerToolTip}" 
+               Foreground="{Binding IsObsolete, Converter={cnv:UniConverter BrushTrue=OrangeRed, BrushFalse=Green}, FallbackValue=#07e}" />
+          <!-- BE-194                        Style="{StaticResource AnimColorButtonStyle}" Height="26" />          -->
+          <!--<TextBlock x:Name="tbkVer" Text="v7·11" Margin="40 0 16 0" 
+                     Foreground="{Binding IsObsolete, Converter={cnv:UniConverter BrushTrue=OrangeRed, BrushFalse=Green}, FallbackValue=#07e}" FontSize="12" VerticalAlignment="Bottom" 
+                        ToolTip="{Binding AppVerToolTip}" />-->
+          <!-- BE-194
+          <Button Content=" Update " Command="{Binding UpgradeSelfCmd}" Visibility="{Binding IsObsolete, Converter={cnv:UniConverter}, FallbackValue=Collapsed}" Foreground="#a00" BorderThickness="0" Margin="4 -2" d:Visibility="Visible" Style="{StaticResource IsObsoleteBurronStyle}" RenderTransformOrigin="1.0,0.0" ToolTip="New version is avilable.&#10;To update click the button...&#10;...or run the Green link" >
+            <Button.RenderTransform>
+              <TransformGroup>
+                <ScaleTransform ScaleX="{Binding UpgradeUrgency}" ScaleY="{Binding UpgradeUrgency}"/>
+                <RotateTransform Angle="{Binding UpgradeUrgency}" />
+                <SkewTransform  AngleX="8" />
+              </TransformGroup>
+            </Button.RenderTransform>
+          </Button>-->
+        </StackPanel>
+
 
       </Grid>
       <StackPanel x:Name="WindowControlPanel" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="-6" Style="{StaticResource SmartOpacityToggleAnimStyle}" >

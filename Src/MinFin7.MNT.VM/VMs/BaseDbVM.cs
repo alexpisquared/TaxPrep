@@ -191,7 +191,7 @@ public partial class BaseDbVM : BaseMinVM
     } //tu: https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/observableproperty
     partial void OnIsBusyChanged(bool value)
     {
-        _mainVM.IsBusy = value; ;
+        //IsBusy = value; ;
     }     /*BusyBlur = value ? 8 : 0;*/    //Write($"TrcW:>         ├── BaseDbVM.IsBusy set to  {value,-5}  {(value ? "<<<<<<<<<<<<" : ">>>>>>>>>>>>")}\n");
 
     [RelayCommand]

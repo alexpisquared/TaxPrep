@@ -1,11 +1,4 @@
-﻿using System.Windows;
-using Microsoft.Extensions.Configuration;
-using MinFin7.MNT.Stores;
-using MinFin7.MNT.VM.Stores;
-using StandardContractsLib;
-using StandardLib.Helpers;
-
-namespace MinFin7.MNT.VM.VMs;
+﻿namespace MinFin7.MNT.VM.VMs;
 public partial class MainVM : BaseMinVM
 {
   readonly NavigationStore _navigationStore;
@@ -138,7 +131,7 @@ public partial class MainVM : BaseMinVM
   [ObservableProperty] int navAnmDirn;
   [ObservableProperty] Visibility isDevDbgViz = Visibility.Visible;
   [ObservableProperty] Visibility gSRepViz = Visibility.Visible;
-  [ObservableProperty] bool isBusy;// /*BusyBlur = value ? 8 : 0;*/  }
+  //[ObservableProperty] bool isBusy;// /*BusyBlur = value ? 8 : 0;*/  }
   [ObservableProperty] ObservableCollection<string?> validationMessages = new();
   bool _au; public bool IsAudible { get => _au; set { if (SetProperty(ref _au, value) && _ctored) { Bpr.SuppressTicks = Bpr.SuppressAlarm = !(UsrStgns.IsAudible = value); Logger.LogInformation($"│   user-pref-auto-poll:       IsAudible: {value} ■─────■"); } } }
   bool _an; public bool IsAnimeOn { get => _an; set { if (SetProperty(ref _an, value) && _ctored) { UsrStgns.IsAnimeOn = value; Logger.LogInformation($"│   user-pref-auto-poll:       IsAnimeOn: {value} ■─────■"); } } }
