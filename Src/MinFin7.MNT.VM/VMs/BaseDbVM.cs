@@ -178,7 +178,6 @@ public partial class BaseDbVM : BaseMinVM
     [ObservableProperty] ICollectionView? pageCvs;
     [ObservableProperty] string searchText;
     [ObservableProperty] bool includeClosed;
-    [ObservableProperty] bool isBusy;
     [ObservableProperty][NotifyCanExecuteChangedFor(nameof(Save2DbCommand))] bool hasChanges;
 
     partial void OnSearchTextChanged(string value)
@@ -189,10 +188,6 @@ public partial class BaseDbVM : BaseMinVM
     {
         Bpr.Tick(); PageCvs?.Refresh();
     } //tu: https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/observableproperty
-    partial void OnIsBusyChanged(bool value)
-    {
-        //IsBusy = value; ;
-    }     /*BusyBlur = value ? 8 : 0;*/    //Write($"TrcW:>         ├── BaseDbVM.IsBusy set to  {value,-5}  {(value ? "<<<<<<<<<<<<" : ">>>>>>>>>>>>")}\n");
 
     [RelayCommand]
     protected void ChkDb4Cngs()

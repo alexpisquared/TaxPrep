@@ -15,6 +15,18 @@
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
+         "Name": "[dbo].[TxCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TxCoreV2]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TxMoneySrc]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[CreateAuditRecord]",
          "ObjectType": 1
       },

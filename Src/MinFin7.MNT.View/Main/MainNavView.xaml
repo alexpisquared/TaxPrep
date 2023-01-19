@@ -276,9 +276,9 @@
                       <MenuItem Header="Admin Visibility Test - Non-Admin" ToolTip="Just a test" Visibility="{Binding IsAdmin, UpdateSourceTrigger=PropertyChanged, Converter={cnv:BoolToVisibilityConverter InvertValue=True}}" />
                       <MenuItem Header="_Toggle IsObsolete " IsCheckable="True" IsChecked="{Binding IsObsolete}"    ToolTip="Temporary feature for quick dev-t only." />
                       <MenuItem Header="Toggle _Admin Mode " IsCheckable="True" IsChecked="{Binding IsAdmin}"       ToolTip="Temporary feature for quick dev-t only." />
-                      -->
                       <MenuItem Header="_Experimental ..." />
                       <MenuItem Header="Get _Busy "     IsCheckable="True" IsChecked="{Binding IsBusy}" ToolTip="Temporary feature for quick dev-t only." />
+                      -->
                       <MenuItem Header="A_utosave    "  IsCheckable="True" IsChecked="True" Unchecked="OnUnchecked" ToolTip="Autosave is On: no need to remember to save your changes." />
                       <Separator/>
                       <MenuItem Header="_Export to XML file" InputGestureText="Ctrl+X" />

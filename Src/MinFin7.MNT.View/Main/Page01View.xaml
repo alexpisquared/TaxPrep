@@ -36,7 +36,7 @@
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="2*"/>
+      <ColumnDefinition Width="1*"/>
       <ColumnDefinition Width="6" />
       <ColumnDefinition Width="1*" />
     </Grid.ColumnDefinitions>
@@ -74,12 +74,12 @@
     <DataGrid Grid.Row="1" ItemsSource="{Binding PageCvs}" CurrentItem="{Binding CurrentEmail}" SelectedItem="{Binding SelectdEmail}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" x:Name="dgPage"
               IsSynchronizedWithCurrentItem="True" SelectionChanged="dgPage_SelectionChanged" RowHeight="22" >
       <DataGrid.Columns>
-        <DataGridTextColumn Header=" Txn Detail" Binding="{Binding TxDtl8}"                             IsReadOnly="True" MinWidth="88"/>
-        <DataGridTextColumn Header=" Cnt"     Binding="{Binding Cnt}"                                   IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#08f" />
-        <DataGridTextColumn Header=" Min"     Binding="{Binding Min, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#08f" />
-        <DataGridTextColumn Header=" Max"     Binding="{Binding Max, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#08f" />
-        <DataGridTextColumn Header=" Avg"     Binding="{Binding Avg, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#08f" />
-        <DataGridTextColumn Header=" Sum"     Binding="{Binding Sum, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#08f" />
+        <DataGridTextColumn Header=" Txn Detail" Binding="{Binding TxDtl8}"                             IsReadOnly="True" MinWidth="88" Foreground="#0ff" />
+        <DataGridTextColumn Header=" Cnt"     Binding="{Binding Cnt}"                                   IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+        <DataGridTextColumn Header=" Min"     Binding="{Binding Min, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+        <DataGridTextColumn Header=" Max"     Binding="{Binding Max, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+        <DataGridTextColumn Header=" Avg"     Binding="{Binding Avg, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+        <DataGridTextColumn Header=" Sum"     Binding="{Binding Sum, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
         <DataGridTextColumn Header=" FrstTxn" Binding="{Binding FrstTxn, StringFormat=\{0:yy-MM-dd\}}"  IsReadOnly="True" />
         <DataGridTextColumn Header=" LastTxn" Binding="{Binding LastTxn, StringFormat=\{0:yy-MM-dd\}}"  IsReadOnly="True" Width="*" />
       </DataGrid.Columns>
@@ -103,43 +103,30 @@
 
       <WrapPanel Grid.Row="2"  >
         <StackPanel>
-          <Label Content="Id" />
-          <TextBlock Text="{Binding Id, FallbackValue='abc@efg.com'}" />
+          <Label Content="TxDtl8" />
+          <TextBlock Text="{Binding TxDtl8, FallbackValue='abc@efg.com'}" />
         </StackPanel>
         <StackPanel>
-          <Label Content="Co" />
-          <TextBlock Text="{Binding Company, FallbackValue='ABC Co'}"  />
-        </StackPanel>
-        <StackPanel Margin="40 0 0 0">
-          <Label Content="First Name" />
-          <TextBox Text="{Binding Fname, FallbackValue='John '}" MinWidth="100" />
-        </StackPanel>
-        <StackPanel>
-          <Label Content="Last Name" />
-          <TextBox Text="{Binding Lname, FallbackValue='Smith'}" MinWidth="100"   />
-        </StackPanel>
-        <StackPanel>
-          <Label Content="Perm Ban Rsn" Target="{Binding ElementName=tbPbr}" />
-          <TextBox                      Text="{Binding PermBanReason}" MinWidth="100" x:Name="tbPbr" />
-        </StackPanel>
-        <StackPanel>
-          <Label Content="_Re-send after"   Target="{Binding ElementName=tbRa}" Margin="-1 0"/>
-          <DatePicker                       SelectedDate="{Binding ReSendAfter}"  x:Name="tbRa" Margin="1.5" />
-        </StackPanel>
-        <StackPanel>
-          <Label Content="DNN Avl"         />
-          <TextBox                          Grid.Column="4" Grid.Row="3" Text="{Binding DoNotNotifyOnAvailableForCampaignId}"  MinWidth="100" />
-        </StackPanel>
-        <StackPanel>
-          <Label Content="Priority" />
-          <TextBox Text="{Binding NotifyPriority}" MinWidth="40"  />
+          <Label Content="Cnt" />
+          <TextBlock Text="{Binding Cnt, FallbackValue='ABC Co'}"  />
         </StackPanel>
       </WrapPanel>
 
     </Grid>
 
     <Grid Grid.Column="2" Grid.Row="1" Background="#4888" Grid.RowSpan="4" >
-      <!--<lcl:EmailDetailView Margin="0" DataContext="{Binding EmailOfIVM}"/>-->
+      <DataGrid Grid.Row="1" ItemsSource="{Binding TxCoCvs}" CurrentItem="{Binding CurrentTxCo}" SelectedItem="{Binding SelectdTxCo}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" x:Name="dgTxCo"
+              IsSynchronizedWithCurrentItem="True" SelectionChanged="dgPage_SelectionChanged" RowHeight="22" AutoGenerateColumns="False">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header=" Tx Detail"  Binding="{Binding TxDetail}" Foreground="#0ff"        />
+          <DataGridTextColumn Header=" Tx Ctgry"   Binding="{Binding TxCategoryIdTxt}" Foreground="#ff0"        />
+          <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-mm-dd}'}"  />
+          <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
+          <DataGridTextColumn Header=" Memo PP"    Binding="{Binding MemoPp}" />
+          <DataGridTextColumn Header=" Notes"      Binding="{Binding Notes}"  Width="*" />
+
+        </DataGrid.Columns>
+      </DataGrid>
     </Grid>
 
     <GridSplitter Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />

@@ -13,8 +13,115 @@ public partial class FinDemoDbgContext : DbContext
     {
     }
 
+    public virtual DbSet<TxCategory> TxCategory { get; set; }
+
+    public virtual DbSet<TxCoreV2> TxCoreV2 { get; set; }
+
+    public virtual DbSet<TxMoneySrc> TxMoneySrc { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<TxCategory>(entity =>
+        {
+            entity.HasKey(e => e.IdTxt);
+
+            entity.Property(e => e.IdTxt)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasDefaultValueSql("('tla')");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DeductiblePercentage).HasDefaultValueSql("((1))");
+            entity.Property(e => e.ExpGroupId)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasDefaultValueSql("('Other')");
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Notes).IsUnicode(false);
+            entity.Property(e => e.TlNumber).HasColumnName("TL_Number");
+        });
+
+        modelBuilder.Entity<TxCoreV2>(entity =>
+        {
+            entity.HasIndex(e => e.FitId, "IX_TxCoreV2").IsUnique();
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.CurBalance)
+                .HasDefaultValueSql("((0))")
+                .HasColumnType("money");
+            entity.Property(e => e.FitId)
+                .IsRequired()
+                .HasMaxLength(128)
+                .IsUnicode(false);
+            entity.Property(e => e.HstTakenAt).HasColumnType("datetime");
+            entity.Property(e => e.MemoPp)
+                .HasMaxLength(500)
+                .IsUnicode(false)
+                .HasColumnName("MemoPP");
+            entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
+            entity.Property(e => e.Notes)
+                .HasMaxLength(2000)
+                .IsUnicode(false);
+            entity.Property(e => e.TxAmount).HasColumnType("money");
+            entity.Property(e => e.TxCategoryIdTxt)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasDefaultValueSql("('UnKn')");
+            entity.Property(e => e.TxDate).HasColumnType("datetime");
+            entity.Property(e => e.TxDetail)
+                .IsRequired()
+                .HasMaxLength(200)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.TxCategoryIdTxtNavigation).WithMany(p => p.TxCoreV2)
+                .HasForeignKey(d => d.TxCategoryIdTxt)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TxCoreV2_TxCategory1");
+
+            entity.HasOne(d => d.TxMoneySrc).WithMany(p => p.TxCoreV2)
+                .HasForeignKey(d => d.TxMoneySrcId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TxCoreV2_TxSource");
+        });
+
+        modelBuilder.Entity<TxMoneySrc>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_TxSource");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Fla)
+                .IsRequired()
+                .HasMaxLength(16)
+                .IsUnicode(false)
+                .HasDefaultValueSql("('UnKn')");
+            entity.Property(e => e.IniBalance).HasColumnType("money");
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Notes)
+                .HasMaxLength(1000)
+                .IsUnicode(false);
+            entity.Property(e => e.Owner)
+                .HasMaxLength(3)
+                .IsUnicode(false);
+            entity.Property(e => e.Status)
+                .HasMaxLength(1)
+                .IsUnicode(false)
+                .IsFixedLength();
+        });
+
         OnModelCreatingGeneratedProcedures(modelBuilder);
         OnModelCreatingPartial(modelBuilder);
     }

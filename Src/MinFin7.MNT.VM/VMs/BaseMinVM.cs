@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MinFin7.MNT.VM.VMs;
+﻿namespace MinFin7.MNT.VM.VMs;
 public partial class BaseMinVM : ObservableValidator, IDisposable
 {
   protected bool _ctored;
@@ -12,6 +6,12 @@ public partial class BaseMinVM : ObservableValidator, IDisposable
   //public BaseMinVM()  {    _ctored = true;  }
   public virtual async Task<bool> InitAsync() { /*WriteLine($"::> Init of {GetType().Name}");*/ await Task.Yield(); _loaded = true; return true; }
   public virtual async Task<bool> WrapAsync() { /*WriteLine($"::> Wrap of {GetType().Name}");*/ await Task.Yield(); return true; }
+
+  [ObservableProperty] bool isBusy; partial void OnIsBusyChanged(bool value)
+  {
+    //IsBusy = value; ;
+  }     /*BusyBlur = value ? 8 : 0;*/    //Write($"TrcW:>         ├── BaseDbVM.IsBusy set to  {value,-5}  {(value ? "<<<<<<<<<<<<" : ">>>>>>>>>>>>")}\n");
+
 
   bool _disposedValue;
   protected virtual void Dispose(bool disposing)
