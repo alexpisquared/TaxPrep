@@ -1,6 +1,4 @@
-﻿using Db.FinDemo.PowerTools.Models;
-
-namespace MinFin7.MNT.VM.Services;
+﻿namespace MinFin7.MNT.VM.Services;
 public class CsvImporterService
 {
   int _nullRec = 0, _existDb = 0, _succss = 0;

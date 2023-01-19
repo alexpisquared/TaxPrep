@@ -1,7 +1,4 @@
-﻿using System.Threading;
-using StandardLib.Helpers;
-
-namespace MinFin7.MNT.VM.VMs;
+﻿namespace MinFin7.MNT.VM.VMs;
 public partial class Page01VM : BaseEmVM
 {
   public Page01VM(MainVM mvm, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoDbgContext dbx, IAddChild win, UserSettings stg, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, EmailOfIStore eml, LetDbChgStore awd, EmailDetailVM evm) : base(mvm, lgr, cfg, bpr, dbx, win, svr, dbs, gsr, awd, stg, eml, evm, 8110) { }
@@ -15,21 +12,11 @@ public partial class Page01VM : BaseEmVM
       var rv = await base.InitAsync(); _loaded = false; IsBusy = true; // or else...
 
       var sw = Stopwatch.StartNew();
-      //await Dbx.PhoneEmailXrefs.LoadAsync();
       //await Dbx.Phones.LoadAsync();
 
-      var pageCvs = (await new FinDemoDbgContextProcedures(Dbx).GroupedTxnAsync(Yoi, MatchLen)).ToList();
-      PageCvs = CollectionViewSource.GetDefaultView(pageCvs);
+      await LoadYoiMln();
 
-      //PageCvs = CollectionViewSource.GetDefaultView(Dbx.Emails.Local.ToObservableCollection()); //tu: ?? instead of .LoadAsync() / .Local.ToObservableCollection() ?? === PageCvs = CollectionViewSource.GetDefaultView(await Dbx.Emails.ToListAsync());
-      //PageCvs.SortDescriptions.Add(new SortDescription(nameof(Email.AddedAt), ListSortDirection.Descending));
-      //PageCvs.Filter = obj => obj is not Email r || r is null ||
-      //  ((string.IsNullOrEmpty(SearchText) ||
-      //    r.Id.Contains(SearchText, StringComparison.OrdinalIgnoreCase) == true ||
-      //    r.Notes?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) == true) &&
-      //  (IncludeClosed == true || (string.IsNullOrEmpty(r.PermBanReason) && _badEmails is not null && !_badEmails.Contains(r.Id))));
 
-      await GetTopDetail();
       _ = PageCvs?.MoveCurrentToFirst();
 
       Lgr.Log(LogLevel.Trace, GSReport = $" {PageCvs?.Cast<GroupedTxnResult>().Count():N0} / {sw.Elapsed.TotalSeconds:N1} loaded rows / s");
@@ -41,54 +28,60 @@ public partial class Page01VM : BaseEmVM
     finally { _ = await base.InitAsync(); }
   }
 
-  [ObservableProperty] int yoi = DateTime.Today.Year - 1;
-  [ObservableProperty] int matchLen = 1;
-  [ObservableProperty] GroupedTxnResult? selectdEmail;
+
+  [ObservableProperty] int matchLen = 16;
+  [ObservableProperty] int yearOfIn = DateTime.Today.Year - 1;
+  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] GroupedTxnResult? currentEmail; // demo only.
+  [ObservableProperty] string yearOfInStr = "2022"; partial void OnYearOfInStrChanged(string value)
+  {
+    Bpr.Tick();
+    if (!int.TryParse(value, out var rv)) return;
+
+    YearOfIn = rv;
+    LoadYoiMlnCommand.Execute(null); //tu: async void avoidment through CMD:
+  }
+  [ObservableProperty] string matchLenStr = "4"; partial void OnMatchLenStrChanged(string value)
+  {
+    Bpr.Tick();
+    if (!int.TryParse(value, out var rv)) return;
+
+    MatchLen = rv;
+    LoadYoiMlnCommand.Execute(null); //tu: async void avoidment through CMD:
+  }
+  [ObservableProperty] GroupedTxnResult? selectdEmail; partial void OnSelectdEmailChanged(GroupedTxnResult? value)
+  {
+    Bpr.Tick(); ;
+    LoadSelTxDtlCommand.Execute(value); //tu: async void avoidment through CMD:
+  }
 
   [RelayCommand]
-  async Task GetTopDetail()
+  async Task LoadYoiMln()
   {
-    await Bpr.StartAsync(8);
-
+    Bpr.Start(8);
     try
     {
-      //  if (PageCvs is null) return;
+      PageCvs = CollectionViewSource.GetDefaultView((await new FinDemoDbgContextProcedures(Dbx).GroupedTxnAsync(YearOfIn, MatchLen)).ToList());
+      ArgumentNullException.ThrowIfNull(PageCvs);
 
-      //  var curpos = PageCvs.CurrentPosition;
-
-      //  for (int i = 0, j = 0; i < 555 && j < 26; i++)
-      //  {
-      //    WriteLine($"== {i,3} {SelectdEmail?.Id}");
-
-      await GetDetailsForSelRow();
-
-      //    j++;
-
-      //    if (PageCvs?.MoveCurrentToNext() != true)
-      //      break;
-      //  }
-
-      //  if (curpos > 0)
-      //    _ = (PageCvs?.MoveCurrentToPosition(curpos));
+      PageCvs.SortDescriptions.Add(new SortDescription(nameof(GroupedTxnResult.TxDtl8), ListSortDirection.Descending));
+      PageCvs.Filter = obj => obj is not GroupedTxnResult r || r is null ||
+        ((string.IsNullOrEmpty(SearchText) ||
+          r.TxDtl8.Contains(SearchText, StringComparison.OrdinalIgnoreCase) == true));
 
       Bpr.Finish(8);
     }
     catch (Exception ex) { ex.Pop(); }
   }
 
-  async Task GetDetailsForSelRow()
+  [RelayCommand]
+  async Task LoadSelTxDtl(GroupedTxnResult selectdEmail)
   {
-    if (SelectdEmail is not null)
+    Bpr.Start(8);
+    try
     {
-      await Bpr.TickAsync();
 
-      //  var (ts, dd, root) = await GenderApi.CallOpenAI(Cfg, SelectdEmail.Fname ?? throw new ArgumentNullException(), true);
-
-      //  SelectdEmail.Country = root?.country_of_origin.FirstOrDefault()?.country_name ?? root?.errmsg ?? dd ?? "?***?";
-      //  SelectdEmail.Ttl_Rcvd = await Dbx.Ehists.CountAsync(r => r.EmailId == SelectdEmail.Id && r.RecivedOrSent == "R");
-      //  SelectdEmail.Ttl_Sent = await Dbx.Ehists.CountAsync(r => r.EmailId == SelectdEmail.Id && r.RecivedOrSent == "S");
-      //  if (SelectdEmail.Ttl_Rcvd > 0) SelectdEmail.LastRcvd = await Dbx.Ehists.Where(r => r.EmailId == SelectdEmail.Id && r.RecivedOrSent == "R").MaxAsync(r => r.EmailedAt);
-      //  if (SelectdEmail.Ttl_Sent > 0) SelectdEmail.LastSent = await Dbx.Ehists.Where(r => r.EmailId == SelectdEmail.Id && r.RecivedOrSent == "S").MaxAsync(r => r.EmailedAt);
+      await Bpr.FinishAsync(8);
     }
+    catch (Exception ex) { ex.Pop(); }
   }
 }

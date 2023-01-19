@@ -33,7 +33,7 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
       <RowDefinition Height="8"/>
-      <RowDefinition Height="200"/>
+      <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="2*"/>
@@ -49,22 +49,23 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
 
-      <TextBlock  Text="Agents" Margin="4 0" FontSize="23" FontFamily="Orbitron" Foreground="{DynamicResource LogoTextBrush}" />
+      <TextBlock  Text="Min Fin" Margin="4 0" FontSize="23" FontFamily="Orbitron" Foreground="{DynamicResource LogoTextBrush}" />
 
       <StackPanel Grid.Column="1" Orientation="Horizontal">
 
-        <Label Content="    _F" Target="{Binding ElementName=tbFilter}" />
-        <TextBox Margin="6 0" Width="120" FontSize="16" x:Name="tbFilter" Text="{Binding SearchText, Delay=750, UpdateSourceTrigger=PropertyChanged}"/>
-        <CheckBox Content="+C_losed " IsChecked="{Binding IncludeClosed}" VerticalAlignment="Center" Margin="6 0" />
+        <Label Content="    _Y"    Target="{Binding ElementName=tbFilteY}" />
+        <TextBox Margin="6 0" Width="040" FontSize="16" x:Name="tbFilteY" Text="{Binding YearOfInStr, Delay=750, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Content="    _L"    Target="{Binding ElementName=tbFilteL}" />
+        <TextBox Margin="6 0" Width="040" FontSize="16" x:Name="tbFilteL" Text="{Binding MatchLenStr, Delay=750, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Content="    _F"    Target="{Binding ElementName=tbFilter}" />
+        <TextBox Margin="6 0" Width="120" FontSize="16" x:Name="tbFilter" Text="{Binding SearchText,  Delay=750, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Button Content=" _Dtl " Command="{Binding GetTopDetailCommand}"  ToolTip="Get details for the top XX rows."        Foreground="#f80" />
-        <Button Content=" New "  Command="{Binding AddNewEmailCommand}"   ToolTip="Add _New Email"        Foreground="#f80" />
         <Button Content=" _Chk " Command="{Binding ChkDb4CngsCommand}"    ToolTip="Check DB for changes"  Foreground="#0a0" />
         <Button Content=" _Sve " Command="{Binding Save2DbCommand}"       ToolTip="Save changes to DB"    Foreground="#f80" />
 
         <TextBlock><Run Text="     Count:" FontWeight="Light" /><Run Text=" "/><Run Text="{Binding PageCvs.Count, Mode=OneWay}" FontWeight="Medium" /></TextBlock>
-        <TextBlock><Run Text="     Slctd:" FontWeight="Light" /><Run Text=" "/><Run Text="{Binding SelectdEmail.Id}" FontWeight="Medium" /></TextBlock>
-        <TextBlock><Run Text="     Crrnt:" FontWeight="Light" /><Run Text=" "/><Run Text="{Binding CurrentEmail.Id}" FontWeight="Medium" /></TextBlock>
+        <TextBlock><Run Text="     Slctd:" FontWeight="Light" /><Run Text=" "/><Run Text="{Binding SelectdEmail.TxDtl8}" FontWeight="Medium" /></TextBlock>
+        <TextBlock><Run Text="     Crrnt:" FontWeight="Light" /><Run Text=" "/><Run Text="{Binding CurrentEmail.TxDtl8}" FontWeight="Medium" /></TextBlock>
       </StackPanel>
 
       <!--<TextBlock  Grid.Column="3" FontSize="16" Text="{Binding GSReport}" HorizontalAlignment="Center" TextWrapping="Wrap" d:Text="GSReport" Foreground="#1af"  />-->
@@ -81,37 +82,10 @@
         <DataGridTextColumn Header=" Sum"     Binding="{Binding Sum, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" Foreground="#08f" />
         <DataGridTextColumn Header=" FrstTxn" Binding="{Binding FrstTxn, StringFormat=\{0:yy-MM-dd\}}"  IsReadOnly="True" />
         <DataGridTextColumn Header=" LastTxn" Binding="{Binding LastTxn, StringFormat=\{0:yy-MM-dd\}}"  IsReadOnly="True" Width="*" />
-        <!--
-        <DataGridTextColumn Header=" Fname"       Binding="{Binding Fname}"                                     MaxWidth="100" />
-        <DataGridTextColumn Header=" Country"     Binding="{Binding Country}"                                   />
-        <DataGridTemplateColumn Header=" Phone"   Width="31" >
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding Phone, Converter={cnv:PhoneFormatConverter}}"
-                         ToolTip="{Binding Phone, Converter={cnv:PhoneToolTipConverter}}"
-                         Foreground="{Binding Phone, Converter={cnv:PhoneBrushConverter}}"/>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-        <DataGridTextColumn Header=" !Avail"      Binding="{Binding DoNotNotifyOnAvailableForCampaignId}"       IsReadOnly="False" ElementStyle="{StaticResource CenterAlignStyle}" />
-        <DataGridTextColumn Header=" !OffMt"      Binding="{Binding DoNotNotifyOnOffMarketForCampaignId}"       IsReadOnly="False" ElementStyle="{StaticResource CenterAlignStyle}" />
-        <DataGridTextColumn Header=" PermBan"     Binding="{Binding PermBanReason}"                             MaxWidth="100" Foreground="#f60" />
-        <DataGridTextColumn Header=" ResndAftr"   Binding="{Binding ReSendAfter, StringFormat=\{0:yy-MM-dd\}}"  IsReadOnly="True"  />
-        <DataGridTextColumn Header=" Added"       Binding="{Binding AddedAt,  Converter={cnv:SmartDateConverter}}" IsReadOnly="True"  />
-        <DataGridTextColumn Header=" Sent"        Binding="{Binding LastSent, Converter={cnv:SmartDateConverter}}" IsReadOnly="True"  />
-        <DataGridTextColumn Header=" Rcvd"        Binding="{Binding LastRcvd, Converter={cnv:SmartDateConverter}}" IsReadOnly="True"  />
-        <DataGridTextColumn Header=" Sent"        Binding="{Binding Ttl_Sent}"                                  IsReadOnly="True" ElementStyle="{StaticResource CenterAlignStyle}" Foreground="#08f" />
-        <DataGridTextColumn Header=" Rcvd"        Binding="{Binding Ttl_Rcvd}"                                  IsReadOnly="True" ElementStyle="{StaticResource CenterAlignStyle}" Foreground="#fa0" />
-        <DataGridTextColumn Header=" Notes"       Binding="{Binding Notes}"                                     FontSize="8" Width="*"  />
-        -->
       </DataGrid.Columns>
     </DataGrid>
 
     <Grid Grid.Row="3" DataContext="{Binding SelectdEmail}" Background="#4888" VerticalAlignment="Stretch" >
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition />
-        <ColumnDefinition Width="Auto"/>
-      </Grid.ColumnDefinitions>
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="12"/>
@@ -162,32 +136,17 @@
         </StackPanel>
       </WrapPanel>
 
-      <TextBox Grid.Row="4" Text="{Binding Notes}" VerticalAlignment="Stretch" x:Name="tbAN" AcceptsReturn="True" MinHeight="42" />
-
-      <StackPanel Grid.Column="1" Grid.RowSpan="5" >
-        <Label Content="   Phones"        Grid.Column="5" Grid.Row="3" />
-        <ListBox                          Grid.Column="6" Grid.Row="3" ItemsSource="{Binding PhoneEmailXrefs}" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="1" >
-          <ListBox.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding Path=Phone.PhoneNumber, Converter={cnv:PhoneFormatConverter}}" 
-                         ToolTip="{Binding Path=Phone.PhoneNumber, Converter={cnv:PhoneToolTipConverter}}"
-                         Foreground="{Binding Path=Phone.PhoneNumber, Converter={cnv:PhoneBrushConverter}}" />
-            </DataTemplate>
-          </ListBox.ItemTemplate>
-        </ListBox>
-      </StackPanel>
-
     </Grid>
 
     <Grid Grid.Column="2" Grid.Row="1" Background="#4888" Grid.RowSpan="4" >
       <!--<lcl:EmailDetailView Margin="0" DataContext="{Binding EmailOfIVM}"/>-->
     </Grid>
 
-    <GridSplitter Grid.Row="2" Grid.Column="0" />
+    <GridSplitter Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
     <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" />
 
-    <Viewbox Grid.RowSpan="4" Grid.ColumnSpan="3" >
-      <TextBlock Visibility="{Binding GetTopDetailCommand.IsRunning, Converter={cnv:UniConverter}}" Text="Loading..." Foreground="Magenta" />
+    <Viewbox Grid.RowSpan="4" Grid.ColumnSpan="3" Visibility="{Binding LoadYoiMlnCommand.IsRunning, Converter={cnv:UniConverter}}" d:Visibility="Collapsed" >
+      <TextBlock Text="Loading..." Foreground="Magenta" />
     </Viewbox>
 
   </Grid>

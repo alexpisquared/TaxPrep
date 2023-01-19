@@ -1,7 +1,7 @@
 ﻿namespace MinFin7.MNT.View.Main;
 public partial class Page01View : UserControl
 {
-  public Page01View() { InitializeComponent(); Loaded += async (s, e) => { await Task.Delay(2500); _ = tbFilter.Focus(); }; }
+  public Page01View() { InitializeComponent(); Loaded += async (s, e) => { await Task.Delay(2500); _ = tbFilteL.Focus(); }; }
   void OnInitNewItem(object s, InitializingNewItemEventArgs e)
   {
     try

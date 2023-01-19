@@ -25,6 +25,9 @@ CREATE OR ALTER PROCEDURE GroupedTxn
 AS
 BEGIN
 	SET NOCOUNT ON;
+
+	IF (@MatchLen < 1) 
+		SET @MatchLen = 1
 	
 	DECLARE @YOI AS VARCHAR(32) 
 	SET @YOI = CAST(@YearOfInt AS CHAR(4)) + '-01-01 00:00:00' -- SELECT @YearOfInt, @MatchLen, @YOI
@@ -36,8 +39,8 @@ BEGIN
 END
 GO
 */
-SELECT   SUBSTRING(TxDetail, 1, 4) AS TxDtl8, COUNT(*) AS Cnt, MIN(TxAmount) AS Min$, MAX(TxAmount) AS Max$, AVG(TxAmount) AS Avg, SUM(TxAmount) AS Sum, MIN(TxDate) AS FrstTxn, MAX(TxDate) AS LastTxn FROM        TxCoreV2 WHERE     (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
-GROUP BY SUBSTRING(TxDetail, 1, 4), TxCategoryIdTxt
-HAVING   (TxCategoryIdTxt = 'UnKn')
+--SELECT   SUBSTRING(TxDetail, 1, 4) AS TxDtl8, COUNT(*) AS Cnt, MIN(TxAmount) AS Min$, MAX(TxAmount) AS Max$, AVG(TxAmount) AS Avg, SUM(TxAmount) AS Sum, MIN(TxDate) AS FrstTxn, MAX(TxDate) AS LastTxn FROM        TxCoreV2 WHERE     (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
+--GROUP BY SUBSTRING(TxDetail, 1, 4), TxCategoryIdTxt
+--HAVING   (TxCategoryIdTxt = 'UnKn')
 
-exec GroupedTxn 2022, 4
+exec GroupedTxn 2022, -1
