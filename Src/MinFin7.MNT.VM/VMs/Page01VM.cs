@@ -13,16 +13,22 @@ public partial class Page01VM : BaseEmVM
       var sw = Stopwatch.StartNew();
 
       await Dbx.TxCategory.LoadAsync();
-      await Dbx.TxCoreV2.LoadAsync();
+      await Dbx.TxCoreV2.Where(r => r.TxDate < new DateTime(YearOfIn, 1, 1)).LoadAsync();
 
-      TxCoCvs = CollectionViewSource.GetDefaultView(Dbx.TxCoreV2.Local.ToObservableCollection()); //tu: ?? instead of .LoadAsync() / .Local.ToObservableCollection() ?? === PageCvs = CollectionViewSource.GetDefaultView(await Dbx.TxCoreV2.ToListAsync());
-      TxCoCvs.SortDescriptions.Add(new SortDescription(nameof(TxCoreV2.CreatedAt), ListSortDirection.Descending));
-      TxCoCvs.Filter = obj => obj is not TxCoreV2 r || r is null || SelectdGrTxn is null ||
+      //2023.01.09 
+      //Data binding directly to 'DbSet.Local' is not supported since it does not provide a stable ordering.
+      //For WPF, bind to 'DbSet.Local.ToObservableCollection'.
+      //For WinForms, bind to 'DbSet.Local.ToBindingList'.
+      //For ASP.NET WebForms, bind to 'DbSet.ToList' or use Model Binding.
+
+      TxPrevCvs = CollectionViewSource.GetDefaultView(Dbx.TxCoreV2.Local.ToObservableCollection());
+      TxPrevCvs.SortDescriptions.Add(new SortDescription(nameof(TxCoreV2.CreatedAt), ListSortDirection.Descending));
+      TxPrevCvs.Filter = obj => obj is not TxCoreV2 r || r is null || SelectdGrTxn is null ||
       (r.TxDate < new DateTime(YearOfIn, 1, 1) && r.TxDetail.StartsWith(SelectdGrTxn.TxDtl8));
 
-      TxcNCvs = CollectionViewSource.GetDefaultView(Dbx.TxCoreV2.ToList());
-      TxcNCvs.SortDescriptions.Add(new SortDescription(nameof(TxCoreV2.CreatedAt), ListSortDirection.Descending));
-      TxcNCvs.Filter = obj => obj is not TxCoreV2 r || r is null || SelectdGrTxn is null ||
+      TxnYoiCvs = CollectionViewSource.GetDefaultView(Dbx.TxCoreV2.Where(r => r.TxDate >= new DateTime(YearOfIn, 1, 1)).ToList());
+      TxnYoiCvs.SortDescriptions.Add(new SortDescription(nameof(TxCoreV2.CreatedAt), ListSortDirection.Descending));
+      TxnYoiCvs.Filter = obj => obj is not TxCoreV2 r || r is null || SelectdGrTxn is null ||
       (r.TxDate >= new DateTime(YearOfIn, 1, 1) && r.TxDetail.StartsWith(SelectdGrTxn.TxDtl8));
 
       await LoadYoiMln();
@@ -31,8 +37,8 @@ public partial class Page01VM : BaseEmVM
 
       var ttlRows =
         PageCvs?.Cast<GroupedTxnResult>().Count() +
-        TxCoCvs?.Cast<TxCoreV2>().Count() +
-        TxcNCvs?.Cast<TxCoreV2>().Count() +
+        TxPrevCvs?.Cast<TxCoreV2>().Count() +
+        TxnYoiCvs?.Cast<TxCoreV2>().Count() +
         Dbx.TxCategory.Local.Count;
       Lgr.Log(LogLevel.Trace, GSReport = $" {ttlRows:N0} / {sw.Elapsed.TotalSeconds:N1}   (rows / s)       ");
 
@@ -48,8 +54,8 @@ public partial class Page01VM : BaseEmVM
   [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] GroupedTxnResult? currentEmail; // demo only.
   [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? currentTxCo;
   [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? selectdTxCo;
-  [ObservableProperty] ICollectionView? txCoCvs;
-  [ObservableProperty] ICollectionView? txcNCvs;
+  [ObservableProperty] ICollectionView? txPrevCvs;
+  [ObservableProperty] ICollectionView? txnYoiCvs;
   [ObservableProperty] ObservableCollection<string> categoriesPrevYr = new();
   [ObservableProperty] string yearOfInStr = "2022"; partial void OnYearOfInStrChanged(string value)
   {
@@ -99,17 +105,17 @@ public partial class Page01VM : BaseEmVM
     Bpr.Start(8);
     try
     {
-      TxCoCvs?.Refresh();
+      TxPrevCvs?.Refresh();
 
-      var filteredItems = TxCoCvs?.Cast<TxCoreV2>();
+      var filteredItems = TxPrevCvs?.Cast<TxCoreV2>();
       if (filteredItems != null)
       {
         CategoriesPrevYr.Clear();
         filteredItems.Select(r => r.TxCategoryIdTxt).Distinct().OrderBy(r => r).ToList().ForEach(CategoriesPrevYr.Add);
       }
 
-      TxcNCvs?.Refresh();
-      TxcNCvs?.MoveCurrentTo(null);
+      TxnYoiCvs?.Refresh();
+      TxnYoiCvs?.MoveCurrentTo(null);
 
       await Bpr.FinishAsync(8);
     }
