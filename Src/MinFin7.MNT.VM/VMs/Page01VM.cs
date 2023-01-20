@@ -53,12 +53,13 @@ public partial class Page01VM : BaseEmVM
 
   [ObservableProperty] int matchLen = 16;
   [ObservableProperty] int yearOfIn = DateTime.Today.Year - 1;
-  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] GroupedTxnResult? currentEmail; // demo only.
-  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? currentTxCo;
-  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? selectdTxCo;
   [ObservableProperty] ICollectionView? txPrevCvs;
   [ObservableProperty] ICollectionView? txnYoiCvs;
   [ObservableProperty] ObservableCollection<string> categoriesPrevYr = new();
+  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] GroupedTxnResult? currentEmail; // demo only.
+  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? currentTxCo;
+  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? selectdTxCo;
+  [ObservableProperty][NotifyCanExecuteChangedFor(nameof(AssignCommand))] string? selCtgry;
   [ObservableProperty] string yearOfInStr = "2022"; partial void OnYearOfInStrChanged(string value)
   {
     Bpr.Tick();
@@ -67,7 +68,7 @@ public partial class Page01VM : BaseEmVM
     YearOfIn = rv;
     LoadYoiMlnCommand.Execute(null); //tu: async void avoidment through CMD:
   }
-  [ObservableProperty] string matchLenStr = "4"; partial void OnMatchLenStrChanged(string value)
+  [ObservableProperty] string matchLenStr = "0004"; partial void OnMatchLenStrChanged(string value)
   {
     Bpr.Tick();
     if (!int.TryParse(value, out var rv)) return;
@@ -80,7 +81,6 @@ public partial class Page01VM : BaseEmVM
     Bpr.Tick();
     LoadSelTxDtlCommand.Execute(value); //tu: async void avoidment through CMD:
   }
-  [ObservableProperty][NotifyCanExecuteChangedFor(nameof(AssignCommand))] string? selCtgry;
 
   [RelayCommand]
   async Task LoadYoiMln()
@@ -117,6 +117,9 @@ public partial class Page01VM : BaseEmVM
         filteredItems.Select(r => r.TxCategoryIdTxt).Distinct().OrderBy(r => r).ToList().ForEach(CategoriesPrevYr.Add);
       }
 
+      if(CategoriesPrevYr.Count == 1)
+        SelCtgry = CategoriesPrevYr.FirstOrDefault();
+
       TxnYoiCvs?.Refresh();
       TxnYoiCvs?.MoveCurrentTo(null);
 
@@ -126,7 +129,20 @@ public partial class Page01VM : BaseEmVM
   }
 
   [RelayCommand(CanExecute = nameof(CanAssign))]
-  void Assign(string? selctgry) { Bpr.Click(); try { Nxt(); } catch (Exception ex) { ex.Pop(); } }
+  void Assign(string? selctgry)
+  {
+    Bpr.Click(); 
+    try
+    {
+      TxnYoiCvs?.Cast<TxCoreV2>().ToList().ForEach(r =>
+      {
+        r.TxCategoryIdTxt = selctgry;
+      });
+
+      Nxt();
+    }
+    catch (Exception ex) { ex.Pop(); }
+  }
   static bool CanAssign(string? selctgry) => selctgry is not null; // https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand
 
   [RelayCommand] void Cou() { Bpr.Click(); try { Nxt(); } catch (Exception ex) { ex.Pop(); } }

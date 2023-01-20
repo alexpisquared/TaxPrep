@@ -45,7 +45,7 @@
       <ColumnDefinition Width="2*" />
     </Grid.ColumnDefinitions>
 
-    <Grid x:Name="ctrlPnl" Height="30">
+    <Grid x:Name="ctrlPnlHeader" Height="30" Grid.ColumnSpan="7">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto"/>
         <ColumnDefinition Width="Auto"/>
@@ -55,7 +55,7 @@
 
       <TextBlock  Text="Hit" Margin="4 0" FontSize="23" FontFamily="Orbitron" Foreground="{DynamicResource LogoTextBrush}" />
 
-      <StackPanel Grid.Column="1" Orientation="Horizontal">
+      <StackPanel Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="3">
 
         <Label Content="    _Y"    Target="{Binding ElementName=tbFilteY}" />
         <TextBox Margin="6 0" Width="040" FontSize="16" x:Name="tbFilteY" Text="{Binding YearOfInStr, Delay=750, UpdateSourceTrigger=PropertyChanged}"/>
@@ -66,10 +66,6 @@
 
         <Button Content=" _Chk " Command="{Binding ChkDb4CngsCommand}"    ToolTip="Check DB for changes"  Foreground="#0a0" />
         <Button Content=" _Sve " Command="{Binding Save2DbCommand}"       ToolTip="Save changes to DB"    Foreground="#f80" />
-
-        <TextBlock><Run Text="     Count:" FontWeight="Light" /><Run Text=" "/><Run Text="{Binding PageCvs.Count, Mode=OneWay}" FontWeight="Medium" /></TextBlock>
-        <TextBlock><Run Text="     Slctd:" FontWeight="Light" /><Run Text=" "/><Run Text="{Binding SelectdGrTxn.TxDtl8}" FontWeight="Medium" /></TextBlock>
-        <TextBlock><Run Text="     Crrnt:" FontWeight="Light" /><Run Text=" "/><Run Text="{Binding CurrentEmail.TxDtl8}" FontWeight="Medium" /></TextBlock>
       </StackPanel>
       <!--<TextBlock  Grid.Column="3" FontSize="16" Text="{Binding GSReport}" HorizontalAlignment="Center" TextWrapping="Wrap" d:Text="GSReport" Foreground="#1af"  />-->
     </Grid>
@@ -77,7 +73,14 @@
     <DataGrid Grid.Row="1" ItemsSource="{Binding PageCvs}" CurrentItem="{Binding CurrentEmail}" SelectedItem="{Binding SelectdGrTxn}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" x:Name="dgPage"
               IsSynchronizedWithCurrentItem="True" SelectionChanged="dgPage_SelectionChanged" RowHeight="22" >
       <DataGrid.Columns>
-        <DataGridTextColumn Header=" Txn Detail" Binding="{Binding TxDtl8}"                             IsReadOnly="True" Width="*" />
+        <DataGridTextColumn Binding="{Binding TxDtl8}"                             IsReadOnly="True" Width="*" >
+          <DataGridTextColumn.HeaderTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding DataContext.PageCvs.Count, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, StringFormat='{}Tx Dtl   ({0} rows)'}" FontWeight="Medium" />
+            </DataTemplate>
+          </DataGridTextColumn.HeaderTemplate>
+        </DataGridTextColumn>
+        
         <DataGridTextColumn Header=" Pre"        Binding="{Binding CntPre}"                             IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
         <DataGridTextColumn Header=" Yoi"        Binding="{Binding CntYoi}"                             IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
         <!--
@@ -125,7 +128,7 @@
         <DataGrid.Columns>
           <DataGridTextColumn Header=" Tx Detail"  Binding="{Binding TxDetail}"        Width="150" Foreground="#0ff" />
           <DataGridTextColumn Header=" Tx Ctgry"   Binding="{Binding TxCategoryIdTxt}"             Foreground="#ff0" />
-          <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-mm-dd}'}"  />
+          <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-MM-dd}'}"  />
           <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
           <DataGridTextColumn Header=" Memo PP"    Binding="{Binding MemoPp}" />
           <DataGridTextColumn Header=" Notes"      Binding="{Binding Notes}"  Width="*" />
@@ -134,10 +137,10 @@
     </Grid>
 
     <StackPanel Grid.Column="4" Grid.Row="1" Background="#4888" Grid.RowSpan="4" >
-      <Label Content="Categories" Margin="7 6 6 6" FontSize="13"/>
-      <ListBox ItemsSource="{Binding CategoriesPrevYr}" SelectedItem="{Binding SelCtgry}" MinWidth="52" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#1000" Margin="6 0" BorderThickness="0"/>
-      <Label Content="Assign to:" Margin="12 16 0 0" FontSize="14"/>
-      <Button Content="{Binding SelCtgry, StringFormat='++{}444 {0} ++'}" IsDefault="True" Command="{Binding AssignCommand}" CommandParameter="{Binding SelCtgry}" Margin="6" Padding="6" />
+      <Label   Content="Categories" Margin="7 6 6 6" FontSize="13"/>
+      <ListBox ItemsSource="{Binding CategoriesPrevYr}" SelectedItem="{Binding SelCtgry}" MinWidth="52" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#1000" Margin="6 0" BorderThickness="0" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+      <Label   Content="Assign to:" Margin="12 16 0 0" FontSize="14"/>
+      <Button  Content="{Binding SelCtgry, StringFormat='++{}444 {0} ++'}" IsDefault="True" Command="{Binding AssignCommand}" CommandParameter="{Binding SelCtgry}" Margin="6" Padding="6" />
     </StackPanel>
 
     <Grid Grid.Column="6" Grid.Row="1" Background="#4888" Grid.RowSpan="4" >
@@ -145,7 +148,7 @@
         <DataGrid.Columns>
           <DataGridTextColumn Header=" Tx Detail"  Binding="{Binding TxDetail}"        Width="150" Foreground="#0ff" />
           <DataGridTextColumn Header=" Tx Ctgry"   Binding="{Binding TxCategoryIdTxt}"             Foreground="#ff0" />
-          <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-mm-dd}'}"  />
+          <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-MM-dd}'}"  />
           <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
           <DataGridTextColumn Header=" Memo PP"    Binding="{Binding MemoPp}" />
           <DataGridTextColumn Header=" Notes"      Binding="{Binding Notes}"  Width="*" />

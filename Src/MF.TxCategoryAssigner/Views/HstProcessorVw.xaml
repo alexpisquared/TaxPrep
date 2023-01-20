@@ -35,9 +35,9 @@
               ItemsSource="{Binding Source={StaticResource txCoreV2ViewSource}}" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
       <DataGrid.Columns>
         <DataGridTextColumn      Width="Auto" Binding="{Binding Id}"              Header="Id"                />
-        <DataGridTextColumn      Width="Auto" Binding="{Binding TxDate, StringFormat='{}{0:yyyy-mm-dd}'}"       Header="Tx Date"           Foreground="#800" />
+        <DataGridTextColumn      Width="Auto" Binding="{Binding TxDate, StringFormat='{}{0:yyyy-MM-dd}'}"       Header="Tx Date"           Foreground="#800" />
         <DataGridTextColumn      Width="Auto" Binding="{Binding TxAmount, StringFormat='{}{0:N0}'}"             Header="Tx Amount"         Foreground="Blue" />
-        <DataGridTextColumn      Width="Auto" Binding="{Binding HstTakenAt, StringFormat='{}{0:yyyy-mm-dd}'}"   Header="HST Taken at"     Foreground="Blue" />
+        <DataGridTextColumn      Width="Auto" Binding="{Binding HstTakenAt, StringFormat='{}{0:yyyy-MM-dd}'}"   Header="HST Taken at"     Foreground="Blue" />
         <DataGridTextColumn      Width="Auto" Binding="{Binding TxDetail}"        Header="Tx Detail"         />
         <DataGridTextColumn      Width="*"    Binding="{Binding MemoPP}"          Header="Memo PP"           />
         <DataGridTextColumn      Width="*"    Binding="{Binding Notes}"           Header="Notes"             />

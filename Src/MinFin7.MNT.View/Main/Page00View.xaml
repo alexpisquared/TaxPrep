@@ -5,7 +5,24 @@
              d:DesignHeight="200" d:DesignWidth="900" Padding="8" Background="#4f0f" >
   <UserControl.Resources>
     <ResourceDictionary>
-      <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TbkVCenteredInfoClr}" />
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Dark.Google.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/BasicDefaultsLayout.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Base.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <Style TargetType="{x:Type TextBlock}"  BasedOn="{StaticResource TbkVCenteredInfoClr}" />
+      <Style TargetType="{x:Type Label}"      BasedOn="{StaticResource lblTopLeft}" />
+      <Style TargetType="{x:Type TextBox}"    BasedOn="{StaticResource tbxRW}" >
+        <Setter Property="Margin"             Value="1"  />
+      </Style>
+      <Style TargetType="{x:Type Button}"     BasedOn="{StaticResource BtnBase}" >
+        <Setter Property="Margin"             Value="1"  />
+      </Style>
+      <Style TargetType="{x:Type ComboBox}"   BasedOn="{StaticResource cbIP2}" >
+        <Setter Property="Margin"             Value="1"  />
+      </Style>
+
     </ResourceDictionary>
   </UserControl.Resources>
   <UserControl.InputBindings>
@@ -19,6 +36,11 @@
     <KeyBinding Command="{Binding NavigatePage05Command}" Gesture="F5" />
   </UserControl.InputBindings>
   <Grid x:Name="ZommablePanel" Tag="//tu: Grid with round corners!!! => must be a Style. ???????">
+    <Grid.LayoutTransform>
+      <TransformGroup>
+        <ScaleTransform ScaleX="{Binding ZV, ElementName=wnd, FallbackValue=1}" ScaleY="{Binding ZV, ElementName=wnd, FallbackValue=1}" />
+      </TransformGroup>
+    </Grid.LayoutTransform>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="1*"/>
     </Grid.ColumnDefinitions>
@@ -62,14 +84,14 @@
       <!--<TextBlock Grid.Column="03" FontSize="16" Text="{Binding CurrentUser.FullName, StringFormat='{}{0}!'}" FontWeight="SemiBold" d:Text="CI\Alex" ToolTip="{Binding CurrentUser.Notes}" />
           <TextBlock Grid.Column="04" FontSize="14" Text="{Binding PermisssionCSV, StringFormat='{} ({0})', FallbackValue='Loading Permissions...'}" FontStyle="Italic" FontWeight="SemiBold" ToolTip="Current permissions"/>-->
 
-      <CheckBox  Grid.Column="07" IsChecked="{Binding LetDbChg}" Content="WrD " />
+      <CheckBox  Grid.Column="07" IsChecked="{Binding LetDbChg}" Content="LetDbChg" />
 
       <Label     Grid.Column="09" Content="SQL" />
-      <ComboBox  Grid.Column="10" ItemsSource="{Binding SqlServrs}" SelectedItem="{Binding SrvrName}" />
+      <ComboBox  Grid.Column="10" ItemsSource="{Binding SqlServrs}" SelectedItem="{Binding SrvrName}" IsReadOnly="False" IsEditable="False" />
       <TextBlock Grid.Column="11"        Text="{Binding SrvrName}" FontStyle="Italic" FontWeight="SemiBold" FontSize="14" />
 
       <Label     Grid.Column="12" Content="DB" />
-      <ComboBox  Grid.Column="13" ItemsSource="{Binding DtBsNames}" SelectedItem="{Binding DtBsName}" />
+      <ComboBox  Grid.Column="13" ItemsSource="{Binding DtBsNames}" SelectedItem="{Binding DtBsName}"  IsReadOnly="True" IsEditable="True" />
       <TextBlock Grid.Column="14"        Text="{Binding DtBsName}" FontStyle="Italic" FontWeight="SemiBold" FontSize="14" />
 
     </Grid>
