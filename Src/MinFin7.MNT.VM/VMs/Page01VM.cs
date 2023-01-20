@@ -82,7 +82,7 @@ public partial class Page01VM : BaseEmVM
       PageCvs = CollectionViewSource.GetDefaultView((await new FinDemoDbgContextProcedures(Dbx).GroupedTxnAsync(YearOfIn, MatchLen)).ToList());
       ArgumentNullException.ThrowIfNull(PageCvs);
 
-      PageCvs.SortDescriptions.Add(new SortDescription(nameof(GroupedTxnResult.TxDtl8), ListSortDirection.Descending));
+      PageCvs.SortDescriptions.Add(new SortDescription(nameof(GroupedTxnResult.TxDtl8), ListSortDirection.Ascending));
       PageCvs.Filter = obj => obj is not GroupedTxnResult r || r is null ||
         string.IsNullOrEmpty(SearchText) || r.TxDtl8.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
 
