@@ -8,7 +8,8 @@ namespace Db.FinDemo.PowerTools.Models
     public partial class GroupedTxnResult
     {
         public string TxDtl8 { get; set; }
-        public int? Cnt { get; set; }
+        public int? CntPre { get; set; }
+        public int? CntYoi { get; set; }
         public decimal? Min { get; set; }
         public decimal? Max { get; set; }
         public decimal? Avg { get; set; }

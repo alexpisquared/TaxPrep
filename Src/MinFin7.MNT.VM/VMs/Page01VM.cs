@@ -1,4 +1,6 @@
-﻿namespace MinFin7.MNT.VM.VMs;
+﻿using StandardLib.Helpers;
+
+namespace MinFin7.MNT.VM.VMs;
 public partial class Page01VM : BaseEmVM
 {
   public Page01VM(MainVM mvm, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoDbgContext dbx, IAddChild win, UserSettings stg, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, EmailOfIStore eml, LetDbChgStore awd, EmailDetailVM evm) : base(mvm, lgr, cfg, bpr, dbx, win, svr, dbs, gsr, awd, stg, eml, evm, 8110) { }
@@ -78,6 +80,7 @@ public partial class Page01VM : BaseEmVM
     Bpr.Tick();
     LoadSelTxDtlCommand.Execute(value); //tu: async void avoidment through CMD:
   }
+  [ObservableProperty][NotifyCanExecuteChangedFor(nameof(AssignCommand))] string? selCtgry;
 
   [RelayCommand]
   async Task LoadYoiMln()
@@ -121,6 +124,10 @@ public partial class Page01VM : BaseEmVM
     }
     catch (Exception ex) { ex.Pop(); }
   }
+
+  [RelayCommand(CanExecute = nameof(CanAssign))]
+  void Assign(string? selctgry) { Bpr.Click(); try { Nxt(); } catch (Exception ex) { ex.Pop(); } }
+  static bool CanAssign(string? selctgry) => selctgry is not null; // https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand
 
   [RelayCommand] void Cou() { Bpr.Click(); try { Nxt(); } catch (Exception ex) { ex.Pop(); } }
   [RelayCommand] void PBR() { Bpr.Click(); try { Nxt(); } catch (Exception ex) { ex.Pop(); } }

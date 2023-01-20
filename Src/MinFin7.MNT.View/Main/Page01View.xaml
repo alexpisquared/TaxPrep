@@ -36,13 +36,13 @@
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="1*"/>
+      <ColumnDefinition Width="260"/>
       <ColumnDefinition Width="6" />
-      <ColumnDefinition Width="1*"/>
+      <ColumnDefinition Width="2*"/>
       <ColumnDefinition Width="6" />
-      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="100" />
       <ColumnDefinition Width="6" />
-      <ColumnDefinition Width="1*" />
+      <ColumnDefinition Width="2*" />
     </Grid.ColumnDefinitions>
 
     <Grid x:Name="ctrlPnl" Height="30">
@@ -77,7 +77,7 @@
     <DataGrid Grid.Row="1" ItemsSource="{Binding PageCvs}" CurrentItem="{Binding CurrentEmail}" SelectedItem="{Binding SelectdGrTxn}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" x:Name="dgPage"
               IsSynchronizedWithCurrentItem="True" SelectionChanged="dgPage_SelectionChanged" RowHeight="22" >
       <DataGrid.Columns>
-        <DataGridTextColumn Header=" Txn Detail" Binding="{Binding TxDtl8}"                             IsReadOnly="True" MinWidth="88" Foreground="#0ff" />
+        <DataGridTextColumn Header=" Txn Detail" Binding="{Binding TxDtl8}"                             IsReadOnly="True" Width="*" />
         <DataGridTextColumn Header=" Pre"        Binding="{Binding CntPre}"                             IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
         <DataGridTextColumn Header=" Yoi"        Binding="{Binding CntYoi}"                             IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
         <!--
@@ -100,10 +100,11 @@
       </Grid.RowDefinitions>
 
       <StackPanel Orientation="Horizontal" Grid.ColumnSpan="33" HorizontalAlignment="Center">
-        <Button Content="Co_untry" Command="{Binding DataContext.CouCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="78" ToolTip="Get country" />
-        <Button Content="!-_Agent" Command="{Binding DataContext.PBRCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="78" ToolTip="Set PBR to 'Not an Agent'" />
-        <Button Content="DNN Avl"  Command="{Binding DataContext.DNNCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="78" ToolTip="Do Not Notify - Available for this Camp-n" />
-        <Button Content=" Delete " Command="{Binding DataContext.DelCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="78" ToolTip="Delete from DB " Margin="48,0,0,0" Foreground="#f00" CommandParameter="{Binding DataContext.SelectdGrTxn, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+        <Button Content="Cou" Command="{Binding DataContext.CouCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="52" ToolTip="Get country" />
+        <Button Content="PBR" Command="{Binding DataContext.PBRCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="52" ToolTip="Set PBR to 'Not an Agent'" />
+        <Button Content="DNN" Command="{Binding DataContext.DNNCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="52" ToolTip="Do Not Notify - Available for this Camp-n" />
+        <Button Content="Del" Command="{Binding DataContext.DelCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="52" ToolTip="Delete from DB " Foreground="#f00" 
+                   CommandParameter="{Binding DataContext.SelectdGrTxn, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
       </StackPanel>
 
       <WrapPanel Grid.Row="2"  >
@@ -113,7 +114,7 @@
         </StackPanel>
         <StackPanel>
           <Label Content="Cnt" />
-          <TextBlock Text="{Binding Cnt, FallbackValue='ABC Co'}"  />
+          <TextBlock Text="{Binding CntYoi, FallbackValue='ABC Co'}"  />
         </StackPanel>
       </WrapPanel>
 
@@ -132,9 +133,12 @@
       </DataGrid>
     </Grid>
 
-    <Grid Grid.Column="4" Grid.Row="1" Background="#4888" Grid.RowSpan="4" >
-      <ListBox ItemsSource="{Binding CategoriesPrevYr}" MinWidth="52" VerticalAlignment="Top" />
-    </Grid>
+    <StackPanel Grid.Column="4" Grid.Row="1" Background="#4888" Grid.RowSpan="4" >
+      <Label Content="Categories" Margin="7 6 6 6" FontSize="13"/>
+      <ListBox ItemsSource="{Binding CategoriesPrevYr}" SelectedItem="{Binding SelCtgry}" MinWidth="52" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#1000" Margin="6 0" BorderThickness="0"/>
+      <Label Content="Assign to:" Margin="12 16 0 0" FontSize="14"/>
+      <Button Content="{Binding SelCtgry, StringFormat='++{}444 {0} ++'}" IsDefault="True" Command="{Binding AssignCommand}" CommandParameter="{Binding SelCtgry}" Margin="6" Padding="6" />
+    </StackPanel>
 
     <Grid Grid.Column="6" Grid.Row="1" Background="#4888" Grid.RowSpan="4" >
       <DataGrid ItemsSource="{Binding TxnYoiCvs}" CurrentItem="{Binding CurrentTxCo}" SelectedItem="{Binding SelectdTxCo}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" IsSynchronizedWithCurrentItem="True" RowHeight="22">
