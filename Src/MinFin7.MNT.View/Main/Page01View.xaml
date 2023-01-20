@@ -121,8 +121,8 @@
     <Grid Grid.Column="2" Grid.Row="1" Background="#4888" Grid.RowSpan="4" >
       <DataGrid ItemsSource="{Binding TxCoCvs}" CurrentItem="{Binding CurrentTxCo}" SelectedItem="{Binding SelectdTxCo}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" IsSynchronizedWithCurrentItem="True" RowHeight="22">
         <DataGrid.Columns>
-          <DataGridTextColumn Header=" Tx Detail"  Binding="{Binding TxDetail}" Foreground="#0ff"        />
-          <DataGridTextColumn Header=" Tx Ctgry"   Binding="{Binding TxCategoryIdTxt}" Foreground="#ff0"        />
+          <DataGridTextColumn Header=" Tx Detail"  Binding="{Binding TxDetail}"        Width="150" Foreground="#0ff" />
+          <DataGridTextColumn Header=" Tx Ctgry"   Binding="{Binding TxCategoryIdTxt}"             Foreground="#ff0" />
           <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-mm-dd}'}"  />
           <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
           <DataGridTextColumn Header=" Memo PP"    Binding="{Binding MemoPp}" />
@@ -138,8 +138,8 @@
     <Grid Grid.Column="6" Grid.Row="1" Background="#4888" Grid.RowSpan="4" >
       <DataGrid ItemsSource="{Binding TxcNCvs}" CurrentItem="{Binding CurrentTxCo}" SelectedItem="{Binding SelectdTxCo}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" IsSynchronizedWithCurrentItem="True" RowHeight="22">
         <DataGrid.Columns>
-          <DataGridTextColumn Header=" Tx Detail"  Binding="{Binding TxDetail}" Foreground="#0ff"        />
-          <DataGridTextColumn Header=" Tx Ctgry"   Binding="{Binding TxCategoryIdTxt}" Foreground="#ff0"        />
+          <DataGridTextColumn Header=" Tx Detail"  Binding="{Binding TxDetail}"        Width="150" Foreground="#0ff" />
+          <DataGridTextColumn Header=" Tx Ctgry"   Binding="{Binding TxCategoryIdTxt}"             Foreground="#ff0" />
           <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-mm-dd}'}"  />
           <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
           <DataGridTextColumn Header=" Memo PP"    Binding="{Binding MemoPp}" />

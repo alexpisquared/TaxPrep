@@ -20,7 +20,7 @@ public partial class Page01VM : BaseEmVM
       TxCoCvs.Filter = obj => obj is not TxCoreV2 r || r is null || SelectdGrTxn is null ||
       (r.TxDate < new DateTime(YearOfIn, 1, 1) && r.TxDetail.StartsWith(SelectdGrTxn.TxDtl8));
 
-      TxcNCvs = CollectionViewSource.GetDefaultView(Dbx.TxCoreV2.Local.ToObservableCollection()); //tu: ?? instead of .LoadAsync() / .Local.ToObservableCollection() ?? === PageCvs = CollectionViewSource.GetDefaultView(await Dbx.TxCoreV2.ToListAsync());
+      TxcNCvs = CollectionViewSource.GetDefaultView(Dbx.TxCoreV2.ToList());
       TxcNCvs.SortDescriptions.Add(new SortDescription(nameof(TxCoreV2.CreatedAt), ListSortDirection.Descending));
       TxcNCvs.Filter = obj => obj is not TxCoreV2 r || r is null || SelectdGrTxn is null ||
       (r.TxDate >= new DateTime(YearOfIn, 1, 1) && r.TxDetail.StartsWith(SelectdGrTxn.TxDtl8));
@@ -109,6 +109,7 @@ public partial class Page01VM : BaseEmVM
       }
 
       TxcNCvs?.Refresh();
+      TxcNCvs?.MoveCurrentTo(null);
 
       await Bpr.FinishAsync(8);
     }
