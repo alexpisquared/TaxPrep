@@ -53,7 +53,7 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
 
-      <TextBlock  Text="Min Fin" Margin="4 0" FontSize="23" FontFamily="Orbitron" Foreground="{DynamicResource LogoTextBrush}" />
+      <TextBlock  Text="Hit" Margin="4 0" FontSize="23" FontFamily="Orbitron" Foreground="{DynamicResource LogoTextBrush}" />
 
       <StackPanel Grid.Column="1" Orientation="Horizontal">
 
@@ -71,7 +71,6 @@
         <TextBlock><Run Text="     Slctd:" FontWeight="Light" /><Run Text=" "/><Run Text="{Binding SelectdGrTxn.TxDtl8}" FontWeight="Medium" /></TextBlock>
         <TextBlock><Run Text="     Crrnt:" FontWeight="Light" /><Run Text=" "/><Run Text="{Binding CurrentEmail.TxDtl8}" FontWeight="Medium" /></TextBlock>
       </StackPanel>
-
       <!--<TextBlock  Grid.Column="3" FontSize="16" Text="{Binding GSReport}" HorizontalAlignment="Center" TextWrapping="Wrap" d:Text="GSReport" Foreground="#1af"  />-->
     </Grid>
 
@@ -79,13 +78,15 @@
               IsSynchronizedWithCurrentItem="True" SelectionChanged="dgPage_SelectionChanged" RowHeight="22" >
       <DataGrid.Columns>
         <DataGridTextColumn Header=" Txn Detail" Binding="{Binding TxDtl8}"                             IsReadOnly="True" MinWidth="88" Foreground="#0ff" />
-        <DataGridTextColumn Header=" Cnt"     Binding="{Binding Cnt}"                                   IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
-        <DataGridTextColumn Header=" Min"     Binding="{Binding Min, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
-        <DataGridTextColumn Header=" Max"     Binding="{Binding Max, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
-        <DataGridTextColumn Header=" Avg"     Binding="{Binding Avg, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
-        <DataGridTextColumn Header=" Sum"     Binding="{Binding Sum, StringFormat=\{0:N2\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+        <DataGridTextColumn Header=" Pre"        Binding="{Binding CntPre}"                             IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+        <DataGridTextColumn Header=" Yoi"        Binding="{Binding CntYoi}"                             IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+        <!--
+        <DataGridTextColumn Header=" Min"     Binding="{Binding Min, StringFormat=\{0:N0\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+        <DataGridTextColumn Header=" Max"     Binding="{Binding Max, StringFormat=\{0:N0\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+        <DataGridTextColumn Header=" Avg"     Binding="{Binding Avg, StringFormat=\{0:N0\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+        <DataGridTextColumn Header=" Sum"     Binding="{Binding Sum, StringFormat=\{0:N0\}}"            IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
         <DataGridTextColumn Header=" FrstTxn" Binding="{Binding FrstTxn, StringFormat=\{0:yy-MM-dd\}}"  IsReadOnly="True" />
-        <DataGridTextColumn Header=" LastTxn" Binding="{Binding LastTxn, StringFormat=\{0:yy-MM-dd\}}"  IsReadOnly="True" Width="*" />
+        <DataGridTextColumn Header=" LastTxn" Binding="{Binding LastTxn, StringFormat=\{0:yy-MM-dd\}}"  IsReadOnly="True" Width="*" />-->
       </DataGrid.Columns>
     </DataGrid>
 

@@ -21,7 +21,7 @@ public partial class Page01VM : BaseEmVM
       //For WinForms, bind to 'DbSet.Local.ToBindingList'.
       //For ASP.NET WebForms, bind to 'DbSet.ToList' or use Model Binding.
 
-      TxPrevCvs = CollectionViewSource.GetDefaultView(Dbx.TxCoreV2.Local.ToObservableCollection());
+      TxPrevCvs = CollectionViewSource.GetDefaultView(Dbx.TxCoreV2.Local.ToObservableCollection().Where(r => r.TxDate < new DateTime(YearOfIn, 1, 1)));
       TxPrevCvs.SortDescriptions.Add(new SortDescription(nameof(TxCoreV2.CreatedAt), ListSortDirection.Descending));
       TxPrevCvs.Filter = obj => obj is not TxCoreV2 r || r is null || SelectdGrTxn is null ||
       (r.TxDate < new DateTime(YearOfIn, 1, 1) && r.TxDetail.StartsWith(SelectdGrTxn.TxDtl8));
