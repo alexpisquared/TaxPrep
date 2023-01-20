@@ -8,24 +8,33 @@ public partial class Page01VM : BaseEmVM
     {
       IsBusy = true;
       Bpr.Start(8);
-      await Task.Delay(2); // <== does not show up without this...............................
       var rv = await base.InitAsync(); _loaded = false; IsBusy = true; // or else...
 
       var sw = Stopwatch.StartNew();
 
+      await Dbx.TxCategory.LoadAsync();
       await Dbx.TxCoreV2.LoadAsync();
+
       TxCoCvs = CollectionViewSource.GetDefaultView(Dbx.TxCoreV2.Local.ToObservableCollection()); //tu: ?? instead of .LoadAsync() / .Local.ToObservableCollection() ?? === PageCvs = CollectionViewSource.GetDefaultView(await Dbx.TxCoreV2.ToListAsync());
       TxCoCvs.SortDescriptions.Add(new SortDescription(nameof(TxCoreV2.CreatedAt), ListSortDirection.Descending));
-      TxCoCvs.Filter = obj => obj is not TxCoreV2 r || r is null || SelectdEmail is null ||
-      (
-        r.TxDate < new DateTime(YearOfIn, 1, 1) && r.TxDetail.StartsWith(SelectdEmail.TxDtl8)
-      );
+      TxCoCvs.Filter = obj => obj is not TxCoreV2 r || r is null || SelectdGrTxn is null ||
+      (r.TxDate < new DateTime(YearOfIn, 1, 1) && r.TxDetail.StartsWith(SelectdGrTxn.TxDtl8));
+
+      TxcNCvs = CollectionViewSource.GetDefaultView(Dbx.TxCoreV2.Local.ToObservableCollection()); //tu: ?? instead of .LoadAsync() / .Local.ToObservableCollection() ?? === PageCvs = CollectionViewSource.GetDefaultView(await Dbx.TxCoreV2.ToListAsync());
+      TxcNCvs.SortDescriptions.Add(new SortDescription(nameof(TxCoreV2.CreatedAt), ListSortDirection.Descending));
+      TxcNCvs.Filter = obj => obj is not TxCoreV2 r || r is null || SelectdGrTxn is null ||
+      (r.TxDate >= new DateTime(YearOfIn, 1, 1) && r.TxDetail.StartsWith(SelectdGrTxn.TxDtl8));
 
       await LoadYoiMln();
 
       _ = PageCvs?.MoveCurrentToFirst();
 
-      Lgr.Log(LogLevel.Trace, GSReport = $" {PageCvs?.Cast<GroupedTxnResult>().Count():N0} / {sw.Elapsed.TotalSeconds:N1}   (rows / s)       ");
+      var ttlRows =
+        PageCvs?.Cast<GroupedTxnResult>().Count() +
+        TxCoCvs?.Cast<TxCoreV2>().Count() +
+        TxcNCvs?.Cast<TxCoreV2>().Count() +
+        Dbx.TxCategory.Local.Count;
+      Lgr.Log(LogLevel.Trace, GSReport = $" {ttlRows:N0} / {sw.Elapsed.TotalSeconds:N1}   (rows / s)       ");
 
       Bpr.Finish(8);
       return rv;
@@ -40,6 +49,8 @@ public partial class Page01VM : BaseEmVM
   [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? currentTxCo;
   [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? selectdTxCo;
   [ObservableProperty] ICollectionView? txCoCvs;
+  [ObservableProperty] ICollectionView? txcNCvs;
+  [ObservableProperty] ObservableCollection<string> categoriesPrevYr = new();
   [ObservableProperty] string yearOfInStr = "2022"; partial void OnYearOfInStrChanged(string value)
   {
     Bpr.Tick();
@@ -56,7 +67,7 @@ public partial class Page01VM : BaseEmVM
     MatchLen = rv;
     LoadYoiMlnCommand.Execute(null); //tu: async void avoidment through CMD:
   }
-  [ObservableProperty] GroupedTxnResult? selectdEmail; partial void OnSelectdEmailChanged(GroupedTxnResult? value)
+  [ObservableProperty] GroupedTxnResult? selectdGrTxn; partial void OnSelectdGrTxnChanged(GroupedTxnResult? value)
   {
     Bpr.Tick();
     LoadSelTxDtlCommand.Execute(value); //tu: async void avoidment through CMD:
@@ -73,8 +84,7 @@ public partial class Page01VM : BaseEmVM
 
       PageCvs.SortDescriptions.Add(new SortDescription(nameof(GroupedTxnResult.TxDtl8), ListSortDirection.Descending));
       PageCvs.Filter = obj => obj is not GroupedTxnResult r || r is null ||
-        string.IsNullOrEmpty(SearchText) ||
-          r.TxDtl8.Contains(SearchText, StringComparison.OrdinalIgnoreCase) == true;
+        string.IsNullOrEmpty(SearchText) || r.TxDtl8.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
 
       Bpr.Finish(8);
     }
@@ -90,6 +100,15 @@ public partial class Page01VM : BaseEmVM
     try
     {
       TxCoCvs?.Refresh();
+
+      var filteredItems = TxCoCvs?.Cast<TxCoreV2>();
+      if (filteredItems != null)
+      {
+        CategoriesPrevYr.Clear();
+        filteredItems.Select(r => r.TxCategoryIdTxt).Distinct().OrderBy(r => r).ToList().ForEach(CategoriesPrevYr.Add);
+      }
+
+      TxcNCvs?.Refresh();
 
       await Bpr.FinishAsync(8);
     }
