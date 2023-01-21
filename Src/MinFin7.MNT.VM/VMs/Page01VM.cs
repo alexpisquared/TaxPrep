@@ -1,7 +1,12 @@
-﻿namespace MinFin7.MNT.VM.VMs;
+﻿using AmbienceLib;
+
+namespace MinFin7.MNT.VM.VMs;
 public partial class Page01VM : BaseEmVM
 {
-  public Page01VM(MainVM mvm, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoContext dbx, IAddChild win, UserSettings stg, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, EmailOfIStore eml, LetDbChgStore awd, EmailDetailVM evm) : base(mvm, lgr, cfg, bpr, dbx, win, svr, dbs, gsr, awd, stg, eml, evm, 8110) { }
+  public Page01VM(MainVM mvm, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoContext dbx, IAddChild win, UserSettings stg, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, EmailOfIStore eml, LetDbChgStore awd, EmailDetailVM evm, SpeechSynth sth) : base(mvm, lgr, cfg, bpr, dbx, win, svr, dbs, gsr, awd, stg, eml, evm, 8110)
+  {
+    _sth = sth;
+  }
   public override async Task<bool> InitAsync()
   {
     try
@@ -50,14 +55,17 @@ public partial class Page01VM : BaseEmVM
     finally { _ = await base.InitAsync(); }
   }
   const int c16 = 16;
+  private readonly SpeechSynth _sth;
   [ObservableProperty] int matchLen = c16;
   [ObservableProperty] int yearOfIn = DateTime.Today.Year - 1;
   [ObservableProperty] ICollectionView? txPrevCvs;
   [ObservableProperty] ICollectionView? txnYoiCvs;
   [ObservableProperty] ObservableCollection<string> categoriesPrevYr = new();
-  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] GroupedTxnResult? currentEmail; // demo only.
-  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? currentTxCo;
-  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? selectdTxCo;
+  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] GroupedTxnResult? currentGrTxn; // demo only.
+  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? currentPre;
+  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? selectdPre;
+  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? currentYoi;
+  [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? selectdYoi;
   [ObservableProperty][NotifyCanExecuteChangedFor(nameof(AssignCommand))] string? selCtgry;
   [ObservableProperty] string yearOfInStr = "2022"; partial void OnYearOfInStrChanged(string value)
   {
@@ -116,7 +124,7 @@ public partial class Page01VM : BaseEmVM
         filteredItems.Select(r => r.TxCategoryIdTxt).Distinct().OrderBy(r => r).ToList().ForEach(CategoriesPrevYr.Add);
       }
 
-      if(CategoriesPrevYr.Count == 1)
+      if (CategoriesPrevYr.Count == 1)
         SelCtgry = CategoriesPrevYr.FirstOrDefault();
 
       TxnYoiCvs?.Refresh();
@@ -128,20 +136,36 @@ public partial class Page01VM : BaseEmVM
   }
 
   [RelayCommand(CanExecute = nameof(CanAssign))]
-  void Assign(string? categoryIdTxt)
+  async void Assign(string? categoryIdTxt)
   {
-    Bpr.Click(); 
     try
     {
       var now = DateTime.Now;
-      TxnYoiCvs?.Cast<TxCoreV2>().ToList().ForEach(r =>
-      {
-        r.TxCategoryIdTxt = categoryIdTxt;
-        r.ModifiedAt = now;
-        r.Notes += " )■*";
-      });
 
-      Nxt();
+      if (SelectdYoi is null)
+      {
+        TxnYoiCvs?.Cast<TxCoreV2>().Where(r => r.TxCategoryIdTxt == "UnKn").ToList().ForEach(r =>
+        {
+          r.TxCategoryIdTxt = categoryIdTxt;
+          r.ModifiedAt = now;
+          r.Notes += " )■*";
+        });
+
+        TxnYoiCvs?.Refresh();
+        await _sth.SpeakExpressAsync("See");
+        await Bpr.BeepAsync(333, .333); // calming down demo of what's done.
+
+        Nxt();
+      }
+      else
+      {
+        SelectdYoi.TxCategoryIdTxt = categoryIdTxt;
+        SelectdYoi.ModifiedAt = now;
+        SelectdYoi.Notes += " )■*";
+
+        TxnYoiCvs?.Refresh();
+        Bpr.Click();
+      }
     }
     catch (Exception ex) { ex.Pop(); }
   }

@@ -70,7 +70,7 @@
       <!--<TextBlock  Grid.Column="3" FontSize="16" Text="{Binding GSReport}" HorizontalAlignment="Center" TextWrapping="Wrap" d:Text="GSReport" Foreground="#1af"  />-->
     </Grid>
 
-    <DataGrid Grid.Row="1" ItemsSource="{Binding PageCvs}" CurrentItem="{Binding CurrentEmail}" SelectedItem="{Binding SelectdGrTxn}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" x:Name="dgPage"
+    <DataGrid Grid.Row="1" ItemsSource="{Binding PageCvs}" CurrentItem="{Binding CurrentGrTxn}" SelectedItem="{Binding SelectdGrTxn}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" x:Name="dgPage"
               IsSynchronizedWithCurrentItem="True" SelectionChanged="dgPage_SelectionChanged" RowHeight="22" >
       <DataGrid.Columns>
         <DataGridTextColumn Binding="{Binding TxDtl8}"                             IsReadOnly="True" Width="*" >
@@ -123,7 +123,7 @@
     </Grid>
 
     <Grid Grid.Column="2" Grid.Row="1" Background="#4888" Grid.RowSpan="4" >
-      <DataGrid ItemsSource="{Binding TxPrevCvs}" CurrentItem="{Binding CurrentTxCo}" SelectedItem="{Binding SelectdTxCo}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" IsSynchronizedWithCurrentItem="True" RowHeight="22">
+      <DataGrid ItemsSource="{Binding TxPrevCvs}" CurrentItem="{Binding CurrentPre}" SelectedItem="{Binding SelectdPre}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" IsSynchronizedWithCurrentItem="True" RowHeight="22">
         <DataGrid.Columns>
 
           <DataGridTextColumn Binding="{Binding TxDetail}">
@@ -174,7 +174,7 @@
     </StackPanel>
 
     <Grid Grid.Column="6" Grid.Row="1" Background="#4888" Grid.RowSpan="4" >
-      <DataGrid ItemsSource="{Binding TxnYoiCvs}" CurrentItem="{Binding CurrentTxCo}" SelectedItem="{Binding SelectdTxCo}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" IsSynchronizedWithCurrentItem="True" RowHeight="22">
+      <DataGrid ItemsSource="{Binding TxnYoiCvs}" CurrentItem="{Binding CurrentYoi}" SelectedItem="{Binding SelectdYoi}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" IsSynchronizedWithCurrentItem="True" RowHeight="22">
         <DataGrid.Columns>
           <DataGridTextColumn Binding="{Binding TxDetail}">
             <DataGridTextColumn.HeaderTemplate>

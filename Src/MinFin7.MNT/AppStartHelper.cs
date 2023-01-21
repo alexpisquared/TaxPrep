@@ -13,5 +13,10 @@ public static class AppStartHelper
       levels: "+Verbose -Info -Warning +Error -ErNT -11mb -Infi").CreateLogger<MainNavView>());
 
     _ = services.AddSingleton<IBpr, Bpr>(); // _ = VersionHelper_.IsDbgAndRBD ? services.AddSingleton<IBpr, Bpr>() : services.AddSingleton<IBpr, BprSilentMock>();
+
+    _ = services.AddSingleton<SpeechSynth>(s => new SpeechSynth(s.GetRequiredService<IConfigurationRoot>()["AppSecrets:MagicSpeech"] ?? "AppSecrets:MagicSpeech is missing ▄▀▄▀▄▀", true, CC.EnusAriaNeural.Voice));
+    //_ = services.AddSingleton<SpeechSynth>(s => new SpeechSynth(new ConfigurationBuilder().AddUserSecrets<App>().Build()["AppSecrets:MagicSpeech"] ?? "AppSecrets:MagicSpeech is missing ▄▀▄▀▄▀", true, CC.EnusAriaNeural.Voice));
+
   }
+  //static SpeechSynth? _sy = null; public static SpeechSynth Synth => _sy ??= new(new ConfigurationBuilder().AddUserSecrets<App>().Build()["AppSecrets:MagicSpeech"] ?? "AppSecrets:MagicSpeech is missing ▄▀▄▀▄▀", true, CC.EnusAriaNeural.Voice);
 }
