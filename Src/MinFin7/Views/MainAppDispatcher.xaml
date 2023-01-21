@@ -66,15 +66,15 @@
             </TextBlock.Foreground>
           </TextBlock>
 
-          <Button Content=" 1 td,cibc: MS Money.OFX     "	                 Foreground="#3c00" x:Name="b1" Click="onX" ToolTip=" CIBC: IntuitQuicken.QFX: seems to be OK (Aug 2018) &#10;&#10; TD: MS Money - OFX &#10;&#10; Amzn: - QIF" />
-          <Button Content=" 2 Charts            - HistoricalChartSet"      Foreground="#30a0" x:Name="b2" Click="onX" ToolTip="Show Charts" />
+          <Button Content=" 1 td,cibc: MS Money.OFX     "	                 Foreground="#2c00" x:Name="b1" Click="onX" ToolTip=" CIBC: IntuitQuicken.QFX: seems to be OK (Aug 2018) &#10;&#10; TD: MS Money - OFX &#10;&#10; Amzn: - QIF" />
+          <Button Content=" 2 Charts            - HistoricalChartSet"      Foreground="#20a0" x:Name="b2" Click="onX" ToolTip="Show Charts" />
           <Button Content=" 3 Assign            - TxCategoryAssigner"      Foreground="#fcc0" x:Name="b3" Click="onX" ToolTip="Show Assign" />
           <Button Content=" 4 Manual Entry      - Crude but better"        Foreground="#f08f" x:Name="b4" Click="onX" ToolTip="Show Assign" />
-          <Button Content=" 5 Annual Report     - MinFin7.Report.WinForm"  Foreground="#3d60" x:Name="b5" Click="onX" ToolTip="Show Assign" />
-          <Button Content=" 6 Annual Report Alx - MinFin7.Report.WinForm"  Foreground="#3d60" x:Name="b6" Click="onX" ToolTip="Show Assign" />
-          <Button Content=" 7 Annual Report Mei - MinFin7.Report.WinForm"  Foreground="#3d60" x:Name="b7" Click="onX" ToolTip="Show Assign" />
-          <Button Content=" 8 Historical Review - MinFin7.Review.DS     "  Foreground="#f80a" x:Name="b8" Click="onX" ToolTip="Show Assign" />
-          <Button Content=" 9 Manual Entry      - Legacy TxCore tbl only"  Foreground="#3222" x:Name="b9" Click="onX" ToolTip="Show Assign" />
+          <Button Content=" 5 Annual Report     - MinFin7.Report.WinForm"  Foreground="#2d60" x:Name="b5" Click="onX" ToolTip="Show Assign" />
+          <Button Content=" 6 Annual Report Alx - MinFin7.Report.WinForm"  Foreground="#2d60" x:Name="b6" Click="onX" ToolTip="Show Assign" />
+          <Button Content=" 7 Annual Report Mei - MinFin7.Report.WinForm"  Foreground="#2d60" x:Name="b7" Click="onX" ToolTip="Show Assign" />
+          <Button Content=" 8 Historical Review - MinFin7.Review.DS     "  Foreground="#fb1d" x:Name="b8" Click="onX" ToolTip="Show Assign" />
+          <Button Content=" 9 Manual Entry      - Legacy TxCore tbl only"  Foreground="#2222" x:Name="b9" Click="onX" ToolTip="Show Assign" />
 
           <TextBlock VerticalAlignment="Center" Margin="3" HorizontalAlignment="Center">         
           <Hyperlink NavigateUri="0\MF\DnLds" RequestNavigate="onNavigate">

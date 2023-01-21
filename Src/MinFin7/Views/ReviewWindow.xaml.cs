@@ -35,6 +35,7 @@ public partial class ReviewWindow : WindowBase
     {
       _bpr.Tick();
       dbHist.ItemsSource = _db.VwTxCores.Local.Where(r => string.Compare(r.TxCategoryIdTxt, ((VwExpHistVsLast)((object[])e.AddedItems)[0]).IdTxt, true) == 0).OrderByDescending(r => r.TxDate);
+      dbHist.SelectedItem = null;
     }
     else
       _bpr.No();

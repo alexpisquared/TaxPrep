@@ -152,7 +152,7 @@ public partial class Page01VM : BaseEmVM
         });
 
         TxnYoiCvs?.Refresh();
-        await _sth.SpeakExpressAsync("See");
+        await _sth.SpeakExpressAsync("Look it!");
         await Bpr.BeepAsync(333, .333); // calming down demo of what's done.
 
         Nxt();
