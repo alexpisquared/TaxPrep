@@ -51,8 +51,8 @@ public partial class Page01VM : BaseEmVM
     catch (Exception ex) { ex.Pop(Lgr); return false; }
     finally { _ = await base.InitAsync(); }
   }
-
-  [ObservableProperty] int matchLen = 16;
+  const int c16 = 16;
+  [ObservableProperty] int matchLen = c16;
   [ObservableProperty] int yearOfIn = DateTime.Today.Year - 1;
   [ObservableProperty] ICollectionView? txPrevCvs;
   [ObservableProperty] ICollectionView? txnYoiCvs;
@@ -69,7 +69,7 @@ public partial class Page01VM : BaseEmVM
     YearOfIn = rv;
     LoadYoiMlnCommand.Execute(null); //tu: async void avoidment through CMD:
   }
-  [ObservableProperty] string matchLenStr = "0004"; partial void OnMatchLenStrChanged(string value)
+  [ObservableProperty] string matchLenStr = $"{c16}"; partial void OnMatchLenStrChanged(string value)
   {
     Bpr.Tick();
     if (!int.TryParse(value, out var rv)) return;
@@ -130,14 +130,17 @@ public partial class Page01VM : BaseEmVM
   }
 
   [RelayCommand(CanExecute = nameof(CanAssign))]
-  void Assign(string? selctgry)
+  void Assign(string? categoryIdTxt)
   {
     Bpr.Click(); 
     try
     {
+      var now = DateTime.Now;
       TxnYoiCvs?.Cast<TxCoreV2>().ToList().ForEach(r =>
       {
-        r.TxCategoryIdTxt = selctgry;
+        r.TxCategoryIdTxt = categoryIdTxt;
+        r.ModifiedAt = now;
+        r.Notes += " )■*";
       });
 
       Nxt();

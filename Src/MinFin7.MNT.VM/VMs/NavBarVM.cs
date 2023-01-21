@@ -1,8 +1,4 @@
-﻿using MinFin7.MNT.Services;
-using MinFin7.MNT.Stores;
-using MinFin7.MNT.VM.Stores;
-
-namespace MinFin7.MNT.VM.VMs;
+﻿namespace MinFin7.MNT.VM.VMs;
 public partial class NavBarVM : BaseMinVM
 {
   readonly SrvrNameStore _SrvrNameStore;
@@ -62,10 +58,10 @@ public partial class NavBarVM : BaseMinVM
 
   public ICommand NavigatePage00Command { get; }
   public ICommand NavigatePage01Command { get; }
-  public ICommand NavigatePage02Command { get; }
-  public ICommand NavigatePage03Command { get; }
-  public ICommand NavigatePage04Command { get; }
-  public ICommand NavigatePage05Command { get; }
+  //public ICommand NavigatePage02Command { get; }
+  //public ICommand NavigatePage03Command { get; }
+  //public ICommand NavigatePage04Command { get; }
+  //public ICommand NavigatePage05Command { get; }
   public ICommand NavigateEmlDtlCommand { get; }
 
   IRelayCommand? _sq; public IRelayCommand SwtchSqlSvrCmd => _sq ??= new AsyncRelayCommand<object>(SwitchSqlServer); async Task SwitchSqlServer(object? sqlServerTLA)
