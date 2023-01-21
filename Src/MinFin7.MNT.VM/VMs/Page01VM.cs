@@ -14,6 +14,7 @@ public partial class Page01VM : BaseEmVM
 
       var sw = Stopwatch.StartNew();
 
+      await Dbx.TxMoneySrc.LoadAsync();
       await Dbx.TxCategory.LoadAsync();
       await Dbx.TxCoreV2.Where(r => r.TxDate < new DateTime(YearOfIn, 1, 1)).LoadAsync();
 

@@ -127,9 +127,32 @@
       <DataGrid ItemsSource="{Binding TxPrevCvs}" CurrentItem="{Binding CurrentTxCo}" SelectedItem="{Binding SelectdTxCo}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" IsSynchronizedWithCurrentItem="True" RowHeight="22">
         <DataGrid.Columns>
           <DataGridTextColumn Header=" Tx Detail"  Binding="{Binding TxDetail}"        Width="150" Foreground="#0ff" />
-          <DataGridTextColumn Header=" Tx Ctgry"   Binding="{Binding TxCategoryIdTxt}"             Foreground="#ff0" />
+          <DataGridTemplateColumn Header="Category"		SortMemberPath="TxCategoryIdTxt">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxCategoryIdTxtNavigation.Name}" Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=Orange, BrushFalse=Yellow}, ConverterParameter='UnKn'}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
           <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-MM-dd}'}"  />
           <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
+
+          <!--tmi:<DataGridTemplateColumn Header="Src FLA"	SortMemberPath="TxMoneySrc.Fla">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding TxMoneySrc.Fla}"  ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=#0cf, BrushFalse=#fcc}, ConverterParameter='Alx'}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>-->
+
+          <DataGridTemplateColumn Header="Src Name" SortMemberPath="TxMoneySrc.Name">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding TxMoneySrc.Name}" ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=#fcc, BrushFalse=#0cf}, ConverterParameter='Mei'}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+
           <DataGridTextColumn Header=" Memo PP"    Binding="{Binding MemoPp}" />
           <DataGridTextColumn Header=" Notes"      Binding="{Binding Notes}"  Width="*" />
         </DataGrid.Columns>
@@ -147,9 +170,24 @@
       <DataGrid ItemsSource="{Binding TxnYoiCvs}" CurrentItem="{Binding CurrentTxCo}" SelectedItem="{Binding SelectdTxCo}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" IsSynchronizedWithCurrentItem="True" RowHeight="22">
         <DataGrid.Columns>
           <DataGridTextColumn Header=" Tx Detail"  Binding="{Binding TxDetail}"        Width="150" Foreground="#0ff" />
-          <DataGridTextColumn Header=" Tx Ctgry"   Binding="{Binding TxCategoryIdTxt}"             Foreground="#ff0" />
+          <DataGridTemplateColumn Header="Category"		SortMemberPath="TxCategoryIdTxt">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxCategoryIdTxtNavigation.Name}" Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=Orange, BrushFalse=Yellow}, ConverterParameter='UnKn'}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
           <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-MM-dd}'}"  />
           <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
+
+          <DataGridTemplateColumn Header="Src Name" SortMemberPath="TxMoneySrc.Name">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding TxMoneySrc.Name}" ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=#fcc, BrushFalse=#0cf}, ConverterParameter='Mei'}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          
           <DataGridTextColumn Header=" Memo PP"    Binding="{Binding MemoPp}" />
           <DataGridTextColumn Header=" Notes"      Binding="{Binding Notes}"  Width="*" />
         </DataGrid.Columns>
