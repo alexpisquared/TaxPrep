@@ -41,7 +41,6 @@ public partial class Page00VM : BaseDbVM
     try
     {
       await Bpr.ClickAsync();
-
       await new CsvImporterService(Dbx, Lgr, _now).ImportCsvAsync(ReportProgress);
       await Bpr.TickAsync();
     }

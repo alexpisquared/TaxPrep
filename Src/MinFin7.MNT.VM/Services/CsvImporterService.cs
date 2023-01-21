@@ -14,7 +14,15 @@ public class CsvImporterService
     ReportProgress($"null:{_nullRec,-5}    exst:{_existDb,-5}    sccs:{_succss,-5}");
     var sw = Stopwatch.StartNew();
 
-    const string csvFile = @"C:\temp\CS.Patch.csv";      //if (File.Exists(csvFile))        _ = Process.Start("Explorer.exe", $"/select, \"{csvFile}\"");      else        _ = MessageBox.Show($"Failed to create the CSV file \n\n{csvFile} \n\n", "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+    const string csvFile = @"C:\temp\CS.Patch.csv";
+    if (File.Exists(csvFile))
+      _ = Process.Start("Explorer.exe", $"/select, \"{csvFile}\"");
+    else
+    {
+      _ = MessageBox.Show($"Failed to find the CSV file \n\n{csvFile} \n\n", "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+      return;
+    }
+
     var i = 0;
     var config = new CsvConfiguration(CultureInfo.InvariantCulture)
     {
@@ -74,8 +82,7 @@ public class CsvImporterService
 
     var eml = record.Email.Replace("@CI", "@unknwn").Replace("@ci", "@unknwn");
 
-
-
+    await Task.Yield();
 
     _succss++;
 

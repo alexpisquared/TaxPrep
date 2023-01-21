@@ -110,6 +110,8 @@ public partial class MainVM : BaseMinVM
   string _dn = ""; public string DtBsName { get => _dn; set { if (SetProperty(ref _dn, value, true) && value is not null && _loaded) { Bpr.Tick(); DtBsNameStore.Change(value); UsrStgns.DtBsName = value; } } }
   string _gr = ""; public string GSReport { get => _gr; set { if (SetProperty(ref _gr, value, true) && value is not null && _loaded) { /*       */ GSReportStore.Change(value); GSRepViz = string.IsNullOrWhiteSpace(value) ? Visibility.Collapsed : Visibility.Visible; } } }
   string _em = ""; public string EmailOfI { get => _em; set { if (SetProperty(ref _em, value, true) && value is not null && _loaded) { Bpr.Tick(); EmailOfIStore.Change(value); UsrStgns.EmailOfI = value; } } }
+  bool _au; public bool IsAudible { get => _au; set { if (SetProperty(ref _au, value, true) && _ctored) { Bpr.Tick(); Bpr.SuppressTicks = Bpr.SuppressAlarm = !(UsrStgns.IsAudible = value); Logger.LogInformation($"│   user-pref-auto-poll:       IsAudible: {value} ■─────■"); } } }
+  bool _an; public bool IsAnimeOn { get => _an; set { if (SetProperty(ref _an, value, true) && _ctored) { Bpr.Tick(); UsrStgns.IsAnimeOn = value; Logger.LogInformation($"│   user-pref-auto-poll:       IsAnimeOn: {value} ■─────■"); } } }
   bool _aw; public bool LetDbChg { get => _aw; set { if (SetProperty(ref _aw, value, true) && _loaded) { Bpr.Tick(); UsrStgns.LetDbChg = value; _letDbChStore.Change(value); } } }
 
   string? _ds; public string DeploymntSrcExe { get => _ds ?? Deployment.DeplSrcExe; set => _ds = value; }
@@ -133,8 +135,6 @@ public partial class MainVM : BaseMinVM
   [ObservableProperty] Visibility gSRepViz = Visibility.Visible;
   //[ObservableProperty] bool isBusy;// /*BusyBlur = value ? 8 : 0;*/  }
   [ObservableProperty] ObservableCollection<string?> validationMessages = new();
-  bool _au; public bool IsAudible { get => _au; set { if (SetProperty(ref _au, value) && _ctored) { Bpr.SuppressTicks = Bpr.SuppressAlarm = !(UsrStgns.IsAudible = value); Logger.LogInformation($"│   user-pref-auto-poll:       IsAudible: {value} ■─────■"); } } }
-  bool _an; public bool IsAnimeOn { get => _an; set { if (SetProperty(ref _an, value) && _ctored) { UsrStgns.IsAnimeOn = value; Logger.LogInformation($"│   user-pref-auto-poll:       IsAnimeOn: {value} ■─────■"); } } }
 
   void OnCurrentVMChanged() => OnPropertyChanged(nameof(CurrentVM));
   void OnCurrentModalVMChanged()
