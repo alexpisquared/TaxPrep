@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Db.FinDemo.PowerTools.Models
 {
-    public partial interface IFinDemoDbgContextProcedures
+    public partial interface IFinDemoContextProcedures
     {
         Task<int> CreateAuditRecordAsync(string notes, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GroupedTxnResult>> GroupedTxnAsync(int? YearOfInt, int? MatchLen, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);

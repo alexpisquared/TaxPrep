@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace Db.FinDemo.PowerTools.Models
 {
-    public partial class FinDemoDbgContext
+    public partial class FinDemoContext
     {
-        private IFinDemoDbgContextProcedures _procedures;
+        private IFinDemoContextProcedures _procedures;
 
-        public virtual IFinDemoDbgContextProcedures Procedures
+        public virtual IFinDemoContextProcedures Procedures
         {
             get
             {
-                if (_procedures is null) _procedures = new FinDemoDbgContextProcedures(this);
+                if (_procedures is null) _procedures = new FinDemoContextProcedures(this);
                 return _procedures;
             }
             set
@@ -27,7 +27,7 @@ namespace Db.FinDemo.PowerTools.Models
             }
         }
 
-        public IFinDemoDbgContextProcedures GetProcedures()
+        public IFinDemoContextProcedures GetProcedures()
         {
             return Procedures;
         }
@@ -38,11 +38,11 @@ namespace Db.FinDemo.PowerTools.Models
         }
     }
 
-    public partial class FinDemoDbgContextProcedures : IFinDemoDbgContextProcedures
+    public partial class FinDemoContextProcedures : IFinDemoContextProcedures
     {
-        private readonly FinDemoDbgContext _context;
+        private readonly FinDemoContext _context;
 
-        public FinDemoDbgContextProcedures(FinDemoDbgContext context)
+        public FinDemoContextProcedures(FinDemoContext context)
         {
             _context = context;
         }

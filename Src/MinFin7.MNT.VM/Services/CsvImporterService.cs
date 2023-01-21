@@ -3,10 +3,10 @@ public class CsvImporterService
 {
   int _nullRec = 0, _existDb = 0, _succss = 0;
 
-  public CsvImporterService(FinDemoDbgContext dbx, ILogger lgr, DateTimeOffset now) => (Dbx, Lgr, Now) = (dbx, lgr, now);
+  public CsvImporterService(FinDemoContext dbx, ILogger lgr, DateTimeOffset now) => (Dbx, Lgr, Now) = (dbx, lgr, now);
 
   public ILogger Lgr { get; }
-  public FinDemoDbgContext Dbx { get; }
+  public FinDemoContext Dbx { get; }
   public DateTimeOffset Now { get; }
 
   public async Task ImportCsvAsync(Action<string> ReportProgress)

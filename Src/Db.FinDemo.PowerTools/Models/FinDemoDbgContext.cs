@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Db.FinDemo.PowerTools.Models;
 
-public partial class FinDemoDbgContext : DbContext
+public partial class FinDemoContext : DbContext
 {
-    public FinDemoDbgContext(DbContextOptions<FinDemoDbgContext> options)
+    public FinDemoContext(DbContextOptions<FinDemoContext> options)
         : base(options)
     {
     }

@@ -5,7 +5,7 @@ public partial class BaseDbVM : BaseMinVM
   readonly MainVM _mainVM;
   protected bool _saving, _loading, _inited;
   protected readonly DateTime Now = DateTime.Now;
-  public BaseDbVM(MainVM mainVM, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoDbgContext dbx, IAddChild win, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, /*EmailOfIStore eml,*/ LetDbChgStore awd, UserSettings usrStgns, int oid)
+  public BaseDbVM(MainVM mainVM, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoContext dbx, IAddChild win, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, /*EmailOfIStore eml,*/ LetDbChgStore awd, UserSettings usrStgns, int oid)
   {
     IsDevDbg = VersionHelper.IsDbg;
 
@@ -156,7 +156,7 @@ public partial class BaseDbVM : BaseMinVM
   {
     get;
   }
-  public FinDemoDbgContext Dbx
+  public FinDemoContext Dbx
   {
     get;
   }

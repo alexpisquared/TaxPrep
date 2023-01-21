@@ -51,7 +51,7 @@ public partial class App : System.Windows.Application
   protected async override void OnExit(ExitEventArgs e)
   {
     if (Current is not null) Current.DispatcherUnhandledException -= UnhandledExceptionHndlr.OnCurrentDispatcherUnhandledException;
-    _serviceProvider.GetRequiredService<FinDemoDbgContext>().Dispose();
+    _serviceProvider.GetRequiredService<FinDemoContext>().Dispose();
 
     if (DateTime.Now == DateTime.Today) LogAllLevels(_serviceProvider.GetRequiredService<ILogger>());
 
@@ -84,7 +84,7 @@ public partial class App : System.Windows.Application
         return;
       }
 
-      _audit = VersionHelper.DevDbgAudit(cfg, MvvmInitHelper.CalcConStr<FinDemoDbgContext>(_serviceProvider, CfgName.SqlVerIpm).SqlConStrValues());
+      _audit = VersionHelper.DevDbgAudit(cfg, MvvmInitHelper.CalcConStr<FinDemoContext>(_serviceProvider, CfgName.SqlVerIpm).SqlConStrValues());
     }
     catch (Exception ex)
     {

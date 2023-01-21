@@ -49,7 +49,7 @@ public static class MvvmInitHelper
 
     _ = services.AddTransient<UserSettings>();
 
-    _ = services.AddTransient(sp => new FinDemoDbgContext(CalcConStr<FinDemoDbgContext>(sp, CfgName.SqlVerIpm)));
+    _ = services.AddTransient(sp => new FinDemoContext(CalcConStr<FinDemoContext>(sp, CfgName.SqlVerIpm)));
   }
   public static string CalcConStr<T>(IServiceProvider sp, string sqlver = "")
   {

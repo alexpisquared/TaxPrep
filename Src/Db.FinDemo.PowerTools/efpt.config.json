@@ -1,6 +1,6 @@
 ﻿{
    "CodeGenerationMode": 3,
-   "ContextClassName": "FinDemoDbgContext",
+   "ContextClassName": "FinDemoContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
    "FilterSchemas": false,
@@ -35,7 +35,7 @@
          "ObjectType": 1
       }
    ],
-   "UiHint": "RAZER1\\SQLEXPRESS.FinDemoDbg",
+   "UiHint": "RAZER1\\SQLEXPRESS.FinDemo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
