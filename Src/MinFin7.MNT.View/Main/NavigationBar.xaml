@@ -15,10 +15,10 @@
     <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="Home" CommandParameter="Mdfr-Ctrl" Modifiers="Ctrl" />
     <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="Home" CommandParameter="Mdfr-Alt"  Modifiers="Alt"  />
     <KeyBinding Command="{Binding NavigatePage01Command}" Gesture="F1" />
-    <!--<KeyBinding Command="{Binding NavigatePage02Command}" Gesture="F2" />
+    <KeyBinding Command="{Binding NavigatePage02Command}" Gesture="F2" />
     <KeyBinding Command="{Binding NavigatePage03Command}" Gesture="F3" />
     <KeyBinding Command="{Binding NavigatePage04Command}" Gesture="F4" />
-    <KeyBinding Command="{Binding NavigatePage05Command}" Gesture="F5" />-->
+    <KeyBinding Command="{Binding NavigatePage05Command}" Gesture="F5" />
   </UserControl.InputBindings>
   <StackPanel Margin="0 10" >
     <nav:NavDrawerItem Command="{Binding NavigatePage01Command}" IsChecked="True" ToolTip="Page 01">
