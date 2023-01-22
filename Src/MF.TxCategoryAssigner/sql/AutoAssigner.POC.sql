@@ -7,7 +7,7 @@ GO
 --SELECT count(*) FROM TxCoreV2 WHERE  (TxCategoryIdTxt = 'UnKn') AND (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
 --UPDATE               TxCoreV2 SET     TxCategoryIdTxt = 'UnKn' WHERE (TxCategoryIdTxt <> 'UnKn') AND (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
 --SELECT count(*) FROM TxCoreV2 WHERE  (TxCategoryIdTxt = 'UnKn') AND (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
-*/
+--* /
 --USE FinDemo
 GO
 SET ANSI_NULLS ON
@@ -46,8 +46,12 @@ BEGIN
 	HAVING   (TxCategoryIdTxt = 'UnKn')
 END
 GO
+*/
 --SELECT   SUBSTRING(TxDetail, 1, 4) AS TxDtl8, COUNT(*) AS Cnt, MIN(TxAmount) AS Min$, MAX(TxAmount) AS Max$, AVG(TxAmount) AS Avg, SUM(TxAmount) AS Sum, MIN(TxDate) AS FrstTxn, MAX(TxDate) AS LastTxn FROM        TxCoreV2 WHERE     (TxDate >= CONVERT(DATETIME, '2022-01-01 00:00:00', 102))
 --GROUP BY SUBSTRING(TxDetail, 1, 4), TxCategoryIdTxt
 --HAVING   (TxCategoryIdTxt = 'UnKn')
 
+exec GroupedTxn 2022, 33
+USE FinDemo
+go
 exec GroupedTxn 2022, 33

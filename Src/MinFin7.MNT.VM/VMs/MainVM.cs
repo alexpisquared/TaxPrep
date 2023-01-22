@@ -40,11 +40,7 @@ public partial class MainVM : BaseMinVM
     AppVerNumber = VersionHelper.CurVerStr("0.M.d");
     AppVerToolTip = VersionHelper.CurVerStr("0.M.d.H.m");
 
-    var rv = await base.InitAsync();
-
-    try { await KeepCheckingForUpdatesAndNeverReturn(); } catch (Exception ex) { ex.Pop(Logger); }
-
-    return rv;
+    return await base.InitAsync();
   }
   public override void Dispose()
   {
@@ -60,52 +56,17 @@ public partial class MainVM : BaseMinVM
 
     base.Dispose();
   }
-  async Task KeepCheckingForUpdatesAndNeverReturn()
-  {
-    await Task.Delay(150000); // 2.5 min
-    OnCheckForNewVersion();
-
-    var nextHour = DateTime.Now.AddHours(1);
-    var nextHH00 = new DateTime(nextHour.Year, nextHour.Month, nextHour.Day, nextHour.Hour, 0, 5);
-    await Task.Delay(nextHH00 - DateTime.Now);
-    OnCheckForNewVersion(true);
-
-    while (await new PeriodicTimer(TimeSpan.FromMinutes(10)).WaitForNextTickAsync()) { OnCheckForNewVersion(); }
-  }
-  void OnCheckForNewVersion(bool logNetVer = false)
-  {
-    try
-    {
-      if (!File.Exists(DeploymntSrcExe))
-      {
-        Logger.LogWarning($"│   Version check    File does not exist:   {DeploymntSrcExe}   ***********************************************");
-        AppVerToolTip = "Version check failed: depl. file is not found.";
-        return;
-      }
-
-      (IsObsolete, var setupExeTime) = VersionHelper.CheckForNewVersion(DeploymntSrcExe);
-      Logger.Log(IsObsolete ? LogLevel.Warning : LogLevel.Information, $"│   Version check this/depl {VersionHelper.TimedVer:MMdd·HHmm}{(IsObsolete ? "!=" : "==")}{setupExeTime:MMdd·HHmm}   {(IsObsolete ? "Obsolete    ▀▄▀▄▀▄▀▄▀▄▀▄▀" : "The latest  ─╬─  ─╬─  ─╬─")}   .n:{(logNetVer ? VersionHelper.DotNetCoreVersionCmd() : "[skipped]")}   ");
-
-      UpgradeUrgency = .6 + Math.Abs((VersionHelper.TimedVer - setupExeTime).TotalDays);
-      AppVerToolTip = IsObsolete ? $" New version is available:   0.{setupExeTime:M.d.HHmm} \n\t         from  {setupExeTime:yyyy-MM-dd HH:mm}.\n Click to update. " : $" This is the latest version  {VersionHelper.CurVerStrYYMMDD} \n\t               from  {VersionHelper.TimedVer:yyyy-MM-dd HH:mm}. ";
-    }
-    catch (Exception ex) { Logger.LogError(ex, "│   ▄─▀─▄─▀─▄ -- Ignore"); }
-  }
 
   protected readonly LetDbChgStore _letDbChStore;
   public SrvrNameStore SrvrNameStore { get; }
   public DtBsNameStore DtBsNameStore { get; }
   public GSReportStore GSReportStore { get; }
   public EmailOfIStore EmailOfIStore { get; }
-  void SrvrNameStore_Chngd(string val) { SrvrName = val;   /* await RefreshReloadAsync(); */ }
-  void DtBsNameStore_Chngd(string val) { DtBsName = val;   /* await RefreshReloadAsync(); */ }
-  void GSReportStore_Chngd(string val) { GSReport = val;   /* await RefreshReloadAsync(); */ }
-  void EmailOfIStore_Chngd(string emailOfI, [CallerMemberName] string? cmn = "")
-  {
-    WriteLine($"■■ MAIN  {GetCaller(),20}  called by  {cmn,-22} {emailOfI,-22}  {(EmailOfI != emailOfI ? "==>Load as it were ..." : "==>----")}");
-    EmailOfI = emailOfI;   /* await RefreshReloadAsync(); */
-  }
-  void LetDbChgStore_Chngd(bool value) { LetDbChg = value; /* await RefreshReloadAsync(); */ }
+  void SrvrNameStore_Chngd(string val) { SrvrName = val;   /* await RefreshReloadAsync() */; }
+  void DtBsNameStore_Chngd(string val) { DtBsName = val;   /* await RefreshReloadAsync() */; }
+  void GSReportStore_Chngd(string val) { GSReport = val;   /* await RefreshReloadAsync() */; }
+  void EmailOfIStore_Chngd(string val, [CallerMemberName] string? cmn = "")  {    WriteLine($"■■ MAIN  {GetCaller(),20}  called by  {cmn,-22} {val,-22}  {(EmailOfI != val ? "==>Load as it were ..." : "==>----")}");    EmailOfI = val;   /* await RefreshReloadAsync(); */  }
+  void LetDbChgStore_Chngd(bool value) { LetDbChg = value; /* await RefreshReloadAsync() */; }
   string _qs = ""; public string SrvrName { get => _qs; set { if (SetProperty(ref _qs, value, true) && value is not null && _loaded) { Bpr.Tick(); SrvrNameStore.Change(value); UsrStgns.SrvrName = value; } } }
   string _dn = ""; public string DtBsName { get => _dn; set { if (SetProperty(ref _dn, value, true) && value is not null && _loaded) { Bpr.Tick(); DtBsNameStore.Change(value); UsrStgns.DtBsName = value; } } }
   string _gr = ""; public string GSReport { get => _gr; set { if (SetProperty(ref _gr, value, true) && value is not null && _loaded) { /*       */ GSReportStore.Change(value); GSRepViz = string.IsNullOrWhiteSpace(value) ? Visibility.Collapsed : Visibility.Visible; } } }
@@ -114,7 +75,6 @@ public partial class MainVM : BaseMinVM
   bool _an; public bool IsAnimeOn { get => _an; set { if (SetProperty(ref _an, value, true) && _ctored) { Bpr.Tick(); UsrStgns.IsAnimeOn = value; Logger.LogInformation($"│   user-pref-auto-poll:       IsAnimeOn: {value} ■─────■"); } } }
   bool _aw; public bool LetDbChg { get => _aw; set { if (SetProperty(ref _aw, value, true) && _loaded) { Bpr.Tick(); UsrStgns.LetDbChg = value; _letDbChStore.Change(value); } } }
 
-  string? _ds; public string DeploymntSrcExe { get => _ds ?? Deployment.DeplSrcExe; set => _ds = value; }
   public IBpr Bpr { get; }
   public ILogger Logger { get; }
   public UserSettings UsrStgns { get; }

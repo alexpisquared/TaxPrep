@@ -189,13 +189,7 @@ public partial class BaseDbVM : BaseMinVM
   } //tu: https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/observableproperty
 
   [RelayCommand]
-  protected void ChkDb4Cngs()
-  {
-    Bpr.Click(); GSReport = Dbx.GetDbChangesReport() + $"{(LetDbChg ? "" : "\n RO - user!!!")}"; HasChanges = Dbx.HasUnsavedChanges(); WriteLine(GSReport);
-  }
+  protected void ChkDb4Cngs() { Bpr.Click(); GSReport = Dbx.GetDbChangesReport() + $"{(LetDbChg ? "" : "\n RO - user!!!")}"; HasChanges = Dbx.HasUnsavedChanges(); WriteLine(GSReport); }
   [RelayCommand]
-  protected async Task Save2Db()
-  {
-    try { Bpr.Click(); IsBusy = _saving = true; _ = await SaveLogReportOrThrow(Dbx); } catch (Exception ex) { IsBusy = false; ex.Pop(Lgr); } finally { IsBusy = _saving = false; Bpr.Tick(); }
-  }
+  protected async Task Save2Db() { try { Bpr.Click(); IsBusy = _saving = true; _ = await SaveLogReportOrThrow(Dbx); } catch (Exception ex) { IsBusy = false; ex.Pop(Lgr); } finally { IsBusy = _saving = false; Bpr.Tick(); } }
 }

@@ -56,7 +56,6 @@
       <TextBlock  Text="Hit" Margin="4 0" FontSize="23" FontFamily="Orbitron" Foreground="{DynamicResource LogoTextBrush}" />
 
       <StackPanel Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="3">
-
         <Label Content="    _Y"    Target="{Binding ElementName=tbFilteY}" />
         <TextBox Margin="6 0" Width="040" FontSize="16" x:Name="tbFilteY" Text="{Binding YearOfInStr, Delay=750, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Content="    _L"    Target="{Binding ElementName=tbFilteL}" />
@@ -64,8 +63,9 @@
         <Label Content="    _F"    Target="{Binding ElementName=tbFilter}" />
         <TextBox Margin="6 0" Width="120" FontSize="16" x:Name="tbFilter" Text="{Binding SearchText,  Delay=750, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Button Content=" _Chk " Command="{Binding ChkDb4CngsCommand}"    ToolTip="Check DB for changes"  Foreground="#0a0" />
-        <Button Content=" _Sve " Command="{Binding Save2DbCommand}"       ToolTip="Save changes to DB"    Foreground="#f80" />
+        <Button Content=" Chk " Command="{Binding ChkDb4CngsCommand}"                  ToolTip="Check DB for changes"  Foreground="#0a0" />
+        <Button Content=" Sve " Command="{Binding Save2DbCommand}"                     ToolTip="Save changes to DB"    Foreground="#f80" />
+        <Ellipse Width="10" Height="10" Margin="-10 -20 0 0" Visibility="{Binding HasChanges, Converter={cnv:UniConverter}}" Fill="#fa0" />
       </StackPanel>
       <!--<TextBlock  Grid.Column="3" FontSize="16" Text="{Binding GSReport}" HorizontalAlignment="Center" TextWrapping="Wrap" d:Text="GSReport" Foreground="#1af"  />-->
     </Grid>
@@ -144,13 +144,13 @@
           <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-MM-dd}'}"  />
           <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
 
-          <!--tmi:<DataGridTemplateColumn Header="Src FLA"	SortMemberPath="TxMoneySrc.Fla">
+          <DataGridTemplateColumn Header="Src FLA"	SortMemberPath="TxMoneySrc.Fla">
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
                 <TextBlock Text="{Binding TxMoneySrc.Fla}"  ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=#0cf, BrushFalse=#fcc}, ConverterParameter='Alx'}" />
               </DataTemplate>
             </DataGridTemplateColumn.CellTemplate>
-          </DataGridTemplateColumn>-->
+          </DataGridTemplateColumn>
 
           <DataGridTemplateColumn Header="Src Name" SortMemberPath="TxMoneySrc.Name">
             <DataGridTemplateColumn.CellTemplate>
@@ -186,12 +186,20 @@
           <DataGridTemplateColumn Header="Category"		SortMemberPath="TxCategoryIdTxt">
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
-                <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxCategoryIdTxtNavigation.Name}" Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=Orange, BrushFalse=Yellow}, ConverterParameter='UnKn'}" />
+                <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxCategoryIdTxtNavigation.Name}" Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=#555, BrushFalse=Yellow}, ConverterParameter='UnKn'}" />
               </DataTemplate>
             </DataGridTemplateColumn.CellTemplate>
           </DataGridTemplateColumn>
           <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-MM-dd}'}"  />
           <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
+
+          <DataGridTemplateColumn Header="Src FLA"	SortMemberPath="TxMoneySrc.Fla">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding TxMoneySrc.Fla}"  ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=#0cf, BrushFalse=#fcc}, ConverterParameter='Alx'}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
 
           <DataGridTemplateColumn Header="Src Name" SortMemberPath="TxMoneySrc.Name">
             <DataGridTemplateColumn.CellTemplate>
