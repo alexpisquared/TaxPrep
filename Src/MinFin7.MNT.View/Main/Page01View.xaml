@@ -1,9 +1,6 @@
 ﻿<UserControl x:Class="MinFin7.MNT.View.Main.Page01View" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" 
-             xmlns:stb="clr-namespace:WpfUserControlLib.Helpers;assembly=WpfUserControlLib" 
              xmlns:cnv="clr-namespace:WpfUserControlLib.Converters;assembly=WpfUserControlLib"
-             xmlns:vms="clr-namespace:MinFin7.MNT.VM.VMs;assembly=MinFin7.MNT.VM" d:DataContext="{d:DesignInstance Type={x:Type vms:Page01VM}}" 
-             xmlns:lcl="clr-namespace:MinFin7.MNT.View.Main" 
-             d:DesignHeight="360" d:DesignWidth="1400" Padding="8">
+             xmlns:vms="clr-namespace:MinFin7.MNT.VM.VMs;assembly=MinFin7.MNT.VM" d:DataContext="{d:DesignInstance Type={x:Type vms:Page01VM}}" d:DesignHeight="360" d:DesignWidth="1400" Padding="8">
   <UserControl.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -36,7 +33,7 @@
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="260"/>
+      <ColumnDefinition Width="180"/>
       <ColumnDefinition Width="6" />
       <ColumnDefinition Width="2*"/>
       <ColumnDefinition Width="6" />
@@ -103,10 +100,10 @@
       </Grid.RowDefinitions>
 
       <StackPanel Orientation="Horizontal" Grid.ColumnSpan="33" HorizontalAlignment="Center">
-        <Button Content="Cou" Command="{Binding DataContext.CouCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="52" ToolTip="Get country" />
-        <Button Content="PBR" Command="{Binding DataContext.PBRCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="52" ToolTip="Set PBR to 'Not an Agent'" />
-        <Button Content="DNN" Command="{Binding DataContext.DNNCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="52" ToolTip="Do Not Notify - Available for this Camp-n" />
-        <Button Content="Del" Command="{Binding DataContext.DelCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="52" ToolTip="Delete from DB " Foreground="#f00" CommandParameter="{Binding DataContext.SelectdGrTxn, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+        <Button Content="Cou" Command="{Binding DataContext.CouCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="42" ToolTip="Get country" />
+        <Button Content="PBR" Command="{Binding DataContext.PBRCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="42" ToolTip="Set PBR to 'Not an Agent'" />
+        <Button Content="DNN" Command="{Binding DataContext.DNNCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="42" ToolTip="Do Not Notify - Available for this Camp-n" />
+        <Button Content="Del" Command="{Binding DataContext.DelCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="42" ToolTip="Delete from DB " Foreground="#f00" CommandParameter="{Binding DataContext.SelectdGrTxn, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
       </StackPanel>
 
       <WrapPanel Grid.Row="2"  >

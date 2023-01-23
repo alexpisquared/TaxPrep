@@ -52,9 +52,9 @@ public partial class Page01VM : BaseEmVM
     catch (Exception ex) { ex.Pop(Lgr); return false; }
     finally { _ = await base.InitAsync(); }
   }
-  const int c16 = 16;
+  const int _len = 4;
   private readonly SpeechSynth _sth;
-  [ObservableProperty] int matchLen = c16;
+  [ObservableProperty] int matchLen = _len;
   [ObservableProperty] int yearOfIn = DateTime.Today.Year - 1;
   [ObservableProperty] ICollectionView? txPrevCvs;
   [ObservableProperty] ICollectionView? txnYoiCvs;
@@ -73,7 +73,7 @@ public partial class Page01VM : BaseEmVM
     YearOfIn = rv;
     LoadYoiMlnCommand.Execute(null); //tu: async void avoidment through CMD:
   }
-  [ObservableProperty] string matchLenStr = $"{c16}"; partial void OnMatchLenStrChanged(string value)
+  [ObservableProperty] string matchLenStr = $"{_len}"; partial void OnMatchLenStrChanged(string value)
   {
     Bpr.Tick();
     if (!int.TryParse(value, out var rv)) return;
@@ -166,6 +166,7 @@ public partial class Page01VM : BaseEmVM
       }
 
       ChkDb4CngsCommand.Execute(null);
+      //todo: Save2DbCommand.Execute(null);
     }
     catch (Exception ex) { ex.Pop(); }
   }
