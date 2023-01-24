@@ -1,6 +1,4 @@
-﻿using static System.Windows.Forms.AxHost;
-
-namespace MF.TxCategoryAssigner;
+﻿namespace MF.TxCategoryAssigner;
 public partial class TxCategoryAssignerVw : WindowBase
 {
   readonly FinDemoContext _db = new();
@@ -70,9 +68,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     }
     catch (Exception ex) { ex.Pop(_lgr); }
   }
-
-  async void OnSave(object s, RoutedEventArgs e) => await SaveAsync();
-  async Task SaveAsync()
+  async void OnSave(object s, RoutedEventArgs e) => await SaveAsync();  async Task SaveAsync()
   {
     try
     {
@@ -91,13 +87,12 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       switch (MessageBox.Show($"Would you like to save the changes? \r\n\n{_db.GetDbChangesReport()}", "Unsaved changes detected", MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
       {
         default:
-        case MessageBoxResult.Cancel: e.Cancel = true; return;
-        case MessageBoxResult.Yes: await SaveAsync(); await Task.Delay(2500); break;
+        case MessageBoxResult.Cancel: e.Cancel = true; KeepOpenReason = "Changes have not been saved... \n...Cancelling the Closing in the Parent of base.";  return;
+        case MessageBoxResult.Yes: await SaveAsync(); KeepOpenReason = null;  await Task.Delay(250); break;
         case MessageBoxResult.No: break;
       }
     }
 
-    //if (_dispose)
     _db.Dispose();
 
     base.OnClosing(e);
@@ -113,7 +108,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     {
       WriteLine($"■■■ filterStart()  [[");
 
-      _bpr.Tick(); 
+      _bpr.Tick();
 
       //await reLoadTxCore();??????????????
 
