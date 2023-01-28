@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AsLink\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="..\MinFin7a\Images\MinFinTax.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
@@ -41,13 +37,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Include="..\..\..\..\c\AsLink\Themes\Common.xaml" Link="AsLink\Common.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 
   <ItemGroup>

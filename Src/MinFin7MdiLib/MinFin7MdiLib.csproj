@@ -6,4 +6,15 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="AsLink\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="..\..\..\..\c\AsLink\Themes\Common.xaml" Link="AsLink\Common.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
 </Project>
