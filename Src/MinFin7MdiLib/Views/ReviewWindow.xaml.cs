@@ -2,11 +2,11 @@
 public partial class ReviewWindow : WindowBase
 {
   readonly FinDemoContext _db = new();
-  readonly ILogger<TxCategoryAssignerVw> _lgr;
-  readonly Bpr _bpr;
+  readonly ILogger _lgr;
+  readonly IBpr _bpr;
   string _owner;
 
-  public ReviewWindow(ILogger<TxCategoryAssignerVw> lgr, Bpr bpr, string owner)
+  public ReviewWindow(ILogger lgr, IBpr bpr, string owner)
   {
     InitializeComponent();
     _lgr = lgr;

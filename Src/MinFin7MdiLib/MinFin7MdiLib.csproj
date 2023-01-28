@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\WinFormsControlLib\WinFormsControlLib.csproj" />
     <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\WpfUserControlLib\WpfUserControlLib.csproj" />
     <ProjectReference Include="..\Db.FinDemo7\Db.FinDemo7.csproj" />
+    <ProjectReference Include="..\MinFin7.MNT.VM\MinFin7.MNT.VM.csproj" />
   </ItemGroup>
 
   <ItemGroup>

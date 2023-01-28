@@ -5,10 +5,10 @@ public partial class ManualTxnEntry : WindowBase
   readonly FinDemoContext _db;
   readonly bool _toDispose;
   readonly DateTime _now = DateTime.Now;
-  readonly ILogger<TxCategoryAssignerVw> _lgr;
-  readonly Bpr _bpr;
+  readonly ILogger _lgr;
+  readonly IBpr _bpr;
 
-  public ManualTxnEntry(ILogger<TxCategoryAssignerVw> lgr, Bpr bpr, bool showBackToMenuBtn, FinDemoContext? db = null)
+  public ManualTxnEntry(ILogger lgr, IBpr bpr, bool showBackToMenuBtn, FinDemoContext? db = null)
   {
     InitializeComponent();
 

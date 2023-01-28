@@ -32,3 +32,5 @@ global using WpfUserControlLib.Helpers;
 global using static System.Diagnostics.Trace;
 global using System.ComponentModel;
 global using System.Globalization;
+global using MinFin7.MNT.VM.VMs;
+global using StandardContractsLib;

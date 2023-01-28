@@ -1,14 +1,18 @@
 ﻿namespace MF.TxCategoryAssigner.Views;
 public partial class MainAppDispatcher : WindowBase
 {
-  const int _zeroBasedBtnCnt = 8;
-  readonly ILogger<TxCategoryAssignerVw> _lgr;
-  readonly Bpr _bpr;
+  //const int _zeroBasedBtnCnt = 8;
+  readonly ILogger _lgr;
+  readonly IBpr _bpr;
 
-  public MainAppDispatcher() : this(SeriLogHelper.InitLoggerFactory(
-      folder: FSHelper.GetCreateSafeLogFolderAndFile(@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log"),
-      levels: "+Info").CreateLogger<TxCategoryAssignerVw>(), new Bpr()) { }
-  public MainAppDispatcher(ILogger<TxCategoryAssignerVw> lgr, Bpr bpr)
+  public MainAppDispatcher() // : this(SeriLogHelper.InitLoggerFactory(folder: FSHelper.GetCreateSafeLogFolderAndFile(@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log"), levels: "+Info").CreateLogger(), new Bpr())
+  {
+    InitializeComponent();
+
+    _lgr = ((BaseDbVM)DataContext).Lgr;
+    _bpr = ((BaseDbVM)DataContext).Bpr;
+  }
+  public MainAppDispatcher(ILogger lgr, IBpr bpr)
   {
     InitializeComponent();
 

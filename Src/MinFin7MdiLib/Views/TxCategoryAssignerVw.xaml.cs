@@ -7,14 +7,14 @@ public partial class TxCategoryAssignerVw : WindowBase
   readonly ObservableCollection<TxCategory> _catg = new();
   readonly CollectionViewSource _txCategoryCmBxVwSrc, _txCategoryDGrdVwSrc, _txCoreV2_Root_VwSrc;
   readonly int _trgTaxYr = DateTime.Today.Year - 1;
-  readonly ILogger<TxCategoryAssignerVw> _lgr;
-  readonly Bpr _bpr;
+  readonly ILogger _lgr;
+  readonly IBpr _bpr;
   string? _txCatgry, _loadedCatgry = "?", _choiceAbove, _choiceBelow;
   decimal _selectTtl = 0;
   bool _loaded = false;
   int? _cutOffYr = null;
 
-  public TxCategoryAssignerVw(ILogger<TxCategoryAssignerVw> lgr, Bpr bpr)
+  public TxCategoryAssignerVw(ILogger lgr, IBpr bpr)
   {
     InitializeComponent();
     _txCategoryCmBxVwSrc = (CollectionViewSource)FindResource("txCategoryCmBxVwSrc");
