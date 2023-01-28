@@ -3,7 +3,7 @@ public partial class Page01VM : BaseEmVM
 {
   public Page01VM(MainVM mvm, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoContext dbx, IAddChild win, UserSettings stg, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, EmailOfIStore eml, LetDbChgStore awd, EmailDetailVM evm, SpeechSynth sth) : base(mvm, lgr, cfg, bpr, dbx, win, svr, dbs, gsr, awd, stg, eml, evm, 8110)
   {
-    _sth = sth;
+    Sth = sth;
   }
   public override async Task<bool> InitAsync()
   {
@@ -53,7 +53,6 @@ public partial class Page01VM : BaseEmVM
     finally { _ = await base.InitAsync(); }
   }
   const int _len = 4;
-  private readonly SpeechSynth _sth;
   [ObservableProperty] int matchLen = _len;
   [ObservableProperty] int yearOfIn = DateTime.Today.Year - 1;
   [ObservableProperty] ICollectionView? txPrevCvs;
@@ -81,7 +80,11 @@ public partial class Page01VM : BaseEmVM
     MatchLen = rv;
     LoadYoiMlnCommand.Execute(null); //tu: async void avoidment through CMD:
   }
-  [ObservableProperty] GroupedTxnResult? selectdGrTxn; partial void OnSelectdGrTxnChanged(GroupedTxnResult? value)
+  [ObservableProperty] GroupedTxnResult? selectdGrTxn;
+
+  public SpeechSynth Sth { get; }
+
+  partial void OnSelectdGrTxnChanged(GroupedTxnResult? value)
   {
     Bpr.Tick();
     LoadSelTxDtlCommand.Execute(value); //tu: async void avoidment through CMD:
@@ -150,7 +153,7 @@ public partial class Page01VM : BaseEmVM
         });
 
         TxnYoiCvs?.Refresh();
-        await _sth.SpeakExpressAsync("Look it!");
+        await Sth.SpeakExpressAsync("Look it!");
         await Bpr.BeepAsync(333, .333); // calming down demo of what's done.
 
         Nxt();
