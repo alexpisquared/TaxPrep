@@ -25,7 +25,7 @@ public partial class TxCategoryAssignerVw : WindowBase
   }
   async void OnLoaded(object s, RoutedEventArgs e)
   {
-    App.Synth.SpeakExpressFAF("Loading...");
+    //888 App.Synth.SpeakExpressFAF("Loading...");
 
     /*
      * var version = Windows.ApplicationModel.Package.Current.Id.Version;
@@ -64,7 +64,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       _loaded = true;
       chkSingleYr.IsChecked = true;      // invokes the 1st search
 
-      App.Synth.SpeakExpressFAF("Done!");
+      //888 App.Synth.SpeakExpressFAF("Done!");
     }
     catch (Exception ex) { ex.Pop(_lgr); }
   }
@@ -114,7 +114,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
       if (string.IsNullOrEmpty(csvFilterString))
       {
-        App.Synth.SpeakExpressFAF("Clear!");
+        //888 App.Synth.SpeakExpressFAF("Clear!");
         FilterTxnsBy2(csvFilterString, _txCatgry);
       }
       else
@@ -122,13 +122,13 @@ If you want to DEBUG or Run with the current Package available, just set your pa
         var ta = csvFilterString.Split(new[] { '`', '>', '\\', '/' });
         if (ta.Length > 1)
         {
-          App.Synth.SpeakExpressFAF($"{ta.Length}-part filter");
+          //888 App.Synth.SpeakExpressFAF($"{ta.Length}-part filter");
 
-          if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { App.Synth.SpeakExpressFAF("Still Empty."); return; }
+          if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { /*//888 App.Synth.SpeakExpressFAF("Still Empty.");*/ return; }
 
           if (!string.IsNullOrEmpty(ta[0]))
           {
-            if (!decimal.TryParse(ta[0], out var amt)) { App.Synth.SpeakExpressFAF("1st must be number."); return; }
+            if (!decimal.TryParse(ta[0], out var amt)) { /*//888 App.Synth.SpeakExpressFAF("1st must be number."); */return; }
 
             if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
             //App.Synth.SpeakExpressFAF("Multi.");
@@ -389,8 +389,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       await Assign(((TxCategory?)txCategoryListBox.SelectedItems[0])?.IdTxt);
     else if (_choiceAbove?.Length > 0 && _choiceAbove == _choiceBelow)
       await Assign(_choiceAbove);
-    else
-      App.Synth.SpeakExpressFAF("Nothing to assign.");
+    //else      App.Synth.SpeakExpressFAF("Nothing to assign.");
   }
   async void OnAssign1(object s, RoutedEventArgs e) => await Assign(_choiceAbove);
   async void OnAssign2(object s, RoutedEventArgs e) => await Assign(_choiceBelow);
@@ -424,7 +423,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
     _ = tbxSearch.Focus();
 
-    App.Synth.SpeakExpressFAF("Assigned.");
+    //App.Synth.SpeakExpressFAF("Assigned.");
   }
 }
 /*

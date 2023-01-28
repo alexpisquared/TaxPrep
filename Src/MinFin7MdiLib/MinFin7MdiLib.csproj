@@ -17,4 +17,22 @@
     </Page>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\Ambience\AmbienceLib.csproj" />
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\EfDbHelperLib\EfDbHelperLib.csproj" />
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\StandardLib\StandardLib.csproj" />
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\WinFormsControlLib\WinFormsControlLib.csproj" />
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\WpfUserControlLib\WpfUserControlLib.csproj" />
+    <ProjectReference Include="..\Db.FinDemo7\Db.FinDemo7.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\ReviewWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\TxCategoryAssignerVw.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

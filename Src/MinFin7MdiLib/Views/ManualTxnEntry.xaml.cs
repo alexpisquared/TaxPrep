@@ -56,8 +56,7 @@ public partial class ManualTxnEntry : WindowBase
   {
     try
     {
-      App.Synth.SpeakExpressFAF("Loading...!");
-
+      //888       App.Synth.SpeakExpressFAF("Loading...!");
       await _db.TxCoreV2s.Where(r => r.TxDate.Year >= 2021).OrderByDescending(r => r.Id).Take(2).LoadAsync();
       await _db.TxCategories.LoadAsync();
       await _db.TxMoneySrcs.LoadAsync();
@@ -77,7 +76,7 @@ public partial class ManualTxnEntry : WindowBase
 
       _ = btnAddNewRcrd.Focus();
 
-      await App.Synth.SpeakExpressAsync("Done!");
+      //888 await App.Synth.SpeakExpressAsync("Done!");
     }
     catch (Exception ex) { ex.Pop(_lgr); }
   }

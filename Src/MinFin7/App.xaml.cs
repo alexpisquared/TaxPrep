@@ -47,7 +47,7 @@ public partial class App : Application
     MainWindow =
       //VersionHelper.IsDbg ?      //new ManualTxnEntry(_logger, new Bpr(), true) :       //new ReviewWindow(_logger, new Bpr(), "Mei") : 
       //new TxCategoryAssignerVw(_logger, new Bpr()) :
-      new MainAppDispatcher(_logger, new Bpr());
+      new MF.TxCategoryAssigner.Views.MainAppDispatcher(_logger, new Bpr());
 
     MainWindow.ShowDialog();
 

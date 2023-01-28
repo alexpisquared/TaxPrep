@@ -14,16 +14,16 @@ public partial class MainAppDispatcher : WindowBase
 
     KeyUp += (s, e) =>
     {
-      switch (e.Key)
-      {
-        case Key.Escape: Close(); App.Current.Shutdown(); break;
-        case Key.Up:   /**/ Settings.Default.LastBtnNo = Settings.Default.LastBtnNo > 0                /**/ ? --Settings.Default.LastBtnNo : 0;                /**/ SetDefault(Settings.Default.LastBtnNo); break;
-        case Key.Down: /**/ Settings.Default.LastBtnNo = Settings.Default.LastBtnNo < _zeroBasedBtnCnt /**/ ? ++Settings.Default.LastBtnNo : _zeroBasedBtnCnt; /**/ SetDefault(Settings.Default.LastBtnNo); break;
-        default: break;
-      }
+      //switch (e.Key)
+      //{
+      //  case Key.Escape: Close(); /*App.Current.Shutdown();*/ break;
+      //  case Key.Up:   /**/ Settings.Default.LastBtnNo = Settings.Default.LastBtnNo > 0                /**/ ? --Settings.Default.LastBtnNo : 0;                /**/ SetDefault(Settings.Default.LastBtnNo); break;
+      //  case Key.Down: /**/ Settings.Default.LastBtnNo = Settings.Default.LastBtnNo < _zeroBasedBtnCnt /**/ ? ++Settings.Default.LastBtnNo : _zeroBasedBtnCnt; /**/ SetDefault(Settings.Default.LastBtnNo); break;
+      //  default: break;
+      //}
     }; //tu:
 
-    SetDefault(Settings.Default.LastBtnNo);
+    //SetDefault(Settings.Default.LastBtnNo);
     tbver.Text = VersionHelper.CurVerStrYMd;
   }
 
@@ -32,8 +32,8 @@ public partial class MainAppDispatcher : WindowBase
     _bpr.Click();
     b1.IsDefault = b2.IsDefault = b3.IsDefault = b4.IsDefault = b5.IsDefault = b6.IsDefault = b7.IsDefault = b8.IsDefault = false;
     ((Button)FindName($"b{cb + 1}")).IsDefault = true;
-    Settings.Default.LastBtnNo = cb;
-    Settings.Default.Save();
+    //Settings.Default.LastBtnNo = cb;
+    //Settings.Default.Save();
   }
 
   async void onX(object s, RoutedEventArgs e)
