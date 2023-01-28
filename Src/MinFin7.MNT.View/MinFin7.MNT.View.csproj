@@ -33,6 +33,7 @@
     <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\WpfUserControlLib\WpfUserControlLib.csproj" />
     <ProjectReference Include="..\MinFin7.MNT.Contract\MinFin7.MNT.Contract.csproj" />
     <ProjectReference Include="..\MinFin7.MNT.VM\MinFin7.MNT.VM.csproj" />
+    <ProjectReference Include="..\MinFin7MdiLib\MinFin7MdiLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>

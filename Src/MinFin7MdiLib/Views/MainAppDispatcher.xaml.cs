@@ -5,6 +5,9 @@ public partial class MainAppDispatcher : WindowBase
   readonly ILogger<TxCategoryAssignerVw> _lgr;
   readonly Bpr _bpr;
 
+  public MainAppDispatcher() : this(SeriLogHelper.InitLoggerFactory(
+      folder: FSHelper.GetCreateSafeLogFolderAndFile(@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log"),
+      levels: "+Info").CreateLogger<TxCategoryAssignerVw>(), new Bpr()) { }
   public MainAppDispatcher(ILogger<TxCategoryAssignerVw> lgr, Bpr bpr)
   {
     InitializeComponent();
@@ -25,6 +28,8 @@ public partial class MainAppDispatcher : WindowBase
 
     //SetDefault(Settings.Default.LastBtnNo);
     tbver.Text = VersionHelper.CurVerStrYMd;
+
+    KeepOpenReason = ""; // nothing ot save/worry about at this stage for this window.
   }
 
   void SetDefault(int cb)

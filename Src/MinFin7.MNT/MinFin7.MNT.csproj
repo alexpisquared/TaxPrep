@@ -24,7 +24,6 @@
     <ProjectReference Include="..\Db.FinDemo.PowerTools\Db.FinDemo.PowerTools.csproj" />
     <ProjectReference Include="..\MinFin7.MNT.View\MinFin7.MNT.View.csproj" />
     <ProjectReference Include="..\MinFin7.MNT.VM\MinFin7.MNT.VM.csproj" />
-    <ProjectReference Include="..\MinFin7MdiLib\MinFin7MdiLib.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,6 +2,7 @@
                     xmlns:vm="clr-namespace:MinFin7.MNT.VM.VMs;assembly=MinFin7.MNT.VM" 
                     xmlns:vv="clr-namespace:MinFin7.MNT.VM.VMs;assembly=MinFin7.MNT.VM" 
                     xmlns:view_Main______________________="clr-namespace:MinFin7.MNT.View.Main"
+                    xmlns:view_Main_MDI__________________="clr-namespace:MF.TxCategoryAssigner.Views;assembly=MinFin7MdiLib"
                     >
   <DataTemplate DataType="{x:Type vm:LayoutVM}">
     <view_Main______________________:Layout />
@@ -11,6 +12,9 @@
   </DataTemplate>
   <DataTemplate DataType="{x:Type vm:Page01VM}">
     <view_Main______________________:Page01View />
+  </DataTemplate>
+  <DataTemplate DataType="{x:Type vm:MainAppDispatcherVM}">
+    <view_Main_MDI__________________:MainAppDispatcher/>
   </DataTemplate>
   <!--<DataTemplate DataType="{x:Type vm:Page02VM}">
     <view_Main______________________:Page02View />
