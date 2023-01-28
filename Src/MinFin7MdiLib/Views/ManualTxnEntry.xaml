@@ -6,6 +6,11 @@
     <CollectionViewSource x:Key="txMoneySrcViewSource"  d:DesignSource="{d:DesignInstance {x:Type mdl:TxMoneySrc}, CreateList=True}"/>
     <CollectionViewSource x:Key="txCategoryViewSource"  d:DesignSource="{d:DesignInstance {x:Type mdl:TxCategory}, CreateList=True}"/>
 
+    <Style x:Key="m5" TargetType="FrameworkElement">
+      <!--<Setter Property="Margin" Value="5"/>-->
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="ToolTipService.ShowDuration" Value="99000000" />
+    </Style>
     <Style TargetType="TextBox" BasedOn="{StaticResource m5}">
       <Setter Property="Foreground"		        Value="#00c"		/>
       <Setter Property="FontSize"			        Value="15"			/>

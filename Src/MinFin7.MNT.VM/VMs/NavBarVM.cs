@@ -6,7 +6,7 @@ public partial class NavBarVM : BaseMinVM
   readonly GSReportStore _GSReportStore;
   readonly LetDbChgStore __letDbChStore;
 
-  public NavBarVM(SrvrNameStore SrvrNameStore, DtBsNameStore DtBsNameStore, GSReportStore gsr, LetDbChgStore letDStore, Page00NavSvc page00NavSvc, Page01NavSvc page01NavSvc, /*Page02NavSvc page02NavSvc, Page03NavSvc page03NavSvc, Page04NavSvc page04NavSvc, Page05NavSvc Page05NavSvc, */EmailDetailNavSvc emlDtlNavSvc, UserSettings usrStgns)
+  public NavBarVM(SrvrNameStore SrvrNameStore, DtBsNameStore DtBsNameStore, GSReportStore gsr, LetDbChgStore letDStore, Page00NavSvc page00NavSvc, Page01NavSvc page01NavSvc, /*Page02NavSvc page02NavSvc, Page03NavSvc page03NavSvc, Page04NavSvc page04NavSvc, Page05NavSvc Page05NavSvc, */MainAppDispatcherNavSvc MainAppDispatcherNavSvc, EmailDetailNavSvc emlDtlNavSvc, UserSettings usrStgns)
   {
     _SrvrNameStore = SrvrNameStore;
     _DtBsNameStore = DtBsNameStore;
@@ -25,6 +25,7 @@ public partial class NavBarVM : BaseMinVM
     //NavigatePage03Command = new NavigateCommand(page03NavSvc);
     //NavigatePage04Command = new NavigateCommand(page04NavSvc);
     //NavigatePage05Command = new NavigateCommand(Page05NavSvc);
+    NavigateMainAppDispatcherCommand = new NavigateCommand(MainAppDispatcherNavSvc);
     NavigateEmlDtlCommand = new NavigateCommand(emlDtlNavSvc);
 
     PrefSrvrName = usrStgns.SrvrName;
@@ -62,6 +63,7 @@ public partial class NavBarVM : BaseMinVM
   public ICommand NavigatePage03Command { get; }
   public ICommand NavigatePage04Command { get; }
   public ICommand NavigatePage05Command { get; }
+  public ICommand NavigateMainAppDispatcherCommand { get; }
   public ICommand NavigateEmlDtlCommand { get; }
 
   IRelayCommand? _sq; public IRelayCommand SwtchSqlSvrCmd => _sq ??= new AsyncRelayCommand<object>(SwitchSqlServer); async Task SwitchSqlServer(object? sqlServerTLA)

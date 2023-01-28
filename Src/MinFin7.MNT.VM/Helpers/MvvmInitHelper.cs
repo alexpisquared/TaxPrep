@@ -24,6 +24,7 @@ public static class MvvmInitHelper
     //_ = services.AddSingleton<Page03NavSvc>();
     //_ = services.AddSingleton<Page04NavSvc>();
     //_ = services.AddSingleton<Page05NavSvc>();
+    _ = services.AddSingleton<MainAppDispatcherNavSvc>();
     _ = services.AddSingleton<EmailDetailNavSvc>();
 
     _ = services.AddSingleton(s => new Func<NavBarVM>(() => s.GetRequiredService<NavBarVM>()!));
@@ -33,6 +34,7 @@ public static class MvvmInitHelper
     //_ = services.AddSingleton(s => new Func<Page03VM>(() => s.GetRequiredService<Page03VM>()!));
     //_ = services.AddSingleton(s => new Func<Page04VM>(() => s.GetRequiredService<Page04VM>()!));
     //_ = services.AddSingleton(s => new Func<Page05VM>(() => s.GetRequiredService<Page05VM>()!));
+    _ = services.AddSingleton(s => new Func<MainAppDispatcherVM>(() => s.GetRequiredService<MainAppDispatcherVM>()!));
     _ = services.AddSingleton(s => new Func<EmailDetailVM>(() => s.GetRequiredService<EmailDetailVM>()!));
 
     _ = services.AddTransient<NavBarVM>();
@@ -43,6 +45,7 @@ public static class MvvmInitHelper
     //_ = services.AddTransient<Page03VM>();
     //_ = services.AddTransient<Page04VM>();
     //_ = services.AddTransient<Page05VM>();
+    _ = services.AddTransient<MainAppDispatcherVM>();
     _ = services.AddTransient<EmailDetailVM>();
 
     //_ = services.AddTransient<ISecurityForcer, SecurityForcer>();
