@@ -9,12 +9,13 @@ public partial class TxCategoryAssignerVw : WindowBase
   readonly int _trgTaxYr = DateTime.Today.Year - 1;
   readonly ILogger _lgr;
   readonly IBpr _bpr;
+  private readonly SpeechSynth _sth;
   string? _txCatgry, _loadedCatgry = "?", _choiceAbove, _choiceBelow;
   decimal _selectTtl = 0;
   bool _loaded = false;
   int? _cutOffYr = null;
 
-  public TxCategoryAssignerVw(ILogger lgr, IBpr bpr)
+  public TxCategoryAssignerVw(ILogger lgr, IBpr bpr, SpeechSynth sth)
   {
     InitializeComponent();
     _txCategoryCmBxVwSrc = (CollectionViewSource)FindResource("txCategoryCmBxVwSrc");
@@ -22,10 +23,11 @@ public partial class TxCategoryAssignerVw : WindowBase
     _txCoreV2_Root_VwSrc = (CollectionViewSource)FindResource("txCoreV2_Root_VwSrc");
     _lgr = lgr;
     _bpr = bpr;
+    this._sth = sth;
   }
   async void OnLoaded(object s, RoutedEventArgs e)
   {
-    //888 App.Synth.SpeakExpressFAF("Loading...");
+    _sth.SpeakExpressFAF("Loading...");
 
     /*
      * var version = Windows.ApplicationModel.Package.Current.Id.Version;
@@ -63,7 +65,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       _loaded = true;
       chkSingleYr.IsChecked = true;      // invokes the 1st search
 
-      //888 App.Synth.SpeakExpressFAF("Done!");
+      _sth.SpeakExpressFAF("Done!");
     }
     catch (Exception ex) { ex.Pop(_lgr); }
   }
@@ -118,7 +120,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
       if (string.IsNullOrEmpty(csvFilterString))
       {
-        //888 App.Synth.SpeakExpressFAF("Clear!");
+        _sth.SpeakExpressFAF("Clear!");
         FilterTxnsBy2(csvFilterString, _txCatgry);
       }
       else
@@ -126,13 +128,13 @@ If you want to DEBUG or Run with the current Package available, just set your pa
         var ta = csvFilterString.Split(new[] { '`', '>', '\\', '/' });
         if (ta.Length > 1)
         {
-          //888 App.Synth.SpeakExpressFAF($"{ta.Length}-part filter");
+          _sth.SpeakExpressFAF($"{ta.Length}-part filter");
 
-          if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { /*//888 App.Synth.SpeakExpressFAF("Still Empty.");*/ return; }
+          if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { /*_sth.SpeakExpressFAF("Still Empty.");*/ return; }
 
           if (!string.IsNullOrEmpty(ta[0]))
           {
-            if (!decimal.TryParse(ta[0], out var amt)) { /*//888 App.Synth.SpeakExpressFAF("1st must be number."); */return; }
+            if (!decimal.TryParse(ta[0], out var amt)) { /*_sth.SpeakExpressFAF("1st must be number."); */return; }
 
             if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
             //App.Synth.SpeakExpressFAF("Multi.");

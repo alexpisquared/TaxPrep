@@ -7,13 +7,15 @@ public partial class ManualTxnEntry : WindowBase
   readonly DateTime _now = DateTime.Now;
   readonly ILogger _lgr;
   readonly IBpr _bpr;
+  private readonly SpeechSynth _sth;
 
-  public ManualTxnEntry(ILogger lgr, IBpr bpr, bool showBackToMenuBtn, FinDemoContext? db = null)
+  public ManualTxnEntry(ILogger lgr, IBpr bpr, SpeechSynth sth, bool showBackToMenuBtn, FinDemoContext? db = null)
   {
     InitializeComponent();
 
     _lgr = lgr;
     _bpr = bpr;
+    this._sth = sth;
     _db = db is null ? new FinDemoContext() : db;
     _toDispose = db is null;
 
@@ -56,7 +58,7 @@ public partial class ManualTxnEntry : WindowBase
   {
     try
     {
-      //888       App.Synth.SpeakExpressFAF("Loading...!");
+      _sth.SpeakExpressFAF("Loading...!");
       await _db.TxCoreV2s.Where(r => r.TxDate.Year >= 2021).OrderByDescending(r => r.Id).Take(2).LoadAsync();
       await _db.TxCategories.LoadAsync();
       await _db.TxMoneySrcs.LoadAsync();
@@ -76,13 +78,13 @@ public partial class ManualTxnEntry : WindowBase
 
       _ = btnAddNewRcrd.Focus();
 
-      //888 await App.Synth.SpeakExpressAsync("Done!");
+      await _sth.SpeakExpressAsync("Done!");
     }
     catch (Exception ex) { ex.Pop(_lgr); }
   }
   async void onSave(object sender, RoutedEventArgs e) { _bpr.Click(); tbkTitle.Text = (await _db.TrySaveReportAsync()).report; }
   void onAddingNewItem(object sender, AddingNewItemEventArgs e) { _bpr.Click(); e.NewItem = createNewTxn(); }//tu: pre-fill new record with valid values on the fly.
-  void onMenu(object s, RoutedEventArgs e) { _bpr.Click(); /*MessageBox.Show("N/A"); } //   {*/ Hide(); _ = new MainAppDispatcher(_lgr, _bpr).ShowDialog(); Show(); }
+  void onMenu(object s, RoutedEventArgs e) { _bpr.Click(); /*MessageBox.Show("N/A"); } //   {*/ Hide(); _ = new MainAppDispatcher(_lgr, _bpr, _sth).ShowDialog(); Show(); }
   void cbSrc_SelectionChanged(object s, SelectionChangedEventArgs e) { _bpr.Click(); btnTD.IsEnabled = int.TryParse(tbYear.Text, out var yr) && yr > 2000 && cbSrc.SelectedValue as int? > 0; }
 
   TxCoreV2 createNewTxn() => new()
