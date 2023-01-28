@@ -115,83 +115,32 @@ public partial class BaseDbVM : BaseMinVM
   protected readonly SrvrNameStore _SrvrNameStore;
   protected readonly DtBsNameStore _DtBsNameStore;
   protected readonly GSReportStore _GSReportStore;
-  async void SrvrNameStore_Chngd(string val)
-  {
-    SrvrName = val; await RefreshReloadAsync();
-  }
-  async void DtBsNameStore_Chngd(string val)
-  {
-    DtBsName = val; await RefreshReloadAsync();
-  }
-  async void GSReportStore_Chngd(string val)
-  {
-    GSReport = val; await RefreshReloadAsync();
-  }
-  async void LetDbChgStore_Chngd(bool value)
-  {
-    LetDbChg = value; await RefreshReloadAsync();
-  }
-
-  [ObservableProperty] string? srvrName; partial void OnSrvrNameChanged(string? value)
-  {
-    if (value is not null && _inited) { _SrvrNameStore.Change(value); Bpr.Click(); UsrStgns.SrvrName = value; }
-  }
-  [ObservableProperty] string? dtBsName; partial void OnDtBsNameChanged(string? value)
-  {
-    if (value is not null && _inited) { _DtBsNameStore.Change(value); Bpr.Click(); UsrStgns.DtBsName = value; }
-  }
-  [ObservableProperty] string? gSReport; partial void OnGSReportChanged(string? value)
-  {
-    if (value is not null && _inited) { _GSReportStore.Change(value); }
-  }
-  [ObservableProperty] bool letDbChg; partial void OnLetDbChgChanged(bool value)
-  {
-    _LetDbChgStore.Change(value);
-  }
-
-  public UserSettings UsrStgns
-  {
-    get;
-  }
-  public IConfigurationRoot Cfg
-  {
-    get;
-  }
-  public FinDemoContext Dbx
-  {
-    get;
-  }
-  public ILogger Lgr
-  {
-    get;
-  }
-  public IBpr Bpr
-  {
-    get;
-  }
-  public SpeechSynth Sth { get; }
-  public Window MainWin
-  {
-    get;
-  }
-
+  async void SrvrNameStore_Chngd(string val) { SrvrName = val; await RefreshReloadAsync(); }
+  async void DtBsNameStore_Chngd(string val) { DtBsName = val; await RefreshReloadAsync(); }
+  async void GSReportStore_Chngd(string val) { GSReport = val; await RefreshReloadAsync(); }
+  async void LetDbChgStore_Chngd(bool value) { LetDbChg = value; await RefreshReloadAsync(); }
+  [ObservableProperty] string? srvrName; partial void OnSrvrNameChanged(string? value) { if (value is not null && _inited) { _SrvrNameStore.Change(value); Bpr.Click(); UsrStgns.SrvrName = value; } }
+  [ObservableProperty] string? dtBsName; partial void OnDtBsNameChanged(string? value) { if (value is not null && _inited) { _DtBsNameStore.Change(value); Bpr.Click(); UsrStgns.DtBsName = value; } }
+  [ObservableProperty] string? gSReport; partial void OnGSReportChanged(string? value) { if (value is not null && _inited) { _GSReportStore.Change(value); } }
+  [ObservableProperty] bool letDbChg; partial void OnLetDbChgChanged(bool value) { _LetDbChgStore.Change(value); }
+  
   [ObservableProperty] bool isDevDbg;
   [ObservableProperty] ICollectionView? pageCvs;
   [ObservableProperty] string searchText;
   [ObservableProperty] bool includeClosed;
   [ObservableProperty][NotifyCanExecuteChangedFor(nameof(Save2DbCommand))] bool hasChanges;
 
-  partial void OnSearchTextChanged(string value)
-  {
-    Bpr.Tick(); PageCvs?.Refresh();
-  }  //tu: https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/observableproperty
-  partial void OnIncludeClosedChanged(bool value)
-  {
-    Bpr.Tick(); PageCvs?.Refresh();
-  } //tu: https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/observableproperty
+  public UserSettings UsrStgns { get; }
+  public IConfigurationRoot Cfg { get; }
+  public FinDemoContext Dbx { get; }
+  public ILogger Lgr { get; }
+  public IBpr Bpr { get; }
+  public SpeechSynth Sth { get; }
+  public Window MainWin { get; }
 
-  [RelayCommand]
-  protected void ChkDb4Cngs() { Bpr.Click(); GSReport = Dbx.GetDbChangesReport() + $"{(LetDbChg ? "" : "\n RO - user!!!")}"; HasChanges = Dbx.HasUnsavedChanges(); WriteLine(GSReport); }
-  [RelayCommand]
-  protected async Task Save2Db() { try { Bpr.Click(); IsBusy = _saving = true; _ = await SaveLogReportOrThrow(Dbx); } catch (Exception ex) { IsBusy = false; ex.Pop(Lgr); } finally { IsBusy = _saving = false; Bpr.Tick(); } }
+  partial void OnSearchTextChanged(string value) { Bpr.Tick(); PageCvs?.Refresh(); }  //tu: https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/observableproperty
+  partial void OnIncludeClosedChanged(bool value) { Bpr.Tick(); PageCvs?.Refresh(); } //tu: https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/observableproperty
+
+  [RelayCommand] protected void ChkDb4Cngs() { Bpr.Click(); GSReport = Dbx.GetDbChangesReport() + $"{(LetDbChg ? "" : "\n RO - user!!!")}"; HasChanges = Dbx.HasUnsavedChanges(); WriteLine(GSReport); }
+  [RelayCommand] protected async Task Save2Db() { try { Bpr.Click(); IsBusy = _saving = true; _ = await SaveLogReportOrThrow(Dbx); } catch (Exception ex) { IsBusy = false; ex.Pop(Lgr); } finally { IsBusy = _saving = false; Bpr.Tick(); } }
 }
