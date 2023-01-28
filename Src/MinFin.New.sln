@@ -66,7 +66,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinFin7.MNT.Contract", "Min
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NavigationDrawerControl", "..\..\AAV.Shared\Src\Net.CI\NavigationDrawerControl\NavigationDrawerControl.csproj", "{95B8F412-4A1A-4583-AB58-7AE8C04A7448}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinFin7MdiLib", "MinFin7MdiLib\MinFin7MdiLib.csproj", "{F569B69E-357E-47F5-83FC-269AEDC032B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinFin7MdiLib", "MinFin7MdiLib\MinFin7MdiLib.csproj", "{F569B69E-357E-47F5-83FC-269AEDC032B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1272,8 +1272,8 @@ Global
 		{F569B69E-357E-47F5-83FC-269AEDC032B4}.Debug|ARM64.Build.0 = Debug|Any CPU
 		{F569B69E-357E-47F5-83FC-269AEDC032B4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{F569B69E-357E-47F5-83FC-269AEDC032B4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{F569B69E-357E-47F5-83FC-269AEDC032B4}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F569B69E-357E-47F5-83FC-269AEDC032B4}.Debug|x64.Build.0 = Debug|Any CPU
+		{F569B69E-357E-47F5-83FC-269AEDC032B4}.Debug|x64.ActiveCfg = Debug|x64
+		{F569B69E-357E-47F5-83FC-269AEDC032B4}.Debug|x64.Build.0 = Debug|x64
 		{F569B69E-357E-47F5-83FC-269AEDC032B4}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{F569B69E-357E-47F5-83FC-269AEDC032B4}.Debug|x86.Build.0 = Debug|Any CPU
 		{F569B69E-357E-47F5-83FC-269AEDC032B4}.Release|Any CPU.ActiveCfg = Release|Any CPU

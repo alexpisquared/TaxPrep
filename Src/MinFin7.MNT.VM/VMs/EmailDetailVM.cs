@@ -1,7 +1,7 @@
 ﻿namespace MinFin7.MNT.VM.VMs;
 public partial class EmailDetailVM : BaseDbVM
 {
-  public EmailDetailVM(MainVM mvm, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoContext dbx, IAddChild win, UserSettings stg, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, EmailOfIStore eml, LetDbChgStore awd) : base(mvm, lgr, cfg, bpr, dbx, win, svr, dbs, gsr, awd, stg, 8110)
+  public EmailDetailVM(MainVM mvm, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoContext dbx, IAddChild win, UserSettings stg, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, EmailOfIStore eml, LetDbChgStore awd, SpeechSynth sth) : base(mvm, lgr, cfg, bpr, dbx, win, svr, dbs, gsr, awd, stg, sth, 8110)
   {
     EmailOfIStore = eml; EmailOfIStore.Changed += EmailOfIStore_Chngd;
     EmailOfI = eml.LastVal;

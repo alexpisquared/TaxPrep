@@ -5,7 +5,7 @@ public partial class BaseDbVM : BaseMinVM
   readonly MainVM _mainVM;
   protected bool _saving, _loading, _inited;
   protected readonly DateTime Now = DateTime.Now;
-  public BaseDbVM(MainVM mainVM, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoContext dbx, IAddChild win, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, /*EmailOfIStore eml,*/ LetDbChgStore awd, UserSettings usrStgns, int oid)
+  public BaseDbVM(MainVM mainVM, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoContext dbx, IAddChild win, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, /*EmailOfIStore eml,*/ LetDbChgStore awd, UserSettings usrStgns, SpeechSynth sth, int oid)
   {
     IsDevDbg = VersionHelper.IsDbg;
 
@@ -15,6 +15,7 @@ public partial class BaseDbVM : BaseMinVM
     Cfg = cfg;
     Dbx = dbx;
     Bpr = bpr;
+    Sth = sth;
     MainWin = (Window)win;
     UsrStgns = usrStgns;
     _mainVM = mainVM;
@@ -168,6 +169,7 @@ public partial class BaseDbVM : BaseMinVM
   {
     get;
   }
+  public SpeechSynth Sth { get; }
   public Window MainWin
   {
     get;
