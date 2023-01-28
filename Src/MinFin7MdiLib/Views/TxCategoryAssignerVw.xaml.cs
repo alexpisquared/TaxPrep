@@ -44,7 +44,6 @@ applicationVersion = string.Format("{0}.{1}.{2}.{3}",
     version.Revision);
 If you want to DEBUG or Run with the current Package available, just set your package deployment project as the Startup Project.     */
 
-
     try
     {
       await _db.TxCategories.LoadAsync();
@@ -68,7 +67,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     }
     catch (Exception ex) { ex.Pop(_lgr); }
   }
-  async void OnSave(object s, RoutedEventArgs e) => await SaveAsync();  async Task SaveAsync()
+  async void OnSave(object s, RoutedEventArgs e) => await SaveAsync(); async Task SaveAsync()
   {
     try
     {
@@ -84,13 +83,18 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   {
     if (_db.HasUnsavedChanges())
     {
-      switch (MessageBox.Show($"Would you like to save the changes? \r\n\n{_db.GetDbChangesReport()}", "Unsaved changes detected", MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
+      var rsn = $"Would you like to save the changes? \r\n\n{_db.GetDbChangesReport()}";
+      switch (MessageBox.Show(rsn, "Unsaved changes detected", MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
       {
         default:
-        case MessageBoxResult.Cancel: e.Cancel = true; KeepOpenReason = "Changes have not been saved... \n...Cancelling the Closing in the Parent of base.";  return;
-        case MessageBoxResult.Yes: await SaveAsync(); KeepOpenReason = null;  await Task.Delay(250); break;
+        case MessageBoxResult.Cancel: e.Cancel = true; KeepOpenReason = "Changes have not been saved... \n...Cancelling the Closing in the Parent of base."; return;
+        case MessageBoxResult.Yes: await SaveAsync(); KeepOpenReason = null; await Task.Delay(250); break;
         case MessageBoxResult.No: break;
       }
+    }
+    else
+    {
+      KeepOpenReason = "";
     }
 
     _db.Dispose();
@@ -379,7 +383,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     else
       return;
 
-    tbxSearch.Focus(); // App.Synth.SpeakExpressFAF("Also, Clipboarded.");
+    _ = tbxSearch.Focus(); // App.Synth.SpeakExpressFAF("Also, Clipboarded.");
   }
 
   //use main menu instead: async void OnManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _db).ShowDialog(); await ReLoadTxCore(); }
