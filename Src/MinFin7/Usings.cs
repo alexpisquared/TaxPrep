@@ -24,7 +24,6 @@ global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.Logging;
 global using MinFin7;
 global using MinFin7.Properties;
-global using MinFin7.Views;
 global using StandardLib.Extensions;
 global using StandardLib.Helpers;
 global using WpfUserControlLib.Base;

@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:MF.TxCategoryAssigner.Views;assembly="         
         xmlns:cnv="clr-namespace:WpfUserControlLib.Converters" 
         xmlns:mdl="clr-namespace:Db.FinDemo7.Models;assembly=Db.FinDemo7" x:Class="MF.TxCategoryAssigner.Views.HstProcessorVw"        mc:Ignorable="d" 
-        Title="MF - HST Processor" Height="450"                  Width="1525" Loaded="onLoaded" Icon="/MinFin7;component/US-dollar.ico" >
+        Title="MF - HST Processor" Height="450"                  Width="1525" Loaded="onLoaded" Icon="/MinFin7MdiLib;component/US-dollar.ico" >
   <lnk:WindowBase.Resources>
     <CollectionViewSource x:Key="txCoreV2ViewSource" d:DesignSource="{d:DesignInstance {x:Type mdl:TxCoreV2}, CreateList=True}"/>
   </lnk:WindowBase.Resources>

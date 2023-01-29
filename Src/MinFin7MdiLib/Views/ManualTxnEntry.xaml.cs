@@ -68,7 +68,7 @@ public partial class ManualTxnEntry : WindowBase
       //For WPF, bind to 'DbSet.Local.ToObservableCollection'.
       //For WinForms, bind to 'DbSet.Local.ToBindingList'.
       //For ASP.NET WebForms, bind to 'DbSet.ToList' or use Model Binding.
-      //NotSupportedException at C:\g\TaxPrep\Src\MinFin7\Views\ManualTxnEntry.xaml.cs(62): onLoaded() 
+      //NotSupportedException at C:\g\TaxPrep\Src\MinFin7MdiLib\Views\ManualTxnEntry.xaml.cs(62): onLoaded() 
 
       ((CollectionViewSource)FindResource("txCoreV2ViewSource")).Source = _db.TxCoreV2s.Local.ToObservableCollection();//.OrderBy(r => r.Id);
       ((CollectionViewSource)FindResource("txMoneySrcViewSource")).Source = _db.TxMoneySrcs.Local.ToObservableCollection();

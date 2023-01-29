@@ -1,4 +1,4 @@
-﻿namespace MinFin7.Views;
+﻿namespace MinFin7MdiLib.Views;
 public partial class ReviewWindow : WindowBase
 {
   readonly FinDemoContext _db = new();

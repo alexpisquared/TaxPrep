@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Media;
 
-namespace MinFin7.Views;
+namespace MinFin7MdiLib.Views;
 
 public class WeekDayToBkColorConverter : IValueConverter // copy from EPP
 {

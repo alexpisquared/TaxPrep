@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="US-dollar.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="AsLink\" />
   </ItemGroup>
 
@@ -26,6 +30,17 @@
     <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\WpfUserControlLib\WpfUserControlLib.csproj" />
     <ProjectReference Include="..\Db.FinDemo7\Db.FinDemo7.csproj" />
     <ProjectReference Include="..\MinFin7.MNT.VM\MinFin7.MNT.VM.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="..\MinFin7a\Images\MinFinTax.png" Link="MinFinTax.png">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </Resource>
+    <Resource Include="US-dollar.ico">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
