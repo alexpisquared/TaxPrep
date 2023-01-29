@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\StandardLib\StandardLib.csproj" />
     <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\WpfUserControlLib\WpfUserControlLib.csproj" />
     <ProjectReference Include="..\Db.FinDemo.PowerTools\Db.FinDemo.PowerTools.csproj" />
+    <ProjectReference Include="..\Db.FinDemo7\Db.FinDemo7.csproj" />
     <ProjectReference Include="..\MinFin7.MNT.Contract\MinFin7.MNT.Contract.csproj" />
   </ItemGroup>
 

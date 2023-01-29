@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Money.ico" />
     <None Remove="Notepad.ico" />
+    <None Remove="ReadMe.md" />
     <None Remove="Report3_Alx.rdlc" />
     <None Remove="Report3_Mei.rdlc" />
     <None Remove="Report3_Unified.rdlc" />
@@ -18,6 +19,7 @@
   <ItemGroup>
     <Content Include="Money.ico" />
     <Content Include="Notepad.ico" />
+    <Content Include="ReadMe.md" />
   </ItemGroup>
 
   <ItemGroup>

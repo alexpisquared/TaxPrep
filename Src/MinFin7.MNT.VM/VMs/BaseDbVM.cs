@@ -132,7 +132,8 @@ public partial class BaseDbVM : BaseMinVM
 
   public UserSettings UsrStgns { get; }
   public IConfigurationRoot Cfg { get; }
-  public FinDemoContext Dbx { get; }
+  public FinDemoContext Dbx { get; } // PwrTls
+  public Db.FinDemo7.Models.FinDemoContext Dba { get; } // All
   public ILogger Lgr { get; }
   public IBpr Bpr { get; }
   public SpeechSynth Sth { get; }

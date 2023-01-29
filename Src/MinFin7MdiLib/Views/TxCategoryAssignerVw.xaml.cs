@@ -388,7 +388,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     _ = tbxSearch.Focus(); // App.Synth.SpeakExpressFAF("Also, Clipboarded.");
   }
 
-  //use main menu instead: async void OnManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _db).ShowDialog(); await ReLoadTxCore(); }
+  //use main menu instead: async void OnManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _dbx).ShowDialog(); await ReLoadTxCore(); }
   async void OnAssign0(object s, RoutedEventArgs e)
   {
     if (txCategoryListBox.SelectedItems.Count == 1)
@@ -944,14 +944,14 @@ public enum MsgBoxDbRslt // MsgBoxReverseRslt
 
 //    return (false, -88, report);
 //  }
-//  public static void DiscardChanges(this DbContext _db) => _db.ChangeTracker.Clear();
-//  public static bool HasUnsavedChanges(this DbContext _db) => _db != null && _db.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted);
-//  public static string GetDbChangesReport(this DbContext _db, int maxLinesToShow = 33)
+//  public static void DiscardChanges(this DbContext _dbx) => _dbx.ChangeTracker.Clear();
+//  public static bool HasUnsavedChanges(this DbContext _dbx) => _dbx != null && _dbx.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted);
+//  public static string GetDbChangesReport(this DbContext _dbx, int maxLinesToShow = 33)
 //  {
-//    var sb = new StringBuilder($"{_db.GetType().Name}.{_db.GetType().GetHashCode()}:  {_db.ChangeTracker.Entries().Count(e => e.State == EntityState.Deleted),5} Del  {_db.ChangeTracker.Entries().Count(e => e.State == EntityState.Added),5} Ins  {_db.ChangeTracker.Entries().Count(e => e.State == EntityState.Modified),5} Upd");
+//    var sb = new StringBuilder($"{_dbx.GetType().Name}.{_dbx.GetType().GetHashCode()}:  {_dbx.ChangeTracker.Entries().Count(e => e.State == EntityState.Deleted),5} Del  {_dbx.ChangeTracker.Entries().Count(e => e.State == EntityState.Added),5} Ins  {_dbx.ChangeTracker.Entries().Count(e => e.State == EntityState.Modified),5} Upd");
 
 //    var lineCounter = 0;
-//    foreach (var modifieds in _db.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified))
+//    foreach (var modifieds in _dbx.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified))
 //    {
 //      foreach (var pn in modifieds.CurrentValues.Properties)
 //      {

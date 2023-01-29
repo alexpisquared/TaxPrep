@@ -1,6 +1,7 @@
 ﻿namespace MF.TxCategoryAssigner.Views;
 public partial class MainAppDispatcher : WindowBase
 {
+  Db.FinDemo7.Models.FinDemoContext? _dbx;
   SpeechSynth ? _sth;
   ILogger ? _lgr;
   IBpr ? _bpr;
@@ -37,6 +38,7 @@ public partial class MainAppDispatcher : WindowBase
     _lgr = ((BaseDbVM)DataContext).Lgr;
     _bpr = ((BaseDbVM)DataContext).Bpr;
     _sth = ((BaseDbVM)DataContext).Sth;
+    _dbx = ((BaseDbVM)DataContext).Dba;    
   }
 
 
@@ -45,6 +47,7 @@ public partial class MainAppDispatcher : WindowBase
     ArgumentNullException.ThrowIfNull(_lgr, nameof(_lgr));
     ArgumentNullException.ThrowIfNull(_bpr, nameof(_bpr));
     ArgumentNullException.ThrowIfNull(_sth, nameof(_sth));
+    ArgumentNullException.ThrowIfNull(_dbx, nameof(_dbx));
 
     _bpr.Click();
     b1.IsDefault = b2.IsDefault = b3.IsDefault = b4.IsDefault = b5.IsDefault = b6.IsDefault = b7.IsDefault = b8.IsDefault = false;
@@ -58,6 +61,7 @@ public partial class MainAppDispatcher : WindowBase
     ArgumentNullException.ThrowIfNull(_lgr, nameof(_lgr));
     ArgumentNullException.ThrowIfNull(_bpr, nameof(_bpr));
     ArgumentNullException.ThrowIfNull(_sth, nameof(_sth));
+    ArgumentNullException.ThrowIfNull(_dbx, nameof(_dbx));
 
     ((Button)s).IsEnabled = false;
     switch (((Button)s).Name)
@@ -69,7 +73,7 @@ public partial class MainAppDispatcher : WindowBase
       //case "b5": setDefault(4); MinFin7MdiLib.Report.WinForm.Program.ShowBoth(); break;
       //case "b6": setDefault(5); MinFin7MdiLib.Report.WinForm.Program.Show_Alx(); break;
       //case "b7": setDefault(6); MinFin7MdiLib.Report.WinForm.Program.Show_Mei(); break;
-      case "b8": SetDefault(7); new ReviewWindow(_lgr, _bpr, "Mei").Show(); break;
+      case "b8": SetDefault(7); new ReviewWindow(_lgr, _bpr, "Mei", _dbx).Show(); break;
       //case "b9": setDefault(8); new MinFin7MdiLib.DataSet.TxAdd().Show(); break;
       default: _bpr.No(); break;
     }

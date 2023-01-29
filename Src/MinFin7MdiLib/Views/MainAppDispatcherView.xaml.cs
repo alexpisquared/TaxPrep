@@ -1,6 +1,7 @@
 ﻿namespace MinFin7MdiLib.Views;
 public partial class MainAppDispatcherView : UserControl
 {
+  Db.FinDemo7.Models.FinDemoContext? _dbx;
   SpeechSynth? _sth;
   ILogger? _lgr;
   IBpr? _bpr;
@@ -11,6 +12,7 @@ public partial class MainAppDispatcherView : UserControl
     _lgr = ((BaseDbVM)DataContext).Lgr;
     _bpr = ((BaseDbVM)DataContext).Bpr;
     _sth = ((BaseDbVM)DataContext).Sth;
+    _dbx = ((BaseDbVM)DataContext).Dba;
   }
 
   void SetDefault(int cb) { b1.IsDefault = b2.IsDefault = b3.IsDefault = b4.IsDefault = b5.IsDefault = b6.IsDefault = b7.IsDefault = b8.IsDefault = false; ((Button)FindName($"b{cb + 1}")).IsDefault = true; }
@@ -30,7 +32,7 @@ public partial class MainAppDispatcherView : UserControl
       case "b5": SetDefault(4); MinFin.Report.WinForm7.Program.ShowBoth(); break;
       case "b6": SetDefault(5); MinFin.Report.WinForm7.Program.Show_Alx(); break;
       case "b7": SetDefault(6); MinFin.Report.WinForm7.Program.Show_Mei(); break;
-      case "b8": SetDefault(7); new ReviewWindow(_lgr, _bpr, "Mei").Show(); break;
+      case "b8": SetDefault(7); new ReviewWindow(_lgr, _bpr, "Mei", _dbx).Show(); break;
       //case "b9": setDefault(8); new MinFin7MdiLib.DataSet.TxAdd().Show(); break;
       default: _bpr?.No(); break;
     }

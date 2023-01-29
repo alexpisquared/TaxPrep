@@ -30,12 +30,12 @@
 
         //if (chkTxCatgry.IsChecked == true)
         //{
-        //  await Task.Run(() => _db.TxCoreV2s.Where(r => r.TxDate >= yrStart2004 && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).Load());
+        //  await Task.Run(() => _dbx.TxCoreV2s.Where(r => r.TxDate >= yrStart2004 && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).Load());
         //  _loadedCatgry = _txCatgry;
         //}
         //else
         //{
-        //  await Task.Run(() => _db.TxCoreV2s.Where(r => r.TxDate >= yrStart2004).Load());
+        //  await Task.Run(() => _dbx.TxCoreV2s.Where(r => r.TxDate >= yrStart2004).Load());
         //  _loadedCatgry = _txCatgry = null;
         //}
       }

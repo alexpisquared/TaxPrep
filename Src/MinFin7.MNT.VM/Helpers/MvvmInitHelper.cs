@@ -11,7 +11,7 @@ public static class MvvmInitHelper
     _ = services.AddSingleton<LetDbChgStore>();
 
     if (VersionHelper.IsDbg) //tu: Start Page controller.
-      _ = services.AddSingleton<INavSvc, Page01NavSvc>();
+      _ = services.AddSingleton<INavSvc, MainAppDispatcherNavSvc>();
     else if (Environment.GetCommandLineArgs().Length > 4)
       _ = services.AddSingleton<INavSvc, Page01NavSvc>();
     else
@@ -53,6 +53,7 @@ public static class MvvmInitHelper
     _ = services.AddTransient<UserSettings>();
 
     _ = services.AddTransient(sp => new FinDemoContext(CalcConStr<FinDemoContext>(sp, CfgName.SqlVerIpm)));
+    _ = services.AddTransient(sp => new Db.FinDemo7.Models.FinDemoContext(CalcConStr<Db.FinDemo7.Models.FinDemoContext>(sp, CfgName.SqlVerIpm)));
   }
   public static string CalcConStr<T>(IServiceProvider sp, string sqlver = "")
   {
