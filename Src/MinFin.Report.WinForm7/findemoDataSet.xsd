@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="findemoDataSet" targetNamespace="http://tempuri.org/findemoDataSet.xsd" xmlns:mstns="http://tempuri.org/findemoDataSet.xsd" xmlns="http://tempuri.org/findemoDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="findemoConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="findemoConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.MinFin.Report.WinForm7.Properties.Settings.GlobalReference.Default.findemoConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Vw_TaxLiqReport_Org_NotUsedTableAdapter" GeneratorDataComponentClassName="Vw_TaxLiqReport_Org_NotUsedTableAdapter" Name="Vw_TaxLiqReport_Org_NotUsed" UserDataComponentName="Vw_TaxLiqReport_Org_NotUsedTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="findemoConnectionString (Settings)" DbObjectName="FinDemo.dbo.Vw_TaxLiqReport" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        [Group], ISNULL(CAST(TL_Number AS char(3)), '??') + ' ' + Category AS Category, PartCalcShow, TtlExp, Qnt, LastTx, ISNULL(TL_Number, 999) AS TL_Number
+FROM            Vw_TaxLiqReport
+WHERE        ([Group] &lt;&gt; 'Ignore')
+ORDER BY [Group], TL_Number</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Group" DataSetColumn="Group" />
+              <Mapping SourceColumn="Category" DataSetColumn="Category" />
+              <Mapping SourceColumn="PartCalcShow" DataSetColumn="PartCalcShow" />
+              <Mapping SourceColumn="TtlExp" DataSetColumn="TtlExp" />
+              <Mapping SourceColumn="Qnt" DataSetColumn="Qnt" />
+              <Mapping SourceColumn="LastTx" DataSetColumn="LastTx" />
+              <Mapping SourceColumn="TL_Number" DataSetColumn="TL_Number" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Vw_TaxLiqReport_AlxTableAdapter" GeneratorDataComponentClassName="Vw_TaxLiqReport_AlxTableAdapter" Name="Vw_TaxLiqReport_Alx" UserDataComponentName="Vw_TaxLiqReport_AlxTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="findemoConnectionString (Settings)" DbObjectName="FinDemo.dbo.Vw_TaxLiqReport_Alx" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT      [Group], TL_Number, Category, PartCalcShow, TtlExp, FirstTx, LastTx, Qnt, Owner
+FROM         Vw_TaxLiqReport_Alx
+ORDER BY [Group], TL_Number</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Group" DataSetColumn="Group" />
+              <Mapping SourceColumn="TL_Number" DataSetColumn="TL_Number" />
+              <Mapping SourceColumn="Category" DataSetColumn="Category" />
+              <Mapping SourceColumn="PartCalcShow" DataSetColumn="PartCalcShow" />
+              <Mapping SourceColumn="TtlExp" DataSetColumn="TtlExp" />
+              <Mapping SourceColumn="FirstTx" DataSetColumn="FirstTx" />
+              <Mapping SourceColumn="LastTx" DataSetColumn="LastTx" />
+              <Mapping SourceColumn="Qnt" DataSetColumn="Qnt" />
+              <Mapping SourceColumn="Owner" DataSetColumn="Owner" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Vw_TaxLiqReport_MeiTableAdapter" GeneratorDataComponentClassName="Vw_TaxLiqReport_MeiTableAdapter" Name="Vw_TaxLiqReport_Mei" UserDataComponentName="Vw_TaxLiqReport_MeiTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="findemoConnectionString (Settings)" DbObjectName="FinDemo.dbo.Vw_TaxLiqReport_Mei" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT      [Group], TL_Number, Category, PartCalcShow, TtlExp, FirstTx, LastTx, Qnt, Owner
+FROM         Vw_TaxLiqReport_Mei
+ORDER BY [Group], TL_Number</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Group" DataSetColumn="Group" />
+              <Mapping SourceColumn="TL_Number" DataSetColumn="TL_Number" />
+              <Mapping SourceColumn="Category" DataSetColumn="Category" />
+              <Mapping SourceColumn="PartCalcShow" DataSetColumn="PartCalcShow" />
+              <Mapping SourceColumn="TtlExp" DataSetColumn="TtlExp" />
+              <Mapping SourceColumn="FirstTx" DataSetColumn="FirstTx" />
+              <Mapping SourceColumn="LastTx" DataSetColumn="LastTx" />
+              <Mapping SourceColumn="Qnt" DataSetColumn="Qnt" />
+              <Mapping SourceColumn="Owner" DataSetColumn="Owner" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Vw_TaxLiqReport_UnifiedTableAdapter" GeneratorDataComponentClassName="Vw_TaxLiqReport_UnifiedTableAdapter" Name="Vw_TaxLiqReport_Unified" UserDataComponentName="Vw_TaxLiqReport_UnifiedTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="findemoConnectionString (Settings)" DbObjectName="FinDemo.dbo.Vw_TaxLiqReport" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT      [Group], TL_Number, Category, PartCalcShow, TtlExp, FirstTx, LastTx, Qnt
+FROM         Vw_TaxLiqReport
+ORDER BY [Group], TL_Number</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Group" DataSetColumn="Group" />
+              <Mapping SourceColumn="TL_Number" DataSetColumn="TL_Number" />
+              <Mapping SourceColumn="Category" DataSetColumn="Category" />
+              <Mapping SourceColumn="PartCalcShow" DataSetColumn="PartCalcShow" />
+              <Mapping SourceColumn="TtlExp" DataSetColumn="TtlExp" />
+              <Mapping SourceColumn="FirstTx" DataSetColumn="FirstTx" />
+              <Mapping SourceColumn="LastTx" DataSetColumn="LastTx" />
+              <Mapping SourceColumn="Qnt" DataSetColumn="Qnt" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="findemoDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_UserDSName="findemoDataSet" msprop:Generator_DataSetName="findemoDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Vw_TaxLiqReport_Org_NotUsed" msprop:Generator_RowClassName="Vw_TaxLiqReport_Org_NotUsedRow" msprop:Generator_RowEvHandlerName="Vw_TaxLiqReport_Org_NotUsedRowChangeEventHandler" msprop:Generator_RowDeletedName="Vw_TaxLiqReport_Org_NotUsedRowDeleted" msprop:Generator_RowDeletingName="Vw_TaxLiqReport_Org_NotUsedRowDeleting" msprop:Generator_RowEvArgName="Vw_TaxLiqReport_Org_NotUsedRowChangeEvent" msprop:Generator_TablePropName="Vw_TaxLiqReport_Org_NotUsed" msprop:Generator_RowChangedName="Vw_TaxLiqReport_Org_NotUsedRowChanged" msprop:Generator_RowChangingName="Vw_TaxLiqReport_Org_NotUsedRowChanging" msprop:Generator_TableClassName="Vw_TaxLiqReport_Org_NotUsedDataTable" msprop:Generator_UserTableName="Vw_TaxLiqReport_Org_NotUsed" msprop:Generator_TableVarName="tableVw_TaxLiqReport_Org_NotUsed">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Group" msprop:Generator_ColumnPropNameInRow="Group" msprop:Generator_ColumnPropNameInTable="GroupColumn" msprop:Generator_ColumnVarNameInTable="columnGroup" msprop:Generator_UserColumnName="Group">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Category" msprop:Generator_ColumnPropNameInRow="Category" msprop:Generator_ColumnPropNameInTable="CategoryColumn" msprop:Generator_ColumnVarNameInTable="columnCategory" msprop:Generator_UserColumnName="Category" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PartCalcShow" msdata:ReadOnly="true" msprop:Generator_ColumnPropNameInRow="PartCalcShow" msprop:Generator_ColumnPropNameInTable="PartCalcShowColumn" msprop:Generator_ColumnVarNameInTable="columnPartCalcShow" msprop:Generator_UserColumnName="PartCalcShow" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="19" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TtlExp" msdata:ReadOnly="true" msprop:Generator_ColumnPropNameInRow="TtlExp" msprop:Generator_ColumnPropNameInTable="TtlExpColumn" msprop:Generator_ColumnVarNameInTable="columnTtlExp" msprop:Generator_UserColumnName="TtlExp" type="xs:double" minOccurs="0" />
+              <xs:element name="Qnt" msprop:Generator_ColumnPropNameInRow="Qnt" msprop:Generator_ColumnPropNameInTable="QntColumn" msprop:Generator_ColumnVarNameInTable="columnQnt" msprop:Generator_UserColumnName="Qnt" type="xs:int" minOccurs="0" />
+              <xs:element name="LastTx" msprop:Generator_ColumnPropNameInRow="LastTx" msprop:Generator_ColumnPropNameInTable="LastTxColumn" msprop:Generator_ColumnVarNameInTable="columnLastTx" msprop:Generator_UserColumnName="LastTx" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TL_Number" msdata:ReadOnly="true" msprop:Generator_ColumnPropNameInRow="TL_Number" msprop:Generator_ColumnPropNameInTable="TL_NumberColumn" msprop:Generator_ColumnVarNameInTable="columnTL_Number" msprop:Generator_UserColumnName="TL_Number" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Vw_TaxLiqReport_Alx" msprop:Generator_RowClassName="Vw_TaxLiqReport_AlxRow" msprop:Generator_RowEvHandlerName="Vw_TaxLiqReport_AlxRowChangeEventHandler" msprop:Generator_RowDeletedName="Vw_TaxLiqReport_AlxRowDeleted" msprop:Generator_RowDeletingName="Vw_TaxLiqReport_AlxRowDeleting" msprop:Generator_RowEvArgName="Vw_TaxLiqReport_AlxRowChangeEvent" msprop:Generator_TablePropName="Vw_TaxLiqReport_Alx" msprop:Generator_RowChangedName="Vw_TaxLiqReport_AlxRowChanged" msprop:Generator_RowChangingName="Vw_TaxLiqReport_AlxRowChanging" msprop:Generator_TableClassName="Vw_TaxLiqReport_AlxDataTable" msprop:Generator_UserTableName="Vw_TaxLiqReport_Alx" msprop:Generator_TableVarName="tableVw_TaxLiqReport_Alx">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Group" msprop:Generator_ColumnPropNameInRow="Group" msprop:Generator_ColumnPropNameInTable="GroupColumn" msprop:Generator_ColumnVarNameInTable="columnGroup" msprop:Generator_UserColumnName="Group">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TL_Number" msprop:Generator_ColumnPropNameInRow="TL_Number" msprop:Generator_ColumnPropNameInTable="TL_NumberColumn" msprop:Generator_ColumnVarNameInTable="columnTL_Number" msprop:Generator_UserColumnName="TL_Number" type="xs:int" minOccurs="0" />
+              <xs:element name="Category" msprop:Generator_ColumnPropNameInRow="Category" msprop:Generator_ColumnPropNameInTable="CategoryColumn" msprop:Generator_ColumnVarNameInTable="columnCategory" msprop:Generator_UserColumnName="Category">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PartCalcShow" msdata:ReadOnly="true" msprop:Generator_ColumnPropNameInRow="PartCalcShow" msprop:Generator_ColumnPropNameInTable="PartCalcShowColumn" msprop:Generator_ColumnVarNameInTable="columnPartCalcShow" msprop:Generator_UserColumnName="PartCalcShow" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="28" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TtlExp" msdata:ReadOnly="true" msprop:Generator_ColumnPropNameInRow="TtlExp" msprop:Generator_ColumnPropNameInTable="TtlExpColumn" msprop:Generator_ColumnVarNameInTable="columnTtlExp" msprop:Generator_UserColumnName="TtlExp" type="xs:double" minOccurs="0" />
+              <xs:element name="FirstTx" msprop:Generator_ColumnPropNameInRow="FirstTx" msprop:Generator_ColumnPropNameInTable="FirstTxColumn" msprop:Generator_ColumnVarNameInTable="columnFirstTx" msprop:Generator_UserColumnName="FirstTx" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="LastTx" msprop:Generator_ColumnPropNameInRow="LastTx" msprop:Generator_ColumnPropNameInTable="LastTxColumn" msprop:Generator_ColumnVarNameInTable="columnLastTx" msprop:Generator_UserColumnName="LastTx" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Qnt" msprop:Generator_ColumnPropNameInRow="Qnt" msprop:Generator_ColumnPropNameInTable="QntColumn" msprop:Generator_ColumnVarNameInTable="columnQnt" msprop:Generator_UserColumnName="Qnt" type="xs:int" minOccurs="0" />
+              <xs:element name="Owner" msprop:Generator_ColumnPropNameInRow="Owner" msprop:Generator_ColumnPropNameInTable="OwnerColumn" msprop:Generator_ColumnVarNameInTable="columnOwner" msprop:Generator_UserColumnName="Owner" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Vw_TaxLiqReport_Mei" msprop:Generator_RowClassName="Vw_TaxLiqReport_MeiRow" msprop:Generator_RowEvHandlerName="Vw_TaxLiqReport_MeiRowChangeEventHandler" msprop:Generator_RowDeletedName="Vw_TaxLiqReport_MeiRowDeleted" msprop:Generator_RowDeletingName="Vw_TaxLiqReport_MeiRowDeleting" msprop:Generator_RowEvArgName="Vw_TaxLiqReport_MeiRowChangeEvent" msprop:Generator_TablePropName="Vw_TaxLiqReport_Mei" msprop:Generator_RowChangedName="Vw_TaxLiqReport_MeiRowChanged" msprop:Generator_RowChangingName="Vw_TaxLiqReport_MeiRowChanging" msprop:Generator_TableClassName="Vw_TaxLiqReport_MeiDataTable" msprop:Generator_UserTableName="Vw_TaxLiqReport_Mei" msprop:Generator_TableVarName="tableVw_TaxLiqReport_Mei">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Group" msprop:Generator_ColumnPropNameInRow="Group" msprop:Generator_ColumnPropNameInTable="GroupColumn" msprop:Generator_ColumnVarNameInTable="columnGroup" msprop:Generator_UserColumnName="Group">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TL_Number" msprop:Generator_ColumnPropNameInRow="TL_Number" msprop:Generator_ColumnPropNameInTable="TL_NumberColumn" msprop:Generator_ColumnVarNameInTable="columnTL_Number" msprop:Generator_UserColumnName="TL_Number" type="xs:int" minOccurs="0" />
+              <xs:element name="Category" msprop:Generator_ColumnPropNameInRow="Category" msprop:Generator_ColumnPropNameInTable="CategoryColumn" msprop:Generator_ColumnVarNameInTable="columnCategory" msprop:Generator_UserColumnName="Category">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PartCalcShow" msdata:ReadOnly="true" msprop:Generator_ColumnPropNameInRow="PartCalcShow" msprop:Generator_ColumnPropNameInTable="PartCalcShowColumn" msprop:Generator_ColumnVarNameInTable="columnPartCalcShow" msprop:Generator_UserColumnName="PartCalcShow" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="28" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TtlExp" msdata:ReadOnly="true" msprop:Generator_ColumnPropNameInRow="TtlExp" msprop:Generator_ColumnPropNameInTable="TtlExpColumn" msprop:Generator_ColumnVarNameInTable="columnTtlExp" msprop:Generator_UserColumnName="TtlExp" type="xs:double" minOccurs="0" />
+              <xs:element name="FirstTx" msprop:Generator_ColumnPropNameInRow="FirstTx" msprop:Generator_ColumnPropNameInTable="FirstTxColumn" msprop:Generator_ColumnVarNameInTable="columnFirstTx" msprop:Generator_UserColumnName="FirstTx" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="LastTx" msprop:Generator_ColumnPropNameInRow="LastTx" msprop:Generator_ColumnPropNameInTable="LastTxColumn" msprop:Generator_ColumnVarNameInTable="columnLastTx" msprop:Generator_UserColumnName="LastTx" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Qnt" msprop:Generator_ColumnPropNameInRow="Qnt" msprop:Generator_ColumnPropNameInTable="QntColumn" msprop:Generator_ColumnVarNameInTable="columnQnt" msprop:Generator_UserColumnName="Qnt" type="xs:int" minOccurs="0" />
+              <xs:element name="Owner" msprop:Generator_ColumnPropNameInRow="Owner" msprop:Generator_ColumnPropNameInTable="OwnerColumn" msprop:Generator_ColumnVarNameInTable="columnOwner" msprop:Generator_UserColumnName="Owner" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Vw_TaxLiqReport_Unified" msprop:Generator_RowEvHandlerName="Vw_TaxLiqReport_UnifiedRowChangeEventHandler" msprop:Generator_RowDeletedName="Vw_TaxLiqReport_UnifiedRowDeleted" msprop:Generator_RowDeletingName="Vw_TaxLiqReport_UnifiedRowDeleting" msprop:Generator_RowEvArgName="Vw_TaxLiqReport_UnifiedRowChangeEvent" msprop:Generator_TablePropName="Vw_TaxLiqReport_Unified" msprop:Generator_RowChangedName="Vw_TaxLiqReport_UnifiedRowChanged" msprop:Generator_RowChangingName="Vw_TaxLiqReport_UnifiedRowChanging" msprop:Generator_TableClassName="Vw_TaxLiqReport_UnifiedDataTable" msprop:Generator_RowClassName="Vw_TaxLiqReport_UnifiedRow" msprop:Generator_TableVarName="tableVw_TaxLiqReport_Unified" msprop:Generator_UserTableName="Vw_TaxLiqReport_Unified">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Group" msprop:Generator_ColumnPropNameInRow="Group" msprop:Generator_ColumnPropNameInTable="GroupColumn" msprop:Generator_ColumnVarNameInTable="columnGroup" msprop:Generator_UserColumnName="Group">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TL_Number" msprop:Generator_ColumnPropNameInRow="TL_Number" msprop:Generator_ColumnPropNameInTable="TL_NumberColumn" msprop:Generator_ColumnVarNameInTable="columnTL_Number" msprop:Generator_UserColumnName="TL_Number" type="xs:int" minOccurs="0" />
+              <xs:element name="Category" msprop:Generator_ColumnPropNameInRow="Category" msprop:Generator_ColumnPropNameInTable="CategoryColumn" msprop:Generator_ColumnVarNameInTable="columnCategory" msprop:Generator_UserColumnName="Category">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PartCalcShow" msdata:ReadOnly="true" msprop:Generator_ColumnPropNameInRow="PartCalcShow" msprop:Generator_ColumnPropNameInTable="PartCalcShowColumn" msprop:Generator_ColumnVarNameInTable="columnPartCalcShow" msprop:Generator_UserColumnName="PartCalcShow" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="28" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TtlExp" msdata:ReadOnly="true" msprop:Generator_ColumnPropNameInRow="TtlExp" msprop:Generator_ColumnPropNameInTable="TtlExpColumn" msprop:Generator_ColumnVarNameInTable="columnTtlExp" msprop:Generator_UserColumnName="TtlExp" type="xs:double" minOccurs="0" />
+              <xs:element name="FirstTx" msprop:Generator_ColumnPropNameInRow="FirstTx" msprop:Generator_ColumnPropNameInTable="FirstTxColumn" msprop:Generator_ColumnVarNameInTable="columnFirstTx" msprop:Generator_UserColumnName="FirstTx" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="LastTx" msprop:Generator_ColumnPropNameInRow="LastTx" msprop:Generator_ColumnPropNameInTable="LastTxColumn" msprop:Generator_ColumnVarNameInTable="columnLastTx" msprop:Generator_UserColumnName="LastTx" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Qnt" msprop:Generator_ColumnPropNameInRow="Qnt" msprop:Generator_ColumnPropNameInTable="QntColumn" msprop:Generator_ColumnVarNameInTable="columnQnt" msprop:Generator_UserColumnName="Qnt" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
