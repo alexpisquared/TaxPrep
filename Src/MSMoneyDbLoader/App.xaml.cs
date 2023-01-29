@@ -34,24 +34,28 @@ namespace MSMoneyDbLoader
 
     public static string[] GetCmndLineArgsInclClickOnce()
     {
-      string[] args;
+      string[] args = Array.Empty<string>();
 
-      if (AppDomain.CurrentDomain.SetupInformation.ActivationArguments != null &&                  //first, check the ClickOnce args
+      try
+      {
+        if (AppDomain.CurrentDomain.SetupInformation.ActivationArguments != null &&                  //first, check the ClickOnce args
           AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData != null &&
           AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData.Length > 0)
-      {
-        args = new string[AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData.Length];
-        for (var i = 0; i < AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData.Length; i++)
-          args[i] = Uri.UnescapeDataString(AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData[i]).Replace("file:///", "").Replace("/", "\\");
+        {
+          args = new string[AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData.Length];
+          for (var i = 0; i < AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData.Length; i++)
+            args[i] = Uri.UnescapeDataString(AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData[i]).Replace("file:///", "").Replace("/", "\\");
+        }
+        else if (Environment.GetCommandLineArgs() != null && Environment.GetCommandLineArgs().Length > 1)
+        {
+          args = new string[Environment.GetCommandLineArgs().Length - 1];
+          for (var i = 0; i < Environment.GetCommandLineArgs().Length - 1; i++)
+            args[i] = Environment.GetCommandLineArgs()[i + 1];
+        }
+        else
+          args = new string[0];
       }
-      else if (Environment.GetCommandLineArgs() != null && Environment.GetCommandLineArgs().Length > 1)
-      {
-        args = new string[Environment.GetCommandLineArgs().Length - 1];
-        for (var i = 0; i < Environment.GetCommandLineArgs().Length - 1; i++)
-          args[i] = Environment.GetCommandLineArgs()[i + 1];
-      }
-      else
-        args = new string[0];
+      catch (Exception ex) { ex.Log(); }
 
       return args;
     }

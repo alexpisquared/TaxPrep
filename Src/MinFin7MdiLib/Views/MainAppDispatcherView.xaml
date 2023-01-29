@@ -70,10 +70,10 @@
           <Button Content=" 2 Charts            - HistoricalChartSet"      Foreground="#20a0" x:Name="b2" Click="OnX" ToolTip="Show Charts" />
           <Button Content=" 3 Assign            - TxCategoryAssigner"      Foreground="#fcc0" x:Name="b3" Click="OnX" ToolTip="Show Assign" />
           <Button Content=" 4 Manual Entry      - Crude but better"        Foreground="#f08f" x:Name="b4" Click="OnX" ToolTip="Show Assign" />
-          <Button Content=" 5 Annual Report     - MinFin7MdiLib.Report.WinForm"  Foreground="#2d60" x:Name="b5" Click="OnX" ToolTip="Show Assign" />
-          <Button Content=" 6 Annual Report Alx - MinFin7MdiLib.Report.WinForm"  Foreground="#2d60" x:Name="b6" Click="OnX" ToolTip="Show Assign" />
-          <Button Content=" 7 Annual Report Mei - MinFin7MdiLib.Report.WinForm"  Foreground="#2d60" x:Name="b7" Click="OnX" ToolTip="Show Assign" />
-          <Button Content=" 8 Historical Review - MinFin7MdiLib.Review.DS     "  Foreground="#fb1d" x:Name="b8" Click="OnX" ToolTip="Show Assign" />
+          <Button Content=" 5 Annual Report     - MinFin.Report.WinForm"   Foreground="#fd60" x:Name="b5" Click="OnX" ToolTip="Show Assign" />
+          <Button Content=" 6 Annual Report Alx - MinFin.Report.WinForm"   Foreground="#fd60" x:Name="b6" Click="OnX" ToolTip="Show Assign" />
+          <Button Content=" 7 Annual Report Mei - MinFin.Report.WinForm"   Foreground="#fd60" x:Name="b7" Click="OnX" ToolTip="Show Assign" />
+          <Button Content=" 8 Historical Review - MinFin.Review.DS     "   Foreground="#fd0d" x:Name="b8" Click="OnX" ToolTip="Show Assign" />
           <Button Content=" 9 Manual Entry      - Legacy TxCore tbl only"  Foreground="#2222" x:Name="b9" Click="OnX" ToolTip="Show Assign" />
 
           <TextBlock VerticalAlignment="Center" Margin="3" HorizontalAlignment="Center">         
