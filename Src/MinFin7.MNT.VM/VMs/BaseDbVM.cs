@@ -81,7 +81,7 @@ public partial class BaseDbVM : BaseMinVM
   }
   public virtual async Task RefreshReloadAsync([CallerMemberName] string? cmn = "")
   {
-    WriteLine($"TrWL:> {cmn}->BaseDbVM.RefreshReloadAsync() "); await Task.Yield();
+    Lgr.Log(LogLevel.Trace, $"TrWL:> {cmn}->BaseDbVM.RefreshReloadAsync() "); await Task.Yield();
   }
   protected void ReportProgress(string msg)
   {
@@ -141,6 +141,6 @@ public partial class BaseDbVM : BaseMinVM
   partial void OnSearchTextChanged(string value) { Bpr.Tick(); PageCvs?.Refresh(); }  //tu: https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/observableproperty
   partial void OnIncludeClosedChanged(bool value) { Bpr.Tick(); PageCvs?.Refresh(); } //tu: https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/observableproperty
 
-  [RelayCommand] protected void ChkDb4Cngs() { Bpr.Click(); GSReport = Dbx.GetDbChangesReport() + $"{(LetDbChg ? "" : "\n RO - user!!!")}"; HasChanges = Dbx.HasUnsavedChanges(); WriteLine(GSReport); }
-  [RelayCommand] protected async Task Save2Db() { try { Bpr.Click(); IsBusy = _saving = true; _ = await SaveLogReportOrThrow(Dbx); } catch (Exception ex) { IsBusy = false; ex.Pop(Lgr); } finally { IsBusy = _saving = false; Bpr.Tick(); } }
+  [RelayCommand] protected void ChkDb4Cngs() { Bpr.Click(); GSReport = Dbx.GetDbChangesReport() + $"{(LetDbChg ? "" : "\n RO - user!!!")}"; HasChanges = Dbx.HasUnsavedChanges(); Lgr.Log(LogLevel.Trace, GSReport); }
+  [RelayCommand] protected async Task Save2Db() { try { Bpr.Click(); IsBusy = _saving = true; GSReport = await SaveLogReportOrThrow(Dbx); } catch (Exception ex) { IsBusy = false; ex.Pop(Lgr); } finally { IsBusy = _saving = false; Bpr.Tick(); } }
 }

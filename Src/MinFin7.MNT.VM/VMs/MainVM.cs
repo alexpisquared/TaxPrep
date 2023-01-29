@@ -6,7 +6,7 @@ public partial class MainVM : BaseMinVM
   {
     NavBarVM = navBarVM;
     _navigationStore = navigationStore;
-    Logger = lgr;
+    Lgr = lgr;
     Bpr = bpr;
     UsrStgns = usr;
 
@@ -65,18 +65,18 @@ public partial class MainVM : BaseMinVM
   void SrvrNameStore_Chngd(string val) { SrvrName = val;   /* await RefreshReloadAsync() */; }
   void DtBsNameStore_Chngd(string val) { DtBsName = val;   /* await RefreshReloadAsync() */; }
   void GSReportStore_Chngd(string val) { GSReport = val;   /* await RefreshReloadAsync() */; }
-  void EmailOfIStore_Chngd(string val, [CallerMemberName] string? cmn = "")  {    WriteLine($"■■ MAIN  {GetCaller(),20}  called by  {cmn,-22} {val,-22}  {(EmailOfI != val ? "==>Load as it were ..." : "==>----")}");    EmailOfI = val;   /* await RefreshReloadAsync(); */  }
+  void EmailOfIStore_Chngd(string val, [CallerMemberName] string? cmn = "")  {    Lgr.Log(LogLevel.Trace, $"■■ MAIN  {GetCaller(),20}  called by  {cmn,-22} {val,-22}  {(EmailOfI != val ? "==>Load as it were ..." : "==>----")}");    EmailOfI = val;   /* await RefreshReloadAsync(); */  }
   void LetDbChgStore_Chngd(bool value) { LetDbChg = value; /* await RefreshReloadAsync() */; }
   string _qs = ""; public string SrvrName { get => _qs; set { if (SetProperty(ref _qs, value, true) && value is not null && _loaded) { Bpr.Tick(); SrvrNameStore.Change(value); UsrStgns.SrvrName = value; } } }
   string _dn = ""; public string DtBsName { get => _dn; set { if (SetProperty(ref _dn, value, true) && value is not null && _loaded) { Bpr.Tick(); DtBsNameStore.Change(value); UsrStgns.DtBsName = value; } } }
   string _gr = ""; public string GSReport { get => _gr; set { if (SetProperty(ref _gr, value, true) && value is not null && _loaded) { /*       */ GSReportStore.Change(value); GSRepViz = string.IsNullOrWhiteSpace(value) ? Visibility.Collapsed : Visibility.Visible; } } }
   string _em = ""; public string EmailOfI { get => _em; set { if (SetProperty(ref _em, value, true) && value is not null && _loaded) { Bpr.Tick(); EmailOfIStore.Change(value); UsrStgns.EmailOfI = value; } } }
-  bool _au; public bool IsAudible { get => _au; set { if (SetProperty(ref _au, value, true) && _ctored) { Bpr.Tick(); Bpr.SuppressTicks = Bpr.SuppressAlarm = !(UsrStgns.IsAudible = value); Logger.LogInformation($"│   user-pref-auto-poll:       IsAudible: {value} ■─────■"); } } }
-  bool _an; public bool IsAnimeOn { get => _an; set { if (SetProperty(ref _an, value, true) && _ctored) { Bpr.Tick(); UsrStgns.IsAnimeOn = value; Logger.LogInformation($"│   user-pref-auto-poll:       IsAnimeOn: {value} ■─────■"); } } }
+  bool _au; public bool IsAudible { get => _au; set { if (SetProperty(ref _au, value, true) && _ctored) { Bpr.Tick(); Bpr.SuppressTicks = Bpr.SuppressAlarm = !(UsrStgns.IsAudible = value); Lgr.LogInformation($"│   user-pref-auto-poll:       IsAudible: {value} ■─────■"); } } }
+  bool _an; public bool IsAnimeOn { get => _an; set { if (SetProperty(ref _an, value, true) && _ctored) { Bpr.Tick(); UsrStgns.IsAnimeOn = value; Lgr.LogInformation($"│   user-pref-auto-poll:       IsAnimeOn: {value} ■─────■"); } } }
   bool _aw; public bool LetDbChg { get => _aw; set { if (SetProperty(ref _aw, value, true) && _loaded) { Bpr.Tick(); UsrStgns.LetDbChg = value; _letDbChStore.Change(value); } } }
 
   public IBpr Bpr { get; }
-  public ILogger Logger { get; }
+  public ILogger Lgr { get; }
   public UserSettings UsrStgns { get; }
   public NavBarVM NavBarVM { get; }
   public BaseMinVM? CurrentVM => _navigationStore.CurrentVM;

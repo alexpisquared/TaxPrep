@@ -165,8 +165,7 @@ public partial class Page01VM : BaseEmVM
         Bpr.Click();
       }
 
-      ChkDb4CngsCommand.Execute(null);
-      //todo: Save2DbCommand.Execute(null);
+      Save2DbCommand.Execute(null); //fallback JIC: ChkDb4CngsCommand.Execute(null);
     }
     catch (Exception ex) { ex.Pop(); }
   }

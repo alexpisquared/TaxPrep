@@ -1,17 +1,13 @@
 ﻿namespace MF.TxCategoryAssigner.Views;
 public partial class MainAppDispatcher : WindowBase
 {
-  //const int _zeroBasedBtnCnt = 8;
-  readonly ILogger _lgr;
-  readonly IBpr _bpr;
-  private readonly SpeechSynth _sth;
+  SpeechSynth ? _sth;
+  ILogger ? _lgr;
+  IBpr ? _bpr;
 
   public MainAppDispatcher() // : this(SeriLogHelper.InitLoggerFactory(folder: FSHelper.GetCreateSafeLogFolderAndFile(@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log"), levels: "+Info").CreateLogger(), new Bpr())
   {
     InitializeComponent();
-
-    _lgr = ((BaseDbVM)DataContext).Lgr;
-    _bpr = ((BaseDbVM)DataContext).Bpr;
   }
   public MainAppDispatcher(ILogger lgr, IBpr bpr, SpeechSynth sth)
   {
@@ -19,7 +15,7 @@ public partial class MainAppDispatcher : WindowBase
 
     _lgr = lgr;
     _bpr = bpr;
-    this._sth = sth;
+    _sth = sth;
     KeyUp += (s, e) =>
     {
       //switch (e.Key)
@@ -32,13 +28,24 @@ public partial class MainAppDispatcher : WindowBase
     }; //tu:
 
     //SetDefault(Settings.Default.LastBtnNo);
-    tbver.Text = VersionHelper.CurVerStrYMd;
+    tbver.Text = $"Old pure MDI ver - {VersionHelper.CurVerStrYMd}";
 
     KeepOpenReason = ""; // nothing ot save/worry about at this stage for this window.
   }
+  void OnLoaded(object sender, RoutedEventArgs e)
+  {
+    _lgr = ((BaseDbVM)DataContext).Lgr;
+    _bpr = ((BaseDbVM)DataContext).Bpr;
+    _sth = ((BaseDbVM)DataContext).Sth;
+  }
+
 
   void SetDefault(int cb)
   {
+    ArgumentNullException.ThrowIfNull(_lgr, nameof(_lgr));
+    ArgumentNullException.ThrowIfNull(_bpr, nameof(_bpr));
+    ArgumentNullException.ThrowIfNull(_sth, nameof(_sth));
+
     _bpr.Click();
     b1.IsDefault = b2.IsDefault = b3.IsDefault = b4.IsDefault = b5.IsDefault = b6.IsDefault = b7.IsDefault = b8.IsDefault = false;
     ((Button)FindName($"b{cb + 1}")).IsDefault = true;
@@ -48,6 +55,10 @@ public partial class MainAppDispatcher : WindowBase
 
   async void onX(object s, RoutedEventArgs e)
   {
+    ArgumentNullException.ThrowIfNull(_lgr, nameof(_lgr));
+    ArgumentNullException.ThrowIfNull(_bpr, nameof(_bpr));
+    ArgumentNullException.ThrowIfNull(_sth, nameof(_sth));
+
     ((Button)s).IsEnabled = false;
     switch (((Button)s).Name)
     {

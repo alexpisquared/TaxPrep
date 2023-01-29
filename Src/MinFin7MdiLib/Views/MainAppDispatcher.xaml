@@ -59,7 +59,7 @@
 
     <Grid>
       <Image Source="/MinFinTax.png" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top" />
-      <TextBlock x:Name="tbver" Margin="0 0 64 0" FontFamily="Courier New" FontSize="14" Text="ver" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#07e" />
+      <TextBlock x:Name="tbver" Margin="0 0 64 0" FontFamily="Courier New" FontSize="14" Text="Old pure MDI ver" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#07e" />
       <Viewbox>
         <StackPanel Orientation="Vertical" Margin="10 50 10 10">
           <TextBlock x:Name="tbTitl0" Margin="22 0" FontSize="32" Text="MinFin7MdiLib" FontWeight="Bold" HorizontalAlignment="Center" >

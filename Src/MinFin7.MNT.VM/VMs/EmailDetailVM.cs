@@ -10,7 +10,7 @@ public partial class EmailDetailVM : BaseDbVM
   public override async Task<bool> InitAsync() { IsBusy = true; _ = await InitAsyncTask(EmailOfI); return await base.InitAsync(); }
   async Task<bool> InitAsyncTask(string emailOfI, [CallerMemberName] string? cmn = "")
   {
-    WriteLine($"■■ Init  {GetCaller(),20}  called by  {cmn,-22} {emailOfI,-22} ■■■■");
+    Lgr.Log(LogLevel.Trace, $"■■ Init  {GetCaller(),20}  called by  {cmn,-22} {emailOfI,-22} ■■■■");
     try
     {
       var sw = Stopwatch.StartNew();
@@ -31,7 +31,7 @@ public partial class EmailDetailVM : BaseDbVM
 
   async void EmailOfIStore_Chngd(string emailOfI, [CallerMemberName] string? cmn = "")
   {
-    WriteLine($"■■ EmDt  {GetCaller(),20}  called by  {cmn,-22} {emailOfI,-22}  {(EmailOfI != emailOfI ? "==>Load" : "==>----")}");
+    Lgr.Log(LogLevel.Trace, $"■■ EmDt  {GetCaller(),20}  called by  {cmn,-22} {emailOfI,-22}  {(EmailOfI != emailOfI ? "==>Load" : "==>----")}");
     if (EmailOfI != emailOfI)
       _ = await InitAsyncTask(emailOfI);
   }
