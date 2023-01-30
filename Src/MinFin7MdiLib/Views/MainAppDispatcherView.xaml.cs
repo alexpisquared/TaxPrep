@@ -21,14 +21,15 @@ public partial class MainAppDispatcherView : UserControl
     ArgumentNullException.ThrowIfNull(_lgr, nameof(_lgr));
     ArgumentNullException.ThrowIfNull(_bpr, nameof(_bpr));
     ArgumentNullException.ThrowIfNull(_sth, nameof(_sth));
+    ArgumentNullException.ThrowIfNull(_dbx, nameof(_dbx));
 
     ((Button)s).IsEnabled = false;
     switch (((Button)s).Name)
     {
       //case "b1": setDefault(0); new DbLoaderReportWindow(MSMoneyDbLoader.App.GetCmndLineArgsInclClickOnce()).ShowDialog(); break;
       //case "b2": setDefault(1); new HistoricalChartSet.MainHistChart().Show(); break;
-      case "b3": SetDefault(2); new TxCategoryAssignerVw(_lgr, _bpr, _sth).Show(); break;
-      case "b4": SetDefault(3); new ManualTxnEntry(_lgr, _bpr, _sth, false).Show(); break;
+      case "b3": SetDefault(2); new TxCategoryAssignerVw(_lgr, _bpr, _sth, _dbx).Show(); break;
+      case "b4": SetDefault(3); new ManualTxnEntry(_lgr, _bpr, _sth, false, _dbx).Show(); break;
       case "b5": SetDefault(4); MinFin.Report.WinForm7.Program.ShowBoth(); break;
       case "b6": SetDefault(5); MinFin.Report.WinForm7.Program.Show_Alx(); break;
       case "b7": SetDefault(6); MinFin.Report.WinForm7.Program.Show_Mei(); break;

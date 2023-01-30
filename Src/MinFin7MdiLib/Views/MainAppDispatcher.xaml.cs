@@ -68,8 +68,8 @@ public partial class MainAppDispatcher : WindowBase
     {
       //case "b1": setDefault(0); new DbLoaderReportWindow(MSMoneyDbLoader.App.GetCmndLineArgsInclClickOnce()).ShowDialog(); break;
       //case "b2": setDefault(1); new HistoricalChartSet.MainHistChart().Show(); break;
-      case "b3": SetDefault(2); new TxCategoryAssignerVw(_lgr, _bpr, _sth).Show(); break;
-      case "b4": SetDefault(3); new ManualTxnEntry(_lgr, _bpr, _sth, false).Show(); break;
+      case "b3": SetDefault(2); new TxCategoryAssignerVw(_lgr, _bpr, _sth, _dbx).Show(); break;
+      case "b4": SetDefault(3); new ManualTxnEntry(_lgr, _bpr, _sth, false, _dbx).Show(); break;
       //case "b5": setDefault(4); MinFin7MdiLib.Report.WinForm.Program.ShowBoth(); break;
       //case "b6": setDefault(5); MinFin7MdiLib.Report.WinForm.Program.Show_Alx(); break;
       //case "b7": setDefault(6); MinFin7MdiLib.Report.WinForm.Program.Show_Mei(); break;

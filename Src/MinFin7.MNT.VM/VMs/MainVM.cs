@@ -65,7 +65,7 @@ public partial class MainVM : BaseMinVM
   void SrvrNameStore_Chngd(string val) { SrvrName = val;   /* await RefreshReloadAsync() */; }
   void DtBsNameStore_Chngd(string val) { DtBsName = val;   /* await RefreshReloadAsync() */; }
   void GSReportStore_Chngd(string val) { GSReport = val;   /* await RefreshReloadAsync() */; }
-  void EmailOfIStore_Chngd(string val, [CallerMemberName] string? cmn = "")  {    Lgr.Log(LogLevel.Trace, $"■■ MAIN  {GetCaller(),20}  called by  {cmn,-22} {val,-22}  {(EmailOfI != val ? "==>Load as it were ..." : "==>----")}");    EmailOfI = val;   /* await RefreshReloadAsync(); */  }
+  void EmailOfIStore_Chngd(string val, [CallerMemberName] string? cmn = "") { Lgr.Log(LogLevel.Trace, $"■■ MAIN  {GetCaller(),20}  called by  {cmn,-22} {val,-22}  {(EmailOfI != val ? "==>Load as it were ..." : "==>----")}"); EmailOfI = val;   /* await RefreshReloadAsync(); */  }
   void LetDbChgStore_Chngd(bool value) { LetDbChg = value; /* await RefreshReloadAsync() */; }
   string _qs = ""; public string SrvrName { get => _qs; set { if (SetProperty(ref _qs, value, true) && value is not null && _loaded) { Bpr.Tick(); SrvrNameStore.Change(value); UsrStgns.SrvrName = value; } } }
   string _dn = ""; public string DtBsName { get => _dn; set { if (SetProperty(ref _dn, value, true) && value is not null && _loaded) { Bpr.Tick(); DtBsNameStore.Change(value); UsrStgns.DtBsName = value; } } }
@@ -103,6 +103,15 @@ public partial class MainVM : BaseMinVM
     //OnPropertyChanged(nameof(IsOpen));
   }
 
+  [RelayCommand]
+  async Task CloseApp()
+  {
+    var allowExit = await base.WrapAsync();
+    if (allowExit)
+    {
+      Application.Current.Shutdown();
+    }
+  }
   [RelayCommand] async Task UpgradeSelf() { await Task.Yield(); ; }
   [RelayCommand]
   void HidePnl()

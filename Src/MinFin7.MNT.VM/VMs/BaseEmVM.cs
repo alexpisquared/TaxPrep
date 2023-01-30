@@ -3,8 +3,8 @@
 public partial class BaseEmVM : BaseDbVM
 {
   protected List<string>? _badEmails;
-  public BaseEmVM(MainVM mvm, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoContext dbx, IAddChild win, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, LetDbChgStore awd, UserSettings stg, EmailOfIStore eml, EmailDetailVM evm, SpeechSynth sth, int oid) :
-    base(mvm, lgr, cfg, bpr, dbx, win, svr, dbs, gsr, awd, stg, sth, oid)
+  public BaseEmVM(MainVM mvm, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoContext dbx, Db.FinDemo7.Models.FinDemoContext dba, IAddChild win, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, LetDbChgStore awd, UserSettings stg, EmailOfIStore eml, EmailDetailVM evm, SpeechSynth sth, int oid) :
+    base(mvm, lgr, cfg, bpr, dbx, dba, win, svr, dbs, gsr, awd, stg, sth, oid)
   {
     EmailOfIStore = eml;
     EmailOfIVM = evm;

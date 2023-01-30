@@ -4,11 +4,11 @@ public class UserSettings : UserSettingsBase // ..actually, not a store/store - 
   readonly bool _loaded;
   readonly ILogger? _logger;
 
-  public UserSettings() => WriteLine("    UserSettings.Ctor(): Deserialized => Loading is done?");
+  public UserSettings() { } // => WriteLine($"[xx:xx:xx Trc]     UserSettings.Ctor(): Deserialized => Loading is done{(_loaded ? "" : " ..almost :(_loaded == false)")}.");
   public UserSettings(ILogger lgr)
   {
     _logger = lgr;
-    _logger.LogInformation("    UserSettings.Ctor(): Supplied by the DI => Loading here now...");
+    _logger.Log(LogLevel.Trace, "    UserSettings.Ctor(): Supplied by the DI => Loading here now...");
 
     if (_loaded) return;
 

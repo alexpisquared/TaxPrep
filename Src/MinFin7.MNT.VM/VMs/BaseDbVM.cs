@@ -5,7 +5,7 @@ public partial class BaseDbVM : BaseMinVM
   readonly MainVM _mainVM;
   protected bool _saving, _loading, _inited;
   protected readonly DateTime Now = DateTime.Now;
-  public BaseDbVM(MainVM mainVM, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoContext dbx, IAddChild win, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, /*EmailOfIStore eml,*/ LetDbChgStore awd, UserSettings usrStgns, SpeechSynth sth, int oid)
+  public BaseDbVM(MainVM mainVM, ILogger lgr, IConfigurationRoot cfg, IBpr bpr, FinDemoContext dbx, Db.FinDemo7.Models.FinDemoContext dba, IAddChild win, SrvrNameStore svr, DtBsNameStore dbs, GSReportStore gsr, /*EmailOfIStore eml,*/ LetDbChgStore awd, UserSettings usrStgns, SpeechSynth sth, int oid)
   {
     IsDevDbg = VersionHelper.IsDbg;
 
@@ -14,6 +14,7 @@ public partial class BaseDbVM : BaseMinVM
     Lgr = lgr;
     Cfg = cfg;
     Dbx = dbx;
+    Dba = dba;
     Bpr = bpr;
     Sth = sth;
     MainWin = (Window)win;
@@ -81,7 +82,7 @@ public partial class BaseDbVM : BaseMinVM
   }
   public virtual async Task RefreshReloadAsync([CallerMemberName] string? cmn = "")
   {
-    Lgr.Log(LogLevel.Trace, $"TrWL:> {cmn}->BaseDbVM.RefreshReloadAsync() "); await Task.Yield();
+    Lgr.Log(LogLevel.Trace, $"[xx:xx:xx Trc] {cmn}->BaseDbVM.RefreshReloadAsync() "); await Task.Yield();
   }
   protected void ReportProgress(string msg)
   {

@@ -11,6 +11,7 @@ public partial class MainNavView : WpfUserControlLib.Base.WindowBase
     //themeSelector1.ThemeApplier = ApplyTheme; //dnf theming 1/2
 
     btnExit.IsCancel = VersionHelper.IsDbg;
+    KeepOpenReason = null; //todo: double ask OnClosing() is killing it.
   }
 
   void OnLoaded(object s, RoutedEventArgs e) { } // themeSelector1.SetCurThemeToMenu(Thm); //dnf theming 2/2
@@ -28,7 +29,6 @@ public partial class MainNavView : WpfUserControlLib.Base.WindowBase
   async void OnAudio(object s, RoutedEventArgs e) => await Task.Yield();
   async void OnFlush(object s, RoutedEventArgs e) => await Task.Yield();
   void OnSettings(object s, RoutedEventArgs e) => MessageBox.Show("Under Construction...", "Under Construction...", MessageBoxButton.OK, MessageBoxImage.Information);
-
   void OnRequestNavigate(object s, System.Windows.Navigation.RequestNavigateEventArgs e)
   {
     e.Handled = true;
@@ -46,7 +46,6 @@ public partial class MainNavView : WpfUserControlLib.Base.WindowBase
       _ = MessageBox.Show($"Directory  \n\n   {e.Uri}\n\ndoes not exist...\n\n...or is unaccessible at the moment ", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
     }
   }
-
   void OnGoToLink(object s, RoutedEventArgs e) => _ = Process.Start("Explorer.exe", ((MenuItem)s)?.Tag?.ToString() ?? "C:\\");
   void OnUnchecked(object s, RoutedEventArgs e) => ((CheckBox)s).IsChecked = true;
 }

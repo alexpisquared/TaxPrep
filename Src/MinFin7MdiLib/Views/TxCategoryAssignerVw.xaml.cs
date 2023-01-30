@@ -1,7 +1,7 @@
 ﻿namespace MF.TxCategoryAssigner;
 public partial class TxCategoryAssignerVw : WindowBase
 {
-  readonly FinDemoContext _db = new();
+  readonly FinDemoContext _dbx;
   readonly DateTime _yrStart2004 = new(2004, 1, 1), _now = DateTime.Now;
   readonly ObservableCollection<TxCoreV2> _core = new();
   readonly ObservableCollection<TxCategory> _catg = new();
@@ -15,7 +15,7 @@ public partial class TxCategoryAssignerVw : WindowBase
   bool _loaded = false;
   int? _cutOffYr = null;
 
-  public TxCategoryAssignerVw(ILogger lgr, IBpr bpr, SpeechSynth sth)
+  public TxCategoryAssignerVw(ILogger lgr, IBpr bpr, SpeechSynth sth, FinDemoContext dbx)
   {
     InitializeComponent();
     _txCategoryCmBxVwSrc = (CollectionViewSource)FindResource("txCategoryCmBxVwSrc");
@@ -23,7 +23,8 @@ public partial class TxCategoryAssignerVw : WindowBase
     _txCoreV2_Root_VwSrc = (CollectionViewSource)FindResource("txCoreV2_Root_VwSrc");
     _lgr = lgr;
     _bpr = bpr;
-    this._sth = sth;
+    _sth = sth;
+    _dbx = dbx;
   }
   async void OnLoaded(object s, RoutedEventArgs e)
   {
@@ -48,11 +49,11 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
     try
     {
-      await _db.TxCategories.LoadAsync();
-      await _db.TxMoneySrcs.LoadAsync();
+      await _dbx.TxCategories.LoadAsync();
+      await _dbx.TxMoneySrcs.LoadAsync();
 
-      _txCategoryDGrdVwSrc.Source = _db.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber);
-      _txCategoryCmBxVwSrc.Source = _db.TxCategories.Local.OrderBy(r => r.Name).ThenBy(r => r.TlNumber);
+      _txCategoryDGrdVwSrc.Source = _dbx.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber);
+      _txCategoryCmBxVwSrc.Source = _dbx.TxCategories.Local.OrderBy(r => r.Name).ThenBy(r => r.TlNumber);
 
       _ = tbxSearch.Focus();
       var y = DateTime.Today.Year;
@@ -73,7 +74,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   {
     try
     {
-      var (success, _, report) = await _db.TrySaveReportAsync();
+      var (success, _, report) = await _dbx.TrySaveReportAsync();
       Title = report;
 
       if (!success)
@@ -83,9 +84,9 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   }
   protected override async void OnClosing(CancelEventArgs e)
   {
-    if (_db.HasUnsavedChanges())
+    if (_dbx.HasUnsavedChanges())
     {
-      var rsn = $"Would you like to save the changes? \r\n\n{_db.GetDbChangesReport()}";
+      var rsn = $"Would you like to save the changes? \r\n\n{_dbx.GetDbChangesReport()}";
       switch (MessageBox.Show(rsn, "Unsaved changes detected", MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
       {
         default:
@@ -99,7 +100,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       KeepOpenReason = "";
     }
 
-    _db.Dispose();
+    _dbx.Dispose();
 
     base.OnClosing(e);
   }
@@ -185,21 +186,21 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     {
       if (chkTxCatgry.IsChecked == true && chkSingleYr.IsChecked == true)
       {
-        await _db.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
+        await _dbx.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
         _loadedCatgry = _txCatgry;
       }
       else if (chkTxCatgry.IsChecked == true)
       {
-        await _db.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004 && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
+        await _dbx.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004 && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
         _loadedCatgry = _txCatgry;
       }
       else if (chkSingleYr.IsChecked == true)
       {
-        await _db.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr).LoadAsync();
+        await _dbx.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr).LoadAsync();
       }
       else
       {
-        await _db.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004).LoadAsync();
+        await _dbx.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004).LoadAsync();
         _loadedCatgry = _txCatgry = null;
       }
 
@@ -218,7 +219,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     tbkFlt.Text = strFilter;
     tbkAmt.Text = "";
 
-    _core.ClearAddRangeAuto(_db.TxCoreV2s.Local.Where(r =>
+    _core.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
       (
         (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(strFilter.ToLower())) ||
         (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(strFilter.ToLower())) ||
@@ -245,7 +246,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     tbkFlt.Text = strFilter;
     tbkAmt.Text = $"{amt:N0}";
 
-    _core.ClearAddRangeAuto(_db.TxCoreV2s.Local.Where(r =>
+    _core.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
       amt - rng <= (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) && (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) <= amt + rng
       &&
       (
@@ -264,8 +265,8 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     ).OrderByDescending(r => r.TxDate));
     WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
   }
-  void FilterCategoryByIdList(IEnumerable<int> catIds) => UpdateCtgrList(_db.TxCategories.Local.Where(r => catIds.Contains(r.Id)));
-  void FilterCategoryByTxtMatch(string namePart/**/  ) => UpdateCtgrList(_db.TxCategories.Local.Where(r => r.Name.ToLower().Contains(namePart) || r.IdTxt.ToLower().Contains(namePart)));
+  void FilterCategoryByIdList(IEnumerable<int> catIds) => UpdateCtgrList(_dbx.TxCategories.Local.Where(r => catIds.Contains(r.Id)));
+  void FilterCategoryByTxtMatch(string namePart/**/  ) => UpdateCtgrList(_dbx.TxCategories.Local.Where(r => r.Name.ToLower().Contains(namePart) || r.IdTxt.ToLower().Contains(namePart)));
 
   void UpdateCtgrList(IEnumerable<TxCategory> enu)
   {
@@ -278,7 +279,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
     if (_catg.Count == 0)
     {
-      _catg.ClearAddRangeAuto(_db.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
+      _catg.ClearAddRangeAuto(_dbx.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
     }
 
     choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled = btAssig2.IsEnabled = false;
@@ -307,7 +308,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
   async void OnReLoad(object s, RoutedEventArgs e)
   {
-    switch (DbSaveMsgBox.CheckAskSave(_db))
+    switch (DbSaveMsgBox.CheckAskSave(_dbx))
     {
       case (int)MsgBoxDbRslt.Yes: break;
       default: break;
@@ -388,7 +389,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     _ = tbxSearch.Focus(); // App.Synth.SpeakExpressFAF("Also, Clipboarded.");
   }
 
-  //use main menu instead: async void OnManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _dbx).ShowDialog(); await ReLoadTxCore(); }
+  //use main menu instead: async void OnManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _dba).ShowDialog(); await ReLoadTxCore(); }
   async void OnAssign0(object s, RoutedEventArgs e)
   {
     if (txCategoryListBox.SelectedItems.Count == 1)
@@ -420,7 +421,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       }
     }
 
-    if (DbSaveMsgBox.TrySaveAsk(_db, $"class TxCategoryAssignerVw.assign()") > 0)//== (int)MsgBoxDbRslt.Yes)
+    if (DbSaveMsgBox.TrySaveAsk(_dbx, $"class TxCategoryAssignerVw.assign()") > 0)//== (int)MsgBoxDbRslt.Yes)
     {
       await ReLoadTxCore();
       OnClear1(default!, default!);
@@ -944,14 +945,14 @@ public enum MsgBoxDbRslt // MsgBoxReverseRslt
 
 //    return (false, -88, report);
 //  }
-//  public static void DiscardChanges(this DbContext _dbx) => _dbx.ChangeTracker.Clear();
-//  public static bool HasUnsavedChanges(this DbContext _dbx) => _dbx != null && _dbx.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted);
-//  public static string GetDbChangesReport(this DbContext _dbx, int maxLinesToShow = 33)
+//  public static void DiscardChanges(this DbContext _dba) => _dba.ChangeTracker.Clear();
+//  public static bool HasUnsavedChanges(this DbContext _dba) => _dba != null && _dba.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted);
+//  public static string GetDbChangesReport(this DbContext _dba, int maxLinesToShow = 33)
 //  {
-//    var sb = new StringBuilder($"{_dbx.GetType().Name}.{_dbx.GetType().GetHashCode()}:  {_dbx.ChangeTracker.Entries().Count(e => e.State == EntityState.Deleted),5} Del  {_dbx.ChangeTracker.Entries().Count(e => e.State == EntityState.Added),5} Ins  {_dbx.ChangeTracker.Entries().Count(e => e.State == EntityState.Modified),5} Upd");
+//    var sb = new StringBuilder($"{_dba.GetType().Name}.{_dba.GetType().GetHashCode()}:  {_dba.ChangeTracker.Entries().Count(e => e.State == EntityState.Deleted),5} Del  {_dba.ChangeTracker.Entries().Count(e => e.State == EntityState.Added),5} Ins  {_dba.ChangeTracker.Entries().Count(e => e.State == EntityState.Modified),5} Upd");
 
 //    var lineCounter = 0;
-//    foreach (var modifieds in _dbx.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified))
+//    foreach (var modifieds in _dba.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified))
 //    {
 //      foreach (var pn in modifieds.CurrentValues.Properties)
 //      {

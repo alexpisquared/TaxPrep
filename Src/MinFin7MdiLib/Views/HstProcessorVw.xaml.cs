@@ -2,7 +2,7 @@
 {
   public partial class HstProcessorVw : WindowBase
   {
-    readonly FinDemoContext _db = new();
+    readonly FinDemoContext _db;
     //readonly DateTime _now = DateTime.Now;
     DateTime _qtrStart = new DateTime(2017, 1, 1);
     DateTime _qtr__End = new DateTime(2017, 4, 1);
@@ -30,12 +30,12 @@
 
         //if (chkTxCatgry.IsChecked == true)
         //{
-        //  await Task.Run(() => _dbx.TxCoreV2s.Where(r => r.TxDate >= yrStart2004 && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).Load());
+        //  await Task.Run(() => _dba.TxCoreV2s.Where(r => r.TxDate >= yrStart2004 && (string.Compare(r.TxCategoryIdTxt, _txCatgry, true) == 0)).Load());
         //  _loadedCatgry = _txCatgry;
         //}
         //else
         //{
-        //  await Task.Run(() => _dbx.TxCoreV2s.Where(r => r.TxDate >= yrStart2004).Load());
+        //  await Task.Run(() => _dba.TxCoreV2s.Where(r => r.TxDate >= yrStart2004).Load());
         //  _loadedCatgry = _txCatgry = null;
         //}
       }

@@ -41,7 +41,7 @@ public partial class App : Application
     //  }
     //}
 
-    ShutdownMode = ShutdownMode.OnExplicitShutdown;
+    ShutdownMode = ShutdownMode.OnMainWindowClose; // The default value is OnLastWindowClose.
 
     MainWindow =
       //VersionHelper.IsDbg ?      //new ManualTxnEntry(_logger, new Bpr(), true) :       //new ReviewWindow(_logger, new Bpr(), "Mei") : 
@@ -53,7 +53,7 @@ public partial class App : Application
     //done:
 #endif
 
-    Current?.Shutdown();
+    //Current?.Shutdown();
   }
   protected override void OnExit(ExitEventArgs e) => base.OnExit(e);      //DateTime tbkFlt = DateTime.Now;			//Trace.WriteLine(string.Format("{0:dd HH:mm:ss} - finished; has been on for {1:N2} min.", tbkFlt, (tbkFlt - t0).TotalMinutes));
   static SpeechSynth? _sy = null; public static SpeechSynth Synth => _sy ??= new(new ConfigurationBuilder().AddUserSecrets<App>().Build()["AppSecrets:MagicSpeech"] ?? "AppSecrets:MagicSpeech is missing ▄▀▄▀▄▀", true, CC.EnusAriaNeural.Voice);

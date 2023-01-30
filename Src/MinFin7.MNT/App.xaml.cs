@@ -24,7 +24,7 @@ public partial class App : System.Windows.Application
 
     _serviceProvider = services.BuildServiceProvider();
 
-    ShutdownMode = ShutdownMode.OnMainWindowClose;
+    ShutdownMode = ShutdownMode.OnMainWindowClose; // The default value is OnLastWindowClose.
   }
 
   protected async override void OnStartup(StartupEventArgs e)

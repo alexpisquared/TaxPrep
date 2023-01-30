@@ -9,14 +9,14 @@ public partial class ManualTxnEntry : WindowBase
   readonly IBpr _bpr;
   private readonly SpeechSynth _sth;
 
-  public ManualTxnEntry(ILogger lgr, IBpr bpr, SpeechSynth sth, bool showBackToMenuBtn, FinDemoContext? db = null)
+  public ManualTxnEntry(ILogger lgr, IBpr bpr, SpeechSynth sth, bool showBackToMenuBtn, FinDemoContext db)
   {
     InitializeComponent();
 
     _lgr = lgr;
     _bpr = bpr;
     this._sth = sth;
-    _db = db is null ? new FinDemoContext() : db;
+    _db = db;// is null ? new FinDemoContext() : db;
     _toDispose = db is null;
 
     btnBackToMenu.Visibility = showBackToMenuBtn ? Visibility.Visible : Visibility.Collapsed;
@@ -168,5 +168,5 @@ public partial class ManualTxnEntry : WindowBase
     catch (Exception ex) { ex.Pop(_lgr); }
   }
 }
-/// EXEC sp_changedbowner 'sa' //tu: dbo is missing fo _dbx diagramming
+/// EXEC sp_changedbowner 'sa' //tu: dbo is missing fo _dba diagramming
 /// 
