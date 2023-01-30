@@ -7,11 +7,6 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
 
-        <!--todo: remove old code: 
-        <ResourceDictionary Source="AsLink\Common.xaml" />
-        -->
-        <ResourceDictionary Source="/MinFin7MdiLib;component/AsLink\Common.xaml" />
-
         <!--ap:Backup theme + designer's:-->
         <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Lite.Gray.xaml" />
 

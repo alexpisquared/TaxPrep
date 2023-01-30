@@ -16,19 +16,10 @@
       <Style x:Key="RightAlignStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="TextAlignment" Value="Right" />
       </Style>
-      
 
     </ResourceDictionary>
   </UserControl.Resources>
   <Border CornerRadius="10" Padding="10" BorderThickness="1" BorderBrush="#080" >
-    <Border.Background>
-      <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-        <GradientStop Color="#c676" Offset="0.11"/>
-        <GradientStop Color="#c565" Offset="0.22"/>
-        <GradientStop Color="#c565" Offset="0.98"/>
-        <GradientStop Color="#c676" Offset="0.999"/>
-      </LinearGradientBrush>
-    </Border.Background>
     <Border.Resources>
       <Style x:Key="m5" TargetType="FrameworkElement">
         <!--<Setter Property="Margin" Value="5"/>-->
@@ -53,7 +44,7 @@
     </Border.Resources>
 
     <Grid>
-      <Image Source="/MinFinTax.png" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top" />
+      <Image Source="/MinFin7MdiLib;component/MinFinTax.png" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top" />
       <TextBlock Margin="0 0 64 0" FontFamily="Courier New" FontSize="14" Text="Jan 2024 ver" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#07e" />
       <Viewbox>
         <StackPanel Orientation="Vertical" Margin="10 50 10 10">
@@ -66,15 +57,15 @@
             </TextBlock.Foreground>
           </TextBlock>
 
-          <Button Content=" 1 td,cibc: MS Money.OFX     "	                 Foreground="#2c00" x:Name="b1" Click="OnX" ToolTip=" CIBC: IntuitQuicken.QFX: seems to be OK (Aug 2018) &#10;&#10; TD: MS Money - OFX &#10;&#10; Amzn: - QIF" />
-          <Button Content=" 2 Charts            - HistoricalChartSet"      Foreground="#20a0" x:Name="b2" Click="OnX" ToolTip="Show Charts" />
-          <Button Content=" 3 Assign            - TxCategoryAssigner"      Foreground="#fcc0" x:Name="b3" Click="OnX" ToolTip="Show Assign" />
-          <Button Content=" 4 Manual Entry      - Crude but better"        Foreground="#f08f" x:Name="b4" Click="OnX" ToolTip="Show Assign" />
-          <Button Content=" 5 Annual Report     - MinFin.Report.WinForm"   Foreground="#fd60" x:Name="b5" Click="OnX" ToolTip="Show Assign" />
-          <Button Content=" 6 Annual Report Alx - MinFin.Report.WinForm"   Foreground="#fd60" x:Name="b6" Click="OnX" ToolTip="Show Assign" />
-          <Button Content=" 7 Annual Report Mei - MinFin.Report.WinForm"   Foreground="#fd60" x:Name="b7" Click="OnX" ToolTip="Show Assign" />
-          <Button Content=" 8 Historical Review - MinFin.Review.DS     "   Foreground="#fd0d" x:Name="b8" Click="OnX" ToolTip="Show Assign" />
-          <Button Content=" 9 Manual Entry      - Legacy TxCore tbl only"  Foreground="#2222" x:Name="b9" Click="OnX" ToolTip="Show Assign" />
+          <Button Content=" 1 TD,CIBC: MS Money.OFX" Foreground="#2c00" x:Name="b1" Click="OnX" ToolTip=" CIBC: IntuitQuicken.QFX: seems to be OK (Aug 2018) &#10;&#10; TD: MS Money - OFX &#10;&#10; Amzn: - QIF" />
+          <Button Content=" 2 Charts               " Foreground="#20a0" x:Name="b2" Click="OnX" ToolTip="HistoricalChartSet"      />
+          <Button Content=" 3 Assign               " Foreground="#fcc0" x:Name="b3" Click="OnX" ToolTip="TxCategoryAssigner"      />
+          <Button Content=" 4 Manual Entry         " Foreground="#f08f" x:Name="b4" Click="OnX" ToolTip="Clpbrd Scraping"         />
+          <Button Content=" 5 Annual Report        " Foreground="#2d60" x:Name="b5" Click="OnX" ToolTip="Report WinForm"          />
+          <Button Content=" 6 Annual Report Alx    " Foreground="#2d60" x:Name="b6" Click="OnX" ToolTip="Report WinForm"          />
+          <Button Content=" 7 Annual Report Mei    " Foreground="#2d60" x:Name="b7" Click="OnX" ToolTip="Report WinForm"          />
+          <Button Content=" 8 Historical Review    " Foreground="#fd0d" x:Name="b8" Click="OnX" ToolTip="Review DS     "          />
+          <Button Content=" 9 Manual Entry         " Foreground="#2222" x:Name="b9" Click="OnX" ToolTip="Legacy TxCore tbl only"  />
 
           <TextBlock VerticalAlignment="Center" Margin="3" HorizontalAlignment="Center">         
             <Hyperlink NavigateUri="0\MF\DnLds" RequestNavigate="OnNavigate">

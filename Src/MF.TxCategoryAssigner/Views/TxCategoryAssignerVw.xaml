@@ -30,10 +30,6 @@
         <ScaleTransform ScaleX="{Binding ZV, ElementName=wnd, FallbackValue=1}" ScaleY="{Binding ZV, ElementName=wnd, FallbackValue=1}" />
       </TransformGroup>
     </Grid.LayoutTransform>
-    <!--<Grid.Resources>
-      <ResourceDictionary Source="/AAV.AsLink;component/AsLink\Common.xaml" />
-    </Grid.Resources>-->
-
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"   />

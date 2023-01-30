@@ -12,17 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AsLink\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Include="..\..\..\..\c\AsLink\Themes\Common.xaml" Link="AsLink\Common.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\Ambience\AmbienceLib.csproj" />
     <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\EfDbHelperLib\EfDbHelperLib.csproj" />
     <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\StandardLib\StandardLib.csproj" />
