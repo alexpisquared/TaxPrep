@@ -46,7 +46,7 @@ public partial class App : Application
     MainWindow =
       //VersionHelper.IsDbg ?      //new ManualTxnEntry(_logger, new Bpr(), true) :       //new ReviewWindow(_logger, new Bpr(), "Mei") : 
       //new TxCategoryAssignerVw(_logger, new Bpr()) :
-      new MainAppDispatcher(_logger, new Bpr(), Synth, new FinDemoContext());
+      new MainAppDispatcher(_logger, new Bpr(), Synth, new FinDemoContext("Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;Encrypt=False;"));
 
     MainWindow.ShowDialog();
 

@@ -34,14 +34,6 @@ public partial class MainAppDispatcher : WindowBase
 
     KeepOpenReason = ""; // nothing ot save/worry about at this stage for this window.
   }
-  void OnLoaded(object sender, RoutedEventArgs e)
-  {
-    //_lgr = ((BaseDbVM)DataContext).Lgr;
-    //_bpr = ((BaseDbVM)DataContext).Bpr;
-    //_sth = ((BaseDbVM)DataContext).Sth;
-    //_dba = ((BaseDbVM)DataContext).Dba;    
-  }
-
 
   void SetDefault(int cb)
   {

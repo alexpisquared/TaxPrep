@@ -3,7 +3,7 @@
                 xmlns:cnv="clr-namespace:WpfUserControlLib.Converters;assembly=WpfUserControlLib" 
                 xmlns:stb="clr-namespace:WpfUserControlLib.Helpers;assembly=WpfUserControlLib" 
                 xmlns:mdl="clr-namespace:Db.FinDemo7.Models;assembly=Db.FinDemo7" 
-                Title="MF.TxCategoryAssigner" Height="250" Width="1800" Loaded="OnLoaded" Background="#555">
+                Title="MF.TxCategoryAssigner" Height="200" Width="1800" Loaded="OnLoaded" Background="#555">
   <lnk:WindowBase.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
