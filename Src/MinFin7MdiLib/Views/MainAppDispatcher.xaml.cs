@@ -1,7 +1,7 @@
 ﻿namespace MF.TxCategoryAssigner.Views;
 public partial class MainAppDispatcher : WindowBase
 {
-  Db.FinDemo7.Models.FinDemoContext? _dbx;
+  Db.FinDemo7.Models.FinDemoContext? _dba;
   SpeechSynth ? _sth;
   ILogger ? _lgr;
   IBpr ? _bpr;
@@ -10,13 +10,14 @@ public partial class MainAppDispatcher : WindowBase
   {
     InitializeComponent();
   }
-  public MainAppDispatcher(ILogger lgr, IBpr bpr, SpeechSynth sth)
+  public MainAppDispatcher(ILogger lgr, IBpr bpr, SpeechSynth sth, FinDemoContext dba)
   {
     InitializeComponent();
 
     _lgr = lgr;
     _bpr = bpr;
     _sth = sth;
+    _dba = dba;
     KeyUp += (s, e) =>
     {
       //switch (e.Key)
@@ -35,10 +36,10 @@ public partial class MainAppDispatcher : WindowBase
   }
   void OnLoaded(object sender, RoutedEventArgs e)
   {
-    _lgr = ((BaseDbVM)DataContext).Lgr;
-    _bpr = ((BaseDbVM)DataContext).Bpr;
-    _sth = ((BaseDbVM)DataContext).Sth;
-    _dbx = ((BaseDbVM)DataContext).Dba;    
+    //_lgr = ((BaseDbVM)DataContext).Lgr;
+    //_bpr = ((BaseDbVM)DataContext).Bpr;
+    //_sth = ((BaseDbVM)DataContext).Sth;
+    //_dba = ((BaseDbVM)DataContext).Dba;    
   }
 
 
@@ -47,7 +48,7 @@ public partial class MainAppDispatcher : WindowBase
     ArgumentNullException.ThrowIfNull(_lgr, nameof(_lgr));
     ArgumentNullException.ThrowIfNull(_bpr, nameof(_bpr));
     ArgumentNullException.ThrowIfNull(_sth, nameof(_sth));
-    ArgumentNullException.ThrowIfNull(_dbx, nameof(_dbx));
+    ArgumentNullException.ThrowIfNull(_dba, nameof(_dba));
 
     _bpr.Click();
     b1.IsDefault = b2.IsDefault = b3.IsDefault = b4.IsDefault = b5.IsDefault = b6.IsDefault = b7.IsDefault = b8.IsDefault = false;
@@ -61,19 +62,19 @@ public partial class MainAppDispatcher : WindowBase
     ArgumentNullException.ThrowIfNull(_lgr, nameof(_lgr));
     ArgumentNullException.ThrowIfNull(_bpr, nameof(_bpr));
     ArgumentNullException.ThrowIfNull(_sth, nameof(_sth));
-    ArgumentNullException.ThrowIfNull(_dbx, nameof(_dbx));
+    ArgumentNullException.ThrowIfNull(_dba, nameof(_dba));
 
     ((Button)s).IsEnabled = false;
     switch (((Button)s).Name)
     {
       //case "b1": setDefault(0); new DbLoaderReportWindow(MSMoneyDbLoader.App.GetCmndLineArgsInclClickOnce()).ShowDialog(); break;
       //case "b2": setDefault(1); new HistoricalChartSet.MainHistChart().Show(); break;
-      case "b3": SetDefault(2); new TxCategoryAssignerVw(_lgr, _bpr, _sth, _dbx).Show(); break;
-      case "b4": SetDefault(3); new ManualTxnEntry(_lgr, _bpr, _sth, false, _dbx).Show(); break;
+      case "b3": SetDefault(2); new TxCategoryAssignerVw(_lgr, _bpr, _sth, _dba).Show(); break;
+      case "b4": SetDefault(3); new ManualTxnEntry(_lgr, _bpr, _sth, false, _dba).Show(); break;
       //case "b5": setDefault(4); MinFin7MdiLib.Report.WinForm.Program.ShowBoth(); break;
       //case "b6": setDefault(5); MinFin7MdiLib.Report.WinForm.Program.Show_Alx(); break;
       //case "b7": setDefault(6); MinFin7MdiLib.Report.WinForm.Program.Show_Mei(); break;
-      case "b8": SetDefault(7); new ReviewWindow(_lgr, _bpr, "Mei", _dbx).Show(); break;
+      case "b8": SetDefault(7); new ReviewWindow(_lgr, _bpr, "Mei", _dba).Show(); break;
       //case "b9": setDefault(8); new MinFin7MdiLib.DataSet.TxAdd().Show(); break;
       default: _bpr.No(); break;
     }

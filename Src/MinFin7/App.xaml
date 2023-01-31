@@ -7,11 +7,17 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
 
-        <!--ap:Backup theme + designer's:-->
-        <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Lite.Gray.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/BasicDefaultsLayout.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/Anime.Base.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/ComboBox.Base.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Base.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Anime.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Anime/IsObsoleteBurronStyle.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Anime/SmartOpacityToggleAnimStyle.xaml" />
+        <!--<ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Dark.Iress.xaml" />-->
+        <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Dark.Google.xaml" />
 
         <!--ap:Allows Style="{StaticResource WindowStyle_Aav0}"  (since it is on top of the visual tree over the Window) -->
-        <ResourceDictionary Source="/WpfUserControlLib;component/Base/BasicDefaultsLayout.xaml" />
 
       </ResourceDictionary.MergedDictionaries>
 

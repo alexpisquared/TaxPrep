@@ -1,7 +1,4 @@
 ﻿# 2023-01-07  Project Creation
-## Useful information 
-### Useful information 
-#### Useful information 
 
 dotnet new classlib -n Db.FinDemo7
 cd .\Db.FinDemo7\
@@ -16,3 +13,4 @@ RESTORE DATABASE [FinDemoDbg] FROM  DISK = N'C:\Program Files\Microsoft SQL Serv
 GO
 RESTORE DATABASE [FinDemoDbg] WITH  RECOVERY -- !!!!!!!!!!!!!!!! if stuck in RESTORING state.
 
+## Not used any more .. just for a fallback JIC.
