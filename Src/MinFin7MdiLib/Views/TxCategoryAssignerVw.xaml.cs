@@ -28,7 +28,7 @@ public partial class TxCategoryAssignerVw : WindowBase
   }
   async void OnLoaded(object s, RoutedEventArgs e)
   {
-    _sth.SpeakExpressFAF("Loading...");
+    _sth.SpeakFAF("Loading...");
 
     /*
      * var version = Windows.ApplicationModel.Package.Current.Id.Version;
@@ -66,7 +66,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       _loaded = true;
       chkSingleYr.IsChecked = true;      // invokes the 1st search
 
-      _sth.SpeakExpressFAF("Done!");
+      _sth.SpeakFAF("Done!");
     }
     catch (Exception ex) { ex.Pop(_lgr); }
   }
@@ -121,7 +121,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
       if (string.IsNullOrEmpty(csvFilterString))
       {
-        _sth.SpeakExpressFAF("Clear!");
+        _sth.SpeakFAF("Clear!");
         FilterTxnsBy2(csvFilterString, _txCatgry);
       }
       else
@@ -129,21 +129,21 @@ If you want to DEBUG or Run with the current Package available, just set your pa
         var ta = csvFilterString.Split(new[] { '`', '>', '\\', '/' });
         if (ta.Length > 1)
         {
-          _sth.SpeakExpressFAF($"{ta.Length}-part filter");
+          _sth.SpeakFAF($"{ta.Length}-part filter");
 
-          if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { /*_sth.SpeakExpressFAF("Still Empty.");*/ return; }
+          if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { /*_sth.SpeakFAF("Still Empty.");*/ return; }
 
           if (!string.IsNullOrEmpty(ta[0]))
           {
-            if (!decimal.TryParse(ta[0], out var amt)) { /*_sth.SpeakExpressFAF("1st must be number."); */return; }
+            if (!decimal.TryParse(ta[0], out var amt)) { /*_sth.SpeakFAF("1st must be number."); */return; }
 
             if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
-            //App.Synth.SpeakExpressFAF("Multi.");
+            //App.Synth.SpeakFAF("Multi.");
             FilterTxnsBy4(csvFilterString[(ta[0].Length + 1)..], _txCatgry, amt, rng);
           }
           else if (!string.IsNullOrEmpty(ta[1])) // explicit by string
           {
-            //App.Synth.SpeakExpressFAF("Filter by text.");
+            //App.Synth.SpeakFAF("Filter by text.");
             FilterTxnsBy2(ta[1], _txCatgry);
           }
         }
@@ -152,12 +152,12 @@ If you want to DEBUG or Run with the current Package available, just set your pa
           if (decimal.TryParse(csvFilterString, out var amt))
           {
             if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
-            //App.Synth.SpeakExpressFAF("Filter by money.");
+            //App.Synth.SpeakFAF("Filter by money.");
             FilterTxnsBy4("", _txCatgry, amt, rng);
           }
           else
           {
-            //App.Synth.SpeakExpressFAF("Filter by text.");
+            //App.Synth.SpeakFAF("Filter by text.");
             FilterTxnsBy2(csvFilterString, _txCatgry);
           }
         }
@@ -386,7 +386,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     else
       return;
 
-    _ = tbxSearch.Focus(); // App.Synth.SpeakExpressFAF("Also, Clipboarded.");
+    _ = tbxSearch.Focus(); // App.Synth.SpeakFAF("Also, Clipboarded.");
   }
 
   //use main menu instead: async void OnManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _dba).ShowDialog(); await ReLoadTxCore(); }
@@ -396,7 +396,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       await Assign(((TxCategory?)txCategoryListBox.SelectedItems[0])?.IdTxt);
     else if (_choiceAbove?.Length > 0 && _choiceAbove == _choiceBelow)
       await Assign(_choiceAbove);
-    //else      App.Synth.SpeakExpressFAF("Nothing to assign.");
+    //else      App.Synth.SpeakFAF("Nothing to assign.");
   }
   async void OnAssign1(object s, RoutedEventArgs e) => await Assign(_choiceAbove);
   async void OnAssign2(object s, RoutedEventArgs e) => await Assign(_choiceBelow);
@@ -430,7 +430,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
     _ = tbxSearch.Focus();
 
-    //App.Synth.SpeakExpressFAF("Assigned.");
+    //App.Synth.SpeakFAF("Assigned.");
   }
 }
 /*
