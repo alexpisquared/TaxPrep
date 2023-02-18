@@ -19,11 +19,13 @@
     <None Remove="Assets\CheckYesNo.ico" />
     <None Remove="Assets\Cog-BlackOnTransp.png" />
     <None Remove="Assets\Excel_16x16.png" />
+    <None Remove="Assets\Money.ico" />
     <None Remove="Assets\Save.png" />
     <None Remove="ReadMe.md" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Money.ico" />
     <Content Include="ReadMe.md" />
   </ItemGroup>
 

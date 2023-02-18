@@ -6,13 +6,16 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64</Platforms>
+    <ApplicationIcon>Money.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Money.ico" />
     <None Remove="ReadMe.md" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Money.ico" />
     <Content Include="ReadMe.md" />
   </ItemGroup>
 
@@ -24,6 +27,10 @@
     <ProjectReference Include="..\Db.FinDemo.PowerTools\Db.FinDemo.PowerTools.csproj" />
     <ProjectReference Include="..\MinFin7.MNT.View\MinFin7.MNT.View.csproj" />
     <ProjectReference Include="..\MinFin7.MNT.VM\MinFin7.MNT.VM.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Money.ico" />
   </ItemGroup>
 
 </Project>

@@ -27,16 +27,16 @@
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-green.ico"      Width="32" />
           <TextBlock Text="" Padding="2 2 0 0" FontFamily="Webdings" FontWeight="Normal" FontSize="22" Foreground="#cfd" />
         </Grid>
-        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" Emails/Agents"/>
+        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" HiT"/>
       </StackPanel>
     </nav:NavDrawerItem>
-    <nav:NavDrawerItem Command="{Binding NavigatePage02Command}" CommandParameter="MaxWithdrawSetupVM" ToolTip="Max Withdrawal Setup">
+    <!--<nav:NavDrawerItem Command="{Binding NavigatePage02Command}" CommandParameter="MaxWithdrawSetupVM" ToolTip="Max Withdrawal Setup">
       <StackPanel Orientation="Horizontal">
         <Grid>
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-yellow.ico"      Width="32" />
           <TextBlock Text="&#x0087;" Padding="3 3 0 0" FontFamily="Wingdings 3" FontWeight="Bold" FontSize="22" Foreground="#04f" />
         </Grid>
-        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" Broadcast"/>
+        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" 222"/>
       </StackPanel>
     </nav:NavDrawerItem>
     <nav:NavDrawerItem Command="{Binding NavigatePage03Command}" CommandParameter="MinWithdrawSetupVM" ToolTip="Min Withdrawal Setup">
@@ -45,7 +45,7 @@
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-blue.ico"      Width="32" />
           <TextBlock Text="&#x0088;" Padding="3 3 0 0" FontFamily="Wingdings 3" FontWeight="Bold" FontSize="22" Foreground="#ff0" />
         </Grid>
-        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" Outlook"/>
+        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" 333"/>
       </StackPanel>
     </nav:NavDrawerItem>
     <nav:NavDrawerItem Command="{Binding NavigatePage04Command}" CommandParameter="MinWithdrawSetupVM" ToolTip="Min Withdrawal Setup">
@@ -54,7 +54,7 @@
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-orange.ico"      Width="32" />
           <TextBlock Text="$" Padding="8 0 0 0" FontWeight="Bold" FontSize="18" Foreground="#0e0" />
         </Grid>
-        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" Leads"/>
+        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" 444"/>
       </StackPanel>
     </nav:NavDrawerItem>
     <nav:NavDrawerItem Command="{Binding NavigatePage05Command}" CommandParameter="PmtProcessExportVM" ToolTip="Export RIF-LIF Excel Files" >
@@ -63,9 +63,9 @@
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-red.ico"      Width="32" />
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Excel_16x16.png" Margin="8"/>
         </Grid>
-        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" Companies"/>
+        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" 555"/>
       </StackPanel>
-    </nav:NavDrawerItem>
+    </nav:NavDrawerItem>-->
 
     <nav:NavDrawerItem Command="{Binding NavigateMainAppDispatcherCommand}" CommandParameter="PmtProcessExportVM" ToolTip="Export RIF-LIF Excel Files" >
       <StackPanel Orientation="Horizontal">
@@ -73,11 +73,11 @@
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-red.ico"      Width="32" />
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Excel_16x16.png" Margin="8"/>
         </Grid>
-        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" Companies"/>
+        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" Menu"/>
       </StackPanel>
     </nav:NavDrawerItem>
 
-    <nav:NavDrawerItem Command="{Binding NavigateEmlDtlCommand}" CommandParameter="XlsOneTimeImportVM" ToolTip="Import RIF-LIF Excel Files" >
+    <!--<nav:NavDrawerItem Command="{Binding NavigateEmlDtlCommand}" CommandParameter="XlsOneTimeImportVM" ToolTip="Import RIF-LIF Excel Files" >
       <StackPanel Orientation="Horizontal">
         <Grid>
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-grey.ico"      Width="32" />
@@ -90,22 +90,22 @@
       <StackPanel Orientation="Horizontal">
         <Grid>
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-green.ico"      Width="32" />
-          <!--<TextBlock Text="&#x0087;" Padding="5 0 0 0" FontFamily="Bookshelf Symbol 7" Foreground="#ff0" />-->
+          --><!--<TextBlock Text="&#x0087;" Padding="5 0 0 0" FontFamily="Bookshelf Symbol 7" Foreground="#ff0" />--><!--
           <TextBlock Text="&#x0087;" Padding="5 0 0 0" FontFamily="Bookshelf Symbol 7" Foreground="#ff0" />
         </Grid>
-        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" EmlDtl"/>
+        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" 888"/>
       </StackPanel>
     </nav:NavDrawerItem>
     <nav:NavDrawerItem Command="{Binding NavigatePage04Command}" CommandParameter="UserPermissionerVM" ToolTip="Permission Manager" Visibility="{Binding IsDevDbgViz, FallbackValue=Collapsed}" d:Visibility="Visible">
       <StackPanel Orientation="Horizontal">
         <Grid>
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-blue.ico"      Width="32" />
-          <!--<TextBlock Text="&#x0087;" Padding="5 0 0 0" FontFamily="Bookshelf Symbol 7" Foreground="#ff0" />-->
+          --><!--<TextBlock Text="&#x0087;" Padding="5 0 0 0" FontFamily="Bookshelf Symbol 7" Foreground="#ff0" />--><!--
           <TextBlock Text="&#x0091;" Padding="5 0 0 0" FontFamily="Bookshelf Symbol 7" Foreground="#fff" />
         </Grid>
-        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" Page04"/>
+        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" 999"/>
       </StackPanel>
-    </nav:NavDrawerItem>
+    </nav:NavDrawerItem>-->
 
     <TextBlock Text="Dev   ↓ ↓ ↓" Visibility="{Binding IsDevDbgViz, FallbackValue=Collapsed}" Margin="8 26 0 8" d:Visibility="Visible" />
 
@@ -115,16 +115,16 @@
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-red.ico"      Width="32" />
           <TextBlock Text="" Padding="1 2 0 0" FontFamily="Wingdings" FontWeight="Normal" FontSize="22" Foreground="#def" />
         </Grid>
-        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" Import Excel Files dbl"/>
+        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" Settings"/>
       </StackPanel>
     </nav:NavDrawerItem>
-    <nav:NavDrawerItem Command="{Binding NavigatePage04Command}" CommandParameter="DevOpsMasterPageVM" Visibility="{Binding IsDevDbgViz, FallbackValue=Collapsed}" ToolTip="DevDbg Matters" d:Visibility="Visible">
+    <!--<nav:NavDrawerItem Command="{Binding NavigatePage04Command}" CommandParameter="DevOpsMasterPageVM" Visibility="{Binding IsDevDbgViz, FallbackValue=Collapsed}" ToolTip="DevDbg Matters" d:Visibility="Visible">
       <StackPanel Orientation="Horizontal">
         <Grid>
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-red.ico"      Width="32" />
           <TextBlock Text="" Padding="3 2 0 0" FontFamily="Wingdings" FontWeight="Normal" FontSize="22" Foreground="#ffc" />
         </Grid>
-        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" QA Results"/>
+        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" bbb"/>
       </StackPanel>
     </nav:NavDrawerItem>
     <nav:NavDrawerItem Command="{Binding NavigatePage04Command}" CommandParameter="HomeLandingPage0View" Visibility="{Binding IsDevDbgViz, FallbackValue=Collapsed}" ToolTip="DevDbg Matters" d:Visibility="Visible">
@@ -133,8 +133,8 @@
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-grey.ico"      Width="32" />
           <TextBlock Text="" Padding="5 0 0 0" FontFamily="Segoe MDL2 assets" Foreground="#00d" />
         </Grid>
-        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" ▄▀▄▀ ^ ~Home"/>
+        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" ccc"/>
       </StackPanel>
-    </nav:NavDrawerItem>
+    </nav:NavDrawerItem>-->
   </StackPanel>
 </UserControl>
