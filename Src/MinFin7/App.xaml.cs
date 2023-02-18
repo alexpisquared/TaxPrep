@@ -6,11 +6,10 @@ public partial class App : Application
   ILogger<TxCategoryAssignerVw>? _logger;
   protected override void OnStartup(StartupEventArgs e)
   {
-    _logger = SeriLogHelper.InitLoggerFactory(
-      folder: FSHelper.GetCreateSafeLogFolderAndFile(@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log"),
-      levels: "+Info").CreateLogger<TxCategoryAssignerVw>();
-
     base.OnStartup(e);
+    
+    _logger = SeriLogHelper.InitLoggerFactory(@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log", "+Info").CreateLogger<TxCategoryAssignerVw>();
+
     Current.DispatcherUnhandledException += UnhandledExceptionHndlr.OnCurrentDispatcherUnhandledException;
     EventManager.RegisterClassHandler(typeof(TextBox), UIElement.GotFocusEvent, new RoutedEventHandler((s, re) => ((TextBox)s).SelectAll())); //tu: TextBox
 
