@@ -73,7 +73,7 @@
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Box-red.ico"      Width="32" />
           <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/MinFin7.MNT.View;component/Assets/Excel_16x16.png" Margin="8"/>
         </Grid>
-        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" Menu"/>
+        <TextBlock Foreground="{StaticResource InfoForegroundBrush}" Text=" MDI Window Launcher"/>
       </StackPanel>
     </nav:NavDrawerItem>
 
