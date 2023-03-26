@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\Ambience\AmbienceLib.csproj" />
-    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\StandardContractsLib\StandardContractsLib.csproj" />
-    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net.CI\WpfUserControlLib\WpfUserControlLib.csproj" />
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\NetLts\Ambience\AmbienceLib.csproj" />
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\NetLts\StandardContractsLib\StandardContractsLib.csproj" />
+    <ProjectReference Include="..\..\..\AAV.Shared\Src\NetLts\WpfUserControlLib\WpfUserControlLib.csproj" />
     <ProjectReference Include="..\Db.FinDemo.PowerTools\Db.FinDemo.PowerTools.csproj" />
   </ItemGroup>
 
