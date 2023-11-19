@@ -1,8 +1,8 @@
 ﻿USE MinFinInv
 go
 
-SELECT     AcntHist.InvAccountID, COUNT(*) AS Cnt, MAX(AcntHist.Balance) AS Max, MIN(AcntHist.Balance) AS Min, InvAccount.SrcAccount, InvAccount.TrgAccount, InvAccount.OpenedOn, InvAccount.ClosedOn, InvAccount.BalanceOpening, InvAccount.BalanceClosing, InvAccount.Institution, 
-                  InvAccount.AcntType, InvAccount.AcntHolder, InvAccount.Advisor, InvAccount.Notes
+SELECT     AcntHist.InvAccountID, COUNT(*) AS Cnt, MAX(AcntHist.Balance) AS Max, MIN(AcntHist.Balance) AS Min, MAX(AcntHist.Date) AS MaxDt, MIN(AcntHist.Date) AS MinDt, InvAccount.SrcAccount, InvAccount.TrgAccount, InvAccount.OpenedOn, InvAccount.ClosedOn, InvAccount.BalanceOpening, 
+                  InvAccount.BalanceClosing, InvAccount.Institution, InvAccount.AcntType, InvAccount.AcntHolder, InvAccount.Advisor, InvAccount.Notes
 FROM        AcntHist INNER JOIN
                   InvAccount ON AcntHist.InvAccountID = InvAccount.ID
 WHERE     (AcntHist.Balance <> 0)
