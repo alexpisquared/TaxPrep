@@ -1,6 +1,8 @@
 ﻿USE MinFinInv
 go
 
+-- //tu: ALTER DATABASE MinFinInv SET COMPATIBILITY_LEVEL = 130;
+
 SELECT     AcntHist.InvAccountID, COUNT(*) AS Cnt, MAX(AcntHist.Balance) AS Max, MIN(AcntHist.Balance) AS Min, MAX(AcntHist.Date) AS MaxDt, MIN(AcntHist.Date) AS MinDt, InvAccount.SrcAccount, InvAccount.TrgAccount, InvAccount.OpenedOn, InvAccount.ClosedOn, InvAccount.BalanceOpening, 
                   InvAccount.BalanceClosing, InvAccount.Institution, InvAccount.AcntType, InvAccount.AcntHolder, InvAccount.Advisor, InvAccount.Notes
 FROM        AcntHist INNER JOIN
