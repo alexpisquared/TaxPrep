@@ -37,8 +37,8 @@ public partial class MainVM : BaseMinVM
     EmailOfI = UsrStgns.EmailOfI;
     LetDbChg = UsrStgns.LetDbChg;
 
-    AppVerNumber = VersionHelper.CurVerStr("0.M.d");
-    AppVerToolTip = VersionHelper.CurVerStr("0.M.d.H.m");
+    AppVerNumber = VersionHelper.CurVerStr;
+    AppVerToolTip = VersionHelper.CurVerStr;
 
     return await base.InitAsync();
   }

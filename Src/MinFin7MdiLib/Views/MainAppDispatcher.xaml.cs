@@ -30,7 +30,7 @@ public partial class MainAppDispatcher : WindowBase
     }; //tu:
 
     //SetDefault(Settings.Default.LastBtnNo);
-    tbver.Text = $"Old pure MDI ver - {VersionHelper.CurVerStrYMd}";
+    tbver.Text = $"Old pure MDI ver - {VersionHelper.CurVerStr}";
 
     KeepOpenReason = ""; // nothing ot save/worry about at this stage for this window.
   }

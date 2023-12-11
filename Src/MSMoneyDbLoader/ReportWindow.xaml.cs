@@ -72,11 +72,11 @@ namespace MSMoneyDbLoader
     {
       base.OnClosing(e);
 
-      if (DbSaveMsgBox.CheckAskSave(_db) == (int)MsgBoxDbRslt.Cancel)
+      if (DbSaveMsgBox_OldRestoredInDec2023.CheckAskSave(_db) == (int)MsgBoxDbRslt.Cancel)
         e.Cancel = true;
     }
     void onCheckDbPendSave(object s = null, RoutedEventArgs e = null) => tbInfo.Text += $"\r\n{_db.GetDbChangesReport()}";
-    void onSaveToDB(object s, RoutedEventArgs e) => tbInfo.Text += $"\r\n{DbSaveMsgBox.CheckAskSave(_db)} rows saved.";
+    void onSaveToDB(object s, RoutedEventArgs e) => tbInfo.Text += $"\r\n{DbSaveMsgBox_OldRestoredInDec2023.CheckAskSave(_db)} rows saved.";
     async void onReadFolder(object s, RoutedEventArgs e)
     {
       try
@@ -155,7 +155,7 @@ namespace MSMoneyDbLoader
 
       Bpr.Beep2of2();
 
-      var rs = DbSaveMsgBox.TrySaveAsk(_db, nameof(doSingleFolder));
+      var rs = DbSaveMsgBox_OldRestoredInDec2023.TrySaveAsk(_db, nameof(doSingleFolder));
       tbInfo.Text += $" {rs,3} rows saved ";
     }
     static IEnumerable<string> getFinFiles(string folder) => Directory.GetFiles(folder, "*.?fx").Union(Directory.GetFiles(folder, "*.qif")).Union(Directory.GetFiles(folder, "*.csv"));

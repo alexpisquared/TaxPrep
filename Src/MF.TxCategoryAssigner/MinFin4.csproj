@@ -254,13 +254,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\C\AAV\AAV.Sys\AAV.Sys.4.8.csproj">
+      <Project>{60bb75f4-e913-40f9-be60-d5e408f24751}</Project>
+      <Name>AAV.Sys.4.8</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\AAV.Shared\Src\Net4.8\AAV.WPF\AAV.WPF.4.8.csproj">
       <Project>{df459a59-5c58-4930-ab44-9b3d6e36cd98}</Project>
       <Name>AAV.WPF.4.8</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net6.0\AAV.Sys\AAV.Sys.csproj">
-      <Project>{8a04f97e-f9ac-4bd2-b4a1-12cc2c46f3a9}</Project>
-      <Name>AAV.Sys</Name>
     </ProjectReference>
     <ProjectReference Include="..\Db.FinDemo\Db.FinDemo.csproj">
       <Project>{aacde791-4edd-4867-a58e-b09c74ac58a8}</Project>

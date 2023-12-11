@@ -96,9 +96,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AAV.Shared\Src\Net6.0\AAV.Sys\AAV.Sys.csproj">
-      <Project>{8a04f97e-f9ac-4bd2-b4a1-12cc2c46f3a9}</Project>
-      <Name>AAV.Sys</Name>
+    <ProjectReference Include="..\..\..\..\C\AAV\AAV.Sys\AAV.Sys.4.8.csproj">
+      <Project>{60bb75f4-e913-40f9-be60-d5e408f24751}</Project>
+      <Name>AAV.Sys.4.8</Name>
     </ProjectReference>
     <ProjectReference Include="..\Db.FinDemo\Db.FinDemo.csproj">
       <Project>{aacde791-4edd-4867-a58e-b09c74ac58a8}</Project>

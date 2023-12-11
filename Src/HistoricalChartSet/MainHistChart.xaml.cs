@@ -44,7 +44,7 @@ namespace HistoricalChartSet
           if (tmsdb != null)
           {
             tmsdb.IniBalance += _balDelta;
-            var rowsSaved = DbSaveMsgBox.CheckAskSave(db);
+            var rowsSaved = DbSaveMsgBox_OldRestoredInDec2023.CheckAskSave(db);
             tBalance.Text = $"{rowsSaved} row saved.";
             await reload();
             chartuc.RmvSeries(_tmsFla);

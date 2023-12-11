@@ -186,11 +186,11 @@ namespace MF.TxCategoryAssigner
         if (dgTxCore.ItemsSource != null)
         {
           CollectionViewSource.GetDefaultView(dgTxCore.ItemsSource).Refresh(); //tu:            
-          Bpr.OkFaF();
+          Bpr.BeepClk();
         }
         else
         {
-          Bpr.ShortFaF();
+          Bpr.BeepClk();
         }
       }
       catch (Exception ex) { ex.Pop(); }
@@ -274,7 +274,7 @@ namespace MF.TxCategoryAssigner
 
     async void onReLoad(object s, RoutedEventArgs e)
     {
-      switch (DbSaveMsgBox.CheckAskSave(_db))
+      switch (DbSaveMsgBox_OldRestoredInDec2023.CheckAskSave(_db))
       {
         case (int)MsgBoxDbRslt.Yes: break;
         default: break;
@@ -373,7 +373,7 @@ namespace MF.TxCategoryAssigner
         }
       }
 
-      if (DbSaveMsgBox.TrySaveAsk(_db, $"class TxCategoryAssignerVw.assign()") > 0)//== (int)MsgBoxDbRslt.Yes)
+      if (DbSaveMsgBox_OldRestoredInDec2023.TrySaveAsk(_db, $"class TxCategoryAssignerVw.assign()") > 0)//== (int)MsgBoxDbRslt.Yes)
       {
         await reLoadTxCore();
         onClear1();

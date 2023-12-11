@@ -33,7 +33,7 @@ namespace MF.TxCategoryAssigner
       LoadFolderCsvsToDb(PreSet.PathToTdPerson, "account*.csv", Td);
       UpdateTxCoreWith_TD();
 
-      DbSaveMsgBox.CheckAskSave(_db);
+      DbSaveMsgBox_OldRestoredInDec2023.CheckAskSave(_db);
     }
 
     static void LoadFolderCsvsToDb(string srcDir, string wildcard, FileProc fp)

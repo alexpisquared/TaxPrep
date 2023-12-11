@@ -43,7 +43,7 @@ namespace MF.TxCategoryAssigner.Views
       ((Button)FindName($"b{cb + 1}")).IsDefault = true;
       Settings.Default.LastBtnNo = cb;
       Settings.Default.Save();
-      Bpr.ShortFaF();
+      Bpr.BeepClk();
     }
 
     async void onX(object s, RoutedEventArgs e)
