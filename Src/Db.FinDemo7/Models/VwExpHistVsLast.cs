@@ -41,6 +41,7 @@ public partial class VwExpHistVsLast
 
     public decimal? Exp2021 { get; set; }
     public decimal? Exp2022 { get; set; }
+    public decimal? Exp2023 { get; set; }
 
   public decimal? MaxPrev { get; set; }
 
