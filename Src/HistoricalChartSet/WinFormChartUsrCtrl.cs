@@ -1,15 +1,12 @@
-﻿using AAV.WPF.Ext;
-using Db.FinDemo.DbModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using AAV.WPF.Extension;
-using System.Windows;
+using AAV.WPF.Ext;
+using Db.FinDemo.DbModel;
 
 namespace HistoricalChartSet
 {
@@ -17,7 +14,6 @@ namespace HistoricalChartSet
   {
     const string _0now = "$1";
     public WinFormChartUsrCtrl() { InitializeComponent(); Load += onLoad; }
-
 
     void onLoad(object s, EventArgs e)
     {
@@ -58,7 +54,7 @@ namespace HistoricalChartSet
         {
           var rmv = chart1.Series.FirstOrDefault(r => r.LegendText != _0now);
           if (rmv != null)
-            chart1.Series.Remove(rmv);
+            _ = chart1.Series.Remove(rmv);
         }
       }
       catch (Exception ex) { ex.Pop(); }
@@ -66,21 +62,21 @@ namespace HistoricalChartSet
     internal (decimal calcBal, decimal histBal) AddSeries(string tmsFla, decimal tmsIniBalance, List<TxCoreV2> txn, List<BalAmtHist> bah)
     {
       var srsCount = chart1.Series.Count;
-      var txsSrs = new Series { Name = $"Txn {srsCount}", LegendText = tmsFla, Color = _srsClr[(1 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.Column, MarkerStyle = MarkerStyle.None };
-      var curSrs = new Series { Name = $"Cur {srsCount}", LegendText = tmsFla, Color = _srsClr[(0 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.StepLine, MarkerStyle = MarkerStyle.Diamond, MarkerSize = 12 };
-      var bahSrs = new Series { Name = $"BaH {srsCount}", LegendText = tmsFla, Color = _srsClr[(1 + 2 * (chart1.Series.Count / 3)) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.StepLine, MarkerStyle = MarkerStyle.None, BorderWidth = 5, BorderDashStyle = ChartDashStyle.Solid };
+      var txsSrs = new Series { Name = $"Txn {srsCount}", LegendText = tmsFla, Color = _srsClr[(1 + (2 * (chart1.Series.Count / 3))) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.Column, MarkerStyle = MarkerStyle.None };
+      var curSrs = new Series { Name = $"Cur {srsCount}", LegendText = tmsFla, Color = _srsClr[(0 + (2 * (chart1.Series.Count / 3))) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.StepLine, MarkerStyle = MarkerStyle.Diamond, MarkerSize = 12 };
+      var bahSrs = new Series { Name = $"BaH {srsCount}", LegendText = tmsFla, Color = _srsClr[(1 + (2 * (chart1.Series.Count / 3))) % _srsClr.Length], XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.StepLine, MarkerStyle = MarkerStyle.None, BorderWidth = 5, BorderDashStyle = ChartDashStyle.Solid };
 
       var calcBal = tmsIniBalance;
       var histBal = tmsIniBalance;
       foreach (var tx in txn.OrderBy(r => r.TxDate))
       {
-        txsSrs.Points.AddXY(tx.TxDate, -tx.TxAmount);
-        curSrs.Points.AddXY(tx.TxDate, tx.CurBalance = (calcBal -= tx.TxAmount));
+        _ = txsSrs.Points.AddXY(tx.TxDate, -tx.TxAmount);
+        _ = curSrs.Points.AddXY(tx.TxDate, tx.CurBalance = calcBal -= tx.TxAmount);
       }
 
       foreach (var ba in bah.OrderBy(r => r.AsOfDate))
       {
-        bahSrs.Points.AddXY(ba.AsOfDate, -ba.BalAmt);
+        _ = bahSrs.Points.AddXY(ba.AsOfDate, -ba.BalAmt);
         histBal = -ba.BalAmt;
       }
 
@@ -93,8 +89,8 @@ namespace HistoricalChartSet
     void AddMinSeries() // preventing datetime invalid error on series clear.
     {
       var txsSrs = new Series { LegendText = _0now, MarkerStyle = MarkerStyle.None, ChartType = SeriesChartType.Line };
-      txsSrs.Points.AddXY(DateTime.Today, -0);
-      txsSrs.Points.AddXY(DateTime.Now, 1);
+      _ = txsSrs.Points.AddXY(DateTime.Today, -0);
+      _ = txsSrs.Points.AddXY(DateTime.Now, 1);
       chart1.Series.Add(txsSrs);
     }
     internal void RmvSeries(string tmsFla)
@@ -105,7 +101,7 @@ namespace HistoricalChartSet
         {
           var rmv = chart1.Series.FirstOrDefault(r => r.LegendText == tmsFla);
           if (rmv != null && chart1.Series.Count > 1)
-            chart1.Series.Remove(rmv);
+            _ = chart1.Series.Remove(rmv);
         }
       }
       catch (Exception ex) { ex.Pop(); }
@@ -146,14 +142,12 @@ namespace HistoricalChartSet
       {
         Cursor = Cursors.Hand;
       }
-      else if (result.ChartElementType != ChartElementType.Nothing &&
-                 result.ChartElementType != ChartElementType.PlottingArea)
-      {
-        Cursor = Cursors.Arrow;
-      }
       else
       {
-        Cursor = Cursors.Default;
+        Cursor = result.ChartElementType != ChartElementType.Nothing &&
+                         result.ChartElementType != ChartElementType.PlottingArea
+          ? Cursors.Arrow
+          : Cursors.Default;
       }
     }
     void chart1_MouseDown(object s, MouseEventArgs e)
@@ -169,7 +163,7 @@ namespace HistoricalChartSet
             var st = DateTime.FromOADate(htr.Series.Points[htr.PointIndex].XValue);
             var txn = db.TxCoreV2.Where(r => r.TxDate == st).ToList();
             if (txn == null)
-              System.Windows.MessageBox.Show("Not good: \r\n\tNo txs for this date found.");
+              _ = System.Windows.MessageBox.Show("Not good: \r\n\tNo txs for this date found.");
             else
             {
               //db.Laps.Load();
@@ -179,7 +173,7 @@ namespace HistoricalChartSet
                 PointIndex = htr.PointIndex,
                 HTR = htr,
                 Txns = txn,
-                Owner = ((FrameworkElement)s).FindParentWindow()
+                //OP2024: not used and problematic: Owner = ((FrameworkElement)(((System.Windows.Forms.Control)s))).FindParentWindow()
               };
               dlg.Show(); // MessageBox.Show(this, "DataPoint.Dialog popup is not ready\r\n\nSelected Element is: " + result.ChartElementType.ToString());
             }
