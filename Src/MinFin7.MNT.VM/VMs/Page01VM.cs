@@ -106,11 +106,11 @@ public partial class Page01VM : BaseEmVM
   }
 
   [RelayCommand]
-  async Task LoadSelTxDtl(GroupedTxnResult selGrdTx)
+  void LoadSelTxDtl(GroupedTxnResult selGrdTx)
   {
     if (!_loaded) { return; }
 
-    Bpr.Start(8);
+    Bpr.Tick();
     try
     {
       TxPrevCvs?.Refresh();
@@ -127,8 +127,7 @@ public partial class Page01VM : BaseEmVM
 
       TxnYoiCvs?.Refresh();
       TxnYoiCvs?.MoveCurrentTo(null);
-
-      await Bpr.FinishAsync(8);
+      Bpr.Click();
     }
     catch (Exception ex) { ex.Pop(); }
   }

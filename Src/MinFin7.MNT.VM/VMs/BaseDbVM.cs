@@ -38,7 +38,6 @@ public partial class BaseDbVM : BaseMinVM
     IsBusy = false;
     _inited = true;
     //Lgr.LogInformation($"├── {GetType().Name} eo-init     _hash:{_hashCode,-10}   br.hash:{Dbx.GetType().GetHashCode(),-10}");
-    //too many: Bpr.Finish();
     return await base.InitAsync();
   }
   public override async Task<bool> WrapAsync()
