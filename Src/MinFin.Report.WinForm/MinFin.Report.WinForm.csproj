@@ -194,6 +194,7 @@
   <ItemGroup>
     <Content Include="Money.ico" />
     <Content Include="Notepad.ico" />
+    <Content Include="ReadMe.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Alx\" />
