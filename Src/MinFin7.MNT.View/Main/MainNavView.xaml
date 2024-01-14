@@ -7,6 +7,7 @@
                 xmlns:vws="clr-namespace:MinFin7.MNT.View.Main"
                 xmlns:nav="clr-namespace:NavigationDrawerControl;assembly=NavigationDrawerControl"            
                 xmlns:vms="clr-namespace:MinFin7.MNT.VM.VMs;assembly=MinFin7.MNT.VM" 
+                xmlns:local="clr-namespace:MinFin7.MNT.View.Main"
                 d:DataContext="{d:DesignInstance Type=vms:MainVM}"  
                 Title="CI Permission Managers" MinWidth="1000" MinHeight="160" Style="{DynamicResource WindowStyle_Aav0}" Loaded="OnLoaded">
   <WindowChrome.WindowChrome>
@@ -389,13 +390,18 @@
           </Grid>
 
           <Rectangle x:Name="pnlReportTooltipShower" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="58" ToolTip="{Binding GSReport}" Fill="Transparent" Grid.Column="1"/>
-          <Border x:Name="pnlReport" Visibility="{Binding GSRepViz, FallbackValue=Collapsed}" d:Visibility="Visible" Background="#282828" BorderBrush="#aaa" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="13 16" Padding="1" CornerRadius="8">
-            <Border.Effect>
-              <DropShadowEffect BlurRadius="16" />
-            </Border.Effect>
-            <Grid>
-              <TextBlock Text="{Binding GSReport}" MaxHeight="160" MaxWidth="920" Background="Transparent" Margin="12 8 26 5" VerticalAlignment="Top" HorizontalAlignment="Left" d:Text="Hello! Here it is."/>
-              <!--<ListBox MaxHeight="160" MaxWidth="920" Background="Transparent" BorderThickness="0" Margin="5 8 15 5" ItemsSource="{Binding ValidationMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" >
+
+          <Rectangle x:Name="Target0"     HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10"              Width="0" Height="0" Grid.ColumnSpan="3" />
+          <ToggleButton Content="1"       HorizontalAlignment="Right" VerticalAlignment="Top" Margin="14" x:Name="Opener0" IsChecked="True" Grid.ColumnSpan="3" FontFamily="Webdings" FontSize="16" Height="26" Width="26" Padding="0 0 0 2" BorderThickness="0" Foreground="#08f"/>
+          <local:DraggablePopup IsOpen="{Binding ElementName=Opener0, Path=IsChecked, FallbackValue=True}" Placement="Left" PlacementTarget="{Binding ElementName=Target0}" AllowsTransparency="True" Cursor="Hand" >
+            <Border             Visibility="{Binding GSRepViz, FallbackValue=Collapsed}" d:Visibility="Visible" Background="#282828" BorderBrush="#aaa" BorderThickness="1" Padding="1" CornerRadius="8" MinWidth="80" MinHeight="48" Cursor="Hand" >
+              <Border.Effect>
+                <DropShadowEffect BlurRadius="16" />
+              </Border.Effect>
+              <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid>
+                  <TextBlock Text="{Binding GSReport}" MaxHeight="160" MaxWidth="920" Background="Transparent" Margin="12 8 26 5" VerticalAlignment="Top" HorizontalAlignment="Left" d:Text="Hello! Here it is."/>
+                  <!--<ListBox MaxHeight="160" MaxWidth="920" Background="Transparent" BorderThickness="0" Margin="5 8 15 5" ItemsSource="{Binding ValidationMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" >
                 <ListBox.ItemContainerStyle>
                   <Style TargetType="{x:Type ListBoxItem}" >
                     <Setter Property="Template" Value="{StaticResource ColoredValidationMsgStyle}"/>
@@ -407,15 +413,24 @@
                 <ListBoxItem Content="123 wonderful color" Foreground="#f88" />
                 <ListBoxItem Content="123 wonderful color" Foreground="#faa" />
               </ListBox>-->
-              <Button Content="r" FontFamily="Webdings" FontSize="18" Height="26" Padding="0 -1" Width="26" Foreground="#F00" BorderThickness="0" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{Binding HidePnlCommand}" Background="#555" Margin="0 -0" IsCancel="True" ToolTip="Close Popup" />
-            </Grid>
-          </Border>
+
+                  <!--<Button   Content="r" FontFamily="Webdings" FontSize="18" Height="26" Width="26" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0 -1" Command="{Binding HidePnlCommand}" Background="#555" Margin="0 -0" IsCancel="True" ToolTip="Close Popup" Foreground="#F00" />-->
+                  <ToggleButton Content="r" FontFamily="Webdings" FontSize="18" Height="26" Width="26" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0 -1" IsChecked="{Binding ElementName=Opener0, Path=IsChecked}"  Foreground="#F00" />
+                </Grid>                                                                                                                                                                                                                                             
+              </ScrollViewer>
+            </Border>
+          </local:DraggablePopup>
+
+          <local:DraggablePopup Width="60" Height="40" IsOpen="True"  Placement="Center" PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Cursor="Hand"  >
+            <Border Background="#088" BorderBrush="#8ff" BorderThickness="1" CornerRadius="8" Cursor="Hand" />
+          </local:DraggablePopup>
+
         </Grid>
 
-        <StackPanel Grid.Row="1" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
-          <Button Content="{Binding AppVerNumber}" Command="{Binding UpgradeSelfCommand}" d:Content="123" BorderThickness="0" Background="Transparent" FontSize="14" VerticalAlignment="Bottom" Padding="4 0 4 1" Margin="2 -4"
+        <StackPanel Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
+          <Button Content="{Binding AppVerNumber}" Command="{Binding UpgradeSelfCommand}" d:Content="123" BorderThickness="0" Background="Transparent" FontSize="14" VerticalAlignment="Bottom" Padding="4 0 4 1" Margin="8 0"
                   ToolTip="{Binding AppVerToolTip}" 
-               Foreground="{Binding IsObsolete, Converter={cnv:UniConverter BrushTrue=OrangeRed, BrushFalse=Green}, FallbackValue=#07e}" />
+               Foreground="{Binding IsObsolete, Converter={cnv:UniConverter BrushTrue=OrangeRed, BrushFalse='#07e'}, FallbackValue=#07e}" FontWeight="Medium" />
           <!-- BE-194                        Style="{StaticResource AnimColorButtonStyle}" Height="26" />          -->
           <!--<TextBlock x:Name="tbkVer" Text="v7·11" Margin="40 0 16 0" 
                      Foreground="{Binding IsObsolete, Converter={cnv:UniConverter BrushTrue=OrangeRed, BrushFalse=Green}, FallbackValue=#07e}" FontSize="12" VerticalAlignment="Bottom" 
@@ -439,10 +454,10 @@
         <Button   Margin="5 0" Content="_Save"     Height="26" Click="OnSave"     Visibility="Collapsed" />
         <Button	  Margin="5 0" Content="Se_ttings" Height="26" Click="OnSettings" Visibility="Collapsed" ToolTip="Adjust application settings" VerticalAlignment="Stretch" />
 
-        <!--<xui:ThemeSelectorUsrCtrl x:Name="themeSelector4" Height="26" Margin="5 0" />        <xui:ThemeSelectorUsrCtrl x:Name="themeSelector3" Header="Dark Mode" FontFml="Arial" FontSze="16"/>-->
-
+        <!--<xui:ThemeSelectorUsrCtrl x:Name="themeSelector4" Height="26" Margin="5 0" />        <xui:ThemeSelectorUsrCtrl x:Name="themeSelector3" Header="Dark Mode" FontFml="Arial" FontSze="16"/>
         <TextBlock Margin="0 0 8 0" FontFamily="Courier New" FontSize="14" Text="Jan 2024 ver" Foreground="#0af" />
-        
+        -->
+
         <xui:Zoomer x:Name="ZoomSlider2" ZmValue="{Binding ZV, ElementName=wnd, Mode=TwoWay}"	VerticalAlignment="Top" Margin="5 0" />
         <Button	Margin="2" Content="_æ" FontFamily="Webdings"    FontSize="18" Height="26" Padding="0 -1" Width="26" Foreground="#00F" BorderThickness="0" ToolTip="Toggle Audio"      Click="OnAudio"                      Visibility="Collapsed" />
         <Button	Margin="2" Content="_+" FontFamily="Wingdings 2" FontSize="16" Height="26" Padding="0 -1" Width="26" Foreground="#111" BorderThickness="0" ToolTip="Restore Window"    Click="OnWindowRestoree" x:Name="wr" Visibility="Collapsed" />
@@ -450,7 +465,7 @@
         <Button	Margin="2" Content="_-"                          FontSize="26" Height="26" Padding="2 -0" Width="26" Foreground="#111" BorderThickness="0" ToolTip="Minimize Window"   Click="OnWindowMiniBase"                               />
         <Button	Margin="2" Content="r"  FontFamily="Webdings"    FontSize="18" Height="26" Padding="0 -1" Width="26" Foreground="#e00" BorderThickness="0" ToolTip="Close Application" Command="{Binding CloseAppCommand}" x:Name="btnExit"   />
       </StackPanel>
-      
+
     </Grid>
   </Border>
 </lnk:WindowBase>  
