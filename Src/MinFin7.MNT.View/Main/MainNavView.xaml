@@ -420,11 +420,6 @@
               </ScrollViewer>
             </Border>
           </local:DraggablePopup>
-
-          <local:DraggablePopup Width="60" Height="40" IsOpen="True"  Placement="Center" PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Cursor="Hand"  >
-            <Border Background="#088" BorderBrush="#8ff" BorderThickness="1" CornerRadius="8" Cursor="Hand" />
-          </local:DraggablePopup>
-
         </Grid>
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
