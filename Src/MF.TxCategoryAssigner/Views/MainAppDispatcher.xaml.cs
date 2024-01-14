@@ -34,7 +34,7 @@ namespace MF.TxCategoryAssigner.Views
       //Task.Run(async () => await A0DbContext.Create().UnitPrices.LoadAsync()); // preload to ini the EF for faster loads in views.
 
       setDefault(Settings.Default.LastBtnNo);
-      tbver.Text = $"db:{Db.FinDemo.DbModel.A0DbContext.DbName}    -   {VerHelper.CurVerStr(".NET 4.8")}";
+      tbver.Text = $"{VerHelper.CurVerStr()}     db:{Db.FinDemo.DbModel.A0DbContext.DbName}";
     }
 
     void setDefault(int cb)

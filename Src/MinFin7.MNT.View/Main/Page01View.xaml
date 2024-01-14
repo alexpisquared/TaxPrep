@@ -142,7 +142,7 @@
           <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-MM-dd}'}"  />
           <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
 
-          <DataGridTemplateColumn Header="Src FLA"	SortMemberPath="TxMoneySrc.Fla">
+          <DataGridTemplateColumn Header="SrcFLA2"	SortMemberPath="TxMoneySrc.Fla">
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
                 <TextBlock Text="{Binding TxMoneySrc.Fla}"  ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=#0cf, BrushFalse=#fcc}, ConverterParameter='Alx'}" />
@@ -191,7 +191,7 @@
           <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-MM-dd}'}"  />
           <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
 
-          <DataGridTemplateColumn Header="Src FLA"	SortMemberPath="TxMoneySrc.Fla">
+          <DataGridTemplateColumn Header="SrcFLA3"	SortMemberPath="TxMoneySrc.Fla">
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
                 <TextBlock Text="{Binding TxMoneySrc.Fla}"  ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=#0cf, BrushFalse=#fcc}, ConverterParameter='Alx'}" />

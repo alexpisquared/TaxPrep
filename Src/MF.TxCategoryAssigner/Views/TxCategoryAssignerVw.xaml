@@ -155,7 +155,7 @@
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
 
-        <DataGridTemplateColumn Header="Src FLA"		  SortMemberPath="TxMoneySrc.Fla">
+        <DataGridTemplateColumn Header="SrcFLA1"		  SortMemberPath="TxMoneySrc.Fla">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
               <TextBlock Text="{Binding TxMoneySrc.Fla}" ToolTip="{Binding TxMoneySrc.Notes}" />

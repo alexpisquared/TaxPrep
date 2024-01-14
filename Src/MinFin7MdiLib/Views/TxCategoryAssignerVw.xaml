@@ -126,7 +126,7 @@
     </StackPanel>
 
     <!--RowDetailsVisibilityMode="VisibleWhenSelected" EnableRowVirtualization="True" AutoGenerateColumns="False" IsReadOnly="False"-->
-    <DataGrid x:Name="dgTxCore" ItemsSource="{Binding}" SelectionChanged="DgTxCore_SelChd" MouseDoubleClick="DgTxCore_MouseDblClick" Grid.Row="1" Grid.Column="1">
+    <DataGrid x:Name="dgTxCore" ItemsSource="{Binding}" SelectionChanged="DgTxCore_SelChd" MouseDoubleClick="DgTxCore_MouseDblClick" SelectionMode="Extended" Grid.Row="1" Grid.Column="1">
       <DataGrid.Resources>
         <Style TargetType="DataGridRow">
           <!--<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.IsInDb, Converter={cnv:Bool TrueColor=Gray, FalseColor=Red}}" />-->
@@ -147,7 +147,7 @@
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
 
-        <DataGridTemplateColumn Header="Src FLA"	SortMemberPath="TxMoneySrc.Fla">
+        <DataGridTemplateColumn Header="src Fla 8 "	SortMemberPath="TxMoneySrc.Fla">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
               <TextBlock Text="{Binding TxMoneySrc.Fla}"  ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=Teal, BrushFalse=Magenta}, ConverterParameter='Alx'}" />
