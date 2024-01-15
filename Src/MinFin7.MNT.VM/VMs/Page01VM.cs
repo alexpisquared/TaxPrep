@@ -171,6 +171,6 @@ public partial class Page01VM : BaseEmVM
   static bool CanAssign(string? selctgry) => selctgry is not null; // https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/relaycommand
 
   [RelayCommand] void Cou() { Bpr.Click(); try { Nxt(); } catch (Exception ex) { ex.Pop(); } }
-  [RelayCommand] void PBR() { Bpr.Click(); try { Nxt(); } catch (Exception ex) { ex.Pop(); } }
+  [RelayCommand] void PBR() { Bpr.Click(); try { Dbg(); } catch (Exception ex) { ex.Pop(); } }
   [RelayCommand] void Del() { Bpr.Click(); try { Nxt(); } catch (Exception ex) { ex.Pop(); } }
 }

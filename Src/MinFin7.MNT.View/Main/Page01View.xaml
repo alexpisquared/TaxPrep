@@ -65,7 +65,6 @@
         <Button Content=" Sve " Command="{Binding Save2DbCommand}"                     ToolTip="Save changes to DB"    Foreground="#f80" />
         <Ellipse Width="10" Height="10" Margin="-10 -20 0 0" Visibility="{Binding HasChanges, Converter={cnv:UniConverter}}" Fill="#fa0" />
       </StackPanel>
-      <!--<TextBlock  Grid.Column="3" FontSize="16" Text="{Binding GSReport}" HorizontalAlignment="Center" TextWrapping="Wrap" d:Text="GSReport" Foreground="#1af"  />-->
     </Grid>
 
     <DataGrid Grid.Row="1" ItemsSource="{Binding PageCvs}" CurrentItem="{Binding CurrentGrTxn}" SelectedItem="{Binding SelectdGrTxn}" CanUserAddRows="False" InitializingNewItem="OnInitNewItem" IsReadOnly="False" Margin="4" x:Name="dgPage"
