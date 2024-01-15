@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls.Primitives;
-
-namespace MinFin7.MNT.View.Main;
+﻿namespace MinFin7.MNT.View.Main;
 public partial class MainNavView : WpfUserControlLib.Base.WindowBase
 {
   public MainNavView(ILogger logger) : this((ILogger<Window>)logger) { }
@@ -50,46 +48,4 @@ public partial class MainNavView : WpfUserControlLib.Base.WindowBase
   }
   void OnGoToLink(object s, RoutedEventArgs e) => _ = Process.Start("Explorer.exe", ((MenuItem)s)?.Tag?.ToString() ?? "C:\\");
   void OnUnchecked(object s, RoutedEventArgs e) => ((CheckBox)s).IsChecked = true;
-}
-
-public class DraggablePopup : Popup
-{
-  Point _initialMousePosition;
-  bool _isDragging;
-
-  protected override void OnInitialized(EventArgs e)
-  {
-    var contents = Child as FrameworkElement;
-    ArgumentNullException.ThrowIfNull(contents, "DraggablePopup either has no content if content that does not derive from FrameworkElement. Must be fixed for dragging to work.");
-
-    contents.MouseLeftButtonDown += Child_MouseLeftButtonDown;
-    contents.MouseLeftButtonUp += Child_MouseLeftButtonUp;
-    contents.MouseMove += Child_MouseMove;
-  }
-
-  private void Child_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-  {
-    _initialMousePosition = e.GetPosition(null);
-    _ = (sender as FrameworkElement)?.CaptureMouse();
-    _isDragging = true;
-    e.Handled = true;
-  }
-
-  private void Child_MouseMove(object sender, MouseEventArgs e)
-  {
-    if (!_isDragging) return;
-
-    var currentPoint = e.GetPosition(null);
-    HorizontalOffset += currentPoint.X - _initialMousePosition.X;
-    VerticalOffset += currentPoint.Y - _initialMousePosition.Y;
-  }
-
-  private void Child_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-  {
-    if (!_isDragging) return;
-
-    (sender as FrameworkElement)?.ReleaseMouseCapture();
-    _isDragging = false;
-    e.Handled = true;
-  }
 }

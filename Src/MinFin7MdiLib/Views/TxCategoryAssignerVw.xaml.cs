@@ -100,8 +100,6 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       KeepOpenReason = "";
     }
 
-    _dbx.Dispose();
-
     base.OnClosing(e);
   }
 
