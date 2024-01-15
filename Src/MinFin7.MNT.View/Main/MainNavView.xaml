@@ -392,15 +392,15 @@
           <Rectangle x:Name="pnlReportTooltipShower" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="58" ToolTip="{Binding GSReport}" Fill="Transparent" Grid.Column="1"/>
 
           <Rectangle x:Name="Target0"     HorizontalAlignment="Right" VerticalAlignment="Top" Margin="12"              Width="0" Height="0" Grid.ColumnSpan="3" />
-          <ToggleButton Content="1"       HorizontalAlignment="Right" VerticalAlignment="Top" Margin="14 22" x:Name="Opener0" IsChecked="True" Grid.ColumnSpan="3" FontFamily="Webdings" FontSize="16" Height="26" Width="26" Padding="0 0 0 2" BorderThickness="0" Foreground="#08f" FocusVisualStyle="{x:Null}"/>
+          <ToggleButton Content="1"       HorizontalAlignment="Right" VerticalAlignment="Top" Margin="14 21" x:Name="Opener0" IsChecked="True" Grid.ColumnSpan="3" FontFamily="Webdings" FontSize="16" Height="26" Width="26" Padding="0 0 0 2" BorderThickness="0" Foreground="#08f" FocusVisualStyle="{x:Null}"/>
           <local:DraggablePopup IsOpen="{Binding ElementName=Opener0, Path=IsChecked, FallbackValue=True}" Placement="Left" PlacementTarget="{Binding ElementName=Target0}" AllowsTransparency="True" Cursor="Hand" >
-            <Border             Visibility="{Binding GSRepViz, FallbackValue=Collapsed}" d:Visibility="Visible" BorderThickness="1 8 1 2" Padding="1" CornerRadius="8" MinWidth="80" MinHeight="48" Cursor="Hand" Background="#282828" BorderBrush="#666" >
+            <Border             Visibility="{Binding GSRepViz, FallbackValue=Collapsed}" d:Visibility="Visible" BorderThickness="1 8 1 2" Padding="1" CornerRadius="8" MinWidth="80" MinHeight="48" Cursor="Hand" Background="#282828" BorderBrush="#333" >
               <Border.Effect>
                 <DropShadowEffect BlurRadius="16" />
               </Border.Effect>
-              <ScrollViewer VerticalScrollBarVisibility="Auto">
+              <ScrollViewer VerticalScrollBarVisibility="Auto" FocusVisualStyle="{x:Null}" >
                 <Grid>
-                  <TextBlock Text="{Binding GSReport}" MaxHeight="160" MaxWidth="920" Background="Transparent" Margin="12 8 26 5" VerticalAlignment="Top" HorizontalAlignment="Left" d:Text="Hello! Here it is."/>
+                  <TextBlock Text="{Binding GSReport}" MaxHeight="160" MaxWidth="920" Margin="12 8 26 5" VerticalAlignment="Top" HorizontalAlignment="Left" d:Text="Hello! Here it is." FocusVisualStyle="{x:Null}" />
                   <!--<ListBox MaxHeight="160" MaxWidth="920" Background="Transparent" BorderThickness="0" Margin="5 8 15 5" ItemsSource="{Binding ValidationMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" >
                 <ListBox.ItemContainerStyle>
                   <Style TargetType="{x:Type ListBoxItem}" >
@@ -415,7 +415,7 @@
               </ListBox>-->
 
                   <!--<Button   Content="r" FontFamily="Webdings" FontSize="18" Height="26" Width="26" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0 -1" Command="{Binding HidePnlCommand}" Background="#555" IsCancel="True" ToolTip="Close Popup" Foreground="#F00" />-->
-                  <ToggleButton Content="r" FontFamily="Webdings" FontSize="18" Height="26" Width="26" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0 -1" IsChecked="{Binding ElementName=Opener0, Path=IsChecked}" Margin="0" FocusVisualStyle="{x:Null}" Foreground="#F00" />
+                  <ToggleButton Content="r" FontFamily="Webdings" FontSize="18" Height="26" Width="26" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0 -1" IsChecked="{Binding ElementName=Opener0, Path=IsChecked}" Margin="0" ToolTip="Close Popup" FocusVisualStyle="{x:Null}" Foreground="#F00" />
                 </Grid>                                                                                                                                                                                                                                             
               </ScrollViewer>
             </Border>
@@ -455,9 +455,9 @@
 
         <xui:Zoomer x:Name="ZoomSlider2" ZmValue="{Binding ZV, ElementName=wnd, Mode=TwoWay}"	VerticalAlignment="Top" Margin="5 0" />
         <Button	Margin="2" Content="_æ" FontFamily="Webdings"    FontSize="18" Height="26" Padding="0 -1" Width="26" Foreground="#00F" BorderThickness="0" ToolTip="Toggle Audio"      Click="OnAudio"                      Visibility="Collapsed" />
+        <Button	Margin="2" Content="_-"                          FontSize="26" Height="26" Padding="2 -0" Width="26" Foreground="#111" BorderThickness="0" ToolTip="Minimize Window"   Click="OnWindowMiniBase"                               />
         <Button	Margin="2" Content="_+" FontFamily="Wingdings 2" FontSize="16" Height="26" Padding="0 -1" Width="26" Foreground="#111" BorderThickness="0" ToolTip="Restore Window"    Click="OnWindowRestoree" x:Name="wr" Visibility="Collapsed" />
         <Button	Margin="2" Content="_£" FontFamily="Wingdings 2" FontSize="16" Height="26" Padding="0 -1" Width="26" Foreground="#111" BorderThickness="0" ToolTip="Maximize Window"   Click="OnWindowMaximize" x:Name="wm"                   />
-        <Button	Margin="2" Content="_-"                          FontSize="26" Height="26" Padding="2 -0" Width="26" Foreground="#111" BorderThickness="0" ToolTip="Minimize Window"   Click="OnWindowMiniBase"                               />
         <Button	Margin="2" Content="r"  FontFamily="Webdings"    FontSize="18" Height="26" Padding="0 -1" Width="26" Foreground="#e00" BorderThickness="0" ToolTip="Close Application" Command="{Binding CloseAppCommand}" x:Name="btnExit"   />
       </StackPanel>
 

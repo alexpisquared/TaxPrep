@@ -10,7 +10,7 @@ public static class MvvmInitHelper
     _ = services.AddSingleton<EmailOfIStore>();
     _ = services.AddSingleton<LetDbChgStore>();
 
-    if (VersionHelper.IsDbg) //tu: Start Page controller.
+    if (!VersionHelper.IsDbg) //tu: Start Page startPage startup controller.
       _ = services.AddSingleton<INavSvc, MainAppDispatcherNavSvc>();
     else if (Environment.GetCommandLineArgs().Length > 4)
       _ = services.AddSingleton<INavSvc, Page01NavSvc>();
