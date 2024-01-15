@@ -129,20 +129,24 @@ If you want to DEBUG or Run with the current Package available, just set your pa
         {
           _sth.SpeakFAF($"{ta.Length}-part filter");
 
-          if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { /*_sth.SpeakFAF("Still Empty.");*/ return; }
+          if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { _sth.SpeakFAF("Still Empty."); return; }
 
           if (!string.IsNullOrEmpty(ta[0]))
           {
-            if (!decimal.TryParse(ta[0], out var amt)) { /*_sth.SpeakFAF("1st must be number."); */return; }
+            if (!decimal.TryParse(ta[0], out var amt)) { _sth.SpeakFAF("1st must be number."); return; }
 
             if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
-            //App.Synth.SpeakFAF("Multi.");
+            _sth.SpeakFAF("Multi.");
             FilterTxnsBy4(csvFilterString[(ta[0].Length + 1)..], _txCatgry, amt, rng);
           }
           else if (!string.IsNullOrEmpty(ta[1])) // explicit by string
           {
-            //App.Synth.SpeakFAF("Filter by text.");
+            _sth.SpeakFAF("Filter by number and text.");
             FilterTxnsBy2(ta[1], _txCatgry);
+          }
+          else
+          {
+            _sth.SpeakFAF("Second must not be empty.");
           }
         }
         else // == 1
@@ -150,12 +154,11 @@ If you want to DEBUG or Run with the current Package available, just set your pa
           if (decimal.TryParse(csvFilterString, out var amt))
           {
             if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
-            //App.Synth.SpeakFAF("Filter by money.");
+
             FilterTxnsBy4("", _txCatgry, amt, rng);
           }
           else
           {
-            //App.Synth.SpeakFAF("Filter by text.");
             FilterTxnsBy2(csvFilterString, _txCatgry);
           }
         }
@@ -384,7 +387,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     else
       return;
 
-    _ = tbxSearch.Focus(); // App.Synth.SpeakFAF("Also, Clipboarded.");
+    _ = tbxSearch.Focus(); // _sth.SpeakFAF("Also, Clipboarded.");
   }
 
   //use main menu instead: async void OnManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _dba).ShowDialog(); await ReLoadTxCore(); }
@@ -394,7 +397,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       await Assign(((TxCategory?)txCategoryListBox.SelectedItems[0])?.IdTxt);
     else if (_choiceAbove?.Length > 0 && _choiceAbove == _choiceBelow)
       await Assign(_choiceAbove);
-    //else      App.Synth.SpeakFAF("Nothing to assign.");
+    //else      _sth.SpeakFAF("Nothing to assign.");
   }
   async void OnAssign1(object s, RoutedEventArgs e) => await Assign(_choiceAbove);
   async void OnAssign2(object s, RoutedEventArgs e) => await Assign(_choiceBelow);
@@ -428,7 +431,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
     _ = tbxSearch.Focus();
 
-    //App.Synth.SpeakFAF("Assigned.");
+    //_sth.SpeakFAF("Assigned.");
   }
 }
 /*
