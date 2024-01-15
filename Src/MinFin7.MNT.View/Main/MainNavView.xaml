@@ -388,8 +388,7 @@
             </Viewbox>
           </Grid>
 
-          <Rectangle x:Name="pnlReportTooltipShower" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="58" ToolTip="{Binding GSReport}" Fill="Transparent" Grid.Column="1"/>
-
+          <Rectangle x:Name="TooltipView" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="58" ToolTip="{Binding GSReport}" Fill="Transparent" Grid.Column="1"/>
           <Rectangle x:Name="Target0"     HorizontalAlignment="Right" VerticalAlignment="Top" Margin="12"              Width="0" Height="0" Grid.ColumnSpan="3" />
           <ToggleButton Content="1"       HorizontalAlignment="Right" VerticalAlignment="Top" Margin="14 21" x:Name="Opener0" IsChecked="True" Grid.ColumnSpan="3" FontFamily="Webdings" FontSize="16" Height="26" Width="26" Padding="0 0 0 2" BorderThickness="0" Foreground="#08f" FocusVisualStyle="{x:Null}"/>
           <lcl:DraggablePopup IsOpen="{Binding ElementName=Opener0, Path=IsChecked, FallbackValue=True}" Placement="Left" PlacementTarget="{Binding ElementName=Target0}" AllowsTransparency="True" >
@@ -399,11 +398,9 @@
               </Border.Effect>
               <Grid>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" FocusVisualStyle="{x:Null}" MaxHeight="160" MaxWidth="920" >
-                  <TextBlock Text="{Binding GSReport}" Margin="12 8 26 5" VerticalAlignment="Top" HorizontalAlignment="Left" d:Text="Hello! Here it is." FocusVisualStyle="{x:Null}" />
-                  <!--<ListBox MaxHeight="160" MaxWidth="920" Background="Transparent" BorderThickness="0" Margin="5 8 15 5" ItemsSource="{Binding ValidationMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" >                <ListBox.ItemContainerStyle>                  <Style TargetType="{x:Type ListBoxItem}" >                    <Setter Property="Template" Value="{StaticResource ColoredValidationMsgStyle}"/>                  </Style>                </ListBox.ItemContainerStyle>              </ListBox>              <ListBox Background="Transparent" BorderThickness="0" Margin="0 120 0 0" Visibility="Collapsed">                <ListBoxItem Content="123 wonderful color" Foreground="#f44" />                <ListBoxItem Content="123 wonderful color" Foreground="#f88" />                <ListBoxItem Content="123 wonderful color" Foreground="#faa" />              </ListBox>-->
-                </ScrollViewer>
-                <ToggleButton Content="r" FontFamily="Webdings" FontSize="18" Height="26" Width="26" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0 -1" IsChecked="{Binding ElementName=Opener0, Path=IsChecked}" Margin="0" ToolTip="Close Popup" FocusVisualStyle="{x:Null}" Opacity=".5" Foreground="#F00" />
-                <!--<Button   Content="r" FontFamily="Webdings" FontSize="18" Height="26" Width="26" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0 -1" Command="{Binding HidePnlCommand}" Background="#555" IsCancel="True" ToolTip="Close Popup" Foreground="#F00" />-->
+                  <TextBlock Text="{Binding GSReport}" Margin="12 8 26 5" VerticalAlignment="Top" HorizontalAlignment="Left" d:Text="Hello! Here it is." FocusVisualStyle="{x:Null}" />                  <!--<ListBox MaxHeight="160" MaxWidth="920" Background="Transparent" BorderThickness="0" Margin="5 8 15 5" ItemsSource="{Binding ValidationMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" >                <ListBox.ItemContainerStyle>                  <Style TargetType="{x:Type ListBoxItem}" >                    <Setter Property="Template" Value="{StaticResource ColoredValidationMsgStyle}"/>                  </Style>                </ListBox.ItemContainerStyle>              </ListBox>              <ListBox Background="Transparent" BorderThickness="0" Margin="0 120 0 0" Visibility="Collapsed">                <ListBoxItem Content="123 wonderful color" Foreground="#f44" />                <ListBoxItem Content="123 wonderful color" Foreground="#f88" />                <ListBoxItem Content="123 wonderful color" Foreground="#faa" />              </ListBox>-->
+                </ScrollViewer>                
+                <Button       Content="r" FontFamily="Webdings" FontSize="18" Height="26" Padding="0 -1" Width="26" BorderThickness="0" VerticalAlignment="Top" HorizontalAlignment="Right" Click="OnHideGSReport"             Margin="-3" ToolTip="Close Popup" Foreground="#F00" Background="Transparent" />
               </Grid>
             </Border>
           </lcl:DraggablePopup>
