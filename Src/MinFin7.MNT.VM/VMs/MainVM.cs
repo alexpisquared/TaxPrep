@@ -40,6 +40,8 @@ public partial class MainVM : BaseMinVM
     AppVerNumber = VersionHelper.CurVerStr;
     AppVerToolTip = VersionHelper.CurVerStr;
 
+    GSReport = "Hello...";
+
     return await base.InitAsync();
   }
   public override void Dispose()
