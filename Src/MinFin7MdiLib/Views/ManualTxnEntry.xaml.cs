@@ -84,7 +84,7 @@ public partial class ManualTxnEntry : WindowBase
   }
   async void onSave(object sender, RoutedEventArgs e) { _bpr.Click(); tbkTitle.Text = (await _db.TrySaveReportAsync()).report; }
   void onAddingNewItem(object sender, AddingNewItemEventArgs e) { _bpr.Click(); e.NewItem = createNewTxn(); }//tu: pre-fill new record with valid values on the fly.
-  void onMenu(object s, RoutedEventArgs e) { _bpr.Click(); /*MessageBox.Show("N/A"); } //   { Hide(); _ = new MainAppDispatcher(_lgr, _bpr, _sth).ShowDialog(); Show(); */}
+  void onMenu(object s, RoutedEventArgs e) { _bpr.Click(); /*MessageBox.Show("N/A"); } //   { Hide(); _ = new MdiMenu(_lgr, _bpr, _sth).ShowDialog(); Show(); */}
   void cbSrc_SelectionChanged(object s, SelectionChangedEventArgs e) { _bpr.Click(); btnTD.IsEnabled = int.TryParse(tbYear.Text, out var yr) && yr > 2000 && cbSrc.SelectedValue as int? > 0; }
 
   TxCoreV2 createNewTxn() => new()

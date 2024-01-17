@@ -1,12 +1,12 @@
 ﻿namespace MinFin7MdiLib.Views;
-public partial class MainAppDispatcherView : UserControl
+public partial class MdiMenuView : UserControl
 {
   Db.FinDemo7.Models.FinDemoContext? _dba;
   SpeechSynth? _sth;
   ILogger? _lgr;
   IBpr? _bpr;
 
-  public MainAppDispatcherView() { InitializeComponent(); }
+  public MdiMenuView() { InitializeComponent(); }
   void OnLoaded(object sender, RoutedEventArgs e)
   {
     _lgr = ((BaseDbVM)DataContext).Lgr;

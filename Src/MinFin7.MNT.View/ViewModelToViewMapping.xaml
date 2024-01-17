@@ -30,7 +30,7 @@
     <view_Main______________________:EmailDetailView/>
   </DataTemplate>
   -->
-  <DataTemplate DataType="{x:Type vm:MainAppDispatcherVM}">
-    <view_Main_MDI__________________:MainAppDispatcherView/>
+  <DataTemplate DataType="{x:Type vm:MdiMenuVM}">
+    <view_Main_MDI__________________:MdiMenuView/>
   </DataTemplate>
 </ResourceDictionary>

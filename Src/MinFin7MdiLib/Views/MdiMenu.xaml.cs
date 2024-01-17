@@ -1,16 +1,16 @@
 ﻿namespace MF.TxCategoryAssigner.Views;
-public partial class MainAppDispatcher : WindowBase
+public partial class MdiMenu : WindowBase
 {
   Db.FinDemo7.Models.FinDemoContext? _dba;
   SpeechSynth ? _sth;
   ILogger ? _lgr;
   IBpr ? _bpr;
 
-  public MainAppDispatcher() // : this(SeriLogHelper.InitLoggerFactory(folder: FSHelper.GetCreateSafeLogFolderAndFile(@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log"), levels: "+Info").CreateLogger(), new Bpr())
+  public MdiMenu() // : this(SeriLogHelper.InitLoggerFactory(folder: FSHelper.GetCreateSafeLogFolderAndFile(@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log"), levels: "+Info").CreateLogger(), new Bpr())
   {
     InitializeComponent();
   }
-  public MainAppDispatcher(ILogger lgr, IBpr bpr, SpeechSynth sth, FinDemoContext dba)
+  public MdiMenu(ILogger lgr, IBpr bpr, SpeechSynth sth, FinDemoContext dba)
   {
     InitializeComponent();
 
