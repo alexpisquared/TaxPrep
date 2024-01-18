@@ -12,9 +12,13 @@
   </UserControl.Resources>
   <UserControl.InputBindings>
     <KeyBinding Command="{Binding NavigateMdiMenuCommand}" Gesture="Home" CommandParameter="NavBar" />
-    <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="End" CommandParameter="Mdfr-None" />
-    <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="End" CommandParameter="Mdfr-Alt"  Modifiers="Alt"  />
-    <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="End" CommandParameter="Mdfr-Ctrl" Modifiers="Ctrl" />
+    <KeyBinding Command="{Binding NavigateMdiMenuCommand}" Gesture="Home" Modifiers="Alt"   CommandParameter="NavBar" />
+    <KeyBinding Command="{Binding NavigateMdiMenuCommand}" Gesture="Home" Modifiers="Ctrl"  CommandParameter="NavBar" />
+    <KeyBinding Command="{Binding NavigateMdiMenuCommand}" Gesture="Home" Modifiers="Shift" CommandParameter="NavBar" />
+    <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="End"   CommandParameter="Mdfr-None" />
+    <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="End"   Modifiers="Alt"   CommandParameter="Mdfr-Alt"   />
+    <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="End"   Modifiers="Ctrl"  CommandParameter="Mdfr-Ctrl"  />
+    <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="End"   Modifiers="Shift" CommandParameter="Mdfr-Shift" />
     <KeyBinding Command="{Binding NavigatePage01Command}" Gesture="F1" />
     <KeyBinding Command="{Binding NavigatePage01Command}" Gesture="F1" Modifiers="Alt"   />
     <KeyBinding Command="{Binding NavigatePage01Command}" Gesture="F1" Modifiers="Ctrl"  />
