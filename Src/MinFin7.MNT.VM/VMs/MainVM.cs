@@ -26,7 +26,7 @@ public partial class MainVM : BaseMinVM
     Bpr.SuppressTicks = Bpr.SuppressAlarm = !(IsAudible = UsrStgns.IsAudible);
     IsAnimeOn = UsrStgns.IsAnimeOn;
 
-    Bpr.Start();
+    Bpr.Start(2); // app start/stop 1/2
 
     _ctored = true;
   }

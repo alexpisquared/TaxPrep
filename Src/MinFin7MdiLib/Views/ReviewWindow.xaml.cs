@@ -23,14 +23,14 @@ public partial class ReviewWindow : WindowBase
     {
       _busy = true;
       ctrlPanel.Visibility = dgTxVs.Visibility = Visibility.Hidden;
-      _bpr.Start();
+      _bpr.Start(12);
       await Task.Yield();                       // it really shows window on .Net 4.8 !!! (2022-Jan-30)
       await _dba.VwTxCores.LoadAsync();         // TxCoreV2 would show the MoneySrc.Name in Binding
       await _dba.VwExpHistVsLasts.LoadAsync();
       dgTxVs.ItemsSource = _dba.VwExpHistVsLasts.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq);
       dbHist.ItemsSource = null;
       _ = dgTxVs.Focus();
-      _bpr.Finish();
+      _bpr.Finish(12);
     } catch (Exception ex) { ex.Pop(_lgr); } finally { _busy = false; ctrlPanel.Visibility = dgTxVs.Visibility = Visibility.Visible; }
   }
   void dgCore_SelnChgd(object s, SelectionChangedEventArgs e)

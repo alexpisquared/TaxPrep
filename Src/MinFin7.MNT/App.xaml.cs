@@ -59,7 +59,7 @@ public partial class App : System.Windows.Application
 
     base.OnExit(e);
 
-    await _serviceProvider.GetRequiredService<IBpr>().FinishAsync();
+    await _serviceProvider.GetRequiredService<IBpr>().FinishAsync(2); // app start/stop 2/2
   }
 
   static void LogAllLevels(ILogger lgr)

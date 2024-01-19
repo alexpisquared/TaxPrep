@@ -192,7 +192,7 @@
             <DataTemplate>
               <Grid>
                 <stb:HighlightableTextBlock FontSize="12" Text="{Binding Notes}" SearchText="{Binding ElementName=tbkFlt, Path=Text}"  />
-                <TextBox      Margin="-2 0" FontSize="12" Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MouseOverMakesOpagueTbxStyle}" />
+                <TextBox      Margin="-2 0" FontSize="12" Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MouseOverMakesOpagueTbxStyle}" MinWidth="32" />
               </Grid>
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>

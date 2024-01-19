@@ -11,19 +11,26 @@
     </ResourceDictionary>
   </UserControl.Resources>
   <UserControl.InputBindings>
+    <!-- 2024-01 - Works only when any of the nav:NavDrawerItem control has focus - 2024-01 - very bizzare intermittent behaviour: keeps failing all the time. -->
     <KeyBinding Command="{Binding NavigateMdiMenuCommand}" Gesture="Home" CommandParameter="NavBar" />
     <KeyBinding Command="{Binding NavigateMdiMenuCommand}" Gesture="Home" Modifiers="Alt"   CommandParameter="NavBar" />
     <KeyBinding Command="{Binding NavigateMdiMenuCommand}" Gesture="Home" Modifiers="Ctrl"  CommandParameter="NavBar" />
     <KeyBinding Command="{Binding NavigateMdiMenuCommand}" Gesture="Home" Modifiers="Shift" CommandParameter="NavBar" />
-    <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="End"   CommandParameter="Mdfr-None" />
+    
+    <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="End" />
+    <KeyBinding Command="{Binding NavigatePage02Command}" Gesture="Ctrl+S" />
     <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="End"   Modifiers="Alt"   CommandParameter="Mdfr-Alt"   />
     <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="End"   Modifiers="Ctrl"  CommandParameter="Mdfr-Ctrl"  />
     <KeyBinding Command="{Binding NavigatePage00Command}" Gesture="End"   Modifiers="Shift" CommandParameter="Mdfr-Shift" />
+    
     <KeyBinding Command="{Binding NavigatePage01Command}" Gesture="F1" />
+    <KeyBinding Command="{Binding NavigatePage01Command}" Gesture="Ctrl+H" />
     <KeyBinding Command="{Binding NavigatePage01Command}" Gesture="F1" Modifiers="Alt"   />
     <KeyBinding Command="{Binding NavigatePage01Command}" Gesture="F1" Modifiers="Ctrl"  />
     <KeyBinding Command="{Binding NavigatePage01Command}" Gesture="F1" Modifiers="Shift" />
+    
     <KeyBinding Command="{Binding NavigatePage02Command}" Gesture="F2" />
+    <KeyBinding Command="{Binding NavigatePage02Command}" Gesture="Ctrl+2" />
     <KeyBinding Command="{Binding NavigatePage03Command}" Gesture="F3" />
     <KeyBinding Command="{Binding NavigatePage04Command}" Gesture="F4" />
     <KeyBinding Command="{Binding NavigatePage05Command}" Gesture="F5" />

@@ -270,6 +270,8 @@
                       <MenuItem Header="_Export to XML file" InputGestureText="Ctrl+X" />
                       <MenuItem Header="_Export to CSV file" InputGestureText="Ctrl+C" />
                       <Separator/>
+                      <MenuItem Header="_Dev Dbg Bpr - if (Debugger.IsAttached) !!!" InputGestureText="Ctrl+B" Click="OnDevDbgBpr" />
+                      <Separator/>
                       <!--
                       <MenuItem Header="_Reset DB" Command="{Binding ResetDbCommand}" CommandParameter="DevDbg" InputGestureText="Ctrl+F22" ToolTip="Delete all forever from the database!!!" />
                       <MenuItem Header="_Check DB" Command="{Binding ChkDb4CngsCommand}" CommandParameter="DevDbg" InputGestureText="Ctrl+F11" ToolTip="..for changes" />
