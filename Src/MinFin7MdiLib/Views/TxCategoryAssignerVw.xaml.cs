@@ -28,8 +28,6 @@ public partial class TxCategoryAssignerVw : WindowBase
   }
   async void OnLoaded(object s, RoutedEventArgs e)
   {
-    _sth.SpeakFAF("Loading...");
-
     /*
      * var version = Windows.ApplicationModel.Package.Current.Id.Version;
      * 
@@ -65,8 +63,6 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
       _loaded = true;
       chkSingleYr.IsChecked = true;      // invokes the 1st search
-
-      _sth.SpeakFAF("Done!");
     }
     catch (Exception ex) { ex.Pop(_lgr); }
   }
@@ -115,12 +111,16 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
       _bpr.Tick();
 
-      //await reLoadTxCore();??????????????
-
       if (string.IsNullOrEmpty(csvFilterString))
       {
-        _sth.SpeakFAF("Clear!");
+        var sel = dgTxCore.SelectedItems.Count > 0 ? dgTxCore.SelectedItems[dgTxCore.SelectedItems.Count - 1] : null;
         FilterTxnsBy2(csvFilterString, _txCatgry);
+        if (sel is not null)
+        {
+          dgTxCore.SelectedItem = sel;
+          dgTxCore.ScrollIntoView(sel);
+        }
+        _sth.SpeakFAF("Clear!");
       }
       else
       {
