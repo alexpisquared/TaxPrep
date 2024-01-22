@@ -361,9 +361,9 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
           var txAmtExactMatches = (_dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && Math.Abs(r.TxAmount) == Math.Abs(select.TxAmount)).OrderByDescending(r => r.TxDate));
           var txDetailsMatches = (_dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && ((!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(select.TxDetail.ToLower())))).OrderByDescending(r => r.TxDate));
-          var txMemoStrMatches = (_dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && ((!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(select.MemoPp.ToLower())))).OrderByDescending(r => r.TxDate));
+          var txMemoStrMatches = (_dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && ((!string.IsNullOrEmpty(r.MemoPp) && !string.IsNullOrEmpty(select.MemoPp) && r.MemoPp.ToLower().Contains(select.MemoPp.ToLower())))).OrderByDescending(r => r.TxDate));
 
-          tbxNew.Text = $"Matches:  by |$|:  {txAmtExactMatches?.Count() ?? 0}  sum {(txAmtExactMatches?.Sum(r => r.TxAmount) ?? 0m):N0}$        by Dtl: {txDetailsMatches?.Count() ?? 0}        by Mem: {txMemoStrMatches?.Count() ?? 0}  ";
+          tbxNew.Text = $"Matches:  by |$|:  {(txAmtExactMatches?.Count() ?? 1) - 1}    sum {(txAmtExactMatches?.Sum(r => r.TxAmount) ?? 0m):N0}$        by Dtl: {(txDetailsMatches?.Count() ?? 1) - 1}        by Mem: {(txMemoStrMatches?.Count() ?? 1) - 1}  ";
         }
         else
         {
