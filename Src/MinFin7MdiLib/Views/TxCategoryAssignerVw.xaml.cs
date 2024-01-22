@@ -1,4 +1,8 @@
-﻿namespace MF.TxCategoryAssigner;
+﻿using System.Xml.Linq;
+using System;
+using System.Windows.Documents;
+
+namespace MF.TxCategoryAssigner;
 public partial class TxCategoryAssignerVw : WindowBase
 {
   readonly FinDemoContext _dbx;
@@ -59,7 +63,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       cbxSingleYr.SelectedIndex = 2;
       chkInfer.IsChecked = true;
 
-      btAssign.IsEnabled = btAssig2.IsEnabled = false;
+      btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ false;
 
       _loaded = true;
       chkSingleYr.IsChecked = true;      // invokes the 1st search
@@ -120,6 +124,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
           dgTxCore.SelectedItem = sel;
           dgTxCore.ScrollIntoView(sel);
         }
+
         _sth.SpeakFAF("Clear!");
       }
       else
@@ -127,9 +132,9 @@ If you want to DEBUG or Run with the current Package available, just set your pa
         var ta = csvFilterString.Split(new[] { '`', '>', '\\', '/' });
         if (ta.Length > 1)
         {
-          _sth.SpeakFAF($"{ta.Length}-part filter");
-
           if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { _sth.SpeakFAF("Still Empty."); return; }
+
+          _sth.SpeakFAF($"{ta.Length}-part filter");
 
           if (!string.IsNullOrEmpty(ta[0]))
           {
@@ -146,7 +151,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
           }
           else
           {
-            _sth.SpeakFAF("Second must not be empty.");
+            _sth.SpeakFAF("Second search item must not be empty.");
           }
         }
         else // == 1
@@ -241,14 +246,14 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
     WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
   }
-  void FilterTxnsBy4(string strFilter, string? txCatgoryId, decimal amt, decimal rng, [CallerMemberName] string? cmn = "")
+  void FilterTxnsBy4(string strFilter, string? txCatgoryId, decimal txnAmt, decimal range, [CallerMemberName] string? cmn = "")
   {
     var started = Stopwatch.GetTimestamp();
     tbkFlt.Text = strFilter;
-    tbkAmt.Text = $"{amt:N0}";
+    tbkAmt.Text = $"{txnAmt:N0}";
 
     _core.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
-      amt - rng <= (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) && (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) <= amt + rng
+      txnAmt - range <= (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) && (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) <= txnAmt + range
       &&
       (
         (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(strFilter.ToLower())) ||
@@ -264,6 +269,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
         string.IsNullOrEmpty(txCatgoryId) || string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0
       )
     ).OrderByDescending(r => r.TxDate));
+
     WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
   }
   void FilterCategoryByIdList(IEnumerable<int> catIds) => UpdateCtgrList(_dbx.TxCategories.Local.Where(r => catIds.Contains(r.Id)));
@@ -283,19 +289,19 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       _catg.ClearAddRangeAuto(_dbx.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
     }
 
-    choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled = btAssig2.IsEnabled = false;
+    choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ false;
     _choiceAbove = _choiceBelow = "";
 
     if (_catg.Count == 1)
     {
-      btAssign.IsEnabled = btAssig2.IsEnabled = true;
+      btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ true;
       _ = _txCategoryDGrdVwSrc.View.MoveCurrentToFirst();
     }
     else if (_catg.Count == 2)
     {
       _choiceAbove = _catg.First().IdTxt;
       _choiceBelow = _catg.Last().IdTxt;
-      btAssign.IsEnabled = btAssig2.IsEnabled = txCategoryListBox.SelectedItems.Count == 1;// _choiceAbove == _choiceBelow;
+      btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ txCategoryListBox.SelectedItems.Count == 1;// _choiceAbove == _choiceBelow;
     }
 
     choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
@@ -327,9 +333,11 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   void OnClear1(object s, RoutedEventArgs e) => tbkFlt.Text = tbxSearch.Text = "";
   void OnClear2(object s, RoutedEventArgs e) => tSrch2.Text = "";
 
-  void DgTxCtgr_SelChd(object s, SelectionChangedEventArgs e) => btAssign.IsEnabled = btAssig2.IsEnabled = e.AddedItems.Count == 1;
+  void DgTxCtgr_SelChd(object s, SelectionChangedEventArgs e) => btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ e.AddedItems.Count == 1;
   void DgTxCore_SelChd(object s, SelectionChangedEventArgs e)
   {
+    if (e.AddedItems.Count < 1) return;
+
     try
     {
       var started = Stopwatch.GetTimestamp();
@@ -348,12 +356,20 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
         if (dgTxCore.SelectedItems.Count == 1)
         {
+          var select = dgTxCore.SelectedItems[0] as TxCoreV2;
+          ArgumentNullException.ThrowIfNull(select, "#18 ▄▀▄▀▄▀▄▀▄▀▄▀");
+
+          var txAmtExactMatches = (_dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && Math.Abs(r.TxAmount) == Math.Abs(select.TxAmount)).OrderByDescending(r => r.TxDate));
+          var txDetailsMatches = (_dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && ((!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(select.TxDetail.ToLower())))).OrderByDescending(r => r.TxDate));
+          var txMemoStrMatches = (_dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && ((!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(select.MemoPp.ToLower())))).OrderByDescending(r => r.TxDate));
+
+          tbxNew.Text = $"Matches:  by |$|:  {txAmtExactMatches?.Count() ?? 0}  sum {(txAmtExactMatches?.Sum(r => r.TxAmount) ?? 0m):N0}$        by Dtl: {txDetailsMatches?.Count() ?? 0}        by Mem: {txMemoStrMatches?.Count() ?? 0}  ";
         }
         else
         {
           var trg = lv.Where(r => r.TxCategoryIdTxtNavigation.IdTxt != "UnKn")?.FirstOrDefault();
           _choiceAbove = _choiceBelow = trg?.TxCategoryIdTxtNavigation.IdTxt ?? "";
-          btAssign.IsEnabled = btAssig2.IsEnabled = txCategoryListBox.SelectedItems.Count == 1;
+          btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ txCategoryListBox.SelectedItems.Count == 1;
         }
       }
 
@@ -375,8 +391,21 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   async void OnSingleYr_UnChckd(object s, RoutedEventArgs e)      /**/ { if (!_loaded) return; /**/                                   _cutOffYr = null;                      /**/ await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
   async void OnSingleYr_Changed(object s, SelectionChangedEventArgs e) => await SycTsk(); async Task SycTsk() { if (!_loaded) return; _cutOffYr = (int)cbxSingleYr.SelectedValue; await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
 
-  void OnLbxSelChd(object s, SelectionChangedEventArgs e) { if (e.AddedItems.Count < 1) return; var started = Stopwatch.GetTimestamp(); UpdateTitle(Stopwatch.GetElapsedTime(started)); Title += string.Format(" - {0}", ((TxCategory?)txCategoryListBox.SelectedItems[0])?.Name); }
+  void OnLbxSelChd(object s, SelectionChangedEventArgs e)
+  {
+    if (e.AddedItems.Count < 1) return;
+
+    var started = Stopwatch.GetTimestamp();
+    UpdateTitle(Stopwatch.GetElapsedTime(started));
+
+    Title += ($" - {((TxCategory?)txCategoryListBox.SelectedItems[0])?.Name}");
+  }
   async void OnInfer_Checked(object s, RoutedEventArgs e) => await FilterStart(tbkFlt.Text);
+
+  void OnFindByDlr(object sender, RoutedEventArgs e) => Clipboard.SetText(tbxSearch.Text = ((dgTxCore.SelectedItem as TxCoreV2)?.TxAmount ?? 0m).ToString());
+  void OnFindByDtl(object sender, RoutedEventArgs e) => Clipboard.SetText(tbxSearch.Text = (dgTxCore.SelectedItem as TxCoreV2)?.TxDetail ?? "");
+  void OnFindByMem(object sender, RoutedEventArgs e) => Clipboard.SetText(tbxSearch.Text = (dgTxCore.SelectedItem as TxCoreV2)?.MemoPp ?? "");
+
   void DgTxCtgr_MouseDblClick(object s, MouseButtonEventArgs e) { if (btAssign.IsEnabled) OnAssign0(s, e); }
   void DgTxCore_MouseDblClick(object s, MouseButtonEventArgs e)
   {
@@ -405,7 +434,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   {
     ArgumentNullException.ThrowIfNull(IdTxt, "▄▀▄▀▄▀▄▀▄▀▄▀");
 
-    btAssign.IsEnabled = btAssig2.IsEnabled = choiceAbove.IsEnabled = choiceBelow.IsEnabled = false;
+    btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ choiceAbove.IsEnabled = choiceBelow.IsEnabled = false;
 
     if (dgTxCore.SelectedItems.Count > 0)
     {
