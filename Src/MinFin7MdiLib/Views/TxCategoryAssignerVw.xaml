@@ -115,7 +115,7 @@
         <Button   Content="|_$|"    Click="OnFindByDlr" Margin="5 3" Width="50" ToolTip="List matches by $$" />
         <Button   Content="_dtl"    Click="OnFindByDtl" Margin="5 3" Width="50" ToolTip="List matches by details" />
         <Button   Content="_mem"    Click="OnFindByMem" Margin="5 3" Width="50" ToolTip="List matches by memo" />
-        <TextBlock x:Name="tbxNew"  d:Text="lkj211l"    Margin="5 3" VerticalAlignment="Center" FontWeight="Medium" Foreground="#0d0" />
+        <TextBlock x:Name="tbxNew"                      Margin="5 3" VerticalAlignment="Center" FontWeight="Medium" Foreground="#0d0" d:Text="Matches:  by |$|:  3    sum 234.56$        by Dtl: 2        by Mem: 0" />
       </StackPanel>
     </Grid>
 

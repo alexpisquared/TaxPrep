@@ -1,14 +1,10 @@
-﻿using System.Xml.Linq;
-using System;
-using System.Windows.Documents;
-
-namespace MF.TxCategoryAssigner;
+﻿namespace MF.TxCategoryAssigner;
 public partial class TxCategoryAssignerVw : WindowBase
 {
   readonly FinDemoContext _dbx;
   readonly DateTime _yrStart2004 = new(2004, 1, 1), _now = DateTime.Now;
-  readonly ObservableCollection<TxCoreV2> _core = new();
-  readonly ObservableCollection<TxCategory> _catg = new();
+  readonly ObservableCollection<TxCoreV2> _core = [];
+  readonly ObservableCollection<TxCategory> _catg = [];
   readonly CollectionViewSource _txCategoryCmBxVwSrc, _txCategoryDGrdVwSrc, _txCoreV2_Root_VwSrc;
   readonly int _trgTaxYr = DateTime.Today.Year - 1;
   readonly ILogger _lgr;
@@ -359,11 +355,11 @@ If you want to DEBUG or Run with the current Package available, just set your pa
           var select = dgTxCore.SelectedItems[0] as TxCoreV2;
           ArgumentNullException.ThrowIfNull(select, "#18 ▄▀▄▀▄▀▄▀▄▀▄▀");
 
-          var txAmtExactMatches = (_dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && Math.Abs(r.TxAmount) == Math.Abs(select.TxAmount)).OrderByDescending(r => r.TxDate));
-          var txDetailsMatches = (_dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && ((!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(select.TxDetail.ToLower())))).OrderByDescending(r => r.TxDate));
-          var txMemoStrMatches = (_dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && ((!string.IsNullOrEmpty(r.MemoPp) && !string.IsNullOrEmpty(select.MemoPp) && r.MemoPp.ToLower().Contains(select.MemoPp.ToLower())))).OrderByDescending(r => r.TxDate));
+          var dlrAmntMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && Math.Abs(r.TxAmount) == Math.Abs(select.TxAmount)).OrderByDescending(r => r.TxDate);
+          var detailsMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && !string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(select.TxDetail.ToLower())).OrderByDescending(r => r.TxDate);
+          var memoStrMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && !string.IsNullOrEmpty(r.MemoPp) && !string.IsNullOrEmpty(select.MemoPp) && r.MemoPp.ToLower().Contains(select.MemoPp.ToLower())).OrderByDescending(r => r.TxDate);
 
-          tbxNew.Text = $"Matches:  by |$|:  {(txAmtExactMatches?.Count() ?? 1) - 1}    sum {(txAmtExactMatches?.Sum(r => r.TxAmount) ?? 0m):N0}$        by Dtl: {(txDetailsMatches?.Count() ?? 1) - 1}        by Mem: {(txMemoStrMatches?.Count() ?? 1) - 1}  ";
+          tbxNew.Text = $"Matches:  by |$|:  {(dlrAmntMatches?.Count() ?? 1) - 1}    sum {dlrAmntMatches?.Sum(r => r.TxAmount) ?? 0m:N0}$        by Dtl: {(detailsMatches?.Count() ?? 1) - 1}        by Mem: {(memoStrMatches?.Count() ?? 1) - 1}  ";
         }
         else
         {
@@ -398,11 +394,16 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     var started = Stopwatch.GetTimestamp();
     UpdateTitle(Stopwatch.GetElapsedTime(started));
 
-    Title += ($" - {((TxCategory?)txCategoryListBox.SelectedItems[0])?.Name}");
+    Title += $" - {((TxCategory?)txCategoryListBox.SelectedItems[0])?.Name}";
   }
   async void OnInfer_Checked(object s, RoutedEventArgs e) => await FilterStart(tbkFlt.Text);
 
-  void OnFindByDlr(object sender, RoutedEventArgs e) => Clipboard.SetText(tbxSearch.Text = ((dgTxCore.SelectedItem as TxCoreV2)?.TxAmount ?? 0m).ToString());
+  void OnFindByDlr(object sender, RoutedEventArgs e)
+  {
+    tRng.Text = "0.00"; // :only the exact matches are OK here.
+    tbxSearch.Text = $"{Math.Abs((dgTxCore.SelectedItem as TxCoreV2)?.TxAmount ?? 0m):N2}";
+    Clipboard.SetText(tbxSearch.Text);
+  }
   void OnFindByDtl(object sender, RoutedEventArgs e) => Clipboard.SetText(tbxSearch.Text = (dgTxCore.SelectedItem as TxCoreV2)?.TxDetail ?? "");
   void OnFindByMem(object sender, RoutedEventArgs e) => Clipboard.SetText(tbxSearch.Text = (dgTxCore.SelectedItem as TxCoreV2)?.MemoPp ?? "");
 
