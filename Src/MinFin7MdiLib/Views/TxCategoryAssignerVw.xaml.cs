@@ -956,7 +956,7 @@ public enum MsgBoxDbRslt // MsgBoxReverseRslt
 //{
 //  public static async Task<(bool success, int rowsSavedCnt, string report)> TrySaveReportAsync(this DbContext dbx, string? info = "", [CallerMemberName] string callerName = "")
 //  {
-//    var report = $"■■ {info}.{callerName}()  records saved: ";
+//    var report = $"■■ {info}.{callerName}()  rows saved: ";
 
 //    try
 //    {
