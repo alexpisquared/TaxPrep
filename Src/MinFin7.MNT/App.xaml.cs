@@ -29,8 +29,8 @@ public partial class App : System.Windows.Application
 
   protected async override void OnStartup(StartupEventArgs e)
   {
-    UnhandledExceptionHndlr.Logger = _serviceProvider.GetRequiredService<ILogger>();
-    Current.DispatcherUnhandledException += UnhandledExceptionHndlr.OnCurrentDispatcherUnhandledException;
+    UnhandledExceptionHndlrUI.Logger = _serviceProvider.GetRequiredService<ILogger>();
+    Current.DispatcherUnhandledException += UnhandledExceptionHndlrUI.OnCurrentDispatcherUnhandledException;
     EventManager.RegisterClassHandler(typeof(TextBox), TextBox.GotFocusEvent, new RoutedEventHandler((s, re) => { (s as TextBox ?? new TextBox()).SelectAll(); }));
     ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(15000));
 
@@ -50,7 +50,7 @@ public partial class App : System.Windows.Application
   }
   protected async override void OnExit(ExitEventArgs e)
   {
-    if (Current is not null) Current.DispatcherUnhandledException -= UnhandledExceptionHndlr.OnCurrentDispatcherUnhandledException;
+    if (Current is not null) Current.DispatcherUnhandledException -= UnhandledExceptionHndlrUI.OnCurrentDispatcherUnhandledException;
     _serviceProvider.GetRequiredService<FinDemoContext>().Dispose();
 
     if (DateTime.Now == DateTime.Today) LogAllLevels(_serviceProvider.GetRequiredService<ILogger>());
