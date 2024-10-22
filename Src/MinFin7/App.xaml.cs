@@ -1,4 +1,6 @@
-﻿namespace MinFin7;
+﻿using static AmbienceLib.SpeechSynth;
+
+namespace MinFin7;
 public partial class App : Application
 {
   static readonly DateTime Started = DateTime.Now;
@@ -7,10 +9,10 @@ public partial class App : Application
   protected override void OnStartup(StartupEventArgs e)
   {
     base.OnStartup(e);
-    
-    _logger = SeriLogHelper.InitLoggerFactory(@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log", "+Info").CreateLogger<TxCategoryAssignerVw>();
 
-    Current.DispatcherUnhandledException += UnhandledExceptionHndlr.OnCurrentDispatcherUnhandledException;
+    _logger = (ILogger<TxCategoryAssignerVw>?)SeriLogHelper.InitLoggerFactory(/*@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log", "+Info"*/).CreateLogger<TxCategoryAssignerVw>();
+
+    Current.DispatcherUnhandledException += UnhandledExceptionHndlrUI.OnCurrentDispatcherUnhandledException;
     EventManager.RegisterClassHandler(typeof(TextBox), UIElement.GotFocusEvent, new RoutedEventHandler((s, re) => ((TextBox)s).SelectAll())); //tu: TextBox
 
 #if _DEBUG
@@ -42,10 +44,11 @@ public partial class App : Application
 
     ShutdownMode = ShutdownMode.OnMainWindowClose; // The default value is OnLastWindowClose.
 
-    MainWindow =
-      //VersionHelper.IsDbg ?      //new ManualTxnEntry(_logger, new Bpr(), true) :       //new ReviewWindow(_logger, new Bpr(), "Mei") : 
-      //new TxCategoryAssignerVw(_logger, new Bpr()) :
-      new MainAppDispatcher(_logger, new Bpr(), Synth, new FinDemoContext("Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;Encrypt=False;"));
+    MainWindow = //VersionHelper.IsDbg ?      
+      //new ManualTxnEntry(_logger, new Bpr(), Synth, true, new FinDemoContext("Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;Encrypt=False;"));
+    //new MinFin7MdiLib.Views.ReviewWindow(_logger, new Bpr(), "Mei", new FinDemoContext("Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;Encrypt=False;"));
+    new TxCategoryAssignerVw(_logger, new Bpr(), Synth, new FinDemoContext("Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;Encrypt=False;"));
+    //new MainAppDispatcher();// (_logger, new Bpr(), Synth, new FinDemoContext("Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;Encrypt=False;"));
 
     MainWindow.ShowDialog();
 
