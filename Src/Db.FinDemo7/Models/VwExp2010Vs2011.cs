@@ -5,9 +5,9 @@ namespace Db.FinDemo7.Models;
 
 public partial class VwExp2010Vs2011
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public string Category { get; set; }
+    public string Category { get; set; } = null!;
 
     public decimal? Exp2010 { get; set; }
 

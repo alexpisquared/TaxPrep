@@ -7,13 +7,13 @@ public partial class VwExp2010201120122013Vs2014b
 {
     public int TaxLiq { get; set; }
 
-    public string ExpenseGroupId { get; set; }
+    public string ExpenseGroupId { get; set; } = null!;
 
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public string IdTxt { get; set; }
+    public string IdTxt { get; set; } = null!;
 
-    public string Category { get; set; }
+    public string Category { get; set; } = null!;
 
     public decimal? Exp2010 { get; set; }
 

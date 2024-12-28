@@ -9,7 +9,7 @@ public partial class TxCoreTdCt
 
     public DateTime TxDate { get; set; }
 
-    public string TxDescrn { get; set; }
+    public string TxDescrn { get; set; } = null!;
 
     public decimal? TxAmountCrt { get; set; }
 
@@ -17,11 +17,11 @@ public partial class TxCoreTdCt
 
     public decimal TxAmountBlnc { get; set; }
 
-    public string AccountId { get; set; }
+    public string AccountId { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
 
     public DateTime? ModifiedAt { get; set; }
 
-    public string Notes { get; set; }
+    public string? Notes { get; set; }
 }

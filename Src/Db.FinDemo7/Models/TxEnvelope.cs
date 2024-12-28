@@ -11,9 +11,9 @@ public partial class TxEnvelope
 
     public decimal Total { get; set; }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public string Note { get; set; }
+    public string? Note { get; set; }
 
-    public virtual ICollection<TxCore> TxCores { get; } = new List<TxCore>();
+    public virtual ICollection<TxCore> TxCores { get; set; } = new List<TxCore>();
 }

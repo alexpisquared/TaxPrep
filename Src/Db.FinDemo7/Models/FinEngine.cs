@@ -7,21 +7,21 @@ public partial class FinEngine
 {
     public int Id { get; set; }
 
-    public string DescrName { get; set; }
+    public string DescrName { get; set; } = null!;
 
-    public string AccountNumber { get; set; }
+    public string AccountNumber { get; set; } = null!;
 
-    public DateTime? OpenedOn { get; set; }
+    public DateOnly? OpenedOn { get; set; }
 
-    public DateTime? ClosedOn { get; set; }
+    public DateOnly? ClosedOn { get; set; }
 
-    public DateTime? MaturesOn { get; set; }
+    public DateOnly? MaturesOn { get; set; }
 
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; }
 
-    public string Notes { get; set; }
+    public string? Notes { get; set; }
 
-    public virtual ICollection<Contribution> Contributions { get; } = new List<Contribution>();
+    public virtual ICollection<Contribution> Contributions { get; set; } = new List<Contribution>();
 
-    public virtual ICollection<UnitPrice> UnitPrices { get; } = new List<UnitPrice>();
+    public virtual ICollection<UnitPrice> UnitPrices { get; set; } = new List<UnitPrice>();
 }

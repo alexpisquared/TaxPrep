@@ -9,13 +9,13 @@ public partial class Contribution
 
     public int FinEngineId { get; set; }
 
-    public DateTime TranDate { get; set; }
+    public DateOnly TranDate { get; set; }
 
     public decimal TranAmount { get; set; }
 
     public decimal UnitPrice { get; set; }
 
-    public string Notes { get; set; }
+    public string? Notes { get; set; }
 
-    public virtual FinEngine FinEngine { get; set; }
+    public virtual FinEngine FinEngine { get; set; } = null!;
 }

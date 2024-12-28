@@ -5,13 +5,13 @@ namespace Db.FinDemo7.Models;
 
 public partial class VwTaxLiqReportAlx
 {
-    public string Group { get; set; }
+    public string Group { get; set; } = null!;
 
     public int? TlNumber { get; set; }
 
-    public string Category { get; set; }
+    public string Category { get; set; } = null!;
 
-    public string PartCalcShow { get; set; }
+    public string? PartCalcShow { get; set; }
 
     public double? TtlExp { get; set; }
 
@@ -21,5 +21,5 @@ public partial class VwTaxLiqReportAlx
 
     public int? Qnt { get; set; }
 
-    public string Owner { get; set; }
+    public string? Owner { get; set; }
 }

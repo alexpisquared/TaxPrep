@@ -9,9 +9,9 @@ public partial class TxSupplier
 
     public DateTime CreatedAt { get; set; }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public string Notes { get; set; }
+    public string? Notes { get; set; }
 
-    public virtual ICollection<TxCore> TxCores { get; } = new List<TxCore>();
+    public virtual ICollection<TxCore> TxCores { get; set; } = new List<TxCore>();
 }

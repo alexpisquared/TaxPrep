@@ -11,15 +11,15 @@ public partial class BalAmtHist
 
     public decimal BalAmt { get; set; }
 
-    public string BalTpe { get; set; }
+    public string BalTpe { get; set; } = null!;
 
     public DateTime AsOfDate { get; set; }
 
-    public string Notes { get; set; }
+    public string? Notes { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
     public DateTime? ModifiedAt { get; set; }
 
-    public virtual TxMoneySrc TxMoneySrc { get; set; }
+    public virtual TxMoneySrc TxMoneySrc { get; set; } = null!;
 }

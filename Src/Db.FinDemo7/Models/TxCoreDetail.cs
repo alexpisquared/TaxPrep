@@ -11,7 +11,7 @@ public partial class TxCoreDetail
 
     public DateTime CreatedAt { get; set; }
 
-    public string Notes { get; set; }
+    public string? Notes { get; set; }
 
-    public virtual TxCore TxCore { get; set; }
+    public virtual TxCore TxCore { get; set; } = null!;
 }

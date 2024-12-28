@@ -11,5 +11,5 @@ public partial class TxCoreAudit
 
     public DateTime CreatedAt { get; set; }
 
-    public string Notes { get; set; }
+    public string? Notes { get; set; }
 }

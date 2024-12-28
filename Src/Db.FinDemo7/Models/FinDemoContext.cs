@@ -110,7 +110,7 @@ public partial class FinDemoContext : DbContext
     public virtual DbSet<ZTest> ZTests { get; set; }
 
 //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
 //        => optionsBuilder.UseSqlServer("Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;TrustServerCertificate=Yes;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -122,7 +122,6 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.AsOfDate).HasColumnType("datetime");
             entity.Property(e => e.BalAmt).HasColumnType("money");
             entity.Property(e => e.BalTpe)
-                .IsRequired()
                 .HasMaxLength(20)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedAt)
@@ -145,7 +144,6 @@ public partial class FinDemoContext : DbContext
 
             entity.Property(e => e.Notes).IsUnicode(false);
             entity.Property(e => e.TranAmount).HasColumnType("money");
-            entity.Property(e => e.TranDate).HasColumnType("date");
             entity.Property(e => e.UnitPrice).HasColumnType("money");
 
             entity.HasOne(d => d.FinEngine).WithMany(p => p.Contributions)
@@ -161,9 +159,7 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.Note).IsUnicode(false);
         });
 
@@ -172,20 +168,13 @@ public partial class FinDemoContext : DbContext
             entity.ToTable("FinEngine");
 
             entity.Property(e => e.AccountNumber)
-                .IsRequired()
                 .HasMaxLength(64)
                 .IsUnicode(false);
-            entity.Property(e => e.ClosedOn).HasColumnType("date");
             entity.Property(e => e.DescrName)
-                .IsRequired()
                 .HasMaxLength(256)
                 .IsUnicode(false);
-            entity.Property(e => e.IsActive)
-                .IsRequired()
-                .HasDefaultValueSql("((1))");
-            entity.Property(e => e.MaturesOn).HasColumnType("date");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.Notes).IsUnicode(false);
-            entity.Property(e => e.OpenedOn).HasColumnType("date");
         });
 
         modelBuilder.Entity<LkuStatus>(entity =>
@@ -201,12 +190,10 @@ public partial class FinDemoContext : DbContext
                 .HasMaxLength(500)
                 .IsUnicode(false);
             entity.Property(e => e.Id)
-                .IsRequired()
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.Name)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
         });
@@ -220,19 +207,17 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.IdTxt)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('tla')");
+                .HasDefaultValue("tla");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.DeductiblePercentage).HasDefaultValueSql("((1))");
+            entity.Property(e => e.DeductiblePercentage).HasDefaultValue(1.0);
             entity.Property(e => e.ExpGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('Other')");
+                .HasDefaultValue("Other");
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Name)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Notes).IsUnicode(false);
@@ -255,20 +240,18 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
             entity.Property(e => e.Notes).IsUnicode(false);
             entity.Property(e => e.ProductService)
-                .IsRequired()
                 .HasMaxLength(200)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('-')");
+                .HasDefaultValue("-");
             entity.Property(e => e.TxAmount).HasColumnType("money");
             entity.Property(e => e.TxAmountOrg).HasColumnType("money");
-            entity.Property(e => e.TxCategoryId).HasDefaultValueSql("((-1))");
+            entity.Property(e => e.TxCategoryId).HasDefaultValue(-1);
             entity.Property(e => e.TxCategoryIdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('UnKn')");
+                .HasDefaultValue("UnKn");
             entity.Property(e => e.TxDate).HasColumnType("datetime");
-            entity.Property(e => e.TxSupplierId).HasDefaultValueSql("((3))");
+            entity.Property(e => e.TxSupplierId).HasDefaultValue(3);
 
             entity.HasOne(d => d.TxCategoryIdTxtNavigation).WithMany(p => p.TxCores)
                 .HasForeignKey(d => d.TxCategoryIdTxt)
@@ -315,7 +298,6 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Credit).HasColumnType("money");
             entity.Property(e => e.Debit).HasColumnType("money");
             entity.Property(e => e.Details)
-                .IsRequired()
                 .HasMaxLength(400)
                 .IsUnicode(false);
             entity.Property(e => e.DtPosted).HasColumnType("datetime");
@@ -359,13 +341,11 @@ public partial class FinDemoContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.DebitCreditFlag)
-                .IsRequired()
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("Debit/Credit Flag");
             entity.Property(e => e.Merchant)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.MerchantCity)
@@ -386,12 +366,10 @@ public partial class FinDemoContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("Posting Date");
             entity.Property(e => e.ReferenceNumber)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("Reference Number");
             entity.Property(e => e.SicmccCode)
-                .IsRequired()
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("SICMCC Code");
@@ -409,7 +387,6 @@ public partial class FinDemoContext : DbContext
             entity.HasIndex(e => new { e.TxDate, e.TxDescrn, e.TxAmountBlnc }, "IX_TxCore_TdCt").IsUnique();
 
             entity.Property(e => e.AccountId)
-                .IsRequired()
                 .HasMaxLength(4)
                 .IsUnicode(false)
                 .IsFixedLength();
@@ -423,10 +400,9 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.TxAmountDbt).HasColumnType("money");
             entity.Property(e => e.TxDate).HasColumnType("datetime");
             entity.Property(e => e.TxDescrn)
-                .IsRequired()
                 .HasMaxLength(400)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('-')");
+                .HasDefaultValue("-");
         });
 
         modelBuilder.Entity<TxCoreV2>(entity =>
@@ -439,10 +415,9 @@ public partial class FinDemoContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.CurBalance)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("money");
             entity.Property(e => e.FitId)
-                .IsRequired()
                 .HasMaxLength(128)
                 .IsUnicode(false);
             entity.Property(e => e.HstTakenAt).HasColumnType("datetime");
@@ -456,13 +431,11 @@ public partial class FinDemoContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.TxAmount).HasColumnType("money");
             entity.Property(e => e.TxCategoryIdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('UnKn')");
+                .HasDefaultValue("UnKn");
             entity.Property(e => e.TxDate).HasColumnType("datetime");
             entity.Property(e => e.TxDetail)
-                .IsRequired()
                 .HasMaxLength(200)
                 .IsUnicode(false);
 
@@ -485,7 +458,6 @@ public partial class FinDemoContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.Name)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Note).IsUnicode(false);
@@ -502,13 +474,11 @@ public partial class FinDemoContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.Fla)
-                .IsRequired()
                 .HasMaxLength(16)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('UnKn')");
+                .HasDefaultValue("UnKn");
             entity.Property(e => e.IniBalance).HasColumnType("money");
             entity.Property(e => e.Name)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Notes)
@@ -531,7 +501,6 @@ public partial class FinDemoContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.Name)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Notes).IsUnicode(false);
@@ -541,7 +510,6 @@ public partial class FinDemoContext : DbContext
         {
             entity.ToTable("UnitPrice");
 
-            entity.Property(e => e.Date).HasColumnType("date");
             entity.Property(e => e.Notes).IsUnicode(false);
             entity.Property(e => e.Value).HasColumnType("money");
 
@@ -562,13 +530,11 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
             entity.Property(e => e.Notes).IsUnicode(false);
             entity.Property(e => e.ProductService)
-                .IsRequired()
                 .HasMaxLength(200)
                 .IsUnicode(false);
             entity.Property(e => e.TxAmount).HasColumnType("money");
             entity.Property(e => e.TxAmountOrg).HasColumnType("money");
             entity.Property(e => e.TxCategoryIdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.TxDate).HasColumnType("datetime");
@@ -584,21 +550,17 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.History).IsUnicode(false);
             entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
             entity.Property(e => e.MoneySrc)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Notes).IsUnicode(false);
             entity.Property(e => e.ProductService)
-                .IsRequired()
                 .HasMaxLength(200)
                 .IsUnicode(false);
             entity.Property(e => e.Supplier)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.TxAmount).HasColumnType("money");
             entity.Property(e => e.TxCategoryIdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.TxDate).HasColumnType("datetime");
@@ -611,7 +573,6 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_2010_2011_2012_2013_2014_2015_2016_vs_2017b");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
@@ -623,17 +584,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2016).HasColumnType("money");
             entity.Property(e => e.Exp2017).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseMaxPrevToCurrent).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
@@ -645,7 +602,6 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_2010_2011_2012_2013_2014_2015_vs_2016b");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
@@ -656,17 +612,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2015).HasColumnType("money");
             entity.Property(e => e.Exp2016).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseMaxPrevToCurrent).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
@@ -678,7 +630,6 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_2010_2011_2012_2013_2014_vs_2015b");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
@@ -688,17 +639,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2014).HasColumnType("money");
             entity.Property(e => e.Exp2015).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseMaxPrevToCurrent).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
@@ -710,7 +657,6 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_2010_2011_2012_2013_vs_2014b");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
@@ -719,17 +665,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2013).HasColumnType("money");
             entity.Property(e => e.Exp2014).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseMaxPrevToCurrent).HasColumnType("money");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
@@ -741,7 +683,6 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_2010_2011_2012_2013_vs_2014b_OLD");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
@@ -750,17 +691,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2013).HasColumnType("money");
             entity.Property(e => e.Exp2014).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseMaxPrevToCurrent).HasColumnType("money");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
@@ -772,7 +709,6 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_2010_2011_2012_vs_2013b");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
@@ -780,17 +716,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2012).HasColumnType("money");
             entity.Property(e => e.Exp2013).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseMaxPrevToCurrent).HasColumnType("money");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
@@ -803,15 +735,12 @@ public partial class FinDemoContext : DbContext
 
             entity.Property(e => e.Avg2010to2011).HasColumnType("numeric(21, 5)");
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
             entity.Property(e => e.Exp2011).HasColumnType("money");
             entity.Property(e => e.Exp2012).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseAvg2010to2011to2012).HasColumnType("numeric(38, 15)");
         });
 
@@ -823,24 +752,19 @@ public partial class FinDemoContext : DbContext
 
             entity.Property(e => e.Avg2010to2011).HasColumnType("numeric(21, 5)");
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
             entity.Property(e => e.Exp2011).HasColumnType("money");
             entity.Property(e => e.Exp2012).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.Max2010to2011).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseAvg2010to2011to2012).HasColumnType("numeric(38, 18)");
             entity.Property(e => e.PercIncreaseMax2010to2011to2012).HasColumnType("numeric(38, 19)");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
@@ -853,14 +777,11 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_2010_vs_2011");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
             entity.Property(e => e.Exp2011).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
         });
 
         modelBuilder.Entity<VwExpHistVs2018>(entity =>
@@ -870,7 +791,6 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_Hist_vs_2018");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
@@ -883,17 +803,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2017).HasColumnType("money");
             entity.Property(e => e.Exp2018).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseMaxPrevToCurrent).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
@@ -905,7 +821,6 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_Hist_vs_2018_Alx");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
@@ -918,17 +833,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2017).HasColumnType("money");
             entity.Property(e => e.Exp2018).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseMaxPrevToCurrent).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
@@ -940,7 +851,6 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_Hist_vs_2018_Mei");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
@@ -953,17 +863,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2017).HasColumnType("money");
             entity.Property(e => e.Exp2018).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseMaxPrevToCurrent).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
@@ -975,7 +881,6 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_Hist_vs_2018_Ndn");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
@@ -988,17 +893,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2017).HasColumnType("money");
             entity.Property(e => e.Exp2018).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseMaxPrevToCurrent).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
@@ -1010,7 +911,6 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_Hist_vs_2018_Zoe");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
@@ -1023,17 +923,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2017).HasColumnType("money");
             entity.Property(e => e.Exp2018).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseMaxPrevToCurrent).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
@@ -1045,7 +941,6 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_Exp_Hist_vs_2019");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Exp2010).HasColumnType("money");
@@ -1059,17 +954,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2018).HasColumnType("money");
             entity.Property(e => e.Exp2019).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.PercIncreaseMaxPrevToCurrent).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
@@ -1077,11 +968,10 @@ public partial class FinDemoContext : DbContext
         modelBuilder.Entity<VwExpHistVsLast>(entity =>
         {
             entity
-                //tu: patch vw-no-kwy 1/2   ...because it does not have a primary key   .HasNoKey()
+                .HasNoKey()
                 .ToView("Vw_Exp_Hist_vs_Last");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Cur2Max).HasColumnType("numeric(38, 6)");
@@ -1100,17 +990,13 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2022).HasColumnType("money");
             entity.Property(e => e.Exp2023).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.MaxPrev).HasColumnType("money");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
         });
 
@@ -1121,13 +1007,10 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_TaxLiqReport");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.FirstTx).HasColumnType("datetime");
-            entity.Property(e => e.Group)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Group).IsUnicode(false);
             entity.Property(e => e.LastTx).HasColumnType("datetime");
             entity.Property(e => e.PartCalcShow)
                 .HasMaxLength(28)
@@ -1142,12 +1025,9 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_TaxLiqReport_2010");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Group)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Group).IsUnicode(false);
             entity.Property(e => e.LastTx).HasColumnType("datetime");
             entity.Property(e => e.PartCalcShow)
                 .HasMaxLength(19)
@@ -1162,12 +1042,9 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_TaxLiqReport_2011");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Group)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Group).IsUnicode(false);
             entity.Property(e => e.LastTx).HasColumnType("datetime");
             entity.Property(e => e.PartCalcShow)
                 .HasMaxLength(19)
@@ -1182,12 +1059,9 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_TaxLiqReport_2012");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Group)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Group).IsUnicode(false);
             entity.Property(e => e.LastTx).HasColumnType("datetime");
             entity.Property(e => e.PartCalcShow)
                 .HasMaxLength(19)
@@ -1202,12 +1076,9 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_TaxLiqReport_2012_");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Group)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Group).IsUnicode(false);
             entity.Property(e => e.LastTx).HasColumnType("datetime");
             entity.Property(e => e.PartCalcShow)
                 .HasMaxLength(19)
@@ -1222,13 +1093,10 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_TaxLiqReport_2014");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.FirstTx).HasColumnType("datetime");
-            entity.Property(e => e.Group)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Group).IsUnicode(false);
             entity.Property(e => e.LastTx).HasColumnType("datetime");
             entity.Property(e => e.PartCalcShow)
                 .HasMaxLength(19)
@@ -1243,13 +1111,10 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_TaxLiqReport_2014_V2");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.FirstTx).HasColumnType("datetime");
-            entity.Property(e => e.Group)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Group).IsUnicode(false);
             entity.Property(e => e.LastTx).HasColumnType("datetime");
             entity.Property(e => e.PartCalcShow)
                 .HasMaxLength(19)
@@ -1264,13 +1129,10 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_TaxLiqReport_2103");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.FirstTx).HasColumnType("datetime");
-            entity.Property(e => e.Group)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Group).IsUnicode(false);
             entity.Property(e => e.LastTx).HasColumnType("datetime");
             entity.Property(e => e.PartCalcShow)
                 .HasMaxLength(19)
@@ -1285,13 +1147,10 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_TaxLiqReport_Alx");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.FirstTx).HasColumnType("datetime");
-            entity.Property(e => e.Group)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Group).IsUnicode(false);
             entity.Property(e => e.LastTx).HasColumnType("datetime");
             entity.Property(e => e.Owner)
                 .HasMaxLength(3)
@@ -1309,13 +1168,10 @@ public partial class FinDemoContext : DbContext
                 .ToView("Vw_TaxLiqReport_Mei");
 
             entity.Property(e => e.Category)
-                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.FirstTx).HasColumnType("datetime");
-            entity.Property(e => e.Group)
-                .IsRequired()
-                .IsUnicode(false);
+            entity.Property(e => e.Group).IsUnicode(false);
             entity.Property(e => e.LastTx).HasColumnType("datetime");
             entity.Property(e => e.Owner)
                 .HasMaxLength(3)
@@ -1329,7 +1185,7 @@ public partial class FinDemoContext : DbContext
         modelBuilder.Entity<VwTxCore>(entity =>
         {
             entity
-                //tu: patch vw-no-kwy 1/2   ...because it does not have a primary key   .HasNoKey()
+                .HasNoKey()
                 .ToView("Vw_TxCore");
 
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
@@ -1344,18 +1200,15 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
             entity.Property(e => e.Notes).IsUnicode(false);
             entity.Property(e => e.ProductService)
-                .IsRequired()
                 .HasMaxLength(200)
                 .IsUnicode(false);
             entity.Property(e => e.TxAmount).HasColumnType("money");
             entity.Property(e => e.TxAmountOrg).HasColumnType("money");
             entity.Property(e => e.TxCategoryIdTxt)
-                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.TxDate).HasColumnType("datetime");
             entity.Property(e => e.TxDetail)
-                .IsRequired()
                 .HasMaxLength(200)
                 .IsUnicode(false);
         });
@@ -1366,7 +1219,6 @@ public partial class FinDemoContext : DbContext
                 .HasNoKey()
                 .ToTable("zTest");
 
-            entity.Property(e => e.DateDt).HasColumnType("date");
             entity.Property(e => e.DateTm)
                 .HasColumnType("datetime")
                 .HasColumnName("DateTM");

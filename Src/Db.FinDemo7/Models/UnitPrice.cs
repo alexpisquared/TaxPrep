@@ -9,11 +9,11 @@ public partial class UnitPrice
 
     public int FinEngineId { get; set; }
 
-    public DateTime Date { get; set; }
+    public DateOnly Date { get; set; }
 
     public decimal Value { get; set; }
 
-    public string Notes { get; set; }
+    public string? Notes { get; set; }
 
-    public virtual FinEngine FinEngine { get; set; }
+    public virtual FinEngine FinEngine { get; set; } = null!;
 }

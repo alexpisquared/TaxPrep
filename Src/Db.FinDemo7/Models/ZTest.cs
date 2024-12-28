@@ -9,9 +9,9 @@ public partial class ZTest
 
     public DateTime? DateTm { get; set; }
 
-    public DateTime? DateDt { get; set; }
+    public DateOnly? DateDt { get; set; }
 
     public decimal? Value { get; set; }
 
-    public string Notes { get; set; }
+    public string? Notes { get; set; }
 }

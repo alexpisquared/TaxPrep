@@ -9,17 +9,17 @@ public partial class VwDupesDetail
 
     public DateTime TxDate { get; set; }
 
-    public string TxCategoryIdTxt { get; set; }
+    public string TxCategoryIdTxt { get; set; } = null!;
 
-    public string ProductService { get; set; }
+    public string ProductService { get; set; } = null!;
 
-    public string Notes { get; set; }
+    public string? Notes { get; set; }
 
-    public string Supplier { get; set; }
+    public string Supplier { get; set; } = null!;
 
-    public string MoneySrc { get; set; }
+    public string MoneySrc { get; set; } = null!;
 
-    public string History { get; set; }
+    public string? History { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
