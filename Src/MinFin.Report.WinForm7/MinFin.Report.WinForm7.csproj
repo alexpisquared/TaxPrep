@@ -32,7 +32,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.ReportViewer.Common" Version="10.0.40219.1" />
     <PackageReference Include="Microsoft.ReportViewer.WinForms" Version="10.0.40219.1" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
   </ItemGroup>
 
   <ItemGroup>
