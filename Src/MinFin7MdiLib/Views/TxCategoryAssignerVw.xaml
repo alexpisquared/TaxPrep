@@ -3,7 +3,7 @@
                 xmlns:cnv="clr-namespace:WpfUserControlLib.Converters;assembly=WpfUserControlLib" 
                 xmlns:stb="clr-namespace:WpfUserControlLib.Helpers;assembly=WpfUserControlLib" 
                 xmlns:mdl="clr-namespace:Db.FinDemo7.Models;assembly=Db.FinDemo7" 
-                Title="MF.TxCategoryAssigner" Height="200" Width="1800" Loaded="OnLoaded" Background="#555">
+                Height="200" Width="1800" Loaded="OnLoaded" Style="{DynamicResource WindowStyle_Aav0}">
   <lnk:WindowBase.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -22,226 +22,239 @@
 
     </ResourceDictionary>
   </lnk:WindowBase.Resources>
-  <Grid DataContext="{StaticResource txCoreV2_Root_VwSrc}"  x:Name="ZommablePanel" >
-    <Grid.LayoutTransform>
-      <TransformGroup>
-        <ScaleTransform ScaleX="{Binding ZV, ElementName=wnd, FallbackValue=1}" ScaleY="{Binding ZV, ElementName=wnd, FallbackValue=1}" />
-      </TransformGroup>
-    </Grid.LayoutTransform>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="*"   />
-      <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="6"   />
-      <ColumnDefinition Width="9*"  />
-      <ColumnDefinition Width="10"   />
-      <ColumnDefinition Width="4*"  />
-      <ColumnDefinition Width="10"   />
-      <ColumnDefinition Width="26"   />
-      <ColumnDefinition Width="6"   />
-    </Grid.ColumnDefinitions>
-
-    <Rectangle Grid.RowSpan="1" Grid.Column="1" Fill="#666" />
-    <Rectangle Grid.RowSpan="1" Grid.Column="3" Fill="#666" />
-    <Rectangle Grid.RowSpan="1" Grid.Column="5" Fill="#666" />
-
-    <Grid Grid.Column="1" x:Name="c1" HorizontalAlignment="Center">
+  <WindowChrome.WindowChrome>
+    <WindowChrome CaptionHeight="0" ResizeBorderThickness="16" />
+  </WindowChrome.WindowChrome>
+  <Border Style="{StaticResource BorderStyle_Aav0}">
+    <Grid DataContext="{StaticResource txCoreV2_Root_VwSrc}"  x:Name="ZommablePanel" >
+      <Grid.LayoutTransform>
+        <TransformGroup>
+          <ScaleTransform ScaleX="{Binding ZV, ElementName=wnd, FallbackValue=1}" ScaleY="{Binding ZV, ElementName=wnd, FallbackValue=1}" />
+        </TransformGroup>
+      </Grid.LayoutTransform>
       <Grid.RowDefinitions>
-        <RowDefinition Height="*"   />
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="*"   />
+        <RowDefinition Height="Auto"/>
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"  />
-        <ColumnDefinition Width="140"  />
-        <ColumnDefinition Width="60"  />
-        <ColumnDefinition Width="60"  />
-        <ColumnDefinition Width="60"  />
-        <ColumnDefinition Width="200"  />
-        <ColumnDefinition Width="20"   />
-        <ColumnDefinition Width="Auto"   />
-        <ColumnDefinition Width="20"   />
-        <ColumnDefinition Width="80"   />
+        <ColumnDefinition Width="6"   />
+        <ColumnDefinition Width="9*"  />
+        <ColumnDefinition Width="10"   />
+        <ColumnDefinition Width="4*"  />
+        <ColumnDefinition Width="10"   />
+        <ColumnDefinition Width="26"   />
+        <ColumnDefinition Width="6"   />
       </Grid.ColumnDefinitions>
-      <Grid.Resources>
-        <Style TargetType="TextBox" >
-          <Setter Property="HorizontalAlignment"  Value="Stretch"/>
-        </Style>
-        <Style TargetType="CheckBox" >
-          <Setter Property="HorizontalAlignment"  Value="Stretch"/>
-          <Setter Property="VerticalAlignment"    Value="Center"/>
-          <Setter Property="IsTabStop"            Value="False"/>
-        </Style>
-        <Style TargetType="ComboBox" >
-          <Setter Property="HorizontalAlignment"  Value="Stretch"/>
-        </Style>
-        <Style TargetType="Label" >
-          <Setter Property="HorizontalAlignment"  Value="Stretch"/>
-        </Style>
-        <Style TargetType="TextBlock" >
-          <Setter Property="HorizontalAlignment"  Value="Center"/>
-        </Style>
-      </Grid.Resources>
 
-      <StackPanel Grid.RowSpan="3" Orientation="Horizontal" Margin="3 0 20 0">
-        <Button Content="_Assign"	 Width="70" Click="OnAssign0" x:Name="btAssign"    IsDefault="True"  Height="52" FontWeight="Bold" Background="#0f0" IsEnabled="False" />
-        <StackPanel VerticalAlignment="Center">
-          <Button Content="_1"		 Width="80" Click="OnAssign1" x:Name="choiceAbove" IsTabStop="False" Height="25" FontWeight="Bold" Background="#ff0" IsEnabled="False" Margin="2 0 0 1" />
-          <Button Content="_7"		 Width="80" Click="OnAssign2" x:Name="choiceBelow" IsTabStop="False" Height="25" FontWeight="Bold" Background="#ff0" IsEnabled="False" Margin="2 1 0 0" />
+      <StackPanel Orientation="Horizontal" Grid.ColumnSpan="7" HorizontalAlignment="Center" >
+        <TextBlock x:Name="h0" Text="Abc 123" FontSize="22" Foreground="#fd0" />
+        <TextBlock x:Name="h1" Text="Abc 123" FontSize="22" Foreground="#0cf" />
+        <TextBlock x:Name="h2" Text="Abc 123" FontSize="22" Foreground="#0a0" />
+        <TextBlock x:Name="h3" Text="Abc 123" FontSize="22" Foreground="#f0f" />
+        <TextBlock x:Name="h4" Text="Abc 123" FontSize="22" Foreground="#05f" />
+      </StackPanel>
+
+      <Rectangle Grid.Row="1" Grid.RowSpan="1" Grid.Column="1" Fill="#666" />
+      <Rectangle Grid.Row="1" Grid.RowSpan="1" Grid.Column="3" Fill="#666" />
+      <Rectangle Grid.Row="1" Grid.RowSpan="1" Grid.Column="5" Fill="#666" />
+
+      <Grid Grid.Row="1" Grid.Column="1" x:Name="c1" HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"   />
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"   />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"  />
+          <ColumnDefinition Width="140"  />
+          <ColumnDefinition Width="60"  />
+          <ColumnDefinition Width="60"  />
+          <ColumnDefinition Width="60"  />
+          <ColumnDefinition Width="200"  />
+          <ColumnDefinition Width="20"   />
+          <ColumnDefinition Width="Auto"   />
+          <ColumnDefinition Width="20"   />
+          <ColumnDefinition Width="80"   />
+        </Grid.ColumnDefinitions>
+        <Grid.Resources>
+          <Style TargetType="TextBox" >
+            <Setter Property="HorizontalAlignment"  Value="Stretch"/>
+          </Style>
+          <Style TargetType="CheckBox" >
+            <Setter Property="HorizontalAlignment"  Value="Stretch"/>
+            <Setter Property="VerticalAlignment"    Value="Center"/>
+            <Setter Property="IsTabStop"            Value="False"/>
+          </Style>
+          <Style TargetType="ComboBox" >
+            <Setter Property="HorizontalAlignment"  Value="Stretch"/>
+          </Style>
+          <Style TargetType="Label" >
+            <Setter Property="HorizontalAlignment"  Value="Stretch"/>
+          </Style>
+          <Style TargetType="TextBlock" >
+            <Setter Property="HorizontalAlignment"  Value="Center"/>
+          </Style>
+        </Grid.Resources>
+
+        <StackPanel Grid.RowSpan="3" Orientation="Horizontal" Margin="3 0 20 0">
+          <Button Content="_Assign"	 Width="70" Click="OnAssign0" x:Name="btAssign"    IsDefault="True"  Height="52" FontWeight="Bold" Background="#0f0" IsEnabled="False" />
+          <StackPanel VerticalAlignment="Center">
+            <Button Content="_1"		 Width="80" Click="OnAssign1" x:Name="choiceAbove" IsTabStop="False" Height="25" FontWeight="Bold" Background="#ff0" IsEnabled="False" Margin="2 0 0 1" />
+            <Button Content="_7"		 Width="80" Click="OnAssign2" x:Name="choiceBelow" IsTabStop="False" Height="25" FontWeight="Bold" Background="#ff0" IsEnabled="False" Margin="2 1 0 0" />
+          </StackPanel>
         </StackPanel>
+
+        <Label      Grid.Column="1"  Grid.Row="1" Foreground="#e21" Content="$$$`t_xt`???:" Target="{Binding ElementName=tbxSearch}"    />
+        <TextBox    Grid.Column="1"  Grid.Row="2" Foreground="#e21" FontSize="18"	      TextChanged="OnTextChangedFuz"       x:Name="tbxSearch" ToolTip="Main Combi Search"/>
+        <CheckBox   Grid.Column="2"  Grid.Row="1" Foreground="#080" Content="A_bs"      x:Name="chkIsAbs" IsChecked="True" HorizontalAlignment="Center" />
+        <TextBlock  Grid.Column="2"  Grid.Row="2" Foreground="#080" FontSize="18"			  x:Name="tbkAmt" Background="#def" MinWidth="22"/>
+        <Label      Grid.Column="3"  Grid.Row="1" Foreground="#080" Content="+/-"	      Target="{Binding ElementName=tRng}" />
+        <TextBox    Grid.Column="3"  Grid.Row="2" Foreground="#080" FontSize="18"			  TextChanged="OnTextChangedFuz" x:Name="tRng" Text="1.00" />
+        <CheckBox   Grid.Column="5"  Grid.Row="1" Foreground="#808" x:Name="chkTxCatgry" Content="Ca_tgry" Checked="OnTxCatgry_Checked" Unchecked="OnTxCatgry_UnChckd" />
+        <ComboBox   Grid.Column="5"  Grid.Row="2"                    x:Name="cbxTxCatgry" IsEnabled="{Binding ElementName=chkTxCatgry, Path=IsChecked}" ItemsSource="{Binding Source={StaticResource txCategoryCmBxVwSrc}}" DisplayMemberPath="Name" SelectedValuePath="IdTxt" SelectionChanged="OnTxCatgry_Changed" />
+
+        <CheckBox   Grid.Column="7"  Grid.Row="1" Foreground="#c04" x:Name="chkSingleYr" Content="1 _Yr  " Checked="OnSingleYr_Checked" Unchecked="OnSingleYr_UnChckd" />
+        <ComboBox   Grid.Column="7"  Grid.Row="2"                    x:Name="cbxSingleYr" IsEnabled="{Binding ElementName=chkSingleYr, Path=IsChecked}" SelectionChanged="OnSingleYr_Changed" />
+
+        <TextBlock  Grid.Column="9"  Grid.Row="2" Foreground="#18d" FontSize="18"		    x:Name="tbkFlt" Background="#def" MinWidth="22" ToolTip="Used below for highlighting" Opacity="0" />
+
+        <Button     Grid.Column="9"  Grid.Row="2" Foreground="#18d" Content="_Clear"  Click="OnClear1" Width="50" />
+        <!--<Button     Grid.Column="11" Grid.Row="2" Foreground="#d81" Content="_Manual" Click="OnManualTxnAdd" ToolTip="Add a txn manually. " />-->
+
+        <StackPanel Grid.ColumnSpan="9"  Grid.Row="3" Orientation="Horizontal" >
+          <Button   Content="|_$|"    Click="OnFindByDlr" Margin="5 3" Width="50" ToolTip="List matches by $$" />
+          <Button   Content="_dtl"    Click="OnFindByDtl" Margin="5 3" Width="50" ToolTip="List matches by details" />
+          <Button   Content="_mem"    Click="OnFindByMem" Margin="5 3" Width="50" ToolTip="List matches by memo" />
+          <TextBlock x:Name="tbxNew"                      Margin="5 3" VerticalAlignment="Center" FontWeight="Medium" Foreground="#0d0" d:Text="Matches:  by |$|:  3    sum 234.56$        by Dtl: 2        by Mem: 0" />
+        </StackPanel>
+      </Grid>
+
+      <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
+        <Label   Foreground="#808" Content="_Id txt:"	Target="{Binding ElementName=tSrch2}" />
+        <TextBox Foreground="#808" FontSize="18"			Width="90" TextChanged="OnTextChangedCtg" x:Name="tSrch2"  />
+        <Button  Foreground="#808" Content="C_lear"		Width="32"  Click="OnClear2" IsTabStop="False" Margin="0,20,20,20" />
+
+        <!--<Button     Content="Assig_n"	  Width="70" Click="OnAssign0" x:Name="btAssig2"    Height="52" FontWeight="Bold" Background="#0f0" IsEnabled="False" Margin="0" />-->
+
+        <CheckBox Foreground="#808" Content="In_ferRT" x:Name="chkInfer" Checked="OnInfer_Checked" Unchecked="OnClear2"  FlowDirection="RightToLeft" Margin="20" ToolTip="Infer real-time from previous ctgr assignments." />
+        <Button   Foreground="#800" Content="_Re-Load"	 Click="OnReLoad" Height="52" ToolTip=": L K J  ???" />
+
       </StackPanel>
 
-      <Label      Grid.Column="1"  Grid.Row="1" Foreground="#e21" Content="$$$`t_xt`???:" Target="{Binding ElementName=tbxSearch}"    />
-      <TextBox    Grid.Column="1"  Grid.Row="2" Foreground="#e21" FontSize="18"	      TextChanged="OnTextChangedFuz"       x:Name="tbxSearch" ToolTip="Main Combi Search"/>
-      <CheckBox   Grid.Column="2"  Grid.Row="1" Foreground="#080" Content="A_bs"      x:Name="chkIsAbs" IsChecked="True" HorizontalAlignment="Center" />
-      <TextBlock  Grid.Column="2"  Grid.Row="2" Foreground="#080" FontSize="18"			  x:Name="tbkAmt" Background="#def" MinWidth="22"/>
-      <Label      Grid.Column="3"  Grid.Row="1" Foreground="#080" Content="+/-"	      Target="{Binding ElementName=tRng}" />
-      <TextBox    Grid.Column="3"  Grid.Row="2" Foreground="#080" FontSize="18"			  TextChanged="OnTextChangedFuz" x:Name="tRng" Text="1.00" />
-      <CheckBox   Grid.Column="5"  Grid.Row="1" Foreground="#808" x:Name="chkTxCatgry" Content="Ca_tgry" Checked="OnTxCatgry_Checked" Unchecked="OnTxCatgry_UnChckd" />
-      <ComboBox   Grid.Column="5"  Grid.Row="2"                    x:Name="cbxTxCatgry" IsEnabled="{Binding ElementName=chkTxCatgry, Path=IsChecked}" ItemsSource="{Binding Source={StaticResource txCategoryCmBxVwSrc}}" DisplayMemberPath="Name" SelectedValuePath="IdTxt" SelectionChanged="OnTxCatgry_Changed" />
+      <!--RowDetailsVisibilityMode="VisibleWhenSelected" EnableRowVirtualization="True" AutoGenerateColumns="False" IsReadOnly="False"-->
+      <DataGrid x:Name="dgTxCore" ItemsSource="{Binding}" SelectionChanged="DgTxCore_SelChd" MouseDoubleClick="DgTxCore_MouseDblClick" SelectionMode="Extended" Grid.Row="2" Grid.Column="1">
+        <DataGrid.Resources>
+          <Style TargetType="DataGridRow">
+            <!--<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.IsInDb, Converter={cnv:Bool TrueColor=Gray, FalseColor=Red}}" />-->
+            <Setter Property="Background" Value="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=#550, BrushFalse=#333}, ConverterParameter='UnKn'}" />
+          </Style>
+        </DataGrid.Resources>
+        <DataGrid.Columns>
+          <DataGridTextColumn     Header="Tx Date"		Binding="{Binding TxDate,    StringFormat=\{0: yyyy-MM-dd \}}"  />
+          <!--Foreground="#00f"-->
+          <DataGridTextColumn     Header="Amount"			Binding="{Binding TxAmount,  StringFormat='{}{0:##,###.#0  }'}" ElementStyle="{StaticResource RightAlignStyle}" FontWeight="SemiBold" />
+          <!--Foreground="#080"-->
 
-      <CheckBox   Grid.Column="7"  Grid.Row="1" Foreground="#c04" x:Name="chkSingleYr" Content="1 _Yr  " Checked="OnSingleYr_Checked" Unchecked="OnSingleYr_UnChckd" />
-      <ComboBox   Grid.Column="7"  Grid.Row="2"                    x:Name="cbxSingleYr" IsEnabled="{Binding ElementName=chkSingleYr, Path=IsChecked}" SelectionChanged="OnSingleYr_Changed" />
+          <DataGridTemplateColumn Header="Category"		SortMemberPath="TxCategoryIdTxt">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxCategoryIdTxtNavigation.Name}" HorizontalAlignment="Center" Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=LightYellow, BrushFalse=Blue}, ConverterParameter='UnKn'}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
 
-      <TextBlock  Grid.Column="9"  Grid.Row="2" Foreground="#18d" FontSize="18"		    x:Name="tbkFlt" Background="#def" MinWidth="22" ToolTip="Used below for highlighting" Opacity="0" />
-      
-      <Button     Grid.Column="9"  Grid.Row="2" Foreground="#18d" Content="_Clear"  Click="OnClear1" Width="50" />
-      <!--<Button     Grid.Column="11" Grid.Row="2" Foreground="#d81" Content="_Manual" Click="OnManualTxnAdd" ToolTip="Add a txn manually. " />-->
+          <DataGridTemplateColumn Header="src Fla 8 "	SortMemberPath="TxMoneySrc.Fla">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding TxMoneySrc.Fla}"  ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=Teal, BrushFalse=Magenta}, ConverterParameter='Alx'}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
 
-      <StackPanel Grid.ColumnSpan="9"  Grid.Row="3" Orientation="Horizontal" >
-        <Button   Content="|_$|"    Click="OnFindByDlr" Margin="5 3" Width="50" ToolTip="List matches by $$" />
-        <Button   Content="_dtl"    Click="OnFindByDtl" Margin="5 3" Width="50" ToolTip="List matches by details" />
-        <Button   Content="_mem"    Click="OnFindByMem" Margin="5 3" Width="50" ToolTip="List matches by memo" />
-        <TextBlock x:Name="tbxNew"                      Margin="5 3" VerticalAlignment="Center" FontWeight="Medium" Foreground="#0d0" d:Text="Matches:  by |$|:  3    sum 234.56$        by Dtl: 2        by Mem: 0" />
-      </StackPanel>
-    </Grid>
+          <DataGridTemplateColumn Header="Src Name" SortMemberPath="TxMoneySrc.Name">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding TxMoneySrc.Name}" ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=Magenta, BrushFalse=Teal}, ConverterParameter='Mei'}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
 
+          <DataGridTemplateColumn Header="TxDetail"   SortMemberPath="TxDetail" CanUserSort="True" >
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <stb:HighlightableTextBlock Text="{Binding TxDetail}" SearchText="{Binding ElementName=tbkFlt, Path=Text}" ToolTip="{Binding CreatedAt}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
 
-    <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
-      <Label   Foreground="#808" Content="_Id txt:"	Target="{Binding ElementName=tSrch2}" />
-      <TextBox Foreground="#808" FontSize="18"			Width="90" TextChanged="OnTextChangedCtg" x:Name="tSrch2"  />
-      <Button  Foreground="#808" Content="C_lear"		Width="32"  Click="OnClear2" IsTabStop="False" Margin="0,20,20,20" />
+          <DataGridTemplateColumn Header="MemoPp"   SortMemberPath="MemoPp" CanUserSort="True" >
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <stb:HighlightableTextBlock Text="{Binding MemoPp}" SearchText="{Binding ElementName=tbkFlt, Path=Text}" >
+                  <stb:HighlightableTextBlock.ToolTip>
+                    <ToolTip>
+                      <Grid Height="40">
+                        <TextBlock Text="  Added" VerticalAlignment="Top" Foreground="#888" />
+                        <TextBlock Text="{Binding CreatedAt, StringFormat=\{0:yyyy-MM-dd\}}" VerticalAlignment="Top"    Margin="64 0 10 0" Foreground="#00f" />
+                        <TextBlock Text="  Id" VerticalAlignment="Bottom" Foreground="#888" />
+                        <TextBlock Text="{Binding Id, StringFormat=\{0:N0\}}"                VerticalAlignment="Bottom" Margin="64 0 10 0" Foreground="#00f" />
+                      </Grid>
+                    </ToolTip>
+                  </stb:HighlightableTextBlock.ToolTip>
+                </stb:HighlightableTextBlock>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
 
-      <!--<Button     Content="Assig_n"	  Width="70" Click="OnAssign0" x:Name="btAssig2"    Height="52" FontWeight="Bold" Background="#0f0" IsEnabled="False" Margin="0" />-->
+          <DataGridTemplateColumn Header="Notes"   SortMemberPath="Notes" CanUserSort="True" Width="*" >
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Grid>
+                  <stb:HighlightableTextBlock FontSize="12" Text="{Binding Notes}" SearchText="{Binding ElementName=tbkFlt, Path=Text}" />
+                  <TextBox Margin="-4 -4 0 0" FontSize="12" Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MouseOverMakesOpagueTbxStyle}" BorderThickness="0" MinWidth="36" Background="#3000" Foreground="#8aa0" />
+                </Grid>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
 
-      <CheckBox Foreground="#808" Content="In_ferRT" x:Name="chkInfer" Checked="OnInfer_Checked" Unchecked="OnClear2"  FlowDirection="RightToLeft" Margin="20" ToolTip="Infer real-time from previous ctgr assignments." />
-      <Button   Foreground="#800" Content="_Re-Load"	 Click="OnReLoad" Height="52" ToolTip=": L K J  ???" />
-
-    </StackPanel>
-
-    <!--RowDetailsVisibilityMode="VisibleWhenSelected" EnableRowVirtualization="True" AutoGenerateColumns="False" IsReadOnly="False"-->
-    <DataGrid x:Name="dgTxCore" ItemsSource="{Binding}" SelectionChanged="DgTxCore_SelChd" MouseDoubleClick="DgTxCore_MouseDblClick" SelectionMode="Extended" Grid.Row="1" Grid.Column="1">
-      <DataGrid.Resources>
-        <Style TargetType="DataGridRow">
-          <!--<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.IsInDb, Converter={cnv:Bool TrueColor=Gray, FalseColor=Red}}" />-->
-          <Setter Property="Background" Value="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=#550, BrushFalse=#333}, ConverterParameter='UnKn'}" />
-        </Style>
-      </DataGrid.Resources>
-      <DataGrid.Columns>
-        <DataGridTextColumn     Header="Tx Date"		Binding="{Binding TxDate,    StringFormat=\{0: yyyy-MM-dd \}}"  />
-        <!--Foreground="#00f"-->
-        <DataGridTextColumn     Header="Amount"			Binding="{Binding TxAmount,  StringFormat='{}{0:##,###.#0  }'}" ElementStyle="{StaticResource RightAlignStyle}" FontWeight="SemiBold" />
-        <!--Foreground="#080"-->
-
-        <DataGridTemplateColumn Header="Category"		SortMemberPath="TxCategoryIdTxt">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxCategoryIdTxtNavigation.Name}" HorizontalAlignment="Center" Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=LightYellow, BrushFalse=Blue}, ConverterParameter='UnKn'}" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn Header="src Fla 8 "	SortMemberPath="TxMoneySrc.Fla">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding TxMoneySrc.Fla}"  ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=Teal, BrushFalse=Magenta}, ConverterParameter='Alx'}" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn Header="Src Name" SortMemberPath="TxMoneySrc.Name">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding TxMoneySrc.Name}" ToolTip="{Binding TxMoneySrc.Notes}" Foreground="{Binding TxMoneySrc.Owner, Converter={cnv:Equals BrushTrue=Magenta, BrushFalse=Teal}, ConverterParameter='Mei'}" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn Header="TxDetail"   SortMemberPath="TxDetail" CanUserSort="True" >
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <stb:HighlightableTextBlock Text="{Binding TxDetail}" SearchText="{Binding ElementName=tbkFlt, Path=Text}" ToolTip="{Binding CreatedAt}" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn Header="MemoPp"   SortMemberPath="MemoPp" CanUserSort="True" >
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <stb:HighlightableTextBlock Text="{Binding MemoPp}" SearchText="{Binding ElementName=tbkFlt, Path=Text}" >
-                <stb:HighlightableTextBlock.ToolTip>
-                  <ToolTip>
-                    <Grid Height="40">
-                      <TextBlock Text="  Added" VerticalAlignment="Top" Foreground="#888" />
-                      <TextBlock Text="{Binding CreatedAt, StringFormat=\{0:yyyy-MM-dd\}}" VerticalAlignment="Top"    Margin="64 0 10 0" Foreground="#00f" />
-                      <TextBlock Text="  Id" VerticalAlignment="Bottom" Foreground="#888" />
-                      <TextBlock Text="{Binding Id, StringFormat=\{0:N0\}}"                VerticalAlignment="Bottom" Margin="64 0 10 0" Foreground="#00f" />
-                    </Grid>
-                  </ToolTip>
-                </stb:HighlightableTextBlock.ToolTip>
-              </stb:HighlightableTextBlock>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn Header="Notes"   SortMemberPath="Notes" CanUserSort="True" Width="*" >
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <Grid>
-                <stb:HighlightableTextBlock FontSize="12" Text="{Binding Notes}" SearchText="{Binding ElementName=tbkFlt, Path=Text}" />
-                <TextBox Margin="-4 -4 0 0" FontSize="12" Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MouseOverMakesOpagueTbxStyle}" BorderThickness="0" MinWidth="36" Background="#3000" Foreground="#8aa0" />
-              </Grid>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <!--<DataGridTextColumn     Header="Added"	FontSize="8" Binding="{Binding CreatedAt, StringFormat=\{0: yyyy-MM-dd \}}" Foreground="#555" />
+          <!--<DataGridTextColumn     Header="Added"	FontSize="8" Binding="{Binding CreatedAt, StringFormat=\{0: yyyy-MM-dd \}}" Foreground="#555" />
         <DataGridTextColumn     Header="Id"			FontSize="8" Binding="{Binding Id}" />-->
-      </DataGrid.Columns>
-    </DataGrid>
+        </DataGrid.Columns>
+      </DataGrid>
 
-    <DataGrid x:Name="dgTxCatgry" ItemsSource="{Binding Source={StaticResource txCategoryDGrdVwSrc}}" SelectionChanged="DgTxCtgr_SelChd" MouseDoubleClick="DgTxCtgr_MouseDblClick" Grid.Row="1" Grid.Column="3" RowBackground="#333"  AlternatingRowBackground="#444">
-      <DataGrid.Columns>
-        <DataGridTextColumn Binding="{Binding TlNumber}"	  Header="TL #" />
-        <DataGridTextColumn Binding="{Binding ExpGroupId}"	Header="Exp Group" />
+      <DataGrid x:Name="dgTxCatgry" ItemsSource="{Binding Source={StaticResource txCategoryDGrdVwSrc}}" SelectionChanged="DgTxCtgr_SelChd" MouseDoubleClick="DgTxCtgr_MouseDblClick" Grid.Row="2" Grid.Column="3" RowBackground="#333"  AlternatingRowBackground="#444">
+        <DataGrid.Columns>
+          <DataGridTextColumn Binding="{Binding TlNumber}"	  Header="TL #" />
+          <DataGridTextColumn Binding="{Binding ExpGroupId}"	Header="Exp Group" />
 
-        <DataGridTemplateColumn Header="IdTxt"   SortMemberPath="IdTxt" CanUserSort="True" >
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <stb:HighlightableTextBlock Text="{Binding IdTxt}" SearchText="{Binding ElementName=tSrch2, Path=Text}"  />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="IdTxt"   SortMemberPath="IdTxt" CanUserSort="True" >
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <stb:HighlightableTextBlock Text="{Binding IdTxt}" SearchText="{Binding ElementName=tSrch2, Path=Text}"  />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
 
-        <DataGridTemplateColumn Header="Name"   SortMemberPath="Name" CanUserSort="True" Width="2*" >
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <stb:HighlightableTextBlock Text="{Binding Name}" SearchText="{Binding ElementName=tSrch2, Path=Text}"  />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="Name"   SortMemberPath="Name" CanUserSort="True" Width="2*" >
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <stb:HighlightableTextBlock Text="{Binding Name}" SearchText="{Binding ElementName=tSrch2, Path=Text}"  />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
 
-        <DataGridTextColumn Binding="{Binding Notes}"			  Header="Notes" Width="*" />
-      </DataGrid.Columns>
-    </DataGrid>
+          <DataGridTextColumn Binding="{Binding Notes}"			  Header="Notes" Width="*" />
+        </DataGrid.Columns>
+      </DataGrid>
 
-    <ListBox	    Grid.Row="1" Grid.Column="5" x:Name="txCategoryListBox" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource txCategoryDGrdVwSrc}}" SelectedValuePath="Id" SelectionChanged="OnLbxSelChd" Margin="0,26,0,0" MinHeight="44"  />
+      <ListBox	    Grid.Row="2" Grid.Column="5" x:Name="txCategoryListBox" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource txCategoryDGrdVwSrc}}" SelectedValuePath="Id" SelectionChanged="OnLbxSelChd" Margin="0,26,0,0" MinHeight="44"  />
 
-    <GridSplitter Grid.RowSpan="3" Grid.Column="2"  />
-    <GridSplitter Grid.RowSpan="3" Grid.Column="4"  />
+      <GridSplitter Grid.RowSpan="3" Grid.Column="2"  />
+      <GridSplitter Grid.RowSpan="3" Grid.Column="4"  />
 
-  </Grid>
+    </Grid>
+  </Border>
 </lnk:WindowBase>
