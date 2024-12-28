@@ -25,3 +25,5 @@ A copy from  C:\g\TaxPrep\Src\Db.FinDemo7.2024.12\Models\TxMoneySrc.cs  solved t
 
 ACTUALLY, all the non .Net 4 projects have the issue.  The .Net 4 projects are OK.
 
+# //tu: !!! Just run this once in while to keep the project up-to-date with the database !!!:
+dotnet ef dbcontext scaffold "Server=.\SqlExpress;Database=FinDemo;Trusted_Connection=True;TrustServerCertificate=Yes;" Microsoft.EntityFrameworkCore.SqlServer -o Models --force
