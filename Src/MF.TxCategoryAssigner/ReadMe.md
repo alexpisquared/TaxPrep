@@ -1,7 +1,7 @@
 ﻿Reverse CHrono
 
 # 2021-09-02  Still .Net 4.8 'cause of .. TTS ... maybe
-ClickOnce does not work .. use Rls folder.
+ClickOnce does not work .. use Rls folder as an installed/published app.
 
 //todo: read balances in from "C:\Users\alexp\OneDrive\Documents\0\MF\DnLds\accountactivity TD Pi 2020-030-02  -  2021-09-02.csv" to txnV2 table.
 

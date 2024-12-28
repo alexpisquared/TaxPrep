@@ -320,6 +320,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="ReadMe.md" />
     <Content Include="sql\Copy from TxCore to TxCoreV2.sql" />
     <Content Include="sql\DupeHunt.sql" />
     <Content Include="sql\HST.2016.sql" />
