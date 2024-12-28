@@ -44,11 +44,14 @@ public partial class App : Application
 
     ShutdownMode = ShutdownMode.OnMainWindowClose; // The default value is OnLastWindowClose.
 
-    MainWindow = //VersionHelper.IsDbg ?      
-      //new ManualTxnEntry(_logger, new Bpr(), Synth, true, new FinDemoContext("Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;Encrypt=False;"));
-    //new MinFin7MdiLib.Views.ReviewWindow(_logger, new Bpr(), "Mei", new FinDemoContext("Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;Encrypt=False;"));
-    new TxCategoryAssignerVw(_logger, new Bpr(), Synth, new FinDemoContext("Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;Encrypt=False;"));
-    //new MainAppDispatcher();// (_logger, new Bpr(), Synth, new FinDemoContext("Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;Encrypt=False;"));
+    var connectionString = "Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;Encrypt=False;";
+
+    MainWindow = 
+      new TxCategoryAssignerVw(_logger, new Bpr(), Synth, new FinDemoContext(connectionString));
+      //VersionHelper.IsDbg ?      
+      //new ManualTxnEntry(_logger, new Bpr(), Synth, true, new FinDemoContext(constr));
+      //new MinFin7MdiLib.Views.ReviewWindow(_logger, new Bpr(), "Mei", new FinDemoContext(constr));
+      //new MainAppDispatcher();// (_logger, new Bpr(), Synth, new FinDemoContext(constr));
 
     MainWindow.ShowDialog();
 

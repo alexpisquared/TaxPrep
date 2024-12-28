@@ -49,11 +49,11 @@
       </Grid.ColumnDefinitions>
 
       <StackPanel Orientation="Horizontal" Grid.ColumnSpan="7" HorizontalAlignment="Center" >
-        <TextBlock x:Name="h0" Text="Abc 123" FontSize="22" Foreground="#fd0" />
-        <TextBlock x:Name="h1" Text="Abc 123" FontSize="22" Foreground="#0cf" />
-        <TextBlock x:Name="h2" Text="Abc 123" FontSize="22" Foreground="#0a0" />
-        <TextBlock x:Name="h3" Text="Abc 123" FontSize="22" Foreground="#f0f" />
-        <TextBlock x:Name="h4" Text="Abc 123" FontSize="22" Foreground="#05f" />
+        <TextBlock x:Name="h0" Text="Abc 123" FontSize="20" Foreground="#fd0" FontFamily="JetBrains Mono" />
+        <TextBlock x:Name="h1" Text="Abc 123" FontSize="20" Foreground="#0cf" FontFamily="JetBrains Mono" />
+        <TextBlock x:Name="h2" Text="Abc 123" FontSize="20" Foreground="#0a0" FontFamily="JetBrains Mono" />
+        <TextBlock x:Name="h3" Text="Abc 123" FontSize="20" Foreground="#f0f" FontFamily="JetBrains Mono" />
+        <TextBlock x:Name="h4" Text="Abc 123" FontSize="20" Foreground="#05f" FontFamily="JetBrains Mono" />
       </StackPanel>
 
       <Rectangle Grid.Row="1" Grid.RowSpan="1" Grid.Column="1" Fill="#666" />

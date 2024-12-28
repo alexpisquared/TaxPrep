@@ -310,11 +310,11 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   void UpdateTitle(TimeSpan took, [CallerMemberName] string? cmn = "")
   {
     WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_core.Count,9:N0} rows    sum {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_core.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t {cmn} \t\t {VersionHelper.CurVerStr}");
-    h0.Text = $"Ctgry {_loadedCatgry,-12} ";
-    h1.Text = $"{_core.Count,9:N0} rows    ";
-    h2.Text = $"sum {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_core.Sum(r => r.TxAmount),-9:N0} \t ";
-    h3.Text = $"selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t ";
-    h4.Text = $"{VersionHelper.CurVerStr}";
+    h0.Text = $"{_core.Count,9:N0} rows     {took.TotalSeconds,4:N1}s     ";
+    h1.Text = $"$UnKn/All: {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount):N0} / {_core.Sum(r => r.TxAmount):N0}     ";
+    h2.Text = $"Selects {_selectTtl,9:N2}     ";
+    h3.Text = $"{VersionHelper.CurVerStr}     ";
+    h4.Text = $"Db: {_dbx.Database.GetDbConnection().Database}     ";              
   }
 
   async void OnReLoad(object s, RoutedEventArgs e)
