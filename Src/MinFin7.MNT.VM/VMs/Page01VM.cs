@@ -133,7 +133,7 @@ public partial class Page01VM : BaseEmVM
   }
 
   [RelayCommand(CanExecute = nameof(CanAssign))]
-  async void Assign(string? categoryIdTxt)
+  async Task AssignAsync(string? categoryIdTxt)
   {
     try
     {

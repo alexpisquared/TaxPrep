@@ -20,6 +20,13 @@
       <CollectionViewSource x:Key="txCategoryDGrdVwSrc"	d:DesignSource="{d:DesignInstance {x:Type mdl:TxCategory}, CreateList=True}"/>
       <CollectionViewSource x:Key="txCategoryCmBxVwSrc"	d:DesignSource="{d:DesignInstance {x:Type mdl:TxCategory}, CreateList=True}"/>
 
+      <Style TargetType="TextBox" >
+        <Setter Property="HorizontalAlignment"  Value="Stretch"/>
+        <Setter Property="VerticalAlignment"    Value="Center"/>
+        <Setter Property="Background"           Value="#888"/>
+        <Setter Property="BorderBrush"          Value="#888"/>
+      </Style>
+
     </ResourceDictionary>
   </lnk:WindowBase.Resources>
   <WindowChrome.WindowChrome>
@@ -52,15 +59,15 @@
         <TextBlock x:Name="h0" Text="Abc 123" FontSize="20" Foreground="#fd0" FontFamily="JetBrains Mono" />
         <TextBlock x:Name="h1" Text="Abc 123" FontSize="20" Foreground="#0cf" FontFamily="JetBrains Mono" />
         <TextBlock x:Name="h2" Text="Abc 123" FontSize="20" Foreground="#0a0" FontFamily="JetBrains Mono" />
-        <TextBlock x:Name="h3" Text="Abc 123" FontSize="20" Foreground="#f0f" FontFamily="JetBrains Mono" />
+        <TextBlock x:Name="h3" Text="Abc 123" FontSize="20" Foreground="#a50" FontFamily="JetBrains Mono" />
         <TextBlock x:Name="h4" Text="Abc 123" FontSize="20" Foreground="#05f" FontFamily="JetBrains Mono" />
       </StackPanel>
 
-      <Rectangle Grid.Row="1" Grid.RowSpan="1" Grid.Column="1" Fill="#666" />
-      <Rectangle Grid.Row="1" Grid.RowSpan="1" Grid.Column="3" Fill="#666" />
-      <Rectangle Grid.Row="1" Grid.RowSpan="1" Grid.Column="5" Fill="#666" />
+      <Rectangle Grid.Row="1" Grid.RowSpan="1" Grid.Column="1" Fill="#363636" />
+      <Rectangle Grid.Row="1" Grid.RowSpan="1" Grid.Column="3" Fill="#363636" />
+      <Rectangle Grid.Row="1" Grid.RowSpan="1" Grid.Column="5" Fill="#363636" />
 
-      <Grid Grid.Row="1" Grid.Column="1" x:Name="c1" HorizontalAlignment="Center">
+      <Grid Grid.Row="1" Grid.Column="1" x:Name="c1" HorizontalAlignment="Center" Margin="3">
         <Grid.RowDefinitions>
           <RowDefinition Height="*"   />
           <RowDefinition Height="Auto"/>
@@ -75,32 +82,13 @@
           <ColumnDefinition Width="60"  />
           <ColumnDefinition Width="200"  />
           <ColumnDefinition Width="20"   />
-          <ColumnDefinition Width="Auto"   />
+          <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="20"   />
           <ColumnDefinition Width="80"   />
         </Grid.ColumnDefinitions>
-        <Grid.Resources>
-          <Style TargetType="TextBox" >
-            <Setter Property="HorizontalAlignment"  Value="Stretch"/>
-          </Style>
-          <Style TargetType="CheckBox" >
-            <Setter Property="HorizontalAlignment"  Value="Stretch"/>
-            <Setter Property="VerticalAlignment"    Value="Center"/>
-            <Setter Property="IsTabStop"            Value="False"/>
-          </Style>
-          <Style TargetType="ComboBox" >
-            <Setter Property="HorizontalAlignment"  Value="Stretch"/>
-          </Style>
-          <Style TargetType="Label" >
-            <Setter Property="HorizontalAlignment"  Value="Stretch"/>
-          </Style>
-          <Style TargetType="TextBlock" >
-            <Setter Property="HorizontalAlignment"  Value="Center"/>
-          </Style>
-        </Grid.Resources>
 
-        <StackPanel Grid.RowSpan="3" Orientation="Horizontal" Margin="3 0 20 0">
-          <Button Content="_Assign"	 Width="70" Click="OnAssign0" x:Name="btAssign"    IsDefault="True"  Height="52" FontWeight="Bold" Background="#0f0" IsEnabled="False" />
+        <StackPanel Grid.RowSpan="3" Orientation="Horizontal" Margin="3 0 50 0">
+          <Button Content="Assign"	 Width="70" Click="OnAssign0" x:Name="btAssign"    IsDefault="True"  Height="52" FontWeight="Bold" Background="#0f0" IsEnabled="False" />
           <StackPanel VerticalAlignment="Center">
             <Button Content="_1"		 Width="80" Click="OnAssign1" x:Name="choiceAbove" IsTabStop="False" Height="25" FontWeight="Bold" Background="#ff0" IsEnabled="False" Margin="2 0 0 1" />
             <Button Content="_7"		 Width="80" Click="OnAssign2" x:Name="choiceBelow" IsTabStop="False" Height="25" FontWeight="Bold" Background="#ff0" IsEnabled="False" Margin="2 1 0 0" />
@@ -110,37 +98,37 @@
         <Label      Grid.Column="1"  Grid.Row="1" Foreground="#e21" Content="$$$`t_xt`???:" Target="{Binding ElementName=tbxSearch}"    />
         <TextBox    Grid.Column="1"  Grid.Row="2" Foreground="#e21" FontSize="18"	      TextChanged="OnTextChangedFuz"       x:Name="tbxSearch" ToolTip="Main Combi Search"/>
         <CheckBox   Grid.Column="2"  Grid.Row="1" Foreground="#080" Content="A_bs"      x:Name="chkIsAbs" IsChecked="True" HorizontalAlignment="Center" />
-        <TextBlock  Grid.Column="2"  Grid.Row="2" Foreground="#080" FontSize="18"			  x:Name="tbkAmt" Background="#def" MinWidth="22"/>
+        <TextBlock  Grid.Column="2"  Grid.Row="2" Foreground="#080" FontSize="18"			  x:Name="tbkAmt" Background="Transparent" MinWidth="22" HorizontalAlignment="Center"/>
         <Label      Grid.Column="3"  Grid.Row="1" Foreground="#080" Content="+/-"	      Target="{Binding ElementName=tRng}" />
-        <TextBox    Grid.Column="3"  Grid.Row="2" Foreground="#080" FontSize="18"			  TextChanged="OnTextChangedFuz" x:Name="tRng" Text="1.00" />
-        <CheckBox   Grid.Column="5"  Grid.Row="1" Foreground="#808" x:Name="chkTxCatgry" Content="Ca_tgry" Checked="OnTxCatgry_Checked" Unchecked="OnTxCatgry_UnChckd" />
-        <ComboBox   Grid.Column="5"  Grid.Row="2"                    x:Name="cbxTxCatgry" IsEnabled="{Binding ElementName=chkTxCatgry, Path=IsChecked}" ItemsSource="{Binding Source={StaticResource txCategoryCmBxVwSrc}}" DisplayMemberPath="Name" SelectedValuePath="IdTxt" SelectionChanged="OnTxCatgry_Changed" />
+        <TextBox    Grid.Column="3"  Grid.Row="2" Foreground="#050" FontSize="18"			  TextChanged="OnTextChangedFuz" x:Name="tRng" Text="1.00" />
+        <CheckBox   Grid.Column="5"  Grid.Row="1" Foreground="#e0a" x:Name="chkTxCatgry" Content="Ca_tgry" Checked="OnTxCatgry_Checked" Unchecked="OnTxCatgry_UnChckd" />
+        <ComboBox   Grid.Column="5"  Grid.Row="2" Foreground="#e0a" x:Name="cbxTxCatgry" IsEnabled="{Binding ElementName=chkTxCatgry, Path=IsChecked}" ItemsSource="{Binding Source={StaticResource txCategoryCmBxVwSrc}}" DisplayMemberPath="Name" SelectedValuePath="IdTxt" SelectionChanged="OnTxCatgry_Changed" />
 
         <CheckBox   Grid.Column="7"  Grid.Row="1" Foreground="#c04" x:Name="chkSingleYr" Content="1 _Yr  " Checked="OnSingleYr_Checked" Unchecked="OnSingleYr_UnChckd" />
         <ComboBox   Grid.Column="7"  Grid.Row="2"                    x:Name="cbxSingleYr" IsEnabled="{Binding ElementName=chkSingleYr, Path=IsChecked}" SelectionChanged="OnSingleYr_Changed" />
 
         <TextBlock  Grid.Column="9"  Grid.Row="2" Foreground="#18d" FontSize="18"		    x:Name="tbkFlt" Background="#def" MinWidth="22" ToolTip="Used below for highlighting" Opacity="0" />
 
-        <Button     Grid.Column="9"  Grid.Row="2" Foreground="#18d" Content="_Clear"  Click="OnClear1" Width="50" />
+        <Button     Grid.Column="9"  Grid.Row="0" Foreground="#18d" Content="_Clear"  Click="OnClear1" Width="80" Height="48" Grid.RowSpan="4" Background="Transparent" BorderBrush="Transparent"/>
         <!--<Button     Grid.Column="11" Grid.Row="2" Foreground="#d81" Content="_Manual" Click="OnManualTxnAdd" ToolTip="Add a txn manually. " />-->
 
         <StackPanel Grid.ColumnSpan="9"  Grid.Row="3" Orientation="Horizontal" >
           <Button   Content="|_$|"    Click="OnFindByDlr" Margin="5 3" Width="50" ToolTip="List matches by $$" />
           <Button   Content="_dtl"    Click="OnFindByDtl" Margin="5 3" Width="50" ToolTip="List matches by details" />
           <Button   Content="_mem"    Click="OnFindByMem" Margin="5 3" Width="50" ToolTip="List matches by memo" />
-          <TextBlock x:Name="tbxNew"                      Margin="5 3" VerticalAlignment="Center" FontWeight="Medium" Foreground="#0d0" d:Text="Matches:  by |$|:  3    sum 234.56$        by Dtl: 2        by Mem: 0" />
+          <TextBlock x:Name="tbxNew"                      Margin="5 3" VerticalAlignment="Center" FontWeight="Medium" Foreground="#0b0" d:Text="Matches:  by |$|:  3    sum 234.56$        by Dtl: 2        by Mem: 0" />
         </StackPanel>
       </Grid>
 
       <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
-        <Label   Foreground="#808" Content="_Id txt:"	Target="{Binding ElementName=tSrch2}" />
-        <TextBox Foreground="#808" FontSize="18"			Width="90" TextChanged="OnTextChangedCtg" x:Name="tSrch2"  />
-        <Button  Foreground="#808" Content="C_lear"		Width="32"  Click="OnClear2" IsTabStop="False" Margin="0,20,20,20" />
+        <Label   Foreground="#e0a" Content="_Id "	Target="{Binding ElementName=tSrch2}" />
+        <TextBox Foreground="#e0a" FontSize="18"			MinWidth="64" TextChanged="OnTextChangedCtg" x:Name="tSrch2"  />
+        <Button  Foreground="#e0a" Content="C_lear"		 Width="80" Height="48" Click="OnClear2" IsTabStop="False" Margin="5,20,20,20" Background="Transparent" BorderBrush="Transparent" />
 
         <!--<Button     Content="Assig_n"	  Width="70" Click="OnAssign0" x:Name="btAssig2"    Height="52" FontWeight="Bold" Background="#0f0" IsEnabled="False" Margin="0" />-->
 
-        <CheckBox Foreground="#808" Content="In_ferRT" x:Name="chkInfer" Checked="OnInfer_Checked" Unchecked="OnClear2"  FlowDirection="RightToLeft" Margin="20" ToolTip="Infer real-time from previous ctgr assignments." />
-        <Button   Foreground="#800" Content="_Re-Load"	 Click="OnReLoad" Height="52" ToolTip=": L K J  ???" />
+        <CheckBox Foreground="#e0a" Content="In_ferRT" x:Name="chkInfer" Checked="OnInfer_Checked" Unchecked="OnClear2"  FlowDirection="RightToLeft" Margin="20" ToolTip="Infer real-time from previous ctgr assignments." />
+        <Button   Foreground="#e0a" Content="_Re-Load"	 Width="80" Height="48" Click="OnReLoad" ToolTip="CheckAskSave() and then reload TxCore" Background="Transparent" BorderBrush="Transparent" />
 
       </StackPanel>
 
@@ -149,7 +137,7 @@
         <DataGrid.Resources>
           <Style TargetType="DataGridRow">
             <!--<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.IsInDb, Converter={cnv:Bool TrueColor=Gray, FalseColor=Red}}" />-->
-            <Setter Property="Background" Value="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=#550, BrushFalse=#333}, ConverterParameter='UnKn'}" />
+            <Setter Property="Background" Value="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=#320, BrushFalse=#222}, ConverterParameter='UnKn'}" />
           </Style>
         </DataGrid.Resources>
         <DataGrid.Columns>
@@ -161,7 +149,7 @@
           <DataGridTemplateColumn Header="Category"		SortMemberPath="TxCategoryIdTxt">
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
-                <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxCategoryIdTxtNavigation.Name}" HorizontalAlignment="Center" Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=LightYellow, BrushFalse=Blue}, ConverterParameter='UnKn'}" />
+                <TextBlock Text="{Binding TxCategoryIdTxt}" ToolTip="{Binding TxCategoryIdTxtNavigation.Name}" HorizontalAlignment="Center" Foreground="{Binding TxCategoryIdTxt, Converter={cnv:Equals BrushTrue=#320, BrushFalse=#06f}, ConverterParameter='UnKn'}" />
               </DataTemplate>
             </DataGridTemplateColumn.CellTemplate>
           </DataGridTemplateColumn>

@@ -15,6 +15,7 @@ public partial class BaseEmVM : BaseDbVM
   public EmailOfIStore EmailOfIStore { get; }
   public EmailDetailVM EmailOfIVM { get; }
 
+  [RelayCommand] protected void Prv() { Bpr.Click(); try { _ = (PageCvs?.MoveCurrentToPrevious()); } catch (Exception ex) { ex.Pop(); } }
   [RelayCommand] protected void Nxt() { Bpr.Click(); try { _ = (PageCvs?.MoveCurrentToNext()); } catch (Exception ex) { ex.Pop(); } }
   [RelayCommand] protected void Dbg() { Bpr.Click(); try { GSReport = _t; } catch (Exception ex) { ex.Pop(); } }
   [RelayCommand] /**/      void OLk() { Bpr.Click(); try { _ = MessageBox.Show("■"); } catch (Exception ex) { ex.Pop(); } }

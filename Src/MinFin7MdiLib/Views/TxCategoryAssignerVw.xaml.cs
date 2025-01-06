@@ -310,11 +310,11 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   void UpdateTitle(TimeSpan took, [CallerMemberName] string? cmn = "")
   {
     WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_core.Count,9:N0} rows    sum {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_core.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t {cmn} \t\t {VersionHelper.CurVerStr}");
-    h0.Text = $"{_core.Count,9:N0} rows     {took.TotalSeconds,4:N1}s     ";
-    h1.Text = $"$UnKn/All: {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount):N0} / {_core.Sum(r => r.TxAmount):N0}     ";
-    h2.Text = $"Selects {_selectTtl,9:N2}     ";
+    h0.Text = $"{_core.Count,9:N0} rows     ";
+    h1.Text = $"$UnKn/All {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount):N0} / {_core.Sum(r => r.TxAmount):N0}     ";
+    h2.Text = $"Selects {_selectTtl:N2}     ";
     h3.Text = $"{VersionHelper.CurVerStr}     ";
-    h4.Text = $"Db: {_dbx.Database.GetDbConnection().Database}     ";              
+    h4.Text = $"Db: {_dbx.Database.GetDbConnection().Database}     ";
   }
 
   async void OnReLoad(object s, RoutedEventArgs e)
@@ -340,6 +340,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   void DgTxCtgr_SelChd(object s, SelectionChangedEventArgs e) => btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ e.AddedItems.Count == 1;
   void DgTxCore_SelChd(object s, SelectionChangedEventArgs e)
   {
+    _selectTtl = 0;
     if (e.AddedItems.Count < 1) return;
 
     try
@@ -348,7 +349,6 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
       _choiceAbove = _choiceBelow = "";
 
-      _selectTtl = 0;
       if (dgTxCore.SelectedItems.Count > 0)
       {
         var lv = new List<TxCoreV2>();

@@ -90,7 +90,7 @@
       </DataGrid.Columns>
     </DataGrid>
 
-    <Grid Grid.Row="3" DataContext="{Binding SelectdGrTxn}" Background="#4888" VerticalAlignment="Stretch" >
+    <Grid Grid.Row="3" DataContext="{Binding SelectdGrTxn}" Background="#4888" VerticalAlignment="Stretch" Tag="Leftover from MegaHunt .. repurpose to something maybe?">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="12"/>
@@ -138,8 +138,8 @@
               </DataTemplate>
             </DataGridTemplateColumn.CellTemplate>
           </DataGridTemplateColumn>
-          <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-MM-dd}'}"  />
-          <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
+          <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-MM-dd}'}" Foreground="#08f" />
+          <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}" FontWeight="Medium" />
 
           <DataGridTemplateColumn Header="SrcFLA2"	SortMemberPath="TxMoneySrc.Fla">
             <DataGridTemplateColumn.CellTemplate>
@@ -168,6 +168,8 @@
       <ListBox ItemsSource="{Binding CategoriesPrevYr}" SelectedItem="{Binding SelCtgry}" MinWidth="52" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#1000" Margin="6 0" BorderThickness="0" d:ItemsSource="{d:SampleData ItemCount=5}"/>
       <Label   Content="Assign to:" Margin="12 16 0 0" FontSize="14"/>
       <Button  Content="{Binding SelCtgry, StringFormat='++{}444 {0} ++'}" IsDefault="True" Command="{Binding AssignCommand}" CommandParameter="{Binding SelCtgry}" Margin="6" Padding="6" />
+      <Button  Content="↑ _Prev" Command="{Binding PrvCommand}" Margin="6 80 6 6" Padding="6" />
+      <Button  Content="↓ _Next" Command="{Binding NxtCommand}" Margin="6" Padding="6" />
     </StackPanel>
 
     <Grid Grid.Column="6" Grid.Row="1" Background="#4888" Grid.RowSpan="4" >
@@ -187,8 +189,8 @@
               </DataTemplate>
             </DataGridTemplateColumn.CellTemplate>
           </DataGridTemplateColumn>
-          <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-MM-dd}'}"  />
-          <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}"  />
+          <DataGridTextColumn Header=" Tx Date"    Binding="{Binding TxDate,   StringFormat='{}{0:yyyy-MM-dd}'}" Foreground="#08f"  />
+          <DataGridTextColumn Header=" Tx Amount"  Binding="{Binding TxAmount, StringFormat='{}{0:N2}'}"         ElementStyle="{StaticResource RightAlignStyle}" FontWeight="Medium" />
 
           <DataGridTemplateColumn Header="SrcFLA3"	SortMemberPath="TxMoneySrc.Fla">
             <DataGridTemplateColumn.CellTemplate>
