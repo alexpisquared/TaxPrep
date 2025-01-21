@@ -101,6 +101,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\MF.TxCategoryAssigner\ReadMe-Publish.md">
+      <Link>ReadMe-Publish.md</Link>
+    </Content>
     <Content Include="Images\MinFinTax.png" />
     <Content Include="Images\SplashScreen.scale-200.png" />
     <Content Include="Images\LockScreenLogo.scale-200.png" />
