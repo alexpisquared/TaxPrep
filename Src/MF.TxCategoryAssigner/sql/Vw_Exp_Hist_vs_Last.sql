@@ -1,4 +1,4 @@
-USE [FinDemo] -- Script Date: 2022-01-08, 2023-12-16
+USE [FinDemo] -- Script Date: 2022-01-08, 2023-12-16, 2025-01-27
 GO
 SET ANSI_NULLS ON
 GO
@@ -21,6 +21,7 @@ SELECT TOP (100) PERCENT ISNULL(dbo.TxCategory.TL_Number, 999) AS TaxLiq##, dbo.
 				(SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2021) GROUP BY TxCategoryIdTxt) AS Exp2021,
 				(SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2022) GROUP BY TxCategoryIdTxt) AS Exp2022,
 				(SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2023) GROUP BY TxCategoryIdTxt) AS Exp2023,
+				(SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2024) GROUP BY TxCategoryIdTxt) AS Exp2024,
 		 
 		 (SELECT Max(v) FROM (VALUES 
 			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_2 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2010) GROUP BY TxCategoryIdTxt)),
@@ -35,9 +36,10 @@ SELECT TOP (100) PERCENT ISNULL(dbo.TxCategory.TL_Number, 999) AS TaxLiq##, dbo.
 			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2019) GROUP BY TxCategoryIdTxt)),
 			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2020) GROUP BY TxCategoryIdTxt)),
 			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2021) GROUP BY TxCategoryIdTxt)),
-			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2022) GROUP BY TxCategoryIdTxt))) AS value(v)) AS MaxPrev,
+			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2022) GROUP BY TxCategoryIdTxt)),
+			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2023) GROUP BY TxCategoryIdTxt))) AS value(v)) AS MaxPrev,
 
-    (SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1     WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2023) GROUP BY TxCategoryIdTxt) / (.00000000000000001 + isnull
+    (SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1     WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2024) GROUP BY TxCategoryIdTxt) / (.00000000000000001 + isnull
      ((SELECT Max(v) FROM (VALUES 
 			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_2 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2010) GROUP BY TxCategoryIdTxt)),
 			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2011) GROUP BY TxCategoryIdTxt)),
@@ -51,7 +53,8 @@ SELECT TOP (100) PERCENT ISNULL(dbo.TxCategory.TL_Number, 999) AS TaxLiq##, dbo.
 			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2019) GROUP BY TxCategoryIdTxt)),
 			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2020) GROUP BY TxCategoryIdTxt)),
 			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2021) GROUP BY TxCategoryIdTxt)),
-			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2022) GROUP BY TxCategoryIdTxt))) AS value(v)), 1000)) AS Cur2Max
+			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2022) GROUP BY TxCategoryIdTxt)),
+			 ((SELECT SUM(TxAmount) FROM    dbo.Vw_TxCore AS TxCore_1 WHERE    (TxCategoryIdTxt = tc.TxCategoryIdTxt) AND (YEAR(TxDate) = 2023) GROUP BY TxCategoryIdTxt))) AS value(v)), 1000)) AS Cur2Max
 FROM dbo.Vw_TxCore AS tc INNER JOIN
      dbo.TxCategory   ON tc.TxCategoryIdTxt = dbo.TxCategory.IdTxt INNER JOIN
      dbo.ExpenseGroup ON dbo.TxCategory.ExpGroupId = dbo.ExpenseGroup.Id

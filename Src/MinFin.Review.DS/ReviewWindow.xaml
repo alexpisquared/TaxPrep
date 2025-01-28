@@ -78,7 +78,9 @@
         <DataGridTextColumn Binding="{Binding Exp2019, StringFormat='{}{0,9:N0}'}" Header="2019"  ElementStyle="{StaticResource RightAlignStyle}" />
         <DataGridTextColumn Binding="{Binding Exp2020, StringFormat='{}{0,9:N0}'}" Header="2020"  ElementStyle="{StaticResource RightAlignStyle}" />
         <DataGridTextColumn Binding="{Binding Exp2021, StringFormat='{}{0,9:N0}'}" Header="2021"  ElementStyle="{StaticResource RightAlignStyle}" />
-        <DataGridTextColumn Binding="{Binding Exp2022, StringFormat='{}{0,9:N0}'}" Header="2022"  ElementStyle="{StaticResource RightAlignStyle}" FontWeight="SemiBold" />
+        <DataGridTextColumn Binding="{Binding Exp2022, StringFormat='{}{0,9:N0}'}" Header="2022"  ElementStyle="{StaticResource RightAlignStyle}" />
+        <DataGridTextColumn Binding="{Binding Exp2023, StringFormat='{}{0,9:N0}'}" Header="2023"  ElementStyle="{StaticResource RightAlignStyle}" />
+        <DataGridTextColumn Binding="{Binding Exp2024, StringFormat='{}{0,9:N0}'}" Header="2024"  ElementStyle="{StaticResource RightAlignStyle}" FontWeight="SemiBold" />
         <DataGridTextColumn Binding="{Binding MaxPrev, StringFormat='{}{0,9:N0}'}" Header="Max"   ElementStyle="{StaticResource RightAlignStyle}" Foreground="DarkRed" />
         <DataGridTextColumn Binding="{Binding Cur2Max, StringFormat='{}{0,9:N1}'}" Header="22/Max"  FontWeight="Bold" >
           <DataGridTextColumn.ElementStyle>
