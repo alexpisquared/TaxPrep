@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Db.FinDemo7.Models;
 
-[Keyless]
 public partial class VwExpHistVsLast
 {
     public int TaxLiq { get; set; }
@@ -44,8 +42,8 @@ public partial class VwExpHistVsLast
     public decimal? Exp2022 { get; set; }
 
     public decimal? Exp2023 { get; set; }
-    
-  public decimal? Exp2024 { get; set; } // manually added
+
+    public decimal? Exp2024 { get; set; }
 
     public decimal? MaxPrev { get; set; }
 
