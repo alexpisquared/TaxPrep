@@ -321,6 +321,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="ReadMe-Publish.md" />
+    <Content Include="sql\AutoAssigner.POC.sql" />
     <Content Include="sql\Copy from TxCore to TxCoreV2.sql" />
     <Content Include="sql\DupeHunt.sql" />
     <Content Include="sql\HST.2016.sql" />
@@ -328,11 +329,18 @@
     <Content Include="sql\HST.2017.sql" />
     <Content Include="sql\HST.2019.sql" />
     <Content Include="sql\HST.2020.sql" />
+    <Content Include="sql\HST.2021.sql" />
+    <Content Include="sql\HST.2022.sql" />
+    <Content Include="sql\HST.2023.sql" />
+    <Content Include="sql\HST.2024.sql" />
+    <Content Include="sql\HST.2025.sql" />
     <Content Include="sql\TxMoneySrc-OrderBy-LastTxn.sql" />
     <Content Include="sql\InvoiceTxnMatcher.sql" />
     <Content Include="sql\Vw_Exp_Hist_vs_Last.sql" />
     <Content Include="sql\Vw_TaxLiqReport_All_2022.sql" />
     <Content Include="sql\Vw_TaxLiqReport_Alx.sql" />
+    <Content Include="sql\Vw_TaxLiqReport_Mei.sql" />
+    <Content Include="sql\Vw_TxCore.sql" />
     <Content Include="sql\Vw_TxMoneySrc_LastTx.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

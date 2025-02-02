@@ -88,11 +88,12 @@
       </DataGrid.Columns>
     </DataGrid>
 
-    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" x:Name="tbkTitle" Background="Yellow" Foreground="Red" Text="Err" HorizontalAlignment="Center" TextWrapping="Wrap" />
+    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" x:Name="tbkTitle" Background="Yellow" Foreground="Red" Text="¦ Err" HorizontalAlignment="Center" TextWrapping="Wrap" />
 
+      <Button Content="  First: _Add .. then edit new row below  "         Click="onAddTxn" x:Name="btnAddNewRcrd" IsDefault="True" ToolTip="Add empty row for editing" HorizontalAlignment="Center" Foreground="#f0a"/>
+    
     <StackPanel Grid.Column="2"                             Orientation="Horizontal" HorizontalAlignment="Left">
       <!--<Button Content="   _Save   " Click="onSave"   />-->
-      <Button Content="   _Add    "         Click="onAddTxn" x:Name="btnAddNewRcrd" IsDefault="True" ToolTip="Add empty row for editing"/>
       <TextBox Text="2021" x:Name="tbYear" Margin="39 0 0 0" Height="26" />
       <ComboBox x:Name="cbSrc" Margin="5" Width="120" Height="26" DisplayMemberPath="Fla" SelectedValuePath="Id" Foreground="#f08" SelectionChanged="cbSrc_SelectionChanged" />
       <Button Content="   _TD    " x:Name="btnTD" IsEnabled="False" Click="onReadTD" Height="26" ToolTip="Read TD bill from clipboard &#10; JAN 4 JAN 5 PAYMENT - THANK YOU -$56.50 &#10; JAN 4 JAN 5 PAYMENT - THANK YOU -$56.50 &#10; JAN 4 JAN 5 PAYMENT - THANK YOU -$56.50"/>

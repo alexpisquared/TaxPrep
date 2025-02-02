@@ -94,7 +94,8 @@ public partial class ManualTxnEntry : WindowBase
     TxDate = _now.Date,
     TxCategoryIdTxt = "UnKn",
     MemoPp = "manual entry",
-    TxDetail = "..."
+    TxDetail = "manual entry",
+    Notes = "manual entry"
   };
 
   void onAddTxn(object s, RoutedEventArgs e)
