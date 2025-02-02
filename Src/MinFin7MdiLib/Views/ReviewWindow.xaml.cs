@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace MinFin7MdiLib.Views;
+﻿namespace MinFin7MdiLib.Views;
 public partial class ReviewWindow : WindowBase
 {
   readonly FinDemoContext _dba;
@@ -50,7 +48,7 @@ To fix this issue, you can:
     catch (Exception ex) { ex.Pop(_lgr); }
     finally { _busy = false; ctrlPanel.Visibility = dgTxVs.Visibility = Visibility.Visible; }
   }
-  async void dgCore_SelnChgd(object s, SelectionChangedEventArgs e)
+  async void OnDataGridSelectionChanged(object s, SelectionChangedEventArgs e)
   {
     try
     {
@@ -59,7 +57,7 @@ To fix this issue, you can:
         _bpr.Tick();
         //dbHist.ItemsSource = _dba.VwTxCores.Local.Where(r => string.Compare(r.TxCategoryIdTxt, ((VwExpHistVsLast)((object[])e.AddedItems)[0]).IdTxt, true) == 0).OrderByDescending(r => r.TxDate);
         var ItemsSource = await _dba.VwTxCores
-          .Where(r => r.TxCategoryIdTxt == (((VwExpHistVsLast)((object[])e.AddedItems)[0]).IdTxt))
+          .Where(r => r.TxCategoryIdTxt == ((VwExpHistVsLast)((object[])e.AddedItems)[0]).IdTxt)
           .ToListAsync();
         dbHist.ItemsSource = ItemsSource.OrderByDescending(r => r.TxDate);
         dbHist.SelectedItem = null;
@@ -69,7 +67,7 @@ To fix this issue, you can:
     }
     catch (Exception ex) { ex.Pop(_lgr); }
   }
-  void onUserChecked(object s, RoutedEventArgs e)
+  void OnUserChecked(object s, RoutedEventArgs e)
   {
     switch (_own = ((RadioButton)s).Name)
     {
@@ -80,6 +78,6 @@ To fix this issue, you can:
       default: _dba.VwExpHistVsLasts.Load(); dgTxVs.ItemsSource = _dba.VwExpHistVsLasts.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq); break;
     }
 
-    CollectionViewSource.GetDefaultView(dgTxVs.ItemsSource).Refresh(); //tu: refresh bound datagrid
+    CollectionViewSource.GetDefaultView(dgTxVs.ItemsSource).Refresh(); //tu: refresh bound DataGrid
   }
 }

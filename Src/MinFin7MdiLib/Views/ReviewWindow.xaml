@@ -55,11 +55,11 @@
       <Button Content=" _Refresh " Click="OnLoaded" IsDefault="True" />
     </StackPanel>
     <StackPanel Name="ctrlPane2" Grid.RowSpan="1" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0" >
-      <RadioButton Content="Alx    " Checked="onUserChecked" VerticalAlignment="Center" IsEnabled="False" />
-      <RadioButton Content="Mei    " Checked="onUserChecked" VerticalAlignment="Center" IsEnabled="False" />
+      <RadioButton Content="Alx    " Checked="OnUserChecked" VerticalAlignment="Center" IsEnabled="False" />
+      <RadioButton Content="Mei    " Checked="OnUserChecked" VerticalAlignment="Center" IsEnabled="False" />
     </StackPanel>
 
-    <DataGrid Name="dgTxVs" Grid.Row="1" Grid.Column="1" EnableRowVirtualization="True" GridLinesVisibility="None" RowHeaderWidth="0" CanUserAddRows="False" SelectionMode="Single" SelectionChanged="dgCore_SelnChgd" AutoGenerateColumns="False" Foreground="#bbb" BorderThickness="0">
+    <DataGrid Name="dgTxVs" Grid.Row="1" Grid.Column="1" EnableRowVirtualization="True" GridLinesVisibility="None" RowHeaderWidth="0" CanUserAddRows="False" SelectionMode="Single" SelectionChanged="OnDataGridSelectionChanged" AutoGenerateColumns="False" Foreground="#bbb" BorderThickness="0">
       <DataGrid.Resources>
         <Style TargetType="{x:Type DataGridRow}">
           <Setter Property="Background">

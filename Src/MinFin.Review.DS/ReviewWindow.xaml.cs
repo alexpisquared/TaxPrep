@@ -16,7 +16,7 @@ namespace MinFin.Review.DS
 
     public ReviewWindow(string owner) { _owner = owner; InitializeComponent(); }
 
-    async void onLoaded(object s, RoutedEventArgs e)
+    async void OnLoaded(object s, RoutedEventArgs e)
     {
       Bpr.Beep1of2();
       _db = A0DbContext.Create();
@@ -28,7 +28,7 @@ namespace MinFin.Review.DS
       dgTxVs.Focus();
       Bpr.Beep2of2();
     }
-    void dgCore_SelnChgd(object s, SelectionChangedEventArgs e)
+    void OnDgCoreSelectionChanged(object s, SelectionChangedEventArgs e)
     {
       if (e.AddedItems.Count > 0)
       {
@@ -38,7 +38,7 @@ namespace MinFin.Review.DS
       else
         Bpr.BeepNo();
     }
-    void onUserChecked(object s, RoutedEventArgs e)
+    void OnUserChecked(object s, RoutedEventArgs e)
     {
       switch (_owner = ((RadioButton)s).Name)
       {
@@ -49,7 +49,7 @@ namespace MinFin.Review.DS
         default: _db.Vw_Exp_Hist_vs_Last.Load(); dgTxVs.ItemsSource = _db.Vw_Exp_Hist_vs_Last.Local.OrderBy(r => r.Name).ThenBy(r => r.TaxLiq__); break;
       }
 
-      CollectionViewSource.GetDefaultView(dgTxVs.ItemsSource).Refresh(); //tu: refresh bound datagrid
+      CollectionViewSource.GetDefaultView(dgTxVs.ItemsSource).Refresh(); //tu: refresh bound DataGrid
     }
   }
 }
