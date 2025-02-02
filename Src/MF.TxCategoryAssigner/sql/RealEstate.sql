@@ -19,45 +19,26 @@ SELECT * FROM TxCoreV2 WHERE YEAR(TxDate)=2024 and (MemoPP LIKE '%NIAZ%' OR Memo
 SELECT * FROM TxCoreV2 WHERE (TxDetail LIKE 'cash ma%') ORDER BY Id DESC
 */
 
-  SELECT
-    '503 York condo' as Property,
-    COUNT(*) AS Count,
-    SUM(TxAmount) AS TotalRent, SUM(TxAmount) / 12 AS AvgPerMonth
+  SELECT '503 York condo' as Property, COUNT(*) AS Count, FORMAT(SUM(TxAmount), '#,##0') AS TotalRent, FORMAT(SUM(TxAmount) / 12, '#,##0') AS AvgPerMonth
   FROM TxCoreV2
   WHERE YEAR(TxDate)=2024 and TxAmount = -2270
 UNION ALL
-  SELECT
-    '536 South Side',
-    COUNT(*),
-    SUM(TxAmount), SUM(TxAmount) / 12 AS AvgPerMonth
+  SELECT '536 South Side', COUNT(*), FORMAT(SUM(TxAmount), '#,##0') , FORMAT(SUM(TxAmount) / 12, '#,##0')
   FROM TxCoreV2
   WHERE YEAR(TxDate)=2024 and MemoPP LIKE '%vin caesar%'
 UNION ALL
-  SELECT
-    '1501 Indie',
-    COUNT(*),
-    SUM(TxAmount), SUM(TxAmount) / 12 AS AvgPerMonth
+  SELECT '1501 Indie', COUNT(*), FORMAT(SUM(TxAmount), '#,##0') , FORMAT(SUM(TxAmount) / 12, '#,##0')
   FROM TxCoreV2
   WHERE YEAR(TxDate)=2024 and MemoPP LIKE '%zimin%'
 UNION ALL
-  SELECT
-    '505 Wilson',
-    COUNT(*),
-    SUM(TxAmount), SUM(TxAmount) / 12 AS AvgPerMonth
+  SELECT '505 Wilson', COUNT(*), FORMAT(SUM(TxAmount), '#,##0') , FORMAT(SUM(TxAmount) / 12, '#,##0')
   FROM TxCoreV2
   WHERE YEAR(TxDate)=2024 and MemoPP LIKE '%OLANI%'
 UNION ALL
-  SELECT
-    '1510 Mobilio',
-    COUNT(*),
-    SUM(TxAmount), SUM(TxAmount) / 12 AS AvgPerMonth
+  SELECT '1510 Mobilio', COUNT(*), FORMAT(SUM(TxAmount), '#,##0') , FORMAT(SUM(TxAmount) / 12, '#,##0')
   FROM TxCoreV2
   WHERE YEAR(TxDate)=2024 and (MemoPP LIKE '%DAWOOD%' or MemoPP LIKE '%sierra raposo%')
 UNION ALL
-  SELECT
-    '610 Pavilia',
-    COUNT(*),
-    (SUM(TxAmount) -(-9500 + 2300*2)),
-    (SUM(TxAmount) -(-9500 + 2300*2)) / 12 AS AvgPerMonth
+  SELECT '610 Pavilia', COUNT(*), FORMAT(SUM(TxAmount) -(-9500 + 2300*2), '#,##0'), FORMAT((SUM(TxAmount) -(-9500 + 2300*2)) / 12, '#,##0')
   FROM TxCoreV2
   WHERE YEAR(TxDate)=2024 and (MemoPP LIKE '%NIAZ%' OR MemoPP LIKE '%JIAQI ZHANG%')
