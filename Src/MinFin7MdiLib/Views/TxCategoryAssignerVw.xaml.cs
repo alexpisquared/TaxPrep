@@ -99,6 +99,43 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     base.OnClosing(e);
   }
 
+  async Task ReLoadTxCore() // limit txns by chkboxs' filters
+  {
+    if (!_loaded) return;
+
+    var started = Stopwatch.GetTimestamp();
+
+    try
+    {
+      if (chkTxCatgry.IsChecked == true && chkSingleYr.IsChecked == true)
+      {
+        await _dbx.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
+        _loadedCatgry = _txCatgry;
+      }
+      else if (chkTxCatgry.IsChecked == true)
+      {
+        await _dbx.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004 && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
+        _loadedCatgry = _txCatgry;
+      }
+      else if (chkSingleYr.IsChecked == true)
+      {
+        await _dbx.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr).LoadAsync();
+      }
+      else
+      {
+        await _dbx.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004).LoadAsync();
+        _loadedCatgry = _txCatgry = null;
+      }
+
+      if (dgTxCore.ItemsSource != null)
+      {
+        CollectionViewSource.GetDefaultView(dgTxCore.ItemsSource).Refresh(); //tu:            
+      }
+
+      UpdateTitle(Stopwatch.GetElapsedTime(started));
+    }
+    catch (Exception ex) { ex.Pop(_lgr); }
+  }
   async Task FilterStart(string csvFilterString)
   {
     if (!_loaded) return;
@@ -121,7 +158,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
           dgTxCore.ScrollIntoView(sel);
         }
 
-        _sth.SpeakFAF("Clear!");
+        //_sth.SpeakFAF("Yes");
       }
       else
       {
@@ -178,54 +215,17 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     catch (Exception ex) { ex.Pop(_lgr); }
     finally { WriteLine($"■■■ filterStart()  ]]"); _bpr.Tick(); await Task.Yield(); }
   }
-  async Task ReLoadTxCore() // limit txns by chkboxs' filters
-  {
-    if (!_loaded) return;
-
-    var started = Stopwatch.GetTimestamp();
-
-    try
-    {
-      if (chkTxCatgry.IsChecked == true && chkSingleYr.IsChecked == true)
-      {
-        await _dbx.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
-        _loadedCatgry = _txCatgry;
-      }
-      else if (chkTxCatgry.IsChecked == true)
-      {
-        await _dbx.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004 && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
-        _loadedCatgry = _txCatgry;
-      }
-      else if (chkSingleYr.IsChecked == true)
-      {
-        await _dbx.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr).LoadAsync();
-      }
-      else
-      {
-        await _dbx.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004).LoadAsync();
-        _loadedCatgry = _txCatgry = null;
-      }
-
-      if (dgTxCore.ItemsSource != null)
-      {
-        CollectionViewSource.GetDefaultView(dgTxCore.ItemsSource).Refresh(); //tu:            
-      }
-
-      UpdateTitle(Stopwatch.GetElapsedTime(started));
-    }
-    catch (Exception ex) { ex.Pop(_lgr); }
-  }
-  void FilterTxnsBy2(string strFilter, string? txCatgoryId, [CallerMemberName] string? cmn = "")
+  void FilterTxnsBy2(string csvFilterString, string? txCategoryId, [CallerMemberName] string? cmn = "")
   {
     var started = Stopwatch.GetTimestamp();
-    tbkFlt.Text = strFilter;
+    tbkFlt.Text = csvFilterString;
     tbkAmt.Text = "";
 
     _core.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
       (
-        (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(strFilter.ToLower())) ||
-        (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(strFilter.ToLower())) ||
-        (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(strFilter.ToLower()))
+        (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(csvFilterString.ToLower())) ||
+        (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(csvFilterString.ToLower())) ||
+        (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(csvFilterString.ToLower()))
       )
       &&
       (
@@ -233,28 +233,25 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       )
       &&
       (
-        string.IsNullOrEmpty(txCatgoryId) ||
-        !string.IsNullOrEmpty(strFilter) ||
-        (r.TxDate.Year >= _trgTaxYr && string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0) ||
-        (r.TxDate.Year < _trgTaxYr)
-      )
+        string.IsNullOrEmpty(txCategoryId) || string.Compare(r.TxCategoryIdTxt, txCategoryId, true) == 0
+      ) 
     ).OrderByDescending(r => r.TxDate));
 
     WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
   }
-  void FilterTxnsBy4(string strFilter, string? txCatgoryId, decimal txnAmt, decimal range, [CallerMemberName] string? cmn = "")
+  void FilterTxnsBy4(string csvFilterString, string? txCategoryId, decimal txnAmt, decimal range, [CallerMemberName] string? cmn = "")
   {
     var started = Stopwatch.GetTimestamp();
-    tbkFlt.Text = strFilter;
+    tbkFlt.Text = csvFilterString;
     tbkAmt.Text = $"{txnAmt:N0}";
 
     _core.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
       txnAmt - range <= (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) && (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) <= txnAmt + range
       &&
       (
-        (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(strFilter.ToLower())) ||
-        (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(strFilter.ToLower())) ||
-        (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(strFilter.ToLower()))
+        (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(csvFilterString.ToLower())) ||
+        (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(csvFilterString.ToLower())) ||
+        (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(csvFilterString.ToLower()))
       )
       &&
       (
@@ -262,7 +259,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       )
       &&
       (
-        string.IsNullOrEmpty(txCatgoryId) || string.Compare(r.TxCategoryIdTxt, txCatgoryId, true) == 0
+        string.IsNullOrEmpty(txCategoryId) || string.Compare(r.TxCategoryIdTxt, txCategoryId, true) == 0
       )
     ).OrderByDescending(r => r.TxDate));
 
@@ -275,7 +272,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   {
     var started = Stopwatch.GetTimestamp();
 
-    _catg.ClearAddRangeAuto(enu);
+    _catg.ClearAddRangeAuto(enu.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
 
     ArgumentNullException.ThrowIfNull(_txCategoryDGrdVwSrc);
     _txCategoryDGrdVwSrc.Source = _catg;

@@ -103,7 +103,7 @@ namespace MF.TxCategoryAssigner
 
       if (string.IsNullOrEmpty(csvFilterString))
       {
-        App.Synth.SpeakAsync("Clear!");
+        Bpr.BeepClk(); // App.Synth.SpeakAsync("Yes");
         filterTxns(csvFilterString, _txCatgry);
       }
       else

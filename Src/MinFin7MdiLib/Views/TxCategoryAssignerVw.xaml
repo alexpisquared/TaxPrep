@@ -102,7 +102,7 @@
         <Label      Grid.Column="3"  Grid.Row="1" Content="+/-"	      Target="{Binding ElementName=tRng}" HorizontalAlignment="Left" />
         <TextBox    Grid.Column="3"  Grid.Row="2" Foreground="#5fa" FontSize="18"			  TextChanged="OnTextChangedFuz" x:Name="tRng" Text="1.00" />
         <CheckBox   Grid.Column="5"  Grid.Row="1" Foreground="#e0a" x:Name="chkTxCatgry" Content="Ca_tgry" Checked="OnTxCatgry_Checked" Unchecked="OnTxCatgry_UnChckd" />
-        <ComboBox   Grid.Column="5"  Grid.Row="2" Foreground="#e0a" x:Name="cbxTxCatgry" Visibility="{Binding ElementName=chkTxCatgry, Path=IsChecked, Converter={cnv:UniConverter}}" ItemsSource="{Binding Source={StaticResource txCategoryCmBxVwSrc}}" DisplayMemberPath="Name" SelectedValuePath="IdTxt" SelectionChanged="OnTxCatgry_Changed" />
+        <ComboBox   Grid.Column="5"  Grid.Row="2" Foreground="#e0a" x:Name="cbxTxCatgry" Visibility="{Binding ElementName=chkTxCatgry, Path=IsChecked, Converter={cnv:UniConverter}}" ItemsSource="{Binding Source={StaticResource txCategoryCmBxVwSrc}}" DisplayMemberPath="IdTxt" SelectedValuePath="IdTxt" SelectionChanged="OnTxCatgry_Changed" ToolTip="{Binding Name}" />
 
         <CheckBox   Grid.Column="7"  Grid.Row="1" Foreground="#e0a" x:Name="chkSingleYr" Content="1 _Yr  " Checked="OnSingleYr_Checked" Unchecked="OnSingleYr_UnChckd" />
         <ComboBox   Grid.Column="7"  Grid.Row="2"                     x:Name="cbxSingleYr" Visibility="{Binding ElementName=chkSingleYr, Path=IsChecked, Converter={cnv:UniConverter}}" SelectionChanged="OnSingleYr_Changed" />
