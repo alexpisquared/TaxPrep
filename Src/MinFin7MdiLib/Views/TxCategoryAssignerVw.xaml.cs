@@ -59,7 +59,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       cbxSingleYr.SelectedIndex = 2;
       chkInfer.IsChecked = true;
 
-      btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ false;
+      btAssign.IsEnabled =  false;
 
       _loaded = true;
       chkSingleYr.IsChecked = true;      // invokes the 1st search
@@ -71,7 +71,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     try
     {
       var (success, _, report) = await _dbx.TrySaveReportAsync();
-      Title = report;
+      Title = tbxNew.Text = report;
 
       if (!success)
         _ = MessageBox.Show(report, $"Attach to process to debug/fix!!! ");
@@ -234,7 +234,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       &&
       (
         string.IsNullOrEmpty(txCategoryId) || string.Compare(r.TxCategoryIdTxt, txCategoryId, true) == 0
-      ) 
+      )
     ).OrderByDescending(r => r.TxDate));
 
     WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
@@ -282,19 +282,19 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       _catg.ClearAddRangeAuto(_dbx.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
     }
 
-    choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ false;
+    choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled =  false;
     _choiceAbove = _choiceBelow = "";
 
     if (_catg.Count == 1)
     {
-      btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ true;
+      btAssign.IsEnabled =  true;
       _ = _txCategoryDGrdVwSrc.View.MoveCurrentToFirst();
     }
     else if (_catg.Count == 2)
     {
       _choiceAbove = _catg.First().IdTxt;
       _choiceBelow = _catg.Last().IdTxt;
-      btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ txCategoryListBox.SelectedItems.Count == 1;// _choiceAbove == _choiceBelow;
+      btAssign.IsEnabled =  txCategoryListBox.SelectedItems.Count == 1;// _choiceAbove == _choiceBelow;
     }
 
     choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
@@ -334,7 +334,12 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   void OnClear1(object s, RoutedEventArgs e) => tbkFlt.Text = tbxSearch.Text = "";
   void OnClear2(object s, RoutedEventArgs e) => tSrch2.Text = "";
 
-  void DgTxCtgr_SelChd(object s, SelectionChangedEventArgs e) => btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ e.AddedItems.Count == 1;
+  void DgTxCtgr_SelChd(object s, SelectionChangedEventArgs e)
+  {
+    btAssign.IsEnabled =  e.AddedItems.Count == 1;
+    btAssign.Content = e.AddedItems.Count == 1 ? $"{((TxCategory?)e.AddedItems[0])?.IdTxt}" : "? ? ?";
+  }
+
   void DgTxCore_SelChd(object s, SelectionChangedEventArgs e)
   {
     _selectTtl = 0;
@@ -364,13 +369,13 @@ If you want to DEBUG or Run with the current Package available, just set your pa
           var detailsMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && !string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(select.TxDetail.ToLower())).OrderByDescending(r => r.TxDate);
           var memoStrMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && !string.IsNullOrEmpty(r.MemoPp) && !string.IsNullOrEmpty(select.MemoPp) && r.MemoPp.ToLower().Contains(select.MemoPp.ToLower())).OrderByDescending(r => r.TxDate);
 
-          tbxNew.Text = $"Matches:  by |$|:  {(dlrAmntMatches?.Count() ?? 1) - 1}    sum {dlrAmntMatches?.Sum(r => r.TxAmount) ?? 0m:N0}$        by Dtl: {(detailsMatches?.Count() ?? 1) - 1}        by Mem: {(memoStrMatches?.Count() ?? 1) - 1}  ";
+          tbxNew.Text = $"{(dlrAmntMatches?.Count() ?? 1) - 1,-5}      sum {dlrAmntMatches?.Sum(r => r.TxAmount) ?? 0m,-8:N0}$           Dtl {(detailsMatches?.Count() ?? 1) - 1,-8}           Mem {(memoStrMatches?.Count() ?? 1) - 1,-8}";
         }
         else
         {
           var trg = lv.Where(r => r.TxCategoryIdTxtNavigation.IdTxt != "UnKn")?.FirstOrDefault();
           _choiceAbove = _choiceBelow = trg?.TxCategoryIdTxtNavigation.IdTxt ?? "";
-          btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ txCategoryListBox.SelectedItems.Count == 1;
+          btAssign.IsEnabled =  txCategoryListBox.SelectedItems.Count == 1;
         }
       }
 
@@ -440,7 +445,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   {
     ArgumentNullException.ThrowIfNull(IdTxt, "▄▀▄▀▄▀▄▀▄▀▄▀");
 
-    btAssign.IsEnabled = /*btAssig2.IsEnabled =*/ choiceAbove.IsEnabled = choiceBelow.IsEnabled = false;
+    btAssign.IsEnabled =  choiceAbove.IsEnabled = choiceBelow.IsEnabled = false;
 
     if (dgTxCore.SelectedItems.Count > 0)
     {
@@ -457,7 +462,9 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       }
     }
 
-    if (DbSaveMsgBox.TrySaveAsk(_dbx, $"class TxCategoryAssignerVw.assign()") > 0)//== (int)MsgBoxDbRslt.Yes)
+    var rows = DbSaveMsgBox.TrySaveAsk(_dbx, $"class TxCategoryAssignerVw.assign()");
+    tbxNew.Text = $"Ros saved: {rows}.";
+    if (rows > 0)
     {
       await ReLoadTxCore();
       OnClear1(default!, default!);

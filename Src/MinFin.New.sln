@@ -858,7 +858,7 @@ Global
 		{57D3757F-6C51-4AFF-8854-7798C583BE3A}.Release|ARM64.Build.0 = Release|Any CPU
 		{57D3757F-6C51-4AFF-8854-7798C583BE3A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{57D3757F-6C51-4AFF-8854-7798C583BE3A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{57D3757F-6C51-4AFF-8854-7798C583BE3A}.Release|x64.ActiveCfg = Release|Any CPU
+		{57D3757F-6C51-4AFF-8854-7798C583BE3A}.Release|x64.ActiveCfg = Release|x64
 		{57D3757F-6C51-4AFF-8854-7798C583BE3A}.Release|x86.ActiveCfg = Release|Any CPU
 		{57D3757F-6C51-4AFF-8854-7798C583BE3A}.Release|x86.Build.0 = Release|Any CPU
 		{1390D0BA-6EA1-45BA-A86A-7E433F9738C6}.BldRls|Any CPU.ActiveCfg = Debug|Any CPU
@@ -1466,8 +1466,8 @@ Global
 		{B216A552-03EA-4254-8B6A-C728681F865D}.Release|ARM64.Build.0 = Release|Any CPU
 		{B216A552-03EA-4254-8B6A-C728681F865D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B216A552-03EA-4254-8B6A-C728681F865D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{B216A552-03EA-4254-8B6A-C728681F865D}.Release|x64.ActiveCfg = Release|Any CPU
-		{B216A552-03EA-4254-8B6A-C728681F865D}.Release|x64.Build.0 = Release|Any CPU
+		{B216A552-03EA-4254-8B6A-C728681F865D}.Release|x64.ActiveCfg = Release|x64
+		{B216A552-03EA-4254-8B6A-C728681F865D}.Release|x64.Build.0 = Release|x64
 		{B216A552-03EA-4254-8B6A-C728681F865D}.Release|x86.ActiveCfg = Release|Any CPU
 		{B216A552-03EA-4254-8B6A-C728681F865D}.Release|x86.Build.0 = Release|Any CPU
 		{71845ABE-70BD-4CB3-ADAE-B9EAA3670379}.BldRls|Any CPU.ActiveCfg = Debug|Any CPU
@@ -1508,8 +1508,8 @@ Global
 		{71845ABE-70BD-4CB3-ADAE-B9EAA3670379}.Release|ARM64.Build.0 = Release|Any CPU
 		{71845ABE-70BD-4CB3-ADAE-B9EAA3670379}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{71845ABE-70BD-4CB3-ADAE-B9EAA3670379}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{71845ABE-70BD-4CB3-ADAE-B9EAA3670379}.Release|x64.ActiveCfg = Release|Any CPU
-		{71845ABE-70BD-4CB3-ADAE-B9EAA3670379}.Release|x64.Build.0 = Release|Any CPU
+		{71845ABE-70BD-4CB3-ADAE-B9EAA3670379}.Release|x64.ActiveCfg = Release|x64
+		{71845ABE-70BD-4CB3-ADAE-B9EAA3670379}.Release|x64.Build.0 = Release|x64
 		{71845ABE-70BD-4CB3-ADAE-B9EAA3670379}.Release|x86.ActiveCfg = Release|Any CPU
 		{71845ABE-70BD-4CB3-ADAE-B9EAA3670379}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
