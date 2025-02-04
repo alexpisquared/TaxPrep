@@ -59,7 +59,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       cbxSingleYr.SelectedIndex = 2;
       chkInfer.IsChecked = true;
 
-      btAssign.IsEnabled =  false;
+      btAssign.IsEnabled = false;
 
       _loaded = true;
       chkSingleYr.IsChecked = true;      // invokes the 1st search
@@ -282,19 +282,19 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       _catg.ClearAddRangeAuto(_dbx.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
     }
 
-    choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled =  false;
+    choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled = false;
     _choiceAbove = _choiceBelow = "";
 
     if (_catg.Count == 1)
     {
-      btAssign.IsEnabled =  true;
+      btAssign.IsEnabled = true;
       _ = _txCategoryDGrdVwSrc.View.MoveCurrentToFirst();
     }
     else if (_catg.Count == 2)
     {
       _choiceAbove = _catg.First().IdTxt;
       _choiceBelow = _catg.Last().IdTxt;
-      btAssign.IsEnabled =  txCategoryListBox.SelectedItems.Count == 1;// _choiceAbove == _choiceBelow;
+      btAssign.IsEnabled = txCategoryListBox.SelectedItems.Count == 1;// _choiceAbove == _choiceBelow;
     }
 
     choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
@@ -336,20 +336,28 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
   void DgTxCtgr_SelChd(object s, SelectionChangedEventArgs e)
   {
-    btAssign.IsEnabled =  e.AddedItems.Count == 1;
+    btAssign.IsEnabled = e.AddedItems.Count == 1;
     btAssign.Content = e.AddedItems.Count == 1 ? $"{((TxCategory?)e.AddedItems[0])?.IdTxt}" : "? ? ?";
   }
 
   void DgTxCore_SelChd(object s, SelectionChangedEventArgs e)
   {
     _selectTtl = 0;
-    if (e.AddedItems.Count < 1) return;
+    if (e.AddedItems.Count < 1)
+    {
+      btnNotePaster.Content = "";
+      btnNotePaster.IsEnabled = false;
+      return;
+    }
 
     try
     {
       var started = Stopwatch.GetTimestamp();
 
       _choiceAbove = _choiceBelow = "";
+
+      btnNotePaster.IsEnabled = dgTxCore.SelectedItems.Count > 0 && Clipboard.ContainsText() && Clipboard.GetText().Length > 0;
+      btnNotePaster.Content = btnNotePaster.IsEnabled ? $"_Paste to {dgTxCore.SelectedItems.Count} rows\n{Clipboard.GetText()}" : "¦";
 
       if (dgTxCore.SelectedItems.Count > 0)
       {
@@ -375,7 +383,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
         {
           var trg = lv.Where(r => r.TxCategoryIdTxtNavigation.IdTxt != "UnKn")?.FirstOrDefault();
           _choiceAbove = _choiceBelow = trg?.TxCategoryIdTxtNavigation.IdTxt ?? "";
-          btAssign.IsEnabled =  txCategoryListBox.SelectedItems.Count == 1;
+          btAssign.IsEnabled = txCategoryListBox.SelectedItems.Count == 1;
         }
       }
 
@@ -441,11 +449,27 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   }
   async void OnAssign1(object s, RoutedEventArgs e) => await Assign(_choiceAbove);
   async void OnAssign2(object s, RoutedEventArgs e) => await Assign(_choiceBelow);
+  async void OnPasteToNote(object s, RoutedEventArgs e) => await PasteToNote(Clipboard.ContainsText() ? Clipboard.GetText() : "");
+  async Task PasteToNote(string? newNoteText)
+  {
+    if (dgTxCore.SelectedItems.Count < 1 || newNoteText is null)
+    {
+      btnNotePaster.Content = "";
+      btnNotePaster.IsEnabled = false;
+      return;
+    }
+
+    foreach (TxCoreV2 tc in dgTxCore.SelectedItems) { tc.Notes = newNoteText; tc.ModifiedAt = _now; }
+
+    var rows = DbSaveMsgBox.TrySaveAsk(_dbx, $"class TxCategoryAssignerVw.assign()");
+    tbxNew.Text = $"Rows saved: {rows}.";
+    await Task.Yield();
+  }
   async Task Assign(string? IdTxt)
   {
     ArgumentNullException.ThrowIfNull(IdTxt, "▄▀▄▀▄▀▄▀▄▀▄▀");
 
-    btAssign.IsEnabled =  choiceAbove.IsEnabled = choiceBelow.IsEnabled = false;
+    btAssign.IsEnabled = choiceAbove.IsEnabled = choiceBelow.IsEnabled = false;
 
     if (dgTxCore.SelectedItems.Count > 0)
     {
@@ -463,7 +487,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     }
 
     var rows = DbSaveMsgBox.TrySaveAsk(_dbx, $"class TxCategoryAssignerVw.assign()");
-    tbxNew.Text = $"Ros saved: {rows}.";
+    tbxNew.Text = $"Rows saved: {rows}.";
     if (rows > 0)
     {
       await ReLoadTxCore();

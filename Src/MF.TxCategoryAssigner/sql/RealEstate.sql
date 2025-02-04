@@ -18,6 +18,15 @@ SELECT COUNT(*) AS Count, TxAmount FROM TxCoreV2 WHERE (YEAR(TxDate) = @Yr) AND 
 SELECT * FROM TxCoreV2 WHERE YEAR(TxDate)=@Yr and (MemoPP LIKE '%NIAZ%' OR MemoPP LIKE '%JIAQI ZHANG%' ) order by TxDate
 SELECT * FROM TxCoreV2 WHERE (TxDetail LIKE 'cash ma%') ORDER BY Id DESC
 
+DECLARE 
+@Indie varchar(50) = '1501 Indie',
+@Pavil varchar(50) = '610 Pavilia',
+@Wilsn varchar(50) = '555 Wilson',
+@York_ varchar(50) = '503 York',
+@Mobil varchar(50) = '1510 Mobilio',
+@South varchar(50) = '536 South Side',
+@Yr int = 2024
+
 
   SELECT '503 York' as Property, COUNT(*) AS Count, FORMAT(SUM(TxAmount), '#,##0') AS TotalRent, FORMAT(SUM(TxAmount) / 12, '#,##0') AS AvgPerMonth
   FROM TxCoreV2
@@ -42,15 +51,6 @@ UNION ALL
   SELECT '610 Pavilia', COUNT(*), FORMAT(SUM(TxAmount) -(-9500 + 2300*2), '#,##0'), FORMAT((SUM(TxAmount) -(-9500 + 2300*2)) / 12, '#,##0')
   FROM TxCoreV2
   WHERE YEAR(TxDate)=@Yr and (MemoPP LIKE '%NIAZ%' OR MemoPP LIKE '%JIAQI ZHANG%')
-*/
-DECLARE 
-@Indie varchar(50) = '1501 Indie',
-@Pavil varchar(50) = '610 Pavilia',
-@Wilsn varchar(50) = '555 Wilson',
-@York_ varchar(50) = '503 York',
-@Mobil varchar(50) = '1510 Mobilio',
-@South varchar(50) = '536 South Side',
-@Yr int = 2024
 
 SELECT @Indie as Property, COUNT(*) AS Count, SUM(TxAmount) AS TotalInsurance, FORMAT(SUM(TxAmount) / 12, '#,##0.##') AS AvgPerMonth  FROM TxCoreV2 WHERE YEAR(TxDate)=@Yr and TxCategoryIdTxt = 'InsSec' and Notes = @Indie UNION ALL
 SELECT @Pavil as Property, COUNT(*) AS Count, SUM(TxAmount) AS TotalInsurance, FORMAT(SUM(TxAmount) / 12, '#,##0.##') AS AvgPerMonth  FROM TxCoreV2 WHERE YEAR(TxDate)=@Yr and TxCategoryIdTxt = 'InsSec' and Notes = @Pavil UNION ALL
@@ -58,6 +58,10 @@ SELECT @Wilsn as Property, COUNT(*) AS Count, SUM(TxAmount) AS TotalInsurance, F
 SELECT @York_ as Property, COUNT(*) AS Count, SUM(TxAmount) AS TotalInsurance, FORMAT(SUM(TxAmount) / 12, '#,##0.##') AS AvgPerMonth  FROM TxCoreV2 WHERE YEAR(TxDate)=@Yr and TxCategoryIdTxt = 'InsSec' and Notes = @York_ UNION ALL
 SELECT @Mobil as Property, COUNT(*) AS Count, SUM(TxAmount) AS TotalInsurance, FORMAT(SUM(TxAmount) / 12, '#,##0.##') AS AvgPerMonth  FROM TxCoreV2 WHERE YEAR(TxDate)=@Yr and TxCategoryIdTxt = 'InsSec' and Notes = @Mobil UNION ALL
 SELECT @South as Property, COUNT(*) AS Count, SUM(TxAmount) AS TotalInsurance, FORMAT(SUM(TxAmount) / 12, '#,##0.##') AS AvgPerMonth  FROM TxCoreV2 WHERE YEAR(TxDate)=@Yr and TxCategoryIdTxt = 'InsSec' and Notes = @South
+*/
 
 -- SELECT * FROM TxCoreV2 WHERE Notes = '555 Wilson' ORDER BY Id DESC 
 --SELECT '536 South Side', * FROM TxCoreV2 WHERE YEAR(TxDate)=@Yr and MemoPP LIKE '%vin caesar%'
+
+SELECT *          from VwReal where YEAR=2024 and TxCategoryIdTxt = 'MaintRep' --TtlRent' --'InsSec' 
+SELECT sum(Total) from VwReal where YEAR=2024 and TxCategoryIdTxt = 'MaintRep' --TtlRent' --'InsSec' 
