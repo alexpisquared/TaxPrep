@@ -59,9 +59,13 @@ SELECT @York_ as Property, COUNT(*) AS Count, SUM(TxAmount) AS TotalInsurance, F
 SELECT @Mobil as Property, COUNT(*) AS Count, SUM(TxAmount) AS TotalInsurance, FORMAT(SUM(TxAmount) / 12, '#,##0.##') AS AvgPerMonth  FROM TxCoreV2 WHERE YEAR(TxDate)=@Yr and TxCategoryIdTxt = 'InsSec' and Notes = @Mobil UNION ALL
 SELECT @South as Property, COUNT(*) AS Count, SUM(TxAmount) AS TotalInsurance, FORMAT(SUM(TxAmount) / 12, '#,##0.##') AS AvgPerMonth  FROM TxCoreV2 WHERE YEAR(TxDate)=@Yr and TxCategoryIdTxt = 'InsSec' and Notes = @South
 */
-
 -- SELECT * FROM TxCoreV2 WHERE Notes = '555 Wilson' ORDER BY Id DESC 
 --SELECT '536 South Side', * FROM TxCoreV2 WHERE YEAR(TxDate)=@Yr and MemoPP LIKE '%vin caesar%'
 
-SELECT *          from VwReal where YEAR=2024 and TxCategoryIdTxt = 'MaintRep' --TtlRent' --'InsSec' 
-SELECT sum(Total) from VwReal where YEAR=2024 and TxCategoryIdTxt = 'MaintRep' --TtlRent' --'InsSec' 
+SELECT TxCategoryIdTxt, FORMAT(SUM(Total), '#,##0.##') AS Total FROM VwReal WHERE     (Year = 2024) AND (TxCategoryIdTxt IN ('MaintRep', 'TtlRent', 'InsSec')) GROUP BY TxCategoryIdTxt ORDER BY TxCategoryIdTxt
+
+SELECT * from VwReal where YEAR=2024 and TxCategoryIdTxt = 'InsSec' 
+SELECT * from VwReal where YEAR=2024 and TxCategoryIdTxt = 'MaintRep' --TtlRent' --'InsSec' 
+SELECT * from VwReal where YEAR=2024 and TxCategoryIdTxt = 'TtlRent' --'InsSec' 
+
+-- SELECT TxCategoryIdTxt, Property, FORMAT(SUM(Total), '#,##0.##') AS Total FROM VwReal WHERE     (Year = 2024) AND (TxCategoryIdTxt IN ('MaintRep', 'TtlRent', 'InsSec')) GROUP BY TxCategoryIdTxt, Property ORDER BY TxCategoryIdTxt, Property
