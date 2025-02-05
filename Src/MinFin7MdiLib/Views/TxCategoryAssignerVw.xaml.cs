@@ -461,9 +461,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
     foreach (TxCoreV2 tc in dgTxCore.SelectedItems) { tc.Notes = newNoteText; tc.ModifiedAt = _now; }
 
-    var rows = DbSaveMsgBox.TrySaveAsk(_dbx, $"class TxCategoryAssignerVw.assign()");
-    tbxNew.Text = $"Rows saved: {rows}.";
-    await Task.Yield();
+    await SaveChangesAndClearIfAsync(false);
   }
   async Task Assign(string? IdTxt)
   {
@@ -486,18 +484,26 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       }
     }
 
+    await SaveChangesAndClearIfAsync(true);
+
+    _ = tbxSearch.Focus();
+  }
+
+  async Task SaveChangesAndClearIfAsync(bool clear)
+  {
     var rows = DbSaveMsgBox.TrySaveAsk(_dbx, $"class TxCategoryAssignerVw.assign()");
-    tbxNew.Text = $"Rows saved: {rows}.";
+    tbxNew.Text = $"{rows} saved.";
     if (rows > 0)
     {
       await ReLoadTxCore();
-      OnClear1(default!, default!);
-      OnClear2(default!, default!);
+
+      if (clear)
+      {
+        OnClear1(default!, default!);
+        OnClear2(default!, default!);
+      }
     }
-
-    _ = tbxSearch.Focus();
-
-    //_sth.SpeakFAF("Assigned.");
+    _sth.SpeakFAF(tbxNew.Text);
   }
 }
 /*
