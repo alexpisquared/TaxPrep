@@ -65,7 +65,7 @@ SELECT @South as Property, COUNT(*) AS Count, SUM(TxAmount) AS TotalInsurance, F
 SELECT TxCategoryIdTxt, FORMAT(SUM(Total), '#,##0.##') AS Total FROM VwReal WHERE     (Year = 2024) AND (TxCategoryIdTxt IN ('MaintRep', 'TtlRent', 'InsSec')) GROUP BY TxCategoryIdTxt ORDER BY TxCategoryIdTxt
 
 SELECT * from VwReal where YEAR=2024 and TxCategoryIdTxt = 'InsSec' 
-SELECT * from VwReal where YEAR=2024 and TxCategoryIdTxt = 'MaintRep' --TtlRent' --'InsSec' 
-SELECT * from VwReal where YEAR=2024 and TxCategoryIdTxt = 'TtlRent' --'InsSec' 
+-- SELECT * from VwReal where YEAR=2024 and TxCategoryIdTxt = 'MaintRep' --TtlRent' --'InsSec' 
+-- SELECT * from VwReal where YEAR=2024 and TxCategoryIdTxt = 'TtlRent' --'InsSec' 
 
 -- SELECT TxCategoryIdTxt, Property, FORMAT(SUM(Total), '#,##0.##') AS Total FROM VwReal WHERE     (Year = 2024) AND (TxCategoryIdTxt IN ('MaintRep', 'TtlRent', 'InsSec')) GROUP BY TxCategoryIdTxt, Property ORDER BY TxCategoryIdTxt, Property
