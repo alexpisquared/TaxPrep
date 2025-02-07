@@ -377,7 +377,11 @@ If you want to DEBUG or Run with the current Package available, just set your pa
           var detailsMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && !string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(select.TxDetail.ToLower())).OrderByDescending(r => r.TxDate);
           var memoStrMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && !string.IsNullOrEmpty(r.MemoPp) && !string.IsNullOrEmpty(select.MemoPp) && r.MemoPp.ToLower().Contains(select.MemoPp.ToLower())).OrderByDescending(r => r.TxDate);
 
-          tbxNew.Text = $"{(dlrAmntMatches?.Count() ?? 1) - 1,-5}      sum {dlrAmntMatches?.Sum(r => r.TxAmount) ?? 0m,-8:N0}$           Dtl {(detailsMatches?.Count() ?? 1) - 1,-8}           Mem {(memoStrMatches?.Count() ?? 1) - 1,-8}";
+          //tbxNew.Text = $"{(dlrAmntMatches?.Count() ?? 1) - 1,-5}   ttl$ {dlrAmntMatches?.Sum(r => r.TxAmount) ?? 0m,-8:N0}       TxDtl {(detailsMatches?.Count() ?? 1) - 1,-8}    Mem {(memoStrMatches?.Count() ?? 1) - 1,-8}";
+        
+          btnMatchesByAmount.Content = $"+ {(dlrAmntMatches?.Count() ?? 1) - 1}";
+          btnMatchesByTxDetl.Content = $"TxDetail  +{(detailsMatches?.Count() ?? 1) - 1}";
+          btnMatchesByMemoPP.Content = $"MemoPP  +{(memoStrMatches?.Count() ?? 1) - 1}";
         }
         else
         {

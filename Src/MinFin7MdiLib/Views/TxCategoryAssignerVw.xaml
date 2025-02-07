@@ -105,20 +105,19 @@
         <TextBlock  Grid.Column="2"  Grid.Row="2" Foreground="#0a0" FontSize="18"			  x:Name="tbkAmt" Background="Transparent" MinWidth="22" HorizontalAlignment="Center" d:Text="23"/>
         <Label      Grid.Column="3"  Grid.Row="1" Content="+/-"	      Target="{Binding ElementName=tRng}" HorizontalAlignment="Left" />
         <TextBox    Grid.Column="3"  Grid.Row="2" Foreground="#5fa" FontSize="18"			  TextChanged="OnTextChangedFuz" x:Name="tRng" Text="1.00" />
-        <CheckBox   Grid.Column="5"  Grid.Row="1" Foreground="#07f" x:Name="chkTxCatgry" Content="Ca_tegory" Checked="OnTxCatgry_Checked" Unchecked="OnTxCatgry_UnChckd" />
-        <ComboBox   Grid.Column="5"  Grid.Row="2" Foreground="#07f" x:Name="cbxTxCatgry" Visibility="{Binding ElementName=chkTxCatgry, Path=IsChecked, Converter={cnv:UniConverter}}" ItemsSource="{Binding Source={StaticResource txCategoryCmBxVwSrc}}" DisplayMemberPath="IdTxt" SelectedValuePath="IdTxt" SelectionChanged="OnTxCatgry_Changed" ToolTip="{Binding Name}" />
+        <CheckBox   Grid.Column="5"  Grid.Row="1" Foreground="#09f" x:Name="chkTxCatgry" Content="Ca_tegory" Checked="OnTxCatgry_Checked" Unchecked="OnTxCatgry_UnChckd" />
+        <ComboBox   Grid.Column="5"  Grid.Row="2" Foreground="#09f" x:Name="cbxTxCatgry" Visibility="{Binding ElementName=chkTxCatgry, Path=IsChecked, Converter={cnv:UniConverter}}" ItemsSource="{Binding Source={StaticResource txCategoryCmBxVwSrc}}" DisplayMemberPath="IdTxt" SelectedValuePath="IdTxt" SelectionChanged="OnTxCatgry_Changed" ToolTip="{Binding Name}" BorderThickness="0" />
 
         <CheckBox   Grid.Column="7"  Grid.Row="1" Foreground="#e0a" x:Name="chkSingleYr" Content="1 _Yr  " Checked="OnSingleYr_Checked" Unchecked="OnSingleYr_UnChckd" />
-        <ComboBox   Grid.Column="7"  Grid.Row="2"                     x:Name="cbxSingleYr" Visibility="{Binding ElementName=chkSingleYr, Path=IsChecked, Converter={cnv:UniConverter}}" SelectionChanged="OnSingleYr_Changed" />
+        <ComboBox   Grid.Column="7"  Grid.Row="2"                     x:Name="cbxSingleYr" Visibility="{Binding ElementName=chkSingleYr, Path=IsChecked, Converter={cnv:UniConverter}}" SelectionChanged="OnSingleYr_Changed" BorderThickness="0" />
 
-        <TextBlock  Grid.Column="9"  Grid.Row="2" Foreground="#18d" FontSize="18"		  x:Name="tbkFlt" Background="#def" MinWidth="22" ToolTip="Used below for highlighting" Opacity="0" />
+        <TextBlock  Grid.Column="11"  Grid.Row="0" Foreground="#888" FontSize="16"		  x:Name="tbkFlt" MinWidth="62" ToolTip="Used below for highlighting" d:Text="134132" Grid.ColumnSpan="4" Grid.RowSpan="3" HorizontalAlignment="Right" />
         <!--ton     Grid.Column="11" Grid.Row="2" Foreground="#d81" Content="_Manual" Click="OnManualTxnAdd" ToolTip="Add a txn manually. " />-->
 
         <Button     Grid.Column="11" Grid.RowSpan="4" Foreground="#ff0" Content="_Paste&#10;132 !@@@@@@@WWWW"  Click="OnPasteToNote" x:Name="btnNotePaster" Width="180" VerticalAlignment="Bottom" Background="Transparent" BorderBrush="Transparent"/>
 
         <StackPanel Grid.ColumnSpan="12"  Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-          <TextBlock                 Margin="0 10 0 8"  FontWeight="Light"  Foreground="#aaa"   Text="Matches by:     $$ " FontFamily="JetBrains Mono" />
-          <TextBlock x:Name="tbxNew" Margin="0 10 0 8"  FontWeight="Medium" Foreground="#aaa" d:Text="|$|:  3    sum 234.56$        by Dtl: 2        by Mem: 0" FontFamily="JetBrains Mono" />
+          <TextBlock x:Name="tbxNew" Margin="0 10 0 8"  FontWeight="Medium" Foreground="#aaa" d:Text="321 abc" FontFamily="JetBrains Mono" />
         </StackPanel>
       </Grid>
 
@@ -146,7 +145,7 @@
           <!--Foreground="#00f"-->
           <DataGridTextColumn     Binding="{Binding TxAmount,  StringFormat='{}{0:##,###.#0  }'}" ElementStyle="{StaticResource RightAlignStyle}" FontWeight="SemiBold" >
             <DataGridTextColumn.Header>
-              <Button   Content="|$$|"    Click="OnFindByDlr" Margin="5 0" Width="60" BorderThickness="0" ToolTip="List matches by $$" />
+              <Button   Content="|$$|" x:Name="btnMatchesByAmount" Click="OnFindByDlr" Margin="5 0" Width="40" BorderThickness="0" ToolTip="List matches by $$" />
             </DataGridTextColumn.Header>
           </DataGridTextColumn>
           <!--Foreground="#080"-->
@@ -177,7 +176,7 @@
 
           <DataGridTemplateColumn SortMemberPath="TxDetail" CanUserSort="True" >
             <DataGridTemplateColumn.Header>
-              <Button   Content="TxDetail"    Click="OnFindByDtl" BorderThickness="0" ToolTip="List matches by details" />
+              <Button   Content="TxDetail" x:Name="btnMatchesByTxDetl" Click="OnFindByDtl" BorderThickness="0" ToolTip="List matches by details" />
             </DataGridTemplateColumn.Header>
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
@@ -188,7 +187,7 @@
 
           <DataGridTemplateColumn SortMemberPath="MemoPp" CanUserSort="True" >
             <DataGridTemplateColumn.Header>
-              <Button   Content="MemoPP"    Click="OnFindByMem" BorderThickness="0" ToolTip="List matches by memo" />
+              <Button   Content="MemoPP" x:Name="btnMatchesByMemoPP" Click="OnFindByMem" BorderThickness="0" ToolTip="List matches by memo" />
             </DataGridTemplateColumn.Header>
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
