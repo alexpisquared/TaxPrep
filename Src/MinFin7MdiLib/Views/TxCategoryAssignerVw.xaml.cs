@@ -150,12 +150,13 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
       if (string.IsNullOrEmpty(csvFilterString))
       {
-        var sel = dgTxCore.SelectedItems.Count > 0 ? dgTxCore.SelectedItems[dgTxCore.SelectedItems.Count - 1] : null;
         FilterTxnsBy2(csvFilterString, _txCatgry);
-        if (sel is not null)
+        
+        var lastSelectedItem = dgTxCore.SelectedItems.Count > 0 ? dgTxCore.SelectedItems[dgTxCore.SelectedItems.Count - 1] : null;
+        if (lastSelectedItem is not null)
         {
-          dgTxCore.SelectedItem = sel;
-          dgTxCore.ScrollIntoView(sel);
+          dgTxCore.SelectedItem = lastSelectedItem;
+          dgTxCore.ScrollIntoView(lastSelectedItem);
         }
 
         //_sth.SpeakFAF("Yes");
@@ -167,31 +168,26 @@ If you want to DEBUG or Run with the current Package available, just set your pa
         {
           if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { _sth.SpeakFAF("Still Empty."); return; }
 
-          _sth.SpeakFAF($"{ta.Length}-part filter");
-
-          if (!string.IsNullOrEmpty(ta[0]))
+          if (string.IsNullOrEmpty(ta[0]))
           {
-            if (!decimal.TryParse(ta[0], out var amt)) { _sth.SpeakFAF("1st must be number."); return; }
-
-            if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
-            _sth.SpeakFAF("Multi.");
-            FilterTxnsBy4(csvFilterString[(ta[0].Length + 1)..], _txCatgry, amt, rng);
-          }
-          else if (!string.IsNullOrEmpty(ta[1])) // explicit by string
-          {
-            _sth.SpeakFAF("Filter by number and text.");
             FilterTxnsBy2(ta[1], _txCatgry);
           }
           else
           {
-            _sth.SpeakFAF("Second search item must not be empty.");
+            if (!decimal.TryParse(ta[0], out var amt)) { _sth.SpeakFAF("1st must be number."); return; }
+
+            if (!decimal.TryParse(tbxRange.Text, out var rng)) tbxRange.Text = (rng = 0m).ToString();
+
+            _sth.SpeakFAF("Multi.");
+            FilterTxnsBy4(csvFilterString[(ta[0].Length + 1)..], _txCatgry, amt, rng);
           }
         }
         else // == 1
         {
+          _sth.SpeakFAF($"{ta.Length}-part filter in action.");
           if (decimal.TryParse(csvFilterString, out var amt))
           {
-            if (!decimal.TryParse(tRng.Text, out var rng)) tRng.Text = (rng = 0m).ToString();
+            if (!decimal.TryParse(tbxRange.Text, out var rng)) tbxRange.Text = (rng = 0m).ToString();
 
             FilterTxnsBy4("", _txCatgry, amt, rng);
           }
@@ -357,7 +353,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       _choiceAbove = _choiceBelow = "";
 
       btnNotePaster.IsEnabled = dgTxCore.SelectedItems.Count > 0 && Clipboard.ContainsText() && Clipboard.GetText().Length > 0;
-      btnNotePaster.Content = btnNotePaster.IsEnabled ? $"_Paste to {dgTxCore.SelectedItems.Count} rows\n{Clipboard.GetText()}" : "¦";
+      btnNotePaster.Content = btnNotePaster.IsEnabled ? $"'{Clipboard.GetText()}'\n_Paste to {dgTxCore.SelectedItems.Count} rows  ▼" : "¦";
 
       if (dgTxCore.SelectedItems.Count > 0)
       {
@@ -422,7 +418,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
   void OnFindByDlr(object sender, RoutedEventArgs e)
   {
-    tRng.Text = "0.00"; // :only the exact matches are OK here.
+    tbxRange.Text = "0.00"; // :only the exact matches are OK here.
     tbxSearch.Text = $"{Math.Abs((dgTxCore.SelectedItem as TxCoreV2)?.TxAmount ?? 0m):N2}";
     Clipboard.SetText(tbxSearch.Text);
   }
