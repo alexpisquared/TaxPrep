@@ -1,0 +1,45 @@
+﻿@page "/weather"
+@attribute [StreamRendering]
+@inject SqlDataAccess sql
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates showing data.</p>
+
+@if (people == null)
+{
+  <p><em>Loading...</em></p>
+}
+else
+{
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var person in people)
+      {
+        <tr>
+          <td>@person.Id</td>
+          <td>@person.FirstName</td>
+          <td>@person.LastName</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
+
+@code {
+  private List<PersonModel>? people;
+
+  protected override async Task OnInitializedAsync()
+  {
+    people = await sql.LoadData<PersonModel, dynamic>("dbo.spPerson_GetAll", new { });
+  }
+}
