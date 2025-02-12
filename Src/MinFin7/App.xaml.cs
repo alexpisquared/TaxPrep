@@ -44,7 +44,7 @@ public partial class App : Application
 
     ShutdownMode = ShutdownMode.OnMainWindowClose; // The default value is OnLastWindowClose.
 
-    var connectionString = "Server=.\\SqlExpress;Database=FinDemo;Trusted_Connection=True;Encrypt=False;";
+    var connectionString = new ConfigurationBuilder().AddUserSecrets<App>().Build()["ConnectionStrings:default"] ?? throw new ArgumentNullException("■ !Config - ConnectionStrings:Express"); //tu: adhoc usersecrets from config
 
     MainWindow = 
       new TxCategoryAssignerVw(_logger, new Bpr(), Synth, new FinDemoContext(connectionString));
