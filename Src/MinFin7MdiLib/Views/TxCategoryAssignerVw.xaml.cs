@@ -163,10 +163,10 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       }
       else
       {
-        var ta = csvFilterString.Split(new[] { '`', '>', '\\', '/' });
+        var ta = csvFilterString.Split(['`', '>', '\\', '/']);
         if (ta.Length > 1)
         {
-          if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { _sth.SpeakFAF("Still Empty."); return; }
+          if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { _sth.SpeakFAF("Both are empty."); return; }
 
           if (string.IsNullOrEmpty(ta[0]))
           {
@@ -178,13 +178,14 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
             if (!decimal.TryParse(tbxRange.Text, out var rng)) tbxRange.Text = (rng = 0m).ToString();
 
-            _sth.SpeakFAF("Multi.");
+            //_sth.SpeakFAF("Multi.");
             FilterTxnsBy4(csvFilterString[(ta[0].Length + 1)..], _txCatgry, amt, rng);
           }
         }
         else // == 1
         {
-          _sth.SpeakFAF($"{ta.Length}-part filter in action.");
+          if (ta.Length != 1) _sth.SpeakFAF($"{ta.Length}-part filter in action.");
+
           if (decimal.TryParse(csvFilterString, out var amt))
           {
             if (!decimal.TryParse(tbxRange.Text, out var rng)) tbxRange.Text = (rng = 0m).ToString();
@@ -459,7 +460,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       return;
     }
 
-    foreach (TxCoreV2 tc in dgTxCore.SelectedItems) { tc.Notes = newNoteText; tc.ModifiedAt = _now; }
+    foreach (TxCoreV2 tc in dgTxCore.SelectedItems) { tc.Notes = newNoteText; tc.ModifiedAt = _now; tc.ModifiedBy = Environment.UserName; }
 
     await SaveChangesAndClearIfAsync(false);
   }
@@ -471,7 +472,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
 
     if (dgTxCore.SelectedItems.Count > 0)
     {
-      foreach (TxCoreV2 tc in dgTxCore.SelectedItems) { tc.TxCategoryIdTxt = IdTxt; tc.ModifiedAt = _now; }
+      foreach (TxCoreV2 tc in dgTxCore.SelectedItems) { tc.TxCategoryIdTxt = IdTxt; tc.ModifiedAt = _now; tc.ModifiedBy = Environment.UserName; }
     }
     else if (tbxSearch.Text.Length > 1)
     {
@@ -479,7 +480,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       {
         if (tc.TxCategoryIdTxt.Equals("UnKn", StringComparison.OrdinalIgnoreCase)) // if (!tc.TxCategoryIdTxt.Equals(IdTxt, StringComparison.OrdinalIgnoreCase))
         {
-          tc.TxCategoryIdTxt = IdTxt; tc.ModifiedAt = _now;
+          tc.TxCategoryIdTxt = IdTxt; tc.ModifiedAt = _now; tc.ModifiedBy = Environment.UserName;
         }
       }
     }

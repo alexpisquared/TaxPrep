@@ -145,7 +145,8 @@ public partial class Page01VM : BaseEmVM
         {
           r.TxCategoryIdTxt = categoryIdTxt;
           r.ModifiedAt = now;
-          r.Notes += " )■*";
+          r.ModifiedBy = Environment.UserName;
+          r.Notes += "  by Page01";
         });
 
         TxnYoiCvs?.Refresh();
@@ -158,7 +159,8 @@ public partial class Page01VM : BaseEmVM
       {
         SelectdYoi.TxCategoryIdTxt = categoryIdTxt;
         SelectdYoi.ModifiedAt = now;
-        SelectdYoi.Notes += " )■*";
+        SelectdYoi.ModifiedBy = Environment.UserName;
+        SelectdYoi.Notes += "  by Page01";
 
         TxnYoiCvs?.Refresh();
         Bpr.Click();

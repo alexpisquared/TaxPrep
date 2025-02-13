@@ -31,6 +31,8 @@ public partial class TxCoreV2
 
     public DateTime? HstTakenAt { get; set; }
 
+    public string? ModifiedBy { get; set; }
+
     public virtual TxCategory TxCategoryIdTxtNavigation { get; set; } = null!;
 
     public virtual TxMoneySrc TxMoneySrc { get; set; } = null!;

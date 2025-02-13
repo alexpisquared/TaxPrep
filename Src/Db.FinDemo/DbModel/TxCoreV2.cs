@@ -44,6 +44,8 @@ namespace Db.FinDemo.DbModel
 
         public DateTime? HstTakenAt { get; set; }
 
+      public string? ModifiedBy { get; set; }
+
         public virtual TxCategory TxCategory { get; set; }
 
         public virtual TxMoneySrc TxMoneySrc { get; set; }

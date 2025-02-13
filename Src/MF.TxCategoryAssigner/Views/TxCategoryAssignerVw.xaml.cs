@@ -360,7 +360,7 @@ namespace MF.TxCategoryAssigner
 
       if (dgTxCore.SelectedItems.Count > 0)
       {
-        foreach (TxCoreV2 tc in dgTxCore.SelectedItems) { tc.TxCategoryIdTxt = IdTxt; tc.ModifiedAt = _now; }
+        foreach (TxCoreV2 tc in dgTxCore.SelectedItems) { tc.TxCategoryIdTxt = IdTxt; tc.ModifiedAt = _now; tc.ModifiedBy = Environment.UserName;  }
       }
       else if (tbxSearch.Text.Length > 1)
       {
@@ -368,7 +368,7 @@ namespace MF.TxCategoryAssigner
         {
           if (tc.TxCategoryIdTxt.Equals("UnKn", StringComparison.OrdinalIgnoreCase)) // if (!tc.TxCategoryIdTxt.Equals(IdTxt, StringComparison.OrdinalIgnoreCase))
           {
-            tc.TxCategoryIdTxt = IdTxt; tc.ModifiedAt = _now;
+            tc.TxCategoryIdTxt = IdTxt; tc.ModifiedAt = _now; tc.ModifiedBy = Environment.UserName;
           }
         }
       }

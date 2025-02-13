@@ -179,6 +179,7 @@ namespace MSMoneyDbLoader
               txDb.Notes += $" Same FitId & amount: changing TxMoneySrc {txDb.TxMoneySrcId} to {txFs.TxMoneySrcId} on {MSMoneyFileReader._batchTimeNow}   ({txDb.TxMoneySrc.Name} -> {txFs.TxMoneySrc.Name}   <== file-fitid:{file}-{txFs.FitId}).";
               txDb.TxMoneySrcId = txFs.TxMoneySrcId;
               txDb.ModifiedAt = MSMoneyFileReader._batchTimeNow;
+              txDb.ModifiedBy = Environment.UserName;
             }
             else
             {
@@ -195,6 +196,7 @@ namespace MSMoneyDbLoader
             txDb.Notes += $" +- ";
             txDb.TxAmount = txFs.TxAmount;
             txDb.ModifiedAt = MSMoneyFileReader._batchTimeNow;
+            txDb.ModifiedBy = Environment.UserName;
           }
 #endif
         }
@@ -218,6 +220,7 @@ namespace MSMoneyDbLoader
           {
             txDb.TxMoneySrcId = txFs.TxMoneySrcId;
             txDb.ModifiedAt = MSMoneyFileReader._batchTimeNow;
+            //txDb.ModifiedBy = Environment.UserName;
           }
         }
       }
