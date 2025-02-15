@@ -151,7 +151,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
       if (string.IsNullOrEmpty(csvFilterString))
       {
         FilterTxnsBy2(csvFilterString, _txCatgry);
-        
+
         var lastSelectedItem = dgTxCore.SelectedItems.Count > 0 ? dgTxCore.SelectedItems[dgTxCore.SelectedItems.Count - 1] : null;
         if (lastSelectedItem is not null)
         {
@@ -375,7 +375,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
           var memoStrMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && !string.IsNullOrEmpty(r.MemoPp) && !string.IsNullOrEmpty(select.MemoPp) && r.MemoPp.ToLower().Contains(select.MemoPp.ToLower())).OrderByDescending(r => r.TxDate);
 
           //tbxNew.Text = $"{(dlrAmntMatches?.Count() ?? 1) - 1,-5}   ttl$ {dlrAmntMatches?.Sum(r => r.TxAmount) ?? 0m,-8:N0}       TxDtl {(detailsMatches?.Count() ?? 1) - 1,-8}    Mem {(memoStrMatches?.Count() ?? 1) - 1,-8}";
-        
+
           btnMatchesByAmount.Content = $"+ {(dlrAmntMatches?.Count() ?? 1) - 1}";
           btnMatchesByTxDetl.Content = $"TxDetail  +{(detailsMatches?.Count() ?? 1) - 1}";
           btnMatchesByMemoPP.Content = $"MemoPP  +{(memoStrMatches?.Count() ?? 1) - 1}";
