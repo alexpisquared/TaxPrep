@@ -3,8 +3,8 @@ public partial class TxCategoryAssignerVw : WindowBase
 {
   readonly FinDemoContext _dbx;
   readonly DateTime _yrStart2004 = new(2004, 1, 1), _now = DateTime.Now;
-  readonly ObservableCollection<TxCoreV2> _core = [];
-  readonly ObservableCollection<TxCategory> _catg = [];
+  readonly ObservableCollection<TxCoreV2> _txCoreItems = [];
+  readonly ObservableCollection<TxCategory> _txCategories = [];
   readonly CollectionViewSource _txCategoryCmBxVwSrc, _txCategoryDGrdVwSrc, _txCoreV2_Root_VwSrc;
   readonly int _trgTaxYr = DateTime.Today.Year - 1;
   readonly ILogger _lgr;
@@ -31,7 +31,7 @@ public partial class TxCategoryAssignerVw : WindowBase
     /*
      * var version = Windows.ApplicationModel.Package.Current.Id.Version;
      * 
-You need to install the Windows 10 WinRT API pack. Install from Nuget the package: Microsoft.Windows.SDK.Contracts
+You need to install the Windows 10 WinRT API pack. Install from NuGet the package: Microsoft.Windows.SDK.Contracts
 
 URL: https://www.nuget.org/packages/Microsoft.Windows.SDK.Contracts
 
@@ -199,11 +199,11 @@ If you want to DEBUG or Run with the current Package available, just set your pa
         }
       }
 
-      _txCoreV2_Root_VwSrc.Source = _core;
+      _txCoreV2_Root_VwSrc.Source = _txCoreItems;
 
       if (chkInfer.IsChecked == true)
       {
-        var catIds = _core.Select(r => r.TxCategoryIdTxtNavigation.Id).Distinct().Where(r => r != 3); // Debug.WriteLine($"catIds.Count() = {catIds.Count()}");
+        var catIds = _txCoreItems.Select(r => r.TxCategoryIdTxtNavigation.Id).Distinct().Where(r => r != 3); // Debug.WriteLine($"catIds.Count() = {catIds.Count()}");
         FilterCategoryByIdList(catIds);
       }
 
@@ -218,7 +218,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     tbkFlt.Text = csvFilterString;
     tbkAmt.Text = "";
 
-    _core.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
+    _txCoreItems.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
       (
         (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(csvFilterString.ToLower())) ||
         (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(csvFilterString.ToLower())) ||
@@ -242,7 +242,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     tbkFlt.Text = csvFilterString;
     tbkAmt.Text = $"{txnAmt:N0}";
 
-    _core.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
+    _txCoreItems.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
       txnAmt - range <= (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) && (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) <= txnAmt + range
       &&
       (
@@ -269,28 +269,28 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   {
     var started = Stopwatch.GetTimestamp();
 
-    _catg.ClearAddRangeAuto(enu.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
+    _txCategories.ClearAddRangeAuto(enu.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
 
     ArgumentNullException.ThrowIfNull(_txCategoryDGrdVwSrc);
-    _txCategoryDGrdVwSrc.Source = _catg;
+    _txCategoryDGrdVwSrc.Source = _txCategories;
 
-    if (_catg.Count == 0)
+    if (_txCategories.Count == 0)
     {
-      _catg.ClearAddRangeAuto(_dbx.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
+      _txCategories.ClearAddRangeAuto(_dbx.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
     }
 
     choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled = false;
     _choiceAbove = _choiceBelow = "";
 
-    if (_catg.Count == 1)
+    if (_txCategories.Count == 1)
     {
       btAssign.IsEnabled = true;
       _ = _txCategoryDGrdVwSrc.View.MoveCurrentToFirst();
     }
-    else if (_catg.Count == 2)
+    else if (_txCategories.Count == 2)
     {
-      _choiceAbove = _catg.First().IdTxt;
-      _choiceBelow = _catg.Last().IdTxt;
+      _choiceAbove = _txCategories.First().IdTxt;
+      _choiceBelow = _txCategories.Last().IdTxt;
       btAssign.IsEnabled = txCategoryListBox.SelectedItems.Count == 1;// _choiceAbove == _choiceBelow;
     }
 
@@ -303,9 +303,9 @@ If you want to DEBUG or Run with the current Package available, just set your pa
   static async Task<bool> IsStillTyping(TextBox textbox) { var prev = textbox.Text; await Task.Delay(750); return prev != textbox.Text; }
   void UpdateTitle(TimeSpan took, [CallerMemberName] string? cmn = "")
   {
-    WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_core.Count,9:N0} rows    sum {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_core.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t {cmn} \t\t {VersionHelper.CurVerStr}");
-    h0.Text = $"{_core.Count,9:N0} rows     ";
-    h1.Text = $"$UnKn/All {_core.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount):N0} / {_core.Sum(r => r.TxAmount):N0}     ";
+    WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_txCoreItems.Count,9:N0} rows    sum {_txCoreItems.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_txCoreItems.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t {cmn} \t\t {VersionHelper.CurVerStr}");
+    h0.Text = $"{_txCoreItems.Count,9:N0} rows     ";
+    h1.Text = $"$UnKn/All {_txCoreItems.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount):N0} / {_txCoreItems.Sum(r => r.TxAmount):N0}     ";
     h2.Text = $"Selects {_selectTtl:N2}     ";
     h3.Text = $"{VersionHelper.CurVerStr}     ";
     h4.Text = $"Db: {_dbx.Database.GetDbConnection().Database}     ";
@@ -476,7 +476,7 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     }
     else if (tbxSearch.Text.Length > 1)
     {
-      foreach (var tc in _core)
+      foreach (var tc in _txCoreItems)
       {
         if (tc.TxCategoryIdTxt.Equals("UnKn", StringComparison.OrdinalIgnoreCase)) // if (!tc.TxCategoryIdTxt.Equals(IdTxt, StringComparison.OrdinalIgnoreCase))
         {
