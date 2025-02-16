@@ -1,4 +1,23 @@
-﻿using static AmbienceLib.SpeechSynth;
+﻿using Azure.Identity;
+using static AmbienceLib.SpeechSynth;
+
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.IO;
+using System.Speech.Synthesis;
+using System.Text.Json;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
+using Azure.Security.KeyVault.Secrets;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Configuration;
+using static System.Diagnostics.Trace;
+using Application = System.Windows.Application;
+
 
 namespace MinFin7;
 public partial class App : Application
@@ -46,12 +65,24 @@ public partial class App : Application
 
     var connectionString = new ConfigurationBuilder().AddUserSecrets<App>().Build()["ConnectionStrings:default"] ?? throw new ArgumentNullException("■ !Config - ConnectionStrings:Express"); //tu: adhoc usersecrets from config
 
-    MainWindow = 
-      new TxCategoryAssignerVw(_logger, new Bpr(), Synth, new FinDemoContext(connectionString));
-      //VersionHelper.IsDbg ?      
-      //new ManualTxnEntry(_logger, new Bpr(), Synth, true, new FinDemoContext(constr));
-      //new MinFin7MdiLib.Views.ReviewWindow(_logger, new Bpr(), "Mei", new FinDemoContext(constr));
-      //new MainAppDispatcher();// (_logger, new Bpr(), Synth, new FinDemoContext(constr));
+    try
+    {
+      var client = new SecretClient(new Uri("https://demopockv.vault.azure.net/"), new DefaultAzureCredential());
+      KeyVaultSecret secret = client.GetSecret("FreeDbConStr");
+      connectionString = secret.Value;
+    }
+    catch (Exception ex)
+    {
+      Trace.WriteLine(ex.Message);
+      connectionString = new ConfigurationBuilder().AddUserSecrets<App>().Build()["ConnectionStrings:default"] ?? throw new ArgumentNullException("■ !Config - ConnectionStrings:Express"); //tu: adhoc usersecrets from config
+    }
+
+    MainWindow =
+    new TxCategoryAssignerVw(_logger, new Bpr(), Synth, new FinDemoContext(connectionString));
+    //VersionHelper.IsDbg ?      
+    //new ManualTxnEntry(_logger, new Bpr(), Synth, true, new FinDemoContext(constr));
+    //new MinFin7MdiLib.Views.ReviewWindow(_logger, new Bpr(), "Mei", new FinDemoContext(constr));
+    //new MainAppDispatcher();// (_logger, new Bpr(), Synth, new FinDemoContext(constr));
 
     MainWindow.ShowDialog();
 
