@@ -63,22 +63,27 @@ public partial class App : Application
 
     ShutdownMode = ShutdownMode.OnMainWindowClose; // The default value is OnLastWindowClose.
 
-    var connectionString = new ConfigurationBuilder().AddUserSecrets<App>().Build()["ConnectionStrings:default"] ?? throw new ArgumentNullException("■ !Config - ConnectionStrings:Express"); //tu: adhoc usersecrets from config
+    var config = new ConfigurationBuilder().AddUserSecrets<App>().Build(); //tu: ad-hoc user Secrets from config
+
+    string connectionString;
 
     try
     {
-      var client = new SecretClient(new Uri("https://demopockv.vault.azure.net/"), new DefaultAzureCredential());
+      var client = new SecretClient(new Uri("https://demopockv.vault.azure.net/"), new ClientSecretCredential(
+        config["akv:Kv_Overview_DirectoryId"],
+        config["akv:EntraKeyVaultPocWpfApp2025_AppId"],
+        config["akv:EntraKeyVaultPocWpfApp2025_SeVal"]));
+
       KeyVaultSecret secret = client.GetSecret("FreeDbConStr");
       connectionString = secret.Value;
     }
     catch (Exception ex)
     {
-      Trace.WriteLine(ex.Message);
-      connectionString = new ConfigurationBuilder().AddUserSecrets<App>().Build()["ConnectionStrings:default"] ?? throw new ArgumentNullException("■ !Config - ConnectionStrings:Express"); //tu: adhoc usersecrets from config
+      WriteLine(ex.Message);
+      connectionString = config["ConnectionStrings:default"] ?? throw new ArgumentNullException("■ !Config: ConnectionStrings:default");
     }
 
-    MainWindow =
-    new TxCategoryAssignerVw(_logger, new Bpr(), Synth, new FinDemoContext(connectionString));
+    MainWindow = new TxCategoryAssignerVw(_logger, new Bpr(), Synth, new FinDemoContext(connectionString));
     //VersionHelper.IsDbg ?      
     //new ManualTxnEntry(_logger, new Bpr(), Synth, true, new FinDemoContext(constr));
     //new MinFin7MdiLib.Views.ReviewWindow(_logger, new Bpr(), "Mei", new FinDemoContext(constr));
