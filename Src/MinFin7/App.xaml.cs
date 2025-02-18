@@ -1,61 +1,36 @@
-﻿using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
-using static AmbienceLib.SpeechSynth;
-using Application = System.Windows.Application;
-
-namespace MinFin7;
+﻿namespace MinFin7;
 public partial class App : Application
 {
-  static readonly DateTime Started = DateTime.Now;
-  //static readonly IConfigurationRoot? _config = ConfigHelper.AutoInitConfigFromFile();
-  ILogger<TxCategoryAssignerVw>? _logger;
   protected override void OnStartup(StartupEventArgs e)
   {
     base.OnStartup(e);
 
-    _logger = (ILogger<TxCategoryAssignerVw>?)SeriLogHelper.InitLoggerFactory(/*@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log", "+Info"*/).CreateLogger<TxCategoryAssignerVw>();
+    var _logger = (ILogger<TxCategoryAssignerVw>?)SeriLogHelper.InitLoggerFactory(/*@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log", "+Info"*/).CreateLogger<TxCategoryAssignerVw>();
 
     Current.DispatcherUnhandledException += UnhandledExceptionHndlrUI.OnCurrentDispatcherUnhandledException;
     EventManager.RegisterClassHandler(typeof(TextBox), UIElement.GotFocusEvent, new RoutedEventHandler((s, re) => ((TextBox)s).SelectAll())); //tu: TextBox
 
-#if _DEBUG
-      //new ReportWindow(MSMoneyDbLoader.App.GetCmndLineArgsInclClickOnce())
-      //new HstProcessorVw()
-
-      //new DbLoaderReportWindow(MSMoneyDbLoader.App.GetCmndLineArgsInclClickOnce()) // 1
-      //new HistoricalChartSet.MainHistChart()                // 2
-      new TxCategoryAssignerVw()                            // 3
-      //new ManualTxnEntry(true) //new MinFin7.DataSet.TxAdd() // 4 
-      //new MinFin7.Review.DS.ReviewWindow("Mei")              // 5
-      .ShowDialog();
-
-      //MinFin7.Report.WinForm.Program.ShowBoth();
-      //MinFin7.Report.WinForm.Program.Show_Alx();
-      //MinFin7.Report.WinForm.Program.Show_Mei();
-      //MinFin7.Report.WinForm.Program.ShowDialogBoth();
-#else
     ShutdownMode = ShutdownMode.OnMainWindowClose; // The default value is OnLastWindowClose.
 
     var config = new ConfigurationBuilder().AddUserSecrets<App>().Build(); //tu: ad-hoc user Secrets from config
 
-    string connectionString;
+    MainWindow = new TxCategoryAssignerVw(_logger!, new Bpr(), new SpeechSynth(config["AppSecrets:MagicSpeech"] ?? throw new ArgumentNullException("■ !Config: MagicSpeech"), true, CC.EnusAriaNeural.Voice), new FinDemoContext(GetConnectionString(_logger, config)));
+    MainWindow.ShowDialog();
+  }
 
+  private static string GetConnectionString(ILogger<TxCategoryAssignerVw>? _logger, IConfigurationRoot config)
+  {
     try
     {
-      connectionString = new SecretClient(
-        new Uri(config["KeyVaultUrl"]!), 
-        new ClientSecretCredential(config["akv:Kv_Overview_DirectoryId"], config["akv:EntraKeyVaultPocWpfApp2025_AppId"], config["akv:EntraKeyVaultPocWpfApp2025_SeVal"])).
-        GetSecret(config["SecretName"]).Value.Value;
+      return new SecretClient(
+        new Uri(config["akv:KvUrl"]!),
+        new ClientSecretCredential(config["akv:DirId"], config["akv:AppId"], config["akv:SeVal"])).
+        GetSecret(config["akv:SName"]).Value.Value;
     }
     catch (Exception ex)
     {
-      WriteLine(ex.Message);
-      connectionString = config["ConnectionStrings:default"] ?? throw new ArgumentNullException("■ !Config: ConnectionStrings:default");
+      _logger?.LogError(ex, "■");
+      return config["ConnectionStrings:default"] ?? throw new ArgumentNullException("■ !Config: ConnectionStrings:default");
     }
-
-    MainWindow = new TxCategoryAssignerVw(_logger!, new Bpr(), new SpeechSynth(config["AppSecrets:MagicSpeech"] ?? throw new ArgumentNullException("■ !Config: MagicSpeech"), true, CC.EnusAriaNeural.Voice), new FinDemoContext(connectionString));
-    MainWindow.ShowDialog();
-#endif
   }
-  protected override void OnExit(ExitEventArgs e) => base.OnExit(e);      //DateTime tbkFlt = DateTime.Now;			//Trace.WriteLine(string.Format("{0:dd HH:mm:ss} - finished; has been on for {1:N2} min.", tbkFlt, (tbkFlt - t0).TotalMinutes));
 }
