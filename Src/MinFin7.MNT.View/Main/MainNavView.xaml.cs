@@ -16,14 +16,8 @@ public partial class MainNavView : WpfUserControlLib.Base.WindowBase
 
   void OnLoaded(object s, RoutedEventArgs e) { } // themeSelector1.SetCurThemeToMenu(Thm); //dnf theming 2/2
 
-  void OnWindowRestoree(object s, RoutedEventArgs e)
-  {
-    wr.Visibility = Visibility.Collapsed; wm.Visibility = Visibility.Visible; WindowState = WindowState.Normal;
-  }
-  void OnWindowMaximize(object s, RoutedEventArgs e)
-  {
-    wm.Visibility = Visibility.Collapsed; wr.Visibility = Visibility.Visible; WindowState = WindowState.Maximized;
-  }
+  void OnWindowRestoree(object s, RoutedEventArgs e)  {    wr.Visibility = Visibility.Collapsed; wm.Visibility = Visibility.Visible; WindowState = WindowState.Normal;  }
+  void OnWindowMaximize(object s, RoutedEventArgs e)  {    wm.Visibility = Visibility.Collapsed; wr.Visibility = Visibility.Visible; WindowState = WindowState.Maximized;  }
 
   async void OnSave(object s, RoutedEventArgs e) => await Task.Yield();
   async void OnAudio(object s, RoutedEventArgs e) => await Task.Yield();

@@ -253,6 +253,13 @@
       <GridSplitter Grid.RowSpan="3" Grid.Column="2"  />
       <GridSplitter Grid.RowSpan="3" Grid.Column="4"  />
 
+      <StackPanel x:Name="WindowControlPanel" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="-6" Style="{StaticResource SmartOpacityToggleAnimStyle}" Grid.ColumnSpan="8" Grid.RowSpan="3">
+        <Button	Margin="2" Content="_-"                          FontSize="26" Height="26" Padding="2 -0" Width="26" Foreground="#aaa" BorderThickness="0" ToolTip="Minimize Window"   Click="OnWindowMiniBase"                               />
+        <Button	Margin="2" Content="_+" FontFamily="Wingdings 2" FontSize="16" Height="26" Padding="0 -1" Width="26" Foreground="#aaa" BorderThickness="0" ToolTip="Restore Window"    Click="OnWindowRestoree" x:Name="wr" Visibility="Collapsed" />
+        <Button	Margin="2" Content="_£" FontFamily="Wingdings 2" FontSize="16" Height="26" Padding="0 -1" Width="26" Foreground="#aaa" BorderThickness="0" ToolTip="Maximize Window"   Click="OnWindowMaximize" x:Name="wm"                   />
+        <Button	Margin="2" Content="r"  FontFamily="Webdings"    FontSize="18" Height="26" Padding="0 -1" Width="26" Foreground="#e00" BorderThickness="0" ToolTip="Close Application" Click="OnWindowClose"    x:Name="btnExit"   />
+      </StackPanel>
+
     </Grid>
   </Border>
 </lnk:WindowBase>

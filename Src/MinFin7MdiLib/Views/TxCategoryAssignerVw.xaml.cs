@@ -506,6 +506,10 @@ If you want to DEBUG or Run with the current Package available, just set your pa
     }
     _sth.SpeakFAF(tbxNew.Text);
   }
+
+  void OnWindowRestoree(object s, RoutedEventArgs e) { wr.Visibility = Visibility.Collapsed; wm.Visibility = Visibility.Visible; WindowState = WindowState.Normal; }
+  void OnWindowMaximize(object s, RoutedEventArgs e) { wm.Visibility = Visibility.Collapsed; wr.Visibility = Visibility.Visible; WindowState = WindowState.Maximized; }
+  void OnWindowClose(object s, RoutedEventArgs e) { Close(); }
 }
 /*
 declare @ms as int, @ia as money

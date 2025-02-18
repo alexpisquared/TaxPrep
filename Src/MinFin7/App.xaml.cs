@@ -34,17 +34,6 @@ public partial class App : Application
       //MinFin7.Report.WinForm.Program.Show_Mei();
       //MinFin7.Report.WinForm.Program.ShowDialogBoth();
 #else
-    //var args = MSMoneyDbLoader.App.GetCmndLineArgsInclClickOnce(); // load cml specified file.
-    //if (args.Length > 0 && (File.Exists(args[0]) || Directory.Exists(args[0])))
-    //{
-    //  new MSMoneyDbLoader.DbLoaderReportWindow(args).ShowDialog();
-    //  if (!(args.Length > 1 && args[1].Equals("ShowMenu", System.StringComparison.OrdinalIgnoreCase)))
-    //  {
-    //    Synth.Speak($"{args[0]} processed. Exiting.");
-    //    goto done;
-    //  }
-    //}
-
     ShutdownMode = ShutdownMode.OnMainWindowClose; // The default value is OnLastWindowClose.
 
     var config = new ConfigurationBuilder().AddUserSecrets<App>().Build(); //tu: ad-hoc user Secrets from config
@@ -53,12 +42,10 @@ public partial class App : Application
 
     try
     {
-      var client = new SecretClient(new Uri("https://demopockv.vault.azure.net/"), new ClientSecretCredential(
-        config["akv:Kv_Overview_DirectoryId"],
-        config["akv:EntraKeyVaultPocWpfApp2025_AppId"],
-        config["akv:EntraKeyVaultPocWpfApp2025_SeVal"]));
-
-      connectionString = client.GetSecret("FreeDbConStr").Value.Value;
+      connectionString = new SecretClient(
+        new Uri(config["KeyVaultUrl"]!), 
+        new ClientSecretCredential(config["akv:Kv_Overview_DirectoryId"], config["akv:EntraKeyVaultPocWpfApp2025_AppId"], config["akv:EntraKeyVaultPocWpfApp2025_SeVal"])).
+        GetSecret(config["SecretName"]).Value.Value;
     }
     catch (Exception ex)
     {
@@ -67,17 +54,8 @@ public partial class App : Application
     }
 
     MainWindow = new TxCategoryAssignerVw(_logger!, new Bpr(), new SpeechSynth(config["AppSecrets:MagicSpeech"] ?? throw new ArgumentNullException("■ !Config: MagicSpeech"), true, CC.EnusAriaNeural.Voice), new FinDemoContext(connectionString));
-    //VersionHelper.IsDbg ?      
-    //new ManualTxnEntry(_logger, new Bpr(), Synth, true, new FinDemoContext(constr));
-    //new MinFin7MdiLib.Views.ReviewWindow(_logger, new Bpr(), "Mei", new FinDemoContext(constr));
-    //new MainAppDispatcher();// (_logger, new Bpr(), Synth, new FinDemoContext(constr));
-
     MainWindow.ShowDialog();
-
-    //done:
 #endif
-
-    //Current?.Shutdown();
   }
   protected override void OnExit(ExitEventArgs e) => base.OnExit(e);      //DateTime tbkFlt = DateTime.Now;			//Trace.WriteLine(string.Format("{0:dd HH:mm:ss} - finished; has been on for {1:N2} min.", tbkFlt, (tbkFlt - t0).TotalMinutes));
 }
