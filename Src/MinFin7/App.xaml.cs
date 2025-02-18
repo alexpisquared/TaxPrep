@@ -1,23 +1,7 @@
 ﻿using Azure.Identity;
-using static AmbienceLib.SpeechSynth;
-
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.Speech.Synthesis;
-using System.Text.Json;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
 using Azure.Security.KeyVault.Secrets;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.Configuration;
-using static System.Diagnostics.Trace;
+using static AmbienceLib.SpeechSynth;
 using Application = System.Windows.Application;
-
 
 namespace MinFin7;
 public partial class App : Application
@@ -74,8 +58,7 @@ public partial class App : Application
         config["akv:EntraKeyVaultPocWpfApp2025_AppId"],
         config["akv:EntraKeyVaultPocWpfApp2025_SeVal"]));
 
-      KeyVaultSecret secret = client.GetSecret("FreeDbConStr");
-      connectionString = secret.Value;
+      connectionString = client.GetSecret("FreeDbConStr").Value.Value;
     }
     catch (Exception ex)
     {
@@ -83,7 +66,7 @@ public partial class App : Application
       connectionString = config["ConnectionStrings:default"] ?? throw new ArgumentNullException("■ !Config: ConnectionStrings:default");
     }
 
-    MainWindow = new TxCategoryAssignerVw(_logger, new Bpr(), Synth, new FinDemoContext(connectionString));
+    MainWindow = new TxCategoryAssignerVw(_logger!, new Bpr(), new SpeechSynth(config["AppSecrets:MagicSpeech"] ?? throw new ArgumentNullException("■ !Config: MagicSpeech"), true, CC.EnusAriaNeural.Voice), new FinDemoContext(connectionString));
     //VersionHelper.IsDbg ?      
     //new ManualTxnEntry(_logger, new Bpr(), Synth, true, new FinDemoContext(constr));
     //new MinFin7MdiLib.Views.ReviewWindow(_logger, new Bpr(), "Mei", new FinDemoContext(constr));
@@ -97,5 +80,4 @@ public partial class App : Application
     //Current?.Shutdown();
   }
   protected override void OnExit(ExitEventArgs e) => base.OnExit(e);      //DateTime tbkFlt = DateTime.Now;			//Trace.WriteLine(string.Format("{0:dd HH:mm:ss} - finished; has been on for {1:N2} min.", tbkFlt, (tbkFlt - t0).TotalMinutes));
-  static SpeechSynth? _sy = null; public static SpeechSynth Synth => _sy ??= new(new ConfigurationBuilder().AddUserSecrets<App>().Build()["AppSecrets:MagicSpeech"] ?? "AppSecrets:MagicSpeech is missing ▄▀▄▀▄▀", true, CC.EnusAriaNeural.Voice);
 }
