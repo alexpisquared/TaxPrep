@@ -1,6 +1,7 @@
-﻿use FinDemo
+﻿/*
+use FinDemo
 go
-/*SELECT COUNT(*) AS Count, SUM(TxCoreV2.TxAmount) AS Total, TxCoreV2.TxDetail, TxCoreV2.MemoPP, TxMoneySrc.Owner, TxMoneySrc.Fla, TxMoneySrc.Name, TxMoneySrc.Notes AS Expr1
+SELECT COUNT(*) AS Count, SUM(TxCoreV2.TxAmount) AS Total, TxCoreV2.TxDetail, TxCoreV2.MemoPP, TxMoneySrc.Owner, TxMoneySrc.Fla, TxMoneySrc.Name, TxMoneySrc.Notes AS Expr1
 FROM TxCoreV2 INNER JOIN TxMoneySrc ON TxCoreV2.TxMoneySrcId = TxMoneySrc.Id
 WHERE (YEAR(TxCoreV2.TxDate) = @Yr) AND (TxCoreV2.TxDetail LIKE '%scc %')
 GROUP BY TxCoreV2.TxDetail, TxCoreV2.MemoPP, TxMoneySrc.Owner, TxMoneySrc.Fla, TxMoneySrc.Name, TxMoneySrc.Notes
