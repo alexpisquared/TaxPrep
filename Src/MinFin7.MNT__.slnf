@@ -1,0 +1,25 @@
+{
+  "solution": {
+    "path": "MinFin.All.sln",
+    "projects": [
+      "..\\..\\AAV.Shared\\Src\\NetLts\\Ambience\\AmbienceLib.csproj",
+      "..\\..\\AAV.Shared\\Src\\NetLts\\EfDbHelperLib\\EfDbHelperLib.csproj",
+      "..\\..\\AAV.Shared\\Src\\NetLts\\LibraryImportLib\\LibraryImportLib.csproj",
+      "..\\..\\AAV.Shared\\Src\\NetLts\\NavigationDrawerControl\\NavigationDrawerControl.csproj",
+      "..\\..\\AAV.Shared\\Src\\NetLts\\PhoneAreaCoder\\PhoneAreaCoder.csproj",
+      "..\\..\\AAV.Shared\\Src\\NetLts\\StandardContractsLib\\StandardContractsLib.csproj",
+      "..\\..\\AAV.Shared\\Src\\NetLts\\StandardLib\\StandardLib.csproj",
+      "..\\..\\AAV.Shared\\Src\\NetLts\\WinFormsControlLib\\WinFormsControlLib.csproj",
+      "..\\..\\AAV.Shared\\Src\\NetLts\\WpfUserControlLib\\WpfUserControlLib.csproj",
+      "..\\..\\Util\\Src\\OpenVsOnTheCulpritLine\\OpenVsOnTheCulpritLine.csproj",
+      "Db.FinDemo.PowerTools\\Db.FinDemo.PowerTools.csproj",
+      "Db.FinDemo7\\Db.FinDemo7.csproj",
+      "MinFin.Report.WinForm7\\MinFin.Report.WinForm7.csproj",
+      "MinFin7.MNT.Contract\\MinFin7.MNT.Contract.csproj",
+      "MinFin7.MNT.VM\\MinFin7.MNT.VM.csproj",
+      "MinFin7.MNT.View\\MinFin7.MNT.View.csproj",
+      "MinFin7.MNT\\MinFin7.MNT.csproj",
+      "MinFin7MdiLib\\MinFin7MdiLib.csproj"
+    ]
+  }
+}
