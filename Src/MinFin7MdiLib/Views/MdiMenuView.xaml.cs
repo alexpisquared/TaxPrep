@@ -32,7 +32,7 @@ public partial class MdiMenuView : UserControl
       case "b4": SetDefault(3); new ManualTxnEntry(_lgr, _bpr, _sth, false, _dba).Show(); break;
       case "b5": SetDefault(4); MinFin.Report.WinForm7.Program.ShowBoth(); break;
       case "b6": SetDefault(5); new PrintableReport(_lgr, _bpr, "Alx", _dba).Show(); break;
-      case "b7": SetDefault(6); MinFin.Report.WinForm7.Program.Show_Mei(); break;
+      case "b7": SetDefault(6); new PrintableReport(_lgr, _bpr, "Mei", _dba).Show(); break;
       case "b8": SetDefault(7); new ReviewWindow(_lgr, _bpr, "Mei", _dba).Show(); break;
       //case "b9": setDefault(8); new MinFin7MdiLib.DataSet.TxAdd().Show(); break;
       default: _bpr?.No(); break;

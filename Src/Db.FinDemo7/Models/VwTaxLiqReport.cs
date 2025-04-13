@@ -20,4 +20,6 @@ public partial class VwTaxLiqReport
     public DateTime? LastTx { get; set; }
 
     public int? Qnt { get; set; }
+
+  public string? Owner { get; set; }
 }

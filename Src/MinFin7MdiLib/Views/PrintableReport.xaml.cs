@@ -71,7 +71,7 @@ namespace MinFin7MdiLib.Views
             }
         }
 
-        private void GenerateReport(IEnumerable<VwTaxLiqReportAlx> reportData)
+        private void GenerateReport(IEnumerable<VwTaxLiqReport> reportData)
         {
             Dispatcher.Invoke(() =>
             {

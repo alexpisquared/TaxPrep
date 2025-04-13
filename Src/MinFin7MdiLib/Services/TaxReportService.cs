@@ -9,13 +9,13 @@ namespace MinFin7MdiLib.Services
 {
   public class TaxReportService
   {
-    public async Task<IEnumerable<VwTaxLiqReportAlx>> GetTaxReportDataAsync(string owner, FinDemoContext dba, DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<VwTaxLiqReport>> GetTaxReportDataAsync(string owner, FinDemoContext dba, DateTime startDate, DateTime endDate)
     {
       try
       {
         // Query using Entity Framework to fetch the report data
         // This matches the SQL query in the requirements
-        var reportData = await dba.VwTaxLiqReportAlxes
+        var reportData = await dba.VwTaxLiqReports
             .Where(x => x.Owner == owner &&
                    x.TlNumber != null &&
                    x.TlNumber <= 201 &&
@@ -35,7 +35,7 @@ namespace MinFin7MdiLib.Services
     }
 
     // Alternative implementation if you need to use raw SQL instead of EF
-    public async Task<IEnumerable<VwTaxLiqReportAlx>> GetTaxReportDataFromRawSqlAsync(string owner, DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<VwTaxLiqReport>> GetTaxReportDataFromRawSqlAsync(string owner, DateTime startDate, DateTime endDate)
     {
       try
       {
@@ -67,7 +67,7 @@ namespace MinFin7MdiLib.Services
                         HAVING (dbo.TxMoneySrc.Owner = @p2) AND (dbo.TxCategory.TL_Number IS NOT NULL) AND (dbo.TxCategory.TL_Number <= 201)
                         ORDER BY dbo.ExpenseGroup.Note, ISNULL(dbo.TxCategory.TL_Number, 999)";
 
-          var data = await context.VwTaxLiqReportAlxes
+          var data = await context.VwTaxLiqReports
               .FromSqlRaw(sql, startDateStr, endDateStr, owner)
               .ToListAsync();
 
