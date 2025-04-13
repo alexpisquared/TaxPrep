@@ -1,8 +1,8 @@
-﻿#nullable disable
-using Microsoft.EntityFrameworkCore;
-namespace Db.FinDemo.PowerTools.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
-public partial class FinDemoContext
+namespace Db.FinDemo7.Models;
+
+public partial class FinDemoContext : DbContext
 {
   readonly string _sqlConnectionString = "<Not Initialized!!!>";//todo: if not done: remove warning and ... in protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)  #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
 
@@ -20,11 +20,11 @@ public partial class FinDemoContext
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) //tu: 
   {
-    if (!optionsBuilder.IsConfigured)
-    {
-      _ = optionsBuilder.UseSqlServer(_sqlConnectionString, sqlServerOptions => { _ = sqlServerOptions.CommandTimeout(150).EnableRetryOnFailure(10, TimeSpan.FromSeconds(44), null); });
-      _ = optionsBuilder.EnableSensitiveDataLogging();  //todo: remove for production.                                                                                                                                                                                                                                 
-    }
+    if (optionsBuilder.IsConfigured)
+      return;
+
+    _ = optionsBuilder.UseSqlServer(_sqlConnectionString, sqlServerOptions => { _ = sqlServerOptions.CommandTimeout(150).EnableRetryOnFailure(10, TimeSpan.FromSeconds(44), null); });
+    _ = optionsBuilder.EnableSensitiveDataLogging();  //todo: remove for production.
   }
 
   [DbFunction(Name = "SOUNDEX", IsBuiltIn = true)] public static string SoundsLike(string sounds) => throw new NotImplementedException(); //tu: SOUNDEX

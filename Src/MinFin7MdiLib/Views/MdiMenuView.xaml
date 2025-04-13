@@ -61,7 +61,7 @@
           <Button Content=" _3 Assign              " Foreground="#fcc0" x:Name="b3" Click="OnX" ToolTip="TxCategoryAssigner"      />
           <Button Content=" _4 Manual Entry        " Foreground="#f08f" x:Name="b4" Click="OnX" ToolTip="Clpbrd Scraping"         />
           <Button Content=" 5 Annual Report        " Foreground="#2d60" x:Name="b5" Click="OnX" ToolTip="Report WinForm"          />
-          <Button Content=" 6 Annual Report Alx    " Foreground="#2d60" x:Name="b6" Click="OnX" ToolTip="Report WinForm"          />
+          <Button Content=" _6 Annual Report Alx   " Foreground="#fd60" x:Name="b6" Click="OnX" ToolTip="Report WinForm"          />
           <Button Content=" 7 Annual Report Mei    " Foreground="#2d60" x:Name="b7" Click="OnX" ToolTip="Report WinForm"          />
           <Button Content=" _8 Historical Review   " Foreground="#fd0d" x:Name="b8" Click="OnX" ToolTip="Review DS     "          />
           <Button Content=" 9 Manual Entry         " Foreground="#2222" x:Name="b9" Click="OnX" ToolTip="Legacy TxCore tbl only"  />
