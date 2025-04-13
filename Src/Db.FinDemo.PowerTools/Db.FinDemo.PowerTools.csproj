@@ -8,6 +8,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="SQL\AutoAssigner.POC.sql" />
+    <Content Include="SQL\Copy from TxCore to TxCoreV2.sql" />
+    <Content Include="SQL\Dupe Txn - Duplicate Transaction.sql" />
+    <Content Include="SQL\DupeHunt.sql" />
+    <Content Include="SQL\HST.2016.sql" />
+    <Content Include="SQL\HST.2017.sql" />
+    <Content Include="SQL\HST.2018.sql" />
+    <Content Include="SQL\HST.2019.sql" />
+    <Content Include="SQL\HST.2020.sql" />
+    <Content Include="SQL\HST.2021.sql" />
+    <Content Include="SQL\HST.2022.sql" />
+    <Content Include="SQL\HST.2023.sql" />
+    <Content Include="SQL\HST.2024.sql" />
+    <Content Include="SQL\HST.2025.sql" />
+    <Content Include="SQL\InvoiceTxnMatcher.sql" />
+    <Content Include="SQL\RealEstate.sql" />
+    <Content Include="SQL\TxMoneySrc-OrderBy-LastTxn.sql" />
+    <Content Include="SQL\Vw_Exp_Hist_vs_Last.sql" />
+    <Content Include="SQL\Vw_TaxLiqReport_All_2022.sql" />
+    <Content Include="SQL\Vw_TaxLiqReport_All_2024.sql" />
+    <Content Include="SQL\Vw_TaxLiqReport_Alx.sql" />
+    <Content Include="SQL\Vw_TaxLiqReport_Mei.sql" />
+    <Content Include="SQL\Vw_TxCore.sql" />
+    <Content Include="SQL\Vw_TxMoneySrc_LastTx.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
   </ItemGroup>
 
