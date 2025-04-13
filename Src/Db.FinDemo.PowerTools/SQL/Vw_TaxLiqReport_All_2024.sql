@@ -37,6 +37,7 @@ GO
 --GO  
 
 /*
-select * from [Vw_TaxLiqReport_Alx]
-select * from [Vw_TaxLiqReport_Mei]
 */
+select top (3) * from [Vw_TaxLiqReport_Alx]
+select top (3) * from [Vw_TaxLiqReport_Mei]
+select top (3) * from [Vw_TaxLiqReport]

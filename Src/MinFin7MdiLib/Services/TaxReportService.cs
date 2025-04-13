@@ -9,18 +9,18 @@ namespace MinFin7MdiLib.Services
 {
   public class TaxReportService
   {
-    public async Task<IEnumerable<VwTaxLiqReport>> GetTaxReportDataAsync(string owner, FinDemoContext dba, DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<VwTaxLiqReport>> GetTaxReportDataAsync(string owner, FinDemoContext context, DateTime startDate, DateTime endDate)
     {
       try
       {
         // Query using Entity Framework to fetch the report data
         // This matches the SQL query in the requirements
-        var reportData = await dba.VwTaxLiqReports
+        var reportData = await context.VwTaxLiqReports
             .Where(x => x.Owner == owner &&
                    x.TlNumber != null &&
                    x.TlNumber <= 201 &&
-                   x.FirstTx >= startDate &&
-                   x.LastTx <= endDate)
+                   x.FirstTx >= startDate &&        //todo: this is wrong
+                   x.LastTx <= endDate)             //todo: this is wrong
             .OrderBy(x => x.TlNumber)
             .ToListAsync();
 
@@ -35,11 +35,10 @@ namespace MinFin7MdiLib.Services
     }
 
     // Alternative implementation if you need to use raw SQL instead of EF
-    public async Task<IEnumerable<VwTaxLiqReport>> GetTaxReportDataFromRawSqlAsync(string owner, DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<VwTaxLiqReport>> GetTaxReportDataFromRawSqlAsync(string owner, FinDemoContext context, DateTime startDate, DateTime endDate)
     {
       try
       {
-        using (var context = new FinDemoContext())
         {
           string startDateStr = startDate.ToString("yyyy-MM-dd 00:00:00");
           string endDateStr = endDate.ToString("yyyy-MM-dd 23:59:59");

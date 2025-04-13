@@ -49,7 +49,7 @@ namespace MinFin7MdiLib.Views
                 _viewModel.StatusText = "Loading report data...";
                 
                 // Get the report data
-                var data = await _reportService.GetTaxReportDataAsync(owner, dba, new DateTime(2024, 1, 1), new DateTime(2024, 12, 31));
+                var data = await _reportService.GetTaxReportDataFromRawSqlAsync(owner, dba, new DateTime(2024, 1, 1), new DateTime(2024, 12, 31));
                 
                 if (data == null || !data.Any())
                 {
