@@ -27,3 +27,6 @@ bash
 dotnet ef dbcontext scaffold "Server=.\SqlExpress;Database=FinDemo;Trusted_Connection=True;TrustServerCertificate=Yes;" Microsoft.EntityFrameworkCore.SqlServer -o Models --force --project Db.FinDemo7 --startup-project Db.FinDemo7.Console
 This approach works because EF Core tools cannot directly execute .NET Standard libraries7. The dummy console project provides a concrete target platform for the tools to work with3.
 If you still encounter issues, try cleaning the solution, rebuilding, and ensuring all NuGet packages are up to date2.
+
+# 2025-04 this is from the Razor1 history .. plus con str update
+dotnet ef dbcontext scaffold "Server=.\SqlExpress;....;" Microsoft.EntityFrameworkCore.SqlServer -o Models --force --project Db.FinDemo7 --startup-project Db.FinDemo7.Console
