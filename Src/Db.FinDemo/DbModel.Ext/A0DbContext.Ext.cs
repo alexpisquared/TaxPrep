@@ -1,6 +1,8 @@
 using System;
 using System.Data.Entity;
 using System.Linq;
+using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace Db.FinDemo.DbModel
 {
@@ -13,6 +15,8 @@ namespace Db.FinDemo.DbModel
 
     public static string DbName => ConStr.Split(';').ToList().FirstOrDefault(r => r.Split('=')[0].Equals("initial catalog", StringComparison.OrdinalIgnoreCase))?.Split('=')[1];
 
+    // Azure SQL Database connection string does not work with .NET Framework 4 (OP 2025--04-12)
+    static string ConStr_____ => JObject.Parse(File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @$"AppSettings\MinFin7.MNT\AppSettings.json")))["SqlConStrFormat"]?.ToString();
     static string ConStr
     {
       get

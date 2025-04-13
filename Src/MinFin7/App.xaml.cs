@@ -30,7 +30,7 @@ public partial class App : Application
     catch (Exception ex)
     {
       _logger?.LogError(ex, "■");
-      return config["ConnectionStrings:default"] ?? throw new ArgumentNullException("■ !Config: ConnectionStrings:default");
+      return config["ConnectionStrings:default"] ?? throw new ArgumentNullException(nameof(config), "■ !Config: ConnectionStrings:default");
     }
   }
 }
