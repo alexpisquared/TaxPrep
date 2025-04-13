@@ -6,10 +6,6 @@ namespace Db.FinDemo7.Models;
 
 public partial class FinDemoContext : DbContext
 {
-    public FinDemoContext()
-    {
-    }
-
     public FinDemoContext(DbContextOptions<FinDemoContext> options)
         : base(options)
     {
@@ -24,6 +20,8 @@ public partial class FinDemoContext : DbContext
     public virtual DbSet<FinEngine> FinEngines { get; set; }
 
     public virtual DbSet<LkuStatus> LkuStatuses { get; set; }
+
+    public virtual DbSet<Sysdiagram> Sysdiagrams { get; set; }
 
     public virtual DbSet<TxCategory> TxCategories { get; set; }
 
@@ -84,6 +82,12 @@ public partial class FinDemoContext : DbContext
     public virtual DbSet<VwExpHistVs2019> VwExpHistVs2019s { get; set; }
 
     public virtual DbSet<VwExpHistVsLast> VwExpHistVsLasts { get; set; }
+
+    public virtual DbSet<VwReal> VwReals { get; set; }
+
+    public virtual DbSet<VwRealInsSec> VwRealInsSecs { get; set; }
+
+    public virtual DbSet<VwRealRent> VwRealRents { get; set; }
 
     public virtual DbSet<VwTaxLiqReport> VwTaxLiqReports { get; set; }
 
@@ -192,6 +196,21 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Sysdiagram>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("sysdiagrams");
+
+            entity.Property(e => e.Definition).HasColumnName("definition");
+            entity.Property(e => e.DiagramId).HasColumnName("diagram_id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(128)
+                .HasColumnName("name");
+            entity.Property(e => e.PrincipalId).HasColumnName("principal_id");
+            entity.Property(e => e.Version).HasColumnName("version");
         });
 
         modelBuilder.Entity<TxCategory>(entity =>
@@ -422,6 +441,7 @@ public partial class FinDemoContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("MemoPP");
             entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
+            entity.Property(e => e.ModifiedBy).HasMaxLength(50);
             entity.Property(e => e.Notes)
                 .HasMaxLength(2000)
                 .IsUnicode(false);
@@ -984,8 +1004,8 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2020).HasColumnType("money");
             entity.Property(e => e.Exp2021).HasColumnType("money");
             entity.Property(e => e.Exp2022).HasColumnType("money");
-          entity.Property(e => e.Exp2023).HasColumnType("money");
-          entity.Property(e => e.Exp2024).HasColumnType("money");
+            entity.Property(e => e.Exp2023).HasColumnType("money");
+            entity.Property(e => e.Exp2024).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -995,6 +1015,48 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.MaxPrev).HasColumnType("money");
             entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.TaxLiq).HasColumnName("TaxLiq##");
+        });
+
+        modelBuilder.Entity<VwReal>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("VwReal");
+
+            entity.Property(e => e.AvgPerMonth).HasColumnType("money");
+            entity.Property(e => e.Property)
+                .HasMaxLength(2000)
+                .IsUnicode(false);
+            entity.Property(e => e.Total).HasColumnType("money");
+            entity.Property(e => e.TxCategoryIdTxt)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<VwRealInsSec>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("VwRealInsSec");
+
+            entity.Property(e => e.AvgPerMonth).HasColumnType("money");
+            entity.Property(e => e.Property)
+                .HasMaxLength(2000)
+                .IsUnicode(false);
+            entity.Property(e => e.Total).HasColumnType("money");
+        });
+
+        modelBuilder.Entity<VwRealRent>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("VwRealRent");
+
+            entity.Property(e => e.AvgPerMonth).HasColumnType("money");
+            entity.Property(e => e.Property)
+                .HasMaxLength(2000)
+                .IsUnicode(false);
+            entity.Property(e => e.Total).HasColumnType("money");
         });
 
         modelBuilder.Entity<VwTaxLiqReport>(entity =>
@@ -1009,6 +1071,9 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.FirstTx).HasColumnType("datetime");
             entity.Property(e => e.Group).IsUnicode(false);
             entity.Property(e => e.LastTx).HasColumnType("datetime");
+            entity.Property(e => e.Owner)
+                .HasMaxLength(3)
+                .IsUnicode(false);
             entity.Property(e => e.PartCalcShow)
                 .HasMaxLength(28)
                 .IsUnicode(false);

@@ -21,5 +21,5 @@ public partial class VwTaxLiqReport
 
     public int? Qnt { get; set; }
 
-  public string? Owner { get; set; }
+    public string? Owner { get; set; }
 }

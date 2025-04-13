@@ -29,4 +29,5 @@ This approach works because EF Core tools cannot directly execute .NET Standard 
 If you still encounter issues, try cleaning the solution, rebuilding, and ensuring all NuGet packages are up to date2.
 
 # 2025-04 this is from the Razor1 history .. plus con str update
-dotnet ef dbcontext scaffold "Server=.\SqlExpress;....;" Microsoft.EntityFrameworkCore.SqlServer -o Models --force --project Db.FinDemo7 --startup-project Db.FinDemo7.Console
+
+dotnet ef dbcontext scaffold "Data Source=freedemosqlserver.database.windows.net;Initial Catalog=FreeFinDemoDb;User ID=OleksaA..;Password=...;Connect Timeout=60;Encrypt=True;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;" Microsoft.EntityFrameworkCore.SqlServer -o Models --force --context FinDemoContext --no-onconfiguring --project C:\g\TaxPrep\Src\Db.FinDemo7\Db.FinDemo7.csproj --startup-project C:\g\TaxPrep\Src\Db.FinDemo7.Console
