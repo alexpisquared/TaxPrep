@@ -1,7 +1,7 @@
 ﻿namespace MinFin7MdiLib.Views;
 public partial class MdiMenuView : UserControl
 {
-  Db.FinDemo7.Models.FinDemoContext? _dba;
+  FinDemoContext? _dba;
   SpeechSynth? _sth;
   ILogger? _lgr;
   IBpr? _bpr;
