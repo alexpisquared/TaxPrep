@@ -156,7 +156,8 @@ public partial class DbLoaderReportWindow
 
     Bpr.Beep2of2();
 
-    var rs = DbSaveMsgBox.TrySaveAsk(_dbx, nameof(doSingleFolder));
+    var rs = DbSaveMsgBox.CheckAskSave(_dbx);
+    //var rs = DbSaveMsgBox.TrySaveAsk(_dbx, nameof(doSingleFolder));
     tbInfo.Text += $" {rs,3} rows saved ";
   }
   static IEnumerable<string> getFinFiles(string folder) => Directory.GetFiles(folder, "*.?fx").Union(Directory.GetFiles(folder, "*.qif")).Union(Directory.GetFiles(folder, "*.csv"));
@@ -415,7 +416,7 @@ public class MSMoneyFileReader
 
           txns.Add(new TxCoreV2
           {
-            Id = --_cntr,
+            //Id = --_cntr,
             CreatedAt = _batchTimeNow,
             FitId = line,
             TxDate = parseTxnDate(cells[2], cells[3]),
@@ -475,7 +476,9 @@ public class MSMoneyFileReader
         Notes = $"Auto created from '{filename}'"
       }).Entity;
 
-      db.SaveChanges();
+      //db.SaveChanges();
+      var rs = DbSaveMsgBox.CheckAskSave(db);
+
       new System.Speech.Synthesis.SpeechSynthesizer().Speak($"New account {acntDir} created from the file {filename}.");
     }
 
@@ -536,7 +539,7 @@ public class MSMoneyFileReader
 
     var rv = new BalAmtHist
     {
-      Id = --_cntr,
+      //Id = --_cntr,
       CreatedAt = _batchTimeNow,
       AsOfDate = parseTxnDate(dp),
       BalAmt = -parseTA(ta),
@@ -555,7 +558,7 @@ public class MSMoneyFileReader
 
       var rv = new TxCoreV2
       {
-        Id = --_cntr,
+        //Id = --_cntr,
         CreatedAt =          /**/  _batchTimeNow,
         FitId =              /**/  ls.FirstOrDefault(r => r[0] == 'N')[1..],
         TxDate =             /**/  parseTxnDate(ls.FirstOrDefault(r => r[0] == 'D')[1..]),
@@ -598,7 +601,7 @@ public class MSMoneyFileReader
 
     var rv = new TxCoreV2
     {
-      Id = --_cntr,
+      //Id = --_cntr,
       CreatedAt = _batchTimeNow,
       FitId = fi,
       TxDate = parseTxnDate(dp),
