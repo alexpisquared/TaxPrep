@@ -26,7 +26,7 @@ public partial class MdiMenuView : UserControl
     ((Button)s).IsEnabled = false;
     switch (((Button)s).Name)
     {
-      //case "b1": setDefault(0); new DbLoaderReportWindow(MSMoneyDbLoader.App.GetCmndLineArgsInclClickOnce()).ShowDialog(); break;
+      case "b1": SetDefault(0); new DbLoaderReportWindow(_lgr, _bpr, _sth, _dba, GetCmndLineArgsInclClickOnce()).Show(); break;
       //case "b2": setDefault(1); new HistoricalChartSet.MainHistChart().Show(); break;
       case "b3": SetDefault(2); new TxCategoryAssignerVw(_lgr, _bpr, _sth, _dba).Show(); break;
       case "b4": SetDefault(3); new ManualTxnEntry(_lgr, _bpr, _sth, false, _dba).Show(); break;
@@ -46,4 +46,33 @@ public partial class MdiMenuView : UserControl
     var dir = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), e.Uri.OriginalString); // ~C:\Users\alexp\OneDrive\Documents\0\MF\DnLds
     try { _ = Process.Start(new ProcessStartInfo(dir)); e.Handled = true; } catch (Exception ex) { _ = ex.Log(dir); }
   }
+  public static string[] GetCmndLineArgsInclClickOnce()
+  {
+    string[] args = Array.Empty<string>();
+
+    try
+    {
+      //if (AppDomain.CurrentDomain.SetupInformation.ActivationArguments != null &&                  //first, check the ClickOnce args
+      //  AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData != null &&
+      //  AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData.Length > 0)
+      //{
+      //  args = new string[AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData.Length];
+      //  for (var i = 0; i < AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData.Length; i++)
+      //    args[i] = Uri.UnescapeDataString(AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData[i]).Replace("file:///", "").Replace("/", "\\");
+      //}
+      //else 
+      if (Environment.GetCommandLineArgs() != null && Environment.GetCommandLineArgs().Length > 1)
+      {
+        args = new string[Environment.GetCommandLineArgs().Length - 1];
+        for (var i = 0; i < Environment.GetCommandLineArgs().Length - 1; i++)
+          args[i] = Environment.GetCommandLineArgs()[i + 1];
+      }
+      else
+        args = new string[0];
+    }
+    catch (Exception ex) { ex.Log(); }
+
+    return args;
+  }
+
 }

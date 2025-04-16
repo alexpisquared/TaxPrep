@@ -56,15 +56,15 @@
             </TextBlock.Foreground>
           </TextBlock>
 
-          <Button Content=" 1 TD,CIBC: MS Money.OFX" Foreground="#2c00" x:Name="b1" Click="OnX" ToolTip=" CIBC: IntuitQuicken.QFX: seems to be OK (Aug 2018) &#10;&#10; TD: MS Money - OFX &#10;&#10; Amzn: - QIF" />
-          <Button Content=" 2 Charts               " Foreground="#20a0" x:Name="b2" Click="OnX" ToolTip="HistoricalChartSet"      />
-          <Button Content=" _3 Assign              " Foreground="#fcc0" x:Name="b3" Click="OnX" ToolTip="TxCategoryAssigner"      />
-          <Button Content=" _4 Manual Entry        " Foreground="#f08f" x:Name="b4" Click="OnX" ToolTip="Clpbrd Scraping"         />
-          <Button Content=" 5 Annual Report        " Foreground="#2d60" x:Name="b5" Click="OnX" ToolTip="Report WinForm"          />
-          <Button Content=" _6 Annual Report Alx   " Foreground="#fd60" x:Name="b6" Click="OnX" ToolTip="Report WinForm"          />
-          <Button Content=" _7 Annual Report Mei   " Foreground="#fd60" x:Name="b7" Click="OnX" ToolTip="Report WinForm"          />
-          <Button Content=" _8 Historical Review   " Foreground="#fd0d" x:Name="b8" Click="OnX" ToolTip="Review DS     "          />
-          <Button Content=" 9 Manual Entry         " Foreground="#2222" x:Name="b9" Click="OnX" ToolTip="Legacy TxCore tbl only"  />
+          <Button Content=" _1 TD,CIBC: MS Money.OFX" Foreground="#fc05" x:Name="b1" Click="OnX" ToolTip=" CIBC: IntuitQuicken.QFX: seems to be OK (Aug 2018) &#10;&#10; TD: MS Money - OFX &#10;&#10; Amzn: - QIF " />
+          <Button Content=" 2 Charts                " Foreground="#20a0" x:Name="b2" Click="OnX" ToolTip="HistoricalChartSet"      />
+          <Button Content=" _3 Assign               " Foreground="#fcc0" x:Name="b3" Click="OnX" ToolTip="TxCategoryAssigner"      />
+          <Button Content=" _4 Manual Entry         " Foreground="#f08f" x:Name="b4" Click="OnX" ToolTip="Clpbrd Scraping"         />
+          <Button Content=" 5 Annual Report         " Foreground="#2d60" x:Name="b5" Click="OnX" ToolTip="Report WinForm"          />
+          <Button Content=" _6 Annual Report Alx    " Foreground="#fd60" x:Name="b6" Click="OnX" ToolTip="Report WinForm"          />
+          <Button Content=" _7 Annual Report Mei    " Foreground="#fd60" x:Name="b7" Click="OnX" ToolTip="Report WinForm"          />
+          <Button Content=" _8 Historical Review    " Foreground="#fd0d" x:Name="b8" Click="OnX" ToolTip="Review DS     "          />
+          <Button Content=" 9 Manual Entry          " Foreground="#2222" x:Name="b9" Click="OnX" ToolTip="Legacy TxCore tbl only"  />
 
           <TextBlock VerticalAlignment="Center" Margin="3" HorizontalAlignment="Center">         
             <Hyperlink NavigateUri="0\MF\DnLds" RequestNavigate="OnNavigate">

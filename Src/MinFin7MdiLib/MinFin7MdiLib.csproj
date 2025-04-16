@@ -27,6 +27,7 @@
       <PackagePath>\</PackagePath>
       <Pack>True</Pack>
     </Resource>
+    <Resource Include="Assets\dollar.ico" />
     <Resource Include="US-dollar.ico">
       <PackagePath>\</PackagePath>
       <Pack>True</Pack>

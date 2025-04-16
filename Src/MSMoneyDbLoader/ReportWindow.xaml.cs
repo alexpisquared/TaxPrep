@@ -18,7 +18,7 @@ using System.Windows.Data;
 
 namespace MSMoneyDbLoader
 {
-  public partial class DbLoaderReportWindow : AAV.WPF.Base.WindowBase
+  public partial class DbLoaderReportWindow
   {
     readonly (bool isFolder, string fileOrFolder) _goal;
     decimal _balns;
