@@ -2,7 +2,7 @@
 
 # 2025-01-20  Publish:
 
-MinFin4       ClickOnce does not work .. use Rls build as an installed/published app.
+MinFin4       ClickOnce does not work .. use Rls x64 build as an installed/published app.
 
 MinFin7       Publish to default folder: c:\g\taxprep\src\minfin7\bin\release\net9.0-windows8.0\publish\
 

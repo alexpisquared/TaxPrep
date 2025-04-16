@@ -155,7 +155,7 @@ namespace MSMoneyDbLoader
 
       Bpr.Beep2of2();
 
-      var rs = DbSaveMsgBox_OldRestoredInDec2023.TrySaveAsk(_db, nameof(doSingleFolder));
+      var rs = DbSaveMsgBox_OldRestoredInDec2023.CheckAskSave(_db); //  .TrySaveAsk(_db, nameof(doSingleFolder));
       tbInfo.Text += $" {rs,3} rows saved ";
     }
     static IEnumerable<string> getFinFiles(string folder) => Directory.GetFiles(folder, "*.?fx").Union(Directory.GetFiles(folder, "*.qif")).Union(Directory.GetFiles(folder, "*.csv"));

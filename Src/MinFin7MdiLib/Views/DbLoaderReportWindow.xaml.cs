@@ -60,7 +60,7 @@ public partial class DbLoaderReportWindow
 
       await doMain(_goal.fileOrFolder);
 
-      await _sth.SpeakAsync("Review for 600 seconds.");
+      await _sth.SpeakAsync("Will self close in 600 seconds.");
       for (var i = 6000; i >= 0; i--) { btnCloseWin.Content = $"{i} _X"; await Task.Delay(99); }
     }
 
@@ -156,8 +156,7 @@ public partial class DbLoaderReportWindow
 
     Bpr.Beep2of2();
 
-    var rs = DbSaveMsgBox.CheckAskSave(_dbx);
-    //var rs = DbSaveMsgBox.TrySaveAsk(_dbx, nameof(doSingleFolder));
+    var rs = DbSaveMsgBox.CheckAskSave(_dbx);  // .TrySaveAsk(_dbx, nameof(doSingleFolder));
     tbInfo.Text += $" {rs,3} rows saved ";
   }
   static IEnumerable<string> getFinFiles(string folder) => Directory.GetFiles(folder, "*.?fx").Union(Directory.GetFiles(folder, "*.qif")).Union(Directory.GetFiles(folder, "*.csv"));
@@ -350,7 +349,7 @@ public static class PreSet
         __PcDt = "PcDt",
         __JMMc = "JMMc",
         __Amzn = "amzn",
-        DbSynced = "DB-Synced on",
+        DbSynced = "DB-Sync-ed on",
         BaSynced = "Use later DbSynced for both";
 
   public static string PathToDnLdRoot => Environment.UserDomainName == "OFFICE" ? _ofc : _hom;
