@@ -147,6 +147,8 @@ public partial class DbLoaderReportWindow
 
     foreach (var file in getFinFiles(folder))
     {
+      WriteLine(file); // continue;
+
       var acntFolder = doFile(file);
 
       renameFileToDbDone(file, acntFolder);
@@ -461,7 +463,7 @@ public class MSMoneyFileReader
   static TxMoneySrc getCreateTxMoneySrc(FinDemoContext db, out string acntDir, string acntId, string filename)
   {
     var ad = acntDir = PreSet.GetAcntFolder((acntId ?? "AcntUnknown").Replace(PreSet.AcntIdTAg, "").Trim());
-    var txMoneySrcs = db.TxMoneySrcs.FirstOrDefault(r => ad.Equals(r.Fla, StringComparison.OrdinalIgnoreCase));
+    var txMoneySrcs = db.TxMoneySrcs.FirstOrDefault(r => r.Fla.ToLower() == ad.ToLower());
     if (txMoneySrcs == null)
     {
       // Fix: Access the `Entity` property of the returned `EntityEntry<T>` to get the actual entity.
