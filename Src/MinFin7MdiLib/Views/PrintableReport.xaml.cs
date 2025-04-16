@@ -47,7 +47,7 @@ namespace MinFin7MdiLib.Views
       try
       {
         tbkCompany.Text = owner == "Alx" ? "AAVpro Ltd." : "Jing Mei Li";
-        tbkTaxYear.Text = $"{DateTime.Today.Year} Tax Year";
+        tbkTaxYear.Text = $"{DateTime.Today.Year - 1} Tax Year";
 
         _viewModel.StatusText = "Loading report data...";
 
