@@ -107,8 +107,8 @@
                             </Grid.ColumnDefinitions>
                             
                             <StackPanel Grid.Column="0">
-                                <TextBlock Text="AAVpro Ltd." Style="{StaticResource HeaderTextStyle}"/>
-                                <TextBlock Text="2024 Tax Year" Style="{StaticResource SubHeaderTextStyle}"/>
+                                <TextBlock Text="AAVpro Ltd." Style="{StaticResource HeaderTextStyle}"  x:Name="tbkCompany"/>
+                                <TextBlock Text="2024 Tax Year" Style="{StaticResource SubHeaderTextStyle}" x:Name="tbkTaxYear"/>
                             </StackPanel>
                             
                             <StackPanel Grid.Column="1" HorizontalAlignment="Right">
