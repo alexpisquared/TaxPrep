@@ -135,7 +135,7 @@ public partial class PrintableReport
     _viewModel.GrandTotal = grandTotal;
 
     // Update the textblock directly if binding doesn't work
-    _ = (GrandTotalText?.Text = grandTotal.ToString("N2"));
+    _ = (GrandTotalText.Text = grandTotal.ToString("N2"));
   });
 
   void Print()
