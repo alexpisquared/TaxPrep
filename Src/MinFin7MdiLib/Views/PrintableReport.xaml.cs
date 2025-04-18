@@ -63,80 +63,80 @@ public partial class PrintableReport
   }
 
   void GenerateReport(IEnumerable<VwTaxLiqReport> reportData) => Dispatcher.Invoke(() =>
-                                                                    {
-                                                                      // Clear existing data rows
-                                                                      DataRows.Rows.Clear();
+  {
+    // Clear existing data rows
+    DataRows.Rows.Clear();
 
-                                                                      // Group data by ExpenseGroup
-                                                                      var groupedData = reportData.GroupBy(item => item.Group)
-                                                                                .OrderBy(g => g.Min(i => i.TlNumber));
+    // Group data by ExpenseGroup
+    var groupedData = reportData.GroupBy(item => item.Group)
+              .OrderBy(g => g.Min(i => i.TlNumber));
 
-                                                                      double grandTotal = 0;
+    double grandTotal = 0;
 
-                                                                      foreach (var group in groupedData)
-                                                                      {
-                                                                        // Add group header
-                                                                        var groupRow = new TableRow { Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#EEEEFF")) };
+    foreach (var group in groupedData)
+    {
+      // Add group header
+      var groupRow = new TableRow { Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#EEEEFF")) };
 
-                                                                        var groupCell = new TableCell { ColumnSpan = 3 };
-                                                                        groupCell.Blocks.Add(new Paragraph(new Run(group.Key)) { FontWeight = FontWeights.Bold });
-                                                                        groupRow.Cells.Add(groupCell);
+      var groupCell = new TableCell { ColumnSpan = 3 };
+      groupCell.Blocks.Add(new Paragraph(new Run(group.Key)) { FontWeight = FontWeights.Bold });
+      groupRow.Cells.Add(groupCell);
 
-                                                                        DataRows.Rows.Add(groupRow);
+      DataRows.Rows.Add(groupRow);
 
-                                                                        // Add items for this group
-                                                                        foreach (var item in group.OrderBy(i => i.TlNumber))
-                                                                        {
-                                                                          var itemRow = new TableRow();
+      // Add items for this group
+      foreach (var item in group.OrderBy(i => i.TlNumber))
+      {
+        var itemRow = new TableRow();
 
-                                                                          // Category cell
-                                                                          var categoryCell = new TableCell();
-                                                                          var categoryParagraph = new Paragraph();
-                                                                          categoryParagraph.Inlines.Add(new Run($"{item.TlNumber}   {item.Category}")
-                                                                          {
-                                                                            FontSize = 15,
-                                                                            FontFamily = new FontFamily("Tahoma")
-                                                                          });
-                                                                          categoryCell.Blocks.Add(categoryParagraph);
-                                                                          itemRow.Cells.Add(categoryCell);
+        // Category cell
+        var categoryCell = new TableCell();
+        var categoryParagraph = new Paragraph();
+        categoryParagraph.Inlines.Add(new Run($"{item.TlNumber}   {item.Category}")
+        {
+          FontSize = 15,
+          FontFamily = new FontFamily("Tahoma")
+        });
+        categoryCell.Blocks.Add(categoryParagraph);
+        itemRow.Cells.Add(categoryCell);
 
-                                                                          // PartCalcShow cell
-                                                                          var partCalcCell = new TableCell();
-                                                                          var partCalcParagraph = new Paragraph { TextAlignment = TextAlignment.Right };
-                                                                          partCalcParagraph.Inlines.Add(new Run(item.PartCalcShow ?? string.Empty)
-                                                                          {
-                                                                            FontSize = 14,
-                                                                            Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#444444")),
-                                                                            FontWeight = FontWeights.Light,
-                                                                            FontFamily = new FontFamily("Tahoma")
-                                                                          });
-                                                                          partCalcCell.Blocks.Add(partCalcParagraph);
-                                                                          itemRow.Cells.Add(partCalcCell);
+        // PartCalcShow cell
+        var partCalcCell = new TableCell();
+        var partCalcParagraph = new Paragraph { TextAlignment = TextAlignment.Right };
+        partCalcParagraph.Inlines.Add(new Run(item.PartCalcShow ?? string.Empty)
+        {
+          FontSize = 14,
+          Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#444444")),
+          FontWeight = FontWeights.Light,
+          FontFamily = new FontFamily("Tahoma")
+        });
+        partCalcCell.Blocks.Add(partCalcParagraph);
+        itemRow.Cells.Add(partCalcCell);
 
-                                                                          // Amount cell
-                                                                          var amountCell = new TableCell();
-                                                                          var amountParagraph = new Paragraph { TextAlignment = TextAlignment.Right };
-                                                                          amountParagraph.Inlines.Add(new Run(item.TtlExp?.ToString("N2") ?? "0.00")
-                                                                          {
-                                                                            FontWeight = FontWeights.Medium,
-                                                                            FontFamily = new FontFamily("Tahoma")
-                                                                          });
-                                                                          amountCell.Blocks.Add(amountParagraph);
-                                                                          itemRow.Cells.Add(amountCell);
+        // Amount cell
+        var amountCell = new TableCell();
+        var amountParagraph = new Paragraph { TextAlignment = TextAlignment.Right };
+        amountParagraph.Inlines.Add(new Run(item.TtlExp?.ToString("N2") ?? "0.00")
+        {
+          FontWeight = FontWeights.Medium,
+          FontFamily = new FontFamily("Tahoma")
+        });
+        amountCell.Blocks.Add(amountParagraph);
+        itemRow.Cells.Add(amountCell);
 
-                                                                          DataRows.Rows.Add(itemRow);
+        DataRows.Rows.Add(itemRow);
 
-                                                                          // Add to grand total
-                                                                          grandTotal += item.TtlExp ?? 0;
-                                                                        }
-                                                                      }
+        // Add to grand total
+        grandTotal += item.TtlExp ?? 0;
+      }
+    }
 
-                                                                      // Update the grand total
-                                                                      _viewModel.GrandTotal = grandTotal;
+    // Update the grand total
+    _viewModel.GrandTotal = grandTotal;
 
-                                                                      // Update the textblock directly if binding doesn't work
-                                                                      _ = (GrandTotalText?.Text = grandTotal.ToString("N2"));
-                                                                    });
+    // Update the textblock directly if binding doesn't work
+    _ = (GrandTotalText?.Text = grandTotal.ToString("N2"));
+  });
 
   void Print()
   {
