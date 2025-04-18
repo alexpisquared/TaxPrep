@@ -12,8 +12,6 @@
         <ResourceDictionary Source="/WpfUserControlLib;component/Base/ComboBox.Base.xaml" />
         <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Anime.xaml" />
         <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Dark.Google.xaml" />
-        <!--
-        -->
       </ResourceDictionary.MergedDictionaries>
 
       <CollectionViewSource x:Key="txCoreV2_Root_VwSrc"	d:DesignSource="{d:DesignInstance {x:Type mdl:TxCoreV2},   CreateList=True}"/>

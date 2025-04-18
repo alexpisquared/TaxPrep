@@ -79,12 +79,12 @@ public partial class DbLoaderReportWindow
   {
     try
     {
-      ctrlPnl.IsEnabled = false; Bpr.Beep1of2();
+      ctrlPnl.IsEnabled = false; _bpr.Beep1of2();
 
       await loadFiles_RefreshGrid_OLD(_goal.fileOrFolder);
     }
     catch (Exception ex) { _ = ex.Log(); }
-    finally { ctrlPnl.IsEnabled = true; Bpr.Beep2of2(); }
+    finally { ctrlPnl.IsEnabled = true; _bpr.Beep2of2(); }
   }
   void onWindowDrop(object s, DragEventArgs e)
   {
@@ -126,7 +126,7 @@ public partial class DbLoaderReportWindow
     try
     {
       ctrlPnl.IsEnabled = false;
-      Bpr.Beep1of2();
+      _bpr.Beep1of2();
       if (string.IsNullOrEmpty(fileOrFolder)) { tbInfo.Text += "\r\nDrag and Drop an OFX file or folder."; }
       else if (File.Exists(fileOrFolder))
         _ = doFile(fileOrFolder);
@@ -137,11 +137,11 @@ public partial class DbLoaderReportWindow
 
     }
     catch (Exception ex) { _ = ex.Log(); }
-    finally { ctrlPnl.IsEnabled = true; Bpr.Beep2of2(); }
+    finally { ctrlPnl.IsEnabled = true; _bpr.Beep2of2(); }
   }
   async Task doSingleFolder(string folder)
   {
-    Bpr.Beep1of2();
+    _bpr.Beep1of2();
 
     await _dbx.TxCoreV2s.LoadAsync(); //todo: try test timer .Local.
 
@@ -154,7 +154,7 @@ public partial class DbLoaderReportWindow
       renameFileToDbDone(file, acntFolder);
     }
 
-    Bpr.Beep2of2();
+    _bpr.Beep2of2();
 
     var rs = DbSaveMsgBox.CheckAskSave(_dbx);  // .TrySaveAsk(_dbx, nameof(doSingleFolder));
     tbInfo.Text += $" {rs,3} rows saved ";
@@ -280,7 +280,7 @@ public partial class DbLoaderReportWindow
     {
       ctrlPnl.IsEnabled = false;         //too much - no way to reuse debug processed files: if (file.Contains(PreSet.DbSynced)) return;
 
-      Bpr.Beep1of2();
+      _bpr.Beep1of2();
       var fnwe = System.IO.Path.GetFileNameWithoutExtension(webFile);
       var tLst = MSMoneyFileReader.ReadTxs(_dbx, webFile, out acntFolder, out var txSrcId);
       if (tLst.Count() <= 0)
@@ -319,7 +319,7 @@ public partial class DbLoaderReportWindow
 #endif
       tbInfo.Text += $"\r\n - {Path.GetFileName(webFile),-20} \t=> {acntFolder,10} \\ {Path.GetFileNameWithoutExtension(newf)}   ";
 
-      Bpr.Beep2of2();
+      _bpr.Beep2of2();
     }
     catch (Exception ex) { ex.Pop($"renameFileToDbDone({webFile}, {acntFolder}) ===> {newf}"); }
     finally { ctrlPnl.IsEnabled = true; }

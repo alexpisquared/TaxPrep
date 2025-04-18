@@ -8,7 +8,7 @@ public partial class FinDemoContext
 
   public FinDemoContext(string connectionString)
   {
-    _sqlConnectionString = connectionString;
+    _sqlConnectionString = IsDbg ? @"Server=.\SqlExpress;Database=FinDemo;Trusted_Connection=True;TrustServerCertificate=Yes;Encrypt=False;Connection Timeout=15;" : connectionString;
 #if EnsureCreated_
       if (Debugger.IsAttached && System.Environment.UserDomainName == "RAZER1")
       {
@@ -26,6 +26,13 @@ public partial class FinDemoContext
       _ = optionsBuilder.EnableSensitiveDataLogging();  //todo: remove for production.                                                                                                                                                                                                                                 
     }
   }
+
+  public static bool IsDbg =>
+#if DEBUG
+      true;
+#else
+      false;
+#endif
 
   [DbFunction(Name = "SOUNDEX", IsBuiltIn = true)] public static string SoundsLike(string sounds) => throw new NotImplementedException(); //tu: SOUNDEX
 }
