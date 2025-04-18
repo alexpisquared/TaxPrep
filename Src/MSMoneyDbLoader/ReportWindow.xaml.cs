@@ -310,9 +310,9 @@ namespace MSMoneyDbLoader
 
         if (!Directory.Exists(Path.GetDirectoryName(newf))) Directory.CreateDirectory(Path.GetDirectoryName(newf));
 
-#if DEBUG
+#if !_______
         App.Synth.SpeakAsyncCancelAll();
-        App.Synth.SpeakAsync("No files are moved in debug mode.");
+        App.Synth.SpeakAsync("No files are moved in .NET 4.8 version: use .MinFin7 app for that.");
 #else
         File.Move(webFile, newf);
 #endif
