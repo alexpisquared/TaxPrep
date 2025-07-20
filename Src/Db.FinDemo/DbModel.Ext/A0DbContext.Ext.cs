@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Diagnostics;
 
 namespace Db.FinDemo.DbModel
 {
@@ -26,7 +27,9 @@ namespace Db.FinDemo.DbModel
 #else
         var dbg = ""; // == Rls
 #endif
-        return $@"data source=.\sqlexpress;initial catalog=FinDemo{dbg};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework";
+
+        return $@"Data Source=freedemosqlserver.database.windows.net;Initial Catalog=FreeFinDemoDb;User ID=OleksaAdmin;Password=Y3{Environment.GetEnvironmentVariable("freedemosqlserver", EnvironmentVariableTarget.User)}"; // 2024-07-20
+        return $@"data source=.\sqlexpress;initial Catalog=4_FinDemo_Use_Azure_one_{dbg};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework";
       }
     }
 

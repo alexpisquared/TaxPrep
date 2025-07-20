@@ -1,5 +1,5 @@
-﻿-- USE [FinDemo]
-go -- SELECT c.*, TxCategory.Name AS Ctg FROM TxCoreV2 c INNER JOIN TxCategory ON c.TxCategoryIdTxt = TxCategory.IdTxt WHERE (c.TxMoneySrcId = 3) AND (c.TxAmount < 0) AND (c.TxCategoryIdTxt <> 'BankFee') AND (c.TxDate >= CONVERT(DATETIME, '2025-01-01 00:00:00', 102)) AND (c.TxDate < CONVERT(DATETIME, '2025-04-01 00:00:00', 102)) ORDER BY c.TxDate DESC
+﻿SET NOCOUNT ON;
+-- SELECT c.*, TxCategory.Name AS Ctg FROM TxCoreV2 c INNER JOIN TxCategory ON c.TxCategoryIdTxt = TxCategory.IdTxt WHERE (c.TxMoneySrcId = 3) AND (c.TxAmount < 0) AND (c.TxCategoryIdTxt <> 'BankFee') AND (c.TxDate >= CONVERT(DATETIME, '2025-01-01 00:00:00', 102)) AND (c.TxDate < CONVERT(DATETIME, '2025-04-01 00:00:00', 102)) ORDER BY c.TxDate DESC
 declare @q0 as DATETIME, @q1 as DATETIME, @q2 as DATETIME, @q3 as DATETIME, @q4 as DATETIME, @abr as CHAR(32), @a as MONEY, @d as MONEY; 
 select @q0 = CONVERT(DATETIME, '2025-01-01 00:00:00', 102), 
        @q1 = CONVERT(DATETIME, '2025-04-01 00:00:00', 102), 

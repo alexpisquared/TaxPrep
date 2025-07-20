@@ -51,7 +51,7 @@
           </TextBlock>
         </StackPanel>
 
-        <Button Content=" _1 td,cibc: MS Money.OFX                 "	   Foreground="#c00" x:Name="b1" Click="onX" ToolTip=" CIBC: IntuitQuicken.QFX: seems to be OK (Aug 2018) &#10;&#10; TD: MS Money - OFX &#10;&#10; Amzn: - QIF" />
+        <Button Content=" _1 use  MinFin7.MNT  instead             "	   Foreground="#454" x:Name="b1" Click="onX" ToolTip=" CIBC: IntuitQuicken.QFX: seems to be OK (Aug 2018) &#10;&#10; TD: MS Money - OFX &#10;&#10; Amzn: - QIF" />
         <Button Content=" _2 Charts            - HistoricalChartSet"     Foreground="#0a0" x:Name="b2" Click="onX" ToolTip="Show Charts" />
         <Button Content=" _3 Assign            - TxCategoryAssigner"     Foreground="#cc0" x:Name="b3" Click="onX" ToolTip="Show Assign" />
         <Button Content=" _4 Manual Entry      - Crude but better"       Foreground="#08f" x:Name="b4" Click="onX" ToolTip="Show Assign" />

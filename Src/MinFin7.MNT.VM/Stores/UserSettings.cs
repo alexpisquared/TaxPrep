@@ -14,7 +14,7 @@ public class UserSettings : UserSettingsStore // ..actually, not a store/store -
 
     var fromFile = Load<UserSettings>();
 
-    var dtoForThis = new MapperConfiguration(cfg => cfg.CreateMap<UserSettings, UserSettings>()).CreateMapper().Map<UserSettings>(fromFile); //not fun.
+    //var dtoForThis = new MapperConfiguration(cfg => cfg.CreateMap<UserSettings, UserSettings>(), loggerFactory: null).CreateMapper().Map<UserSettings>(fromFile); //not fun.
 
     SrvrName = fromFile.SrvrName;
     DtBsName = fromFile.DtBsName;

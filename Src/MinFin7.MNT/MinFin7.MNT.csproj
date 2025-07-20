@@ -8,6 +8,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <ApplicationIcon>Money.ico</ApplicationIcon>
     <LangVersion>preview</LangVersion>
+    <UserSecretsId>b78b2423-5be3-4ccc-8586-3d34559df939</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
