@@ -55,9 +55,9 @@
 
       <StackPanel Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="3">
         <Label Content="    _Y"    Target="{Binding ElementName=tbFilteY}" />
-        <TextBox Margin="6 0" Width="040" FontSize="16" x:Name="tbFilteY" Text="{Binding YearOfInStr, Delay=750, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Margin="6 0" Width="050" FontSize="16" x:Name="tbFilteY" Text="{Binding YearOfInStr, Delay=750, UpdateSourceTrigger=PropertyChanged}" ToolTip="Cutoff date ???"/>
         <Label Content="    _L"    Target="{Binding ElementName=tbFilteL}" />
-        <TextBox Margin="6 0" Width="040" FontSize="16" x:Name="tbFilteL" Text="{Binding MatchLenStr, Delay=750, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Margin="6 0" Width="030" FontSize="16" x:Name="tbFilteL" Text="{Binding MatchLenStr, Delay=750, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Content="    _F"    Target="{Binding ElementName=tbFilter}" />
         <TextBox Margin="6 0" Width="120" FontSize="16" x:Name="tbFilter" Text="{Binding SearchText,  Delay=750, UpdateSourceTrigger=PropertyChanged}"/>
 

@@ -60,6 +60,11 @@ namespace MSMoneyDbLoader
         btn_DoAllDirs.ToolTip = $" There are {lst.Count()} *.?fx files in the {_goal.fileOrFolder} fodler.\r\n\n CLick this button to process(remove) them. ";
         btn_DoAllDirs.FontWeight = (lst.Count() > 0) ? FontWeights.Bold : FontWeights.Normal;
 
+        App.Synth.SpeakAsync($"Found {lst.Count()} files. " +
+          $"Lading to DB now..." +
+          $"Use Quicken .qfx instead of QuickBooks .qbo" +
+          $"");
+
         await doMain(_goal.fileOrFolder);
 
         App.Synth.SpeakAsync("Review for 600 seconds.");

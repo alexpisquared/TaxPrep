@@ -5,7 +5,8 @@ public partial class App : Application
   {
     base.OnStartup(e);
 
-    var _logger = (ILogger<TxCategoryAssignerVw>?)SeriLogHelper.InitLoggerFactory(/*@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log", "+Info"*/).CreateLogger<TxCategoryAssignerVw>();
+    var _logger = //(ILogger<TxCategoryAssignerVw>?)SeriLogHelper.InitLoggerFactory(/*@$"C:\Temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name![..5]}.{VersionHelper.Env()}.{Environment.UserName[..3]}..log", "+Info"*/).CreateLogger<TxCategoryAssignerVw>();
+      SerilogHelperLib.SeriLogHelper.CreateLogger<TxCategoryAssignerVw>();
 
     Current.DispatcherUnhandledException += UnhandledExceptionHndlrUI.OnCurrentDispatcherUnhandledException;
     EventManager.RegisterClassHandler(typeof(TextBox), UIElement.GotFocusEvent, new RoutedEventHandler((s, re) => ((TextBox)s).SelectAll())); //tu: TextBox
@@ -14,7 +15,7 @@ public partial class App : Application
 
     var config = new ConfigurationBuilder().AddUserSecrets<App>().Build(); //tu: ad-hoc user Secrets from config
 
-    MainWindow = new TxCategoryAssignerVw(_logger!, new Bpr(), new SpeechSynth(config["AppSecrets:MagicSpeech"] ?? throw new ArgumentNullException("■ !Config: MagicSpeech"), true, CC.EnusAriaNeural.Voice), new FinDemoContext(GetConnectionString(_logger, config)));
+    MainWindow = new TxCategoryAssignerVw(_logger!, new Bpr(), new SpeechSynth(config["AppSecrets:MagicSpeech"] ?? throw new ArgumentNullException("■ !Config: MagicSpeech"), true, CC.EnusAriaNeural.Voice), new FinDemoContext(GetConnectionString((ILogger<TxCategoryAssignerVw>?)_logger, config)));
     MainWindow.ShowDialog();
   }
 

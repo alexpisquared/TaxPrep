@@ -63,7 +63,7 @@ public partial class Page01VM : BaseEmVM
   [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? currentYoi;
   [ObservableProperty][NotifyPropertyChangedFor(nameof(GSReport))] TxCoreV2? selectdYoi;
   [ObservableProperty][NotifyCanExecuteChangedFor(nameof(AssignCommand))] string? selCtgry;
-  [ObservableProperty] string yearOfInStr = "2022"; partial void OnYearOfInStrChanged(string value)
+  [ObservableProperty] string yearOfInStr = DateTime.Today.AddMonths(-8).Year.ToString(); partial void OnYearOfInStrChanged(string value)
   {
     Bpr.Tick();
     if (!int.TryParse(value, out var rv)) return;

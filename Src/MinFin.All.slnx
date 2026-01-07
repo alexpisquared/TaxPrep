@@ -1,0 +1,371 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="BldRls" />
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM" />
+    <Platform Name="ARM32" />
+    <Platform Name="ARM64" />
+    <Platform Name="Mixed Platforms" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Extern-4.8/">
+    <Project Path="../../../C/AAV/AAV.Sys/AAV.Sys.4.8.csproj" Id="568cb356-c28d-4d97-b595-d1dda2b6ed89">
+      <BuildType Solution="BldRls|*" Project="Debug" />
+      <Platform Solution="*|Mixed Platforms" Project="x64" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="../../../C/AavCore/AAV.Sys/AAV.Sys.Std.csproj">
+      <BuildType Solution="BldRls|*" Project="Debug" />
+      <Platform Solution="*|Mixed Platforms" Project="x64" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Extern/">
+    <Project Path="../../AAV.Shared/Src/NetLts/Ambience/AmbienceLib.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+      <BuildType Solution="BldRls|ARM" Project="Release" />
+      <BuildType Solution="BldRls|ARM32" Project="Release" />
+      <BuildType Solution="BldRls|ARM64" Project="Release" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Debug" />
+      <Platform Solution="*|Mixed Platforms" Project="x64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../AAV.Shared/Src/NetLts/EfDbHelperLib/EfDbHelperLib.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+      <BuildType Solution="BldRls|ARM" Project="Release" />
+      <BuildType Solution="BldRls|ARM32" Project="Release" />
+      <BuildType Solution="BldRls|ARM64" Project="Release" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Debug" />
+      <Platform Solution="*|Mixed Platforms" Project="x64" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="../../AAV.Shared/Src/NetLts/LibraryImportLib/LibraryImportLib.csproj">
+      <BuildType Solution="BldRls|*" Project="Debug" />
+      <Platform Solution="Debug|Mixed Platforms" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../AAV.Shared/Src/NetLts/NavigationDrawerControl/NavigationDrawerControl.csproj">
+      <BuildType Solution="BldRls|*" Project="Debug" />
+      <Platform Solution="*|ARM32" Project="ARM32" />
+      <Platform Solution="*|Mixed Platforms" Project="x64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../AAV.Shared/Src/NetLts/PhoneAreaCoder/PhoneAreaCoder.csproj">
+      <BuildType Solution="BldRls|*" Project="Debug" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../AAV.Shared/Src/NetLts/SerilogHelperLib/SerilogHelperLib.csproj">
+      <BuildType Solution="BldRls|*" Project="Debug" />
+    </Project>
+    <Project Path="../../AAV.Shared/Src/NetLts/StandardContractsLib/StandardContractsLib.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+      <BuildType Solution="BldRls|ARM" Project="Release" />
+      <BuildType Solution="BldRls|ARM32" Project="Release" />
+      <BuildType Solution="BldRls|ARM64" Project="Release" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Debug" />
+      <Platform Solution="*|Mixed Platforms" Project="x64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../AAV.Shared/Src/NetLts/StandardLib/StandardLib.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+      <BuildType Solution="BldRls|ARM" Project="Release" />
+      <BuildType Solution="BldRls|ARM32" Project="Release" />
+      <BuildType Solution="BldRls|ARM64" Project="Release" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Debug" />
+      <Platform Solution="*|Mixed Platforms" Project="x64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../AAV.Shared/Src/NetLts/WinFormsControlLib/WinFormsControlLib.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+      <BuildType Solution="BldRls|ARM" Project="Release" />
+      <BuildType Solution="BldRls|ARM32" Project="Release" />
+      <BuildType Solution="BldRls|ARM64" Project="Release" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Debug" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Release|x64" Project="x64" />
+    </Project>
+    <Project Path="../../AAV.Shared/Src/NetLts/WpfUserControlLib/WpfUserControlLib.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+      <BuildType Solution="BldRls|ARM" Project="Release" />
+      <BuildType Solution="BldRls|ARM32" Project="Release" />
+      <BuildType Solution="BldRls|ARM64" Project="Release" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Debug" />
+      <Platform Solution="*|Mixed Platforms" Project="x64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../Util/Src/OpenVsOnTheCulpritLine/OpenVsOnTheCulpritLine.csproj">
+      <BuildType Solution="BldRls|*" Project="Debug" />
+      <Platform Solution="*|Mixed Platforms" Project="x64" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/MinFinLib/">
+    <Project Path="../../AAV.Shared/Src/Net4.8/AAV.WPF/AAV.WPF.4.8.csproj" Id="df459a59-5c58-4930-ab44-9b3d6e36cd98">
+      <BuildType Solution="BldRls|Any CPU" Project="Release" />
+      <BuildType Solution="BldRls|ARM" Project="Debug" />
+      <BuildType Solution="BldRls|ARM32" Project="Debug" />
+      <BuildType Solution="BldRls|ARM64" Project="Debug" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
+      <Platform Solution="Debug|Mixed Platforms" Project="x86" />
+      <Platform Solution="Release|Mixed Platforms" Project="x86" />
+    </Project>
+    <Project Path="../../AAV.Shared/Src/Net6.0/AAV.Sys/AAV.Sys.8.0.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
+      <Platform Solution="Debug|x86" Project="x86" />
+      <Platform Solution="Release|x86" Project="x86" />
+    </Project>
+    <Project Path="Db.FinDemo.PowerTools/Db.FinDemo.PowerTools.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+      <BuildType Solution="BldRls|ARM" Project="Debug" />
+      <BuildType Solution="BldRls|ARM32" Project="Release" />
+      <BuildType Solution="BldRls|ARM64" Project="Debug" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Debug" />
+      <Platform Solution="Debug|Mixed Platforms" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Release|x64" Project="x64" />
+    </Project>
+    <Project Path="Db.FinDemo/Db.FinDemo.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Release" />
+      <BuildType Solution="BldRls|ARM" Project="Debug" />
+      <BuildType Solution="BldRls|ARM32" Project="Debug" />
+      <BuildType Solution="BldRls|ARM64" Project="Debug" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
+      <Platform Solution="Debug|Mixed Platforms" Project="x86" />
+      <Platform Solution="Release|Mixed Platforms" Project="x86" />
+    </Project>
+    <Project Path="Db.FinDemo7/Db.FinDemo7.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+      <BuildType Solution="BldRls|ARM" Project="Release" />
+      <BuildType Solution="BldRls|ARM32" Project="Release" />
+      <BuildType Solution="BldRls|ARM64" Project="Release" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Debug" />
+      <Platform Solution="Debug|Mixed Platforms" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Release|x64" Project="x64" />
+    </Project>
+    <Project Path="HistoricalChartSet/HistoricalChartSet.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Release" />
+      <BuildType Solution="BldRls|ARM" Project="Debug" />
+      <BuildType Solution="BldRls|ARM32" Project="Debug" />
+      <BuildType Solution="BldRls|ARM64" Project="Debug" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
+      <Platform Solution="Debug|Mixed Platforms" Project="x64" />
+    </Project>
+    <Project Path="MF.Common/MF.Common.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Release" />
+      <BuildType Solution="BldRls|ARM" Project="Debug" />
+      <BuildType Solution="BldRls|ARM32" Project="Debug" />
+      <BuildType Solution="BldRls|ARM64" Project="Debug" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
+      <Platform Solution="Debug|Mixed Platforms" Project="x64" />
+    </Project>
+    <Project Path="MinFin.DataSet/MinFin.DataSet.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Release" />
+      <BuildType Solution="BldRls|ARM" Project="Debug" />
+      <BuildType Solution="BldRls|ARM32" Project="Debug" />
+      <BuildType Solution="BldRls|ARM64" Project="Debug" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
+      <Platform Solution="Debug|Mixed Platforms" Project="x86" />
+      <Platform Solution="Release|Mixed Platforms" Project="x86" />
+    </Project>
+    <Project Path="MinFin.Report.WinForm/MinFin.Report.WinForm.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Release" />
+      <BuildType Solution="BldRls|ARM" Project="Debug" />
+      <BuildType Solution="BldRls|ARM32" Project="Debug" />
+      <BuildType Solution="BldRls|ARM64" Project="Debug" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
+      <Platform Solution="Debug|Mixed Platforms" Project="x86" />
+      <Platform Solution="Release|Mixed Platforms" Project="x86" />
+    </Project>
+    <Project Path="MinFin.Report.WinForm7/MinFin.Report.WinForm7.csproj">
+      <BuildType Solution="BldRls|*" Project="Debug" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Release|x64" Project="x64" />
+    </Project>
+    <Project Path="MinFin.Review.DS/MinFin.Review.DS.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Release" />
+      <BuildType Solution="BldRls|ARM" Project="Debug" />
+      <BuildType Solution="BldRls|ARM32" Project="Debug" />
+      <BuildType Solution="BldRls|ARM64" Project="Debug" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
+    </Project>
+    <Project Path="MinFin7MdiLib/MinFin7MdiLib.csproj">
+      <BuildType Solution="BldRls|*" Project="Debug" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Release|x64" Project="x64" />
+    </Project>
+    <Project Path="MSMoneyDbLoader/MSMoneyDbLoader.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Release" />
+      <BuildType Solution="BldRls|ARM" Project="Debug" />
+      <BuildType Solution="BldRls|ARM32" Project="Debug" />
+      <BuildType Solution="BldRls|ARM64" Project="Debug" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
+    </Project>
+    <Project Path="MSMoneyFormatAdapter/MSMoneyFormatAdapter.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Release" />
+      <BuildType Solution="BldRls|ARM" Project="Debug" />
+      <BuildType Solution="BldRls|ARM32" Project="Debug" />
+      <BuildType Solution="BldRls|ARM64" Project="Debug" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/MNT/">
+    <Project Path="MinFin7.MNT.Contract/MinFin7.MNT.Contract.csproj">
+      <BuildType Solution="BldRls|*" Project="Debug" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Release|x64" Project="x64" />
+    </Project>
+    <Project Path="MinFin7.MNT.View/MinFin7.MNT.View.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+      <BuildType Solution="BldRls|ARM" Project="Debug" />
+      <BuildType Solution="BldRls|ARM32" Project="Release" />
+      <BuildType Solution="BldRls|ARM64" Project="Debug" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Debug" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Release|x64" Project="x64" />
+    </Project>
+    <Project Path="MinFin7.MNT.VM/MinFin7.MNT.VM.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+      <BuildType Solution="BldRls|ARM" Project="Debug" />
+      <BuildType Solution="BldRls|ARM32" Project="Release" />
+      <BuildType Solution="BldRls|ARM64" Project="Debug" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Debug" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Release|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/TryEF7onCodeBehind/">
+    <Project Path="MinFin7b/MinFin7b.csproj">
+      <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+      <BuildType Solution="BldRls|ARM" Project="Release" />
+      <BuildType Solution="BldRls|ARM32" Project="Release" />
+      <BuildType Solution="BldRls|ARM64" Project="Release" />
+      <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+      <BuildType Solution="BldRls|x64" Project="Debug" />
+      <BuildType Solution="BldRls|x86" Project="Debug" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Release|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Project Path="MF.TxCategoryAssigner/MinFin4.csproj">
+    <BuildDependency Project="MSMoneyFormatAdapter/MSMoneyFormatAdapter.csproj" />
+    <BuildType Solution="BldRls|Any CPU" Project="Release" />
+    <BuildType Solution="BldRls|ARM" Project="Debug" />
+    <BuildType Solution="BldRls|ARM32" Project="Debug" />
+    <BuildType Solution="BldRls|ARM64" Project="Debug" />
+    <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+    <BuildType Solution="BldRls|x64" Project="Debug" />
+    <BuildType Solution="BldRls|x86" Project="Release" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+    <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
+  </Project>
+  <Project Path="MinFin7.MNT/MinFin7.MNT.csproj">
+    <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+    <BuildType Solution="BldRls|ARM" Project="Debug" />
+    <BuildType Solution="BldRls|ARM32" Project="Release" />
+    <BuildType Solution="BldRls|ARM64" Project="Debug" />
+    <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+    <BuildType Solution="BldRls|x64" Project="Debug" />
+    <BuildType Solution="BldRls|x86" Project="Debug" />
+    <Platform Solution="Debug|x64" Project="x64" />
+    <Platform Solution="Release|x64" Project="x64" />
+  </Project>
+  <Project Path="MinFin7/MinFin7.csproj">
+    <BuildType Solution="BldRls|Any CPU" Project="Debug" />
+    <BuildType Solution="BldRls|ARM" Project="Release" />
+    <BuildType Solution="BldRls|ARM32" Project="Release" />
+    <BuildType Solution="BldRls|ARM64" Project="Release" />
+    <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+    <BuildType Solution="BldRls|x64" Project="Debug" />
+    <BuildType Solution="BldRls|x86" Project="Debug" />
+    <Platform Solution="Debug|x64" Project="x64" />
+    <Platform Solution="Release|x64" Project="x64" />
+  </Project>
+  <Project Path="MinFin7a/MinFin7a.wapproj" Type="c7167f0d-bc9f-4e6e-afe1-012c56b48db5">
+    <BuildType Solution="BldRls|Any CPU" Project="Release" />
+    <BuildType Solution="BldRls|ARM" Project="Debug" />
+    <BuildType Solution="BldRls|ARM32" Project="Debug" />
+    <BuildType Solution="BldRls|ARM64" Project="Debug" />
+    <BuildType Solution="BldRls|Mixed Platforms" Project="Debug" />
+    <BuildType Solution="BldRls|x64" Project="Debug" />
+    <BuildType Solution="BldRls|x86" Project="Debug" />
+    <Platform Solution="*|ARM32" Project="AnyCPU" />
+    <Platform Solution="*|Mixed Platforms" Project="x64" />
+    <Deploy />
+  </Project>
+</Solution>
