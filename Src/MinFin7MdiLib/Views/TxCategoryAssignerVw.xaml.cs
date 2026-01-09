@@ -1,515 +1,519 @@
-﻿namespace MF.TxCategoryAssigner;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+
+namespace MF.TxCategoryAssigner;
+
 public partial class TxCategoryAssignerVw : WindowBase
 {
-  readonly FinDemoContext _dbx;
-  readonly DateTime _yrStart2004 = new(2004, 1, 1), _now = DateTime.Now;
-  readonly ObservableCollection<TxCoreV2> _txCoreItems = [];
-  readonly ObservableCollection<TxCategory> _txCategories = [];
-  readonly CollectionViewSource _txCategoryCmBxVwSrc, _txCategoryDGrdVwSrc, _txCoreV2_Root_VwSrc;
-  readonly int _trgTaxYr = DateTime.Today.Year - 1;
-  readonly ILogger _lgr;
-  readonly IBpr _bpr;
-  private readonly SpeechSynth _sth;
-  string? _txCatgry, _loadedCatgry = "?", _choiceAbove, _choiceBelow;
-  decimal _selectTtl = 0;
-  bool _loaded = false;
-  int? _cutOffYr = null;
+    readonly FinDemoContext _dbx;
+    readonly DateTime _yrStart2004 = new(2004, 1, 1), _now = DateTime.Now;
+    readonly ObservableCollection<TxCoreV2> _txCoreItems = [];
+    readonly ObservableCollection<TxCategory> _txCategories = [];
+    readonly CollectionViewSource _txCategoryCmBxVwSrc, _txCategoryDGrdVwSrc, _txCoreV2_Root_VwSrc;
+    readonly int _trgTaxYr = DateTime.Today.Year - 1;
+    readonly ILogger _lgr;
+    readonly IBpr _bpr;
+    private readonly SpeechSynth _sth;
+    string? _txCatgry, _loadedCatgry = "?", _choiceAbove, _choiceBelow;
+    decimal _selectTtl = 0;
+    bool _loaded = false;
+    int? _cutOffYr = null;
 
-  public TxCategoryAssignerVw(ILogger lgr, IBpr bpr, SpeechSynth sth, FinDemoContext dbx)
-  {
-    InitializeComponent();
-    _txCategoryCmBxVwSrc = (CollectionViewSource)FindResource("txCategoryCmBxVwSrc");
-    _txCategoryDGrdVwSrc = (CollectionViewSource)FindResource("txCategoryDGrdVwSrc");
-    _txCoreV2_Root_VwSrc = (CollectionViewSource)FindResource("txCoreV2_Root_VwSrc");
-    _lgr = lgr;
-    _bpr = bpr;
-    _sth = sth;
-    _dbx = dbx;
-  }
-  async void OnLoaded(object s, RoutedEventArgs e)
-  {
-    /*
-     * var version = Windows.ApplicationModel.Package.Current.Id.Version;
-     * 
-You need to install the Windows 10 WinRT API pack. Install from NuGet the package: Microsoft.Windows.SDK.Contracts
-
-URL: https://www.nuget.org/packages/Microsoft.Windows.SDK.Contracts
-
-Then you can do something like this:
-
-var version = Windows.ApplicationModel.Package.Current.Id.Version;
-applicationVersion = string.Format("{0}.{1}.{2}.{3}",
-    version.Major,
-    version.Minor,
-    version.Build,
-    version.Revision);
-If you want to DEBUG or Run with the current Package available, just set your package deployment project as the Startup Project.     */
-
-    try
+    public TxCategoryAssignerVw(ILogger lgr, IBpr bpr, SpeechSynth sth, FinDemoContext dbx)
     {
-      await _dbx.TxCategories.LoadAsync();
-      await _dbx.TxMoneySrcs.LoadAsync();
-
-      _txCategoryDGrdVwSrc.Source = _dbx.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber);
-      _txCategoryCmBxVwSrc.Source = _dbx.TxCategories.Local.OrderBy(r => r.Name).ThenBy(r => r.TlNumber);
-
-      _ = tbxSearch.Focus();
-      var y = DateTime.Today.Year;
-      cbxSingleYr.ItemsSource = new int[] { y, y - 1, y - 2, y - 3, y - 4, y - 5, y - 6, y - 7, y - 8, y - 9 };
-      cbxSingleYr.SelectedIndex = 2;
-      chkInfer.IsChecked = true;
-
-      btAssign.IsEnabled = false;
-
-      _loaded = true;
-      chkSingleYr.IsChecked = true;      // invokes the 1st search
+        InitializeComponent();
+        _txCategoryCmBxVwSrc = (CollectionViewSource)FindResource("txCategoryCmBxVwSrc");
+        _txCategoryDGrdVwSrc = (CollectionViewSource)FindResource("txCategoryDGrdVwSrc");
+        _txCoreV2_Root_VwSrc = (CollectionViewSource)FindResource("txCoreV2_Root_VwSrc");
+        _lgr = lgr;
+        _bpr = bpr;
+        _sth = sth;
+        _dbx = dbx;
     }
-    catch (Exception ex) { ex.Pop(_lgr); }
-  }
-  async void OnSave(object s, RoutedEventArgs e) => await SaveAsync(); async Task SaveAsync()
-  {
-    try
+    async void OnLoaded(object s, RoutedEventArgs e)
     {
-      var (success, _, report) = await _dbx.TrySaveReportAsync();
-      Title = tbxNew.Text = report;
+        /*
+         * var version = Windows.ApplicationModel.Package.Current.Id.Version;
+         * 
+    You need to install the Windows 10 WinRT API pack. Install from NuGet the package: Microsoft.Windows.SDK.Contracts
 
-      if (!success)
-        _ = MessageBox.Show(report, $"Attach to process to debug/fix!!! ");
-    }
-    catch (Exception ex) { ex.Pop(_lgr); }
-  }
-  protected override async void OnClosing(CancelEventArgs e)
-  {
-    if (_dbx.HasUnsavedChanges())
-    {
-      var rsn = $"Would you like to save the changes? \r\n\n{_dbx.GetDbChangesReport()}";
-      switch (MessageBox.Show(rsn, "Unsaved changes detected", MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
-      {
-        default:
-        case MessageBoxResult.Cancel: e.Cancel = true; KeepOpenReason = "Changes have not been saved... \n...Cancelling the Closing in the Parent of base."; return;
-        case MessageBoxResult.Yes: await SaveAsync(); KeepOpenReason = null; await Task.Delay(250); break;
-        case MessageBoxResult.No: break;
-      }
-    }
-    else
-    {
-      KeepOpenReason = "";
-    }
+    URL: https://www.nuget.org/packages/Microsoft.Windows.SDK.Contracts
 
-    base.OnClosing(e);
-  }
+    Then you can do something like this:
 
-  async Task ReLoadTxCore() // limit txns by chkboxs' filters
-  {
-    if (!_loaded) return;
+    var version = Windows.ApplicationModel.Package.Current.Id.Version;
+    applicationVersion = string.Format("{0}.{1}.{2}.{3}",
+        version.Major,
+        version.Minor,
+        version.Build,
+        version.Revision);
+    If you want to DEBUG or Run with the current Package available, just set your package deployment project as the Startup Project.     */
 
-    var started = Stopwatch.GetTimestamp();
-
-    try
-    {
-      if (chkTxCatgry.IsChecked == true && chkSingleYr.IsChecked == true)
-      {
-        await _dbx.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
-        _loadedCatgry = _txCatgry;
-      }
-      else if (chkTxCatgry.IsChecked == true)
-      {
-        await _dbx.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004 && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
-        _loadedCatgry = _txCatgry;
-      }
-      else if (chkSingleYr.IsChecked == true)
-      {
-        await _dbx.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr).LoadAsync();
-      }
-      else
-      {
-        await _dbx.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004).LoadAsync();
-        _loadedCatgry = _txCatgry = null;
-      }
-
-      if (dgTxCore.ItemsSource != null)
-      {
-        CollectionViewSource.GetDefaultView(dgTxCore.ItemsSource).Refresh(); //tu:            
-      }
-
-      UpdateTitle(Stopwatch.GetElapsedTime(started));
-    }
-    catch (Exception ex) { ex.Pop(_lgr); }
-  }
-  async Task FilterStart(string csvFilterString)
-  {
-    if (!_loaded) return;
-
-    var started = Stopwatch.GetTimestamp();
-
-    try
-    {
-      WriteLine($"■■■ filterStart()  [[");
-
-      _bpr.Tick();
-
-      if (string.IsNullOrEmpty(csvFilterString))
-      {
-        FilterTxnsBy2(csvFilterString, _txCatgry);
-
-        var lastSelectedItem = dgTxCore.SelectedItems.Count > 0 ? dgTxCore.SelectedItems[dgTxCore.SelectedItems.Count - 1] : null;
-        if (lastSelectedItem is not null)
+        try
         {
-          dgTxCore.SelectedItem = lastSelectedItem;
-          dgTxCore.ScrollIntoView(lastSelectedItem);
+            await _dbx.TxCategories.LoadAsync();
+            await _dbx.TxMoneySrcs.LoadAsync();
+
+            _txCategoryDGrdVwSrc.Source = _dbx.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber);
+            _txCategoryCmBxVwSrc.Source = _dbx.TxCategories.Local.OrderBy(r => r.Name).ThenBy(r => r.TlNumber);
+
+            _ = tbxSearch.Focus();
+            var y = DateTime.Today.Year;
+            cbxSingleYr.ItemsSource = new int[] { y, y - 1, y - 2, y - 3, y - 4, y - 5, y - 6, y - 7, y - 8, y - 9 };
+            cbxSingleYr.SelectedIndex = 2;
+            chkInfer.IsChecked = true;
+
+            btAssign.IsEnabled = false;
+
+            _loaded = true;
+            chkSingleYr.IsChecked = true;      // invokes the 1st search
         }
-
-        //_sth.SpeakFAF("Yes");
-      }
-      else
-      {
-        var ta = csvFilterString.Split(['`', '>', '\\', '/']);
-        if (ta.Length > 1)
+        catch (Exception ex) { ex.Pop(_lgr); }
+    }
+    async void OnSave(object s, RoutedEventArgs e) => await SaveAsync(); async Task SaveAsync()
+    {
+        try
         {
-          if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { _sth.SpeakFAF("Both are empty."); return; }
+            (bool success, int _, string? report) = await _dbx.TrySaveReportAsync();
+            Title = tbxNew.Text = report;
 
-          if (string.IsNullOrEmpty(ta[0]))
-          {
-            FilterTxnsBy2(ta[1], _txCatgry);
-          }
-          else
-          {
-            if (!decimal.TryParse(ta[0], out var amt)) { _sth.SpeakFAF("1st must be number."); return; }
-
-            if (!decimal.TryParse(tbxRange.Text, out var rng)) tbxRange.Text = (rng = 0m).ToString();
-
-            //_sth.SpeakFAF("Multi.");
-            FilterTxnsBy4(csvFilterString[(ta[0].Length + 1)..], _txCatgry, amt, rng);
-          }
+            if (!success)
+                _ = MessageBox.Show(report, $"Attach to process to debug/fix!!! ");
         }
-        else // == 1
+        catch (Exception ex) { ex.Pop(_lgr); }
+    }
+    protected override async void OnClosing(CancelEventArgs e)
+    {
+        if (_dbx.HasUnsavedChanges())
         {
-          if (ta.Length != 1) _sth.SpeakFAF($"{ta.Length}-part filter in action.");
-
-          if (decimal.TryParse(csvFilterString, out var amt))
-          {
-            if (!decimal.TryParse(tbxRange.Text, out var rng)) tbxRange.Text = (rng = 0m).ToString();
-
-            FilterTxnsBy4("", _txCatgry, amt, rng);
-          }
-          else
-          {
-            FilterTxnsBy2(csvFilterString, _txCatgry);
-          }
-        }
-      }
-
-      _txCoreV2_Root_VwSrc.Source = _txCoreItems;
-
-      if (chkInfer.IsChecked == true)
-      {
-        var catIds = _txCoreItems.Select(r => r.TxCategoryIdTxtNavigation.Id).Distinct().Where(r => r != 3); // Debug.WriteLine($"catIds.Count() = {catIds.Count()}");
-        FilterCategoryByIdList(catIds);
-      }
-
-      UpdateTitle(Stopwatch.GetElapsedTime(started));
-    }
-    catch (Exception ex) { ex.Pop(_lgr); }
-    finally { WriteLine($"■■■ filterStart()  ]]"); _bpr.Tick(); await Task.Yield(); }
-  }
-  void FilterTxnsBy2(string csvFilterString, string? txCategoryId, [CallerMemberName] string? cmn = "")
-  {
-    var started = Stopwatch.GetTimestamp();
-    tbkFlt.Text = csvFilterString;
-    tbkAmt.Text = "";
-
-    _txCoreItems.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
-      (
-        (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(csvFilterString.ToLower())) ||
-        (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(csvFilterString.ToLower())) ||
-        (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(csvFilterString.ToLower()))
-      )
-      &&
-      (
-        _cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr
-      )
-      &&
-      (
-        string.IsNullOrEmpty(txCategoryId) || string.Compare(r.TxCategoryIdTxt, txCategoryId, true) == 0
-      )
-    ).OrderByDescending(r => r.TxDate));
-
-    WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
-  }
-  void FilterTxnsBy4(string csvFilterString, string? txCategoryId, decimal txnAmt, decimal range, [CallerMemberName] string? cmn = "")
-  {
-    var started = Stopwatch.GetTimestamp();
-    tbkFlt.Text = csvFilterString;
-    tbkAmt.Text = $"{txnAmt:N0}";
-
-    _txCoreItems.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
-      txnAmt - range <= (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) && (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) <= txnAmt + range
-      &&
-      (
-        (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(csvFilterString.ToLower())) ||
-        (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(csvFilterString.ToLower())) ||
-        (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(csvFilterString.ToLower()))
-      )
-      &&
-      (
-        _cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr
-      )
-      &&
-      (
-        string.IsNullOrEmpty(txCategoryId) || string.Compare(r.TxCategoryIdTxt, txCategoryId, true) == 0
-      )
-    ).OrderByDescending(r => r.TxDate));
-
-    WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
-  }
-  void FilterCategoryByIdList(IEnumerable<int> catIds) => UpdateCtgrList(_dbx.TxCategories.Local.Where(r => catIds.Contains(r.Id)));
-  void FilterCategoryByTxtMatch(string namePart/**/  ) => UpdateCtgrList(_dbx.TxCategories.Local.Where(r => r.Name.ToLower().Contains(namePart) || r.IdTxt.ToLower().Contains(namePart)));
-
-  void UpdateCtgrList(IEnumerable<TxCategory> enu)
-  {
-    var started = Stopwatch.GetTimestamp();
-
-    _txCategories.ClearAddRangeAuto(enu.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
-
-    ArgumentNullException.ThrowIfNull(_txCategoryDGrdVwSrc);
-    _txCategoryDGrdVwSrc.Source = _txCategories;
-
-    if (_txCategories.Count == 0)
-    {
-      _txCategories.ClearAddRangeAuto(_dbx.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
-    }
-
-    choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled = false;
-    _choiceAbove = _choiceBelow = "";
-
-    if (_txCategories.Count == 1)
-    {
-      btAssign.IsEnabled = true;
-      _ = _txCategoryDGrdVwSrc.View.MoveCurrentToFirst();
-    }
-    else if (_txCategories.Count == 2)
-    {
-      _choiceAbove = _txCategories.First().IdTxt;
-      _choiceBelow = _txCategories.Last().IdTxt;
-      btAssign.IsEnabled = txCategoryListBox.SelectedItems.Count == 1;// _choiceAbove == _choiceBelow;
-    }
-
-    choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
-    choiceBelow.Content = $"_7 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
-
-    UpdateTitle(Stopwatch.GetElapsedTime(started));
-  }
-
-  static async Task<bool> IsStillTyping(TextBox textbox) { var prev = textbox.Text; await Task.Delay(750); return prev != textbox.Text; }
-  void UpdateTitle(TimeSpan took, [CallerMemberName] string? cmn = "")
-  {
-    WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_txCoreItems.Count,9:N0} rows    sum {_txCoreItems.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_txCoreItems.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t {cmn} \t\t {VersionHelper.CurVerStr}");
-    h0.Text = $"{_txCoreItems.Count,9:N0} rows     ";
-    h1.Text = $"$UnKn/All {_txCoreItems.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount):N0} / {_txCoreItems.Sum(r => r.TxAmount):N0}     ";
-    h2.Text = $"Selects {_selectTtl:N2}     ";
-    h3.Text = $"{VersionHelper.CurVerStr}     ";
-    h4.Text = $"Db: {_dbx.Database.GetDbConnection().Database}     ";
-  }
-
-  async void OnReLoad(object s, RoutedEventArgs e)
-  {
-    switch (DbSaveMsgBox.CheckAskSave(_dbx))
-    {
-      case (int)MsgBoxDbRslt.Yes: break;
-      default: break;
-      case (int)MsgBoxDbRslt.Cancel: return;
-      case (int)MsgBoxDbRslt.No: break;
-    }
-
-    await ReLoadTxCore();
-    OnClear1(s, e);
-  }
-
-  async void OnTextChangedFuz(object s, TextChangedEventArgs e) { if (!await IsStillTyping((TextBox)s)) await FilterStart(tbxSearch.Text); }
-  async void OnTextChangedCtg(object s, TextChangedEventArgs e) { if (!await IsStillTyping((TextBox)s)) FilterCategoryByTxtMatch(((TextBox)s).Text); }
-
-  void OnClear1(object s, RoutedEventArgs e) => tbkFlt.Text = tbxSearch.Text = "";
-  void OnClear2(object s, RoutedEventArgs e) => tSrch2.Text = "";
-
-  void DgTxCtgr_SelChd(object s, SelectionChangedEventArgs e)
-  {
-    btAssign.IsEnabled = e.AddedItems.Count == 1;
-    btAssign.Content = e.AddedItems.Count == 1 ? $"{((TxCategory?)e.AddedItems[0])?.IdTxt}" : "? ? ?";
-  }
-
-  void DgTxCore_SelChd(object s, SelectionChangedEventArgs e)
-  {
-    _selectTtl = 0;
-    if (e.AddedItems.Count < 1)
-    {
-      btnNotePaster.Content = "";
-      btnNotePaster.IsEnabled = false;
-      return;
-    }
-
-    try
-    {
-      var started = Stopwatch.GetTimestamp();
-
-      _choiceAbove = _choiceBelow = "";
-
-      btnNotePaster.IsEnabled = dgTxCore.SelectedItems.Count > 0 && Clipboard.ContainsText() && Clipboard.GetText().Length > 0;
-      btnNotePaster.Content = btnNotePaster.IsEnabled ? $"'{Clipboard.GetText()}'\n_Paste to {dgTxCore.SelectedItems.Count} rows  ▼" : "¦";
-
-      if (dgTxCore.SelectedItems.Count > 0)
-      {
-        var lv = new List<TxCoreV2>();
-        foreach (TxCoreV2 tc in dgTxCore.SelectedItems)
-        {
-          lv.Add(tc);
-          _selectTtl += tc.TxAmount;
-        }
-
-        if (dgTxCore.SelectedItems.Count == 1)
-        {
-          var select = dgTxCore.SelectedItems[0] as TxCoreV2;
-          ArgumentNullException.ThrowIfNull(select, "#18 ▄▀▄▀▄▀▄▀▄▀▄▀");
-
-          var dlrAmntMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && Math.Abs(r.TxAmount) == Math.Abs(select.TxAmount)).OrderByDescending(r => r.TxDate);
-          var detailsMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && !string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(select.TxDetail.ToLower())).OrderByDescending(r => r.TxDate);
-          var memoStrMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && !string.IsNullOrEmpty(r.MemoPp) && !string.IsNullOrEmpty(select.MemoPp) && r.MemoPp.ToLower().Contains(select.MemoPp.ToLower())).OrderByDescending(r => r.TxDate);
-
-          //tbxNew.Text = $"{(dlrAmntMatches?.Count() ?? 1) - 1,-5}   ttl$ {dlrAmntMatches?.Sum(r => r.TxAmount) ?? 0m,-8:N0}       TxDtl {(detailsMatches?.Count() ?? 1) - 1,-8}    Mem {(memoStrMatches?.Count() ?? 1) - 1,-8}";
-
-          btnMatchesByAmount.Content = $"+ {(dlrAmntMatches?.Count() ?? 1) - 1}";
-          btnMatchesByTxDetl.Content = $"TxDetail  +{(detailsMatches?.Count() ?? 1) - 1}";
-          btnMatchesByMemoPP.Content = $"MemoPP  +{(memoStrMatches?.Count() ?? 1) - 1}";
+            var rsn = $"Would you like to save the changes? \r\n\n{_dbx.GetDbChangesReport()}";
+            switch (MessageBox.Show(rsn, "Unsaved changes detected", MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
+            {
+                default:
+                case MessageBoxResult.Cancel: e.Cancel = true; KeepOpenReason = "Changes have not been saved... \n...Cancelling the Closing in the Parent of base."; return;
+                case MessageBoxResult.Yes: await SaveAsync(); KeepOpenReason = null; await Task.Delay(250); break;
+                case MessageBoxResult.No: break;
+            }
         }
         else
         {
-          var trg = lv.Where(r => r.TxCategoryIdTxtNavigation.IdTxt != "UnKn")?.FirstOrDefault();
-          _choiceAbove = _choiceBelow = trg?.TxCategoryIdTxtNavigation.IdTxt ?? "";
-          btAssign.IsEnabled = txCategoryListBox.SelectedItems.Count == 1;
+            KeepOpenReason = "";
         }
-      }
 
-      choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
-      choiceBelow.Content = $"_7 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
-
-      btAssign.IsEnabled = _choiceAbove.Length > 0 && _choiceAbove == _choiceBelow; //todo: assign does not work!!! 2023-01-15
-
-      UpdateTitle(Stopwatch.GetElapsedTime(started));
-    }
-    catch (Exception ex) { ex.Pop(_lgr); }
-  }
-
-  async void OnTxCatgry_Checked(object s, RoutedEventArgs e)      /**/ { _ = cbxTxCatgry.Focus(); await TccTsk(); }
-  async void OnTxCatgry_UnChckd(object s, RoutedEventArgs e)      /**/ { if (!_loaded) return; /**/                                   _txCatgry = null;                         /**/ await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
-  async void OnTxCatgry_Changed(object s, SelectionChangedEventArgs e) => await TccTsk(); async Task TccTsk() { if (!_loaded) return; _txCatgry = (string)cbxTxCatgry.SelectedValue; await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
-
-  async void OnSingleYr_Checked(object s, RoutedEventArgs e)      /**/ { _ = cbxSingleYr?.Focus(); await SycTsk(); }
-  async void OnSingleYr_UnChckd(object s, RoutedEventArgs e)      /**/ { if (!_loaded) return; /**/                                   _cutOffYr = null;                      /**/ await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
-  async void OnSingleYr_Changed(object s, SelectionChangedEventArgs e) => await SycTsk(); async Task SycTsk() { if (!_loaded) return; _cutOffYr = (int)cbxSingleYr.SelectedValue; await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
-
-  void OnLbxSelChd(object s, SelectionChangedEventArgs e)
-  {
-    if (e.AddedItems.Count < 1) return;
-
-    var started = Stopwatch.GetTimestamp();
-    UpdateTitle(Stopwatch.GetElapsedTime(started));
-
-    Title += $" - {((TxCategory?)txCategoryListBox.SelectedItems[0])?.Name}";
-  }
-  async void OnInfer_Checked(object s, RoutedEventArgs e) => await FilterStart(tbkFlt.Text);
-
-  void OnFindByDlr(object sender, RoutedEventArgs e)
-  {
-    tbxRange.Text = "0.00"; // :only the exact matches are OK here.
-    tbxSearch.Text = $"{Math.Abs((dgTxCore.SelectedItem as TxCoreV2)?.TxAmount ?? 0m):N2}";
-    Clipboard.SetText(tbxSearch.Text);
-  }
-  void OnFindByDtl(object sender, RoutedEventArgs e) => Clipboard.SetText(tbxSearch.Text = (dgTxCore.SelectedItem as TxCoreV2)?.TxDetail ?? "");
-  void OnFindByMem(object sender, RoutedEventArgs e) => Clipboard.SetText(tbxSearch.Text = (dgTxCore.SelectedItem as TxCoreV2)?.MemoPp ?? "");
-
-  void DgTxCtgr_MouseDblClick(object s, MouseButtonEventArgs e) { if (btAssign.IsEnabled) OnAssign0(s, e); }
-  void DgTxCore_MouseDblClick(object s, MouseButtonEventArgs e)
-  {
-    if (e.OriginalSource is System.Windows.Documents.Run run)
-      Clipboard.SetText(tbxSearch.Text = run.Text);
-    else if (((TxCoreV2)((System.Windows.Controls.Primitives.Selector)s).SelectedItem) is not null)
-      Clipboard.SetText(tbxSearch.Text = ((TxCoreV2)((System.Windows.Controls.Primitives.Selector)s).SelectedItem)?.TxDetail);
-    else
-      return;
-
-    _ = tbxSearch.Focus(); // _sth.SpeakFAF("Also, Clipboarded.");
-  }
-
-  //use main menu instead: async void OnManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _dba).ShowDialog(); await ReLoadTxCore(); }
-  async void OnAssign0(object s, RoutedEventArgs e)
-  {
-    if (txCategoryListBox.SelectedItems.Count == 1)
-      await Assign(((TxCategory?)txCategoryListBox.SelectedItems[0])?.IdTxt);
-    else if (_choiceAbove?.Length > 0 && _choiceAbove == _choiceBelow)
-      await Assign(_choiceAbove);
-    //else      _sth.SpeakFAF("Nothing to assign.");
-  }
-  async void OnAssign1(object s, RoutedEventArgs e) => await Assign(_choiceAbove);
-  async void OnAssign2(object s, RoutedEventArgs e) => await Assign(_choiceBelow);
-  async void OnPasteToNote(object s, RoutedEventArgs e) => await PasteToNote(Clipboard.ContainsText() ? Clipboard.GetText() : "");
-  async Task PasteToNote(string? newNoteText)
-  {
-    if (dgTxCore.SelectedItems.Count < 1 || newNoteText is null)
-    {
-      btnNotePaster.Content = "";
-      btnNotePaster.IsEnabled = false;
-      return;
+        base.OnClosing(e);
     }
 
-    foreach (TxCoreV2 tc in dgTxCore.SelectedItems) { tc.Notes = newNoteText; tc.ModifiedAt = _now; tc.ModifiedBy = Environment.UserName; }
-
-    await SaveChangesAndClearIfAsync(false);
-  }
-  async Task Assign(string? IdTxt)
-  {
-    ArgumentNullException.ThrowIfNull(IdTxt, "▄▀▄▀▄▀▄▀▄▀▄▀");
-
-    btAssign.IsEnabled = choiceAbove.IsEnabled = choiceBelow.IsEnabled = false;
-
-    if (dgTxCore.SelectedItems.Count > 0)
+    async Task ReLoadTxCore() // limit txns by chkboxs' filters
     {
-      foreach (TxCoreV2 tc in dgTxCore.SelectedItems) { tc.TxCategoryIdTxt = IdTxt; tc.ModifiedAt = _now; tc.ModifiedBy = Environment.UserName; }
-    }
-    else if (tbxSearch.Text.Length > 1)
-    {
-      foreach (var tc in _txCoreItems)
-      {
-        if (tc.TxCategoryIdTxt.Equals("UnKn", StringComparison.OrdinalIgnoreCase)) // if (!tc.TxCategoryIdTxt.Equals(IdTxt, StringComparison.OrdinalIgnoreCase))
+        if (!_loaded) return;
+
+        var started = Stopwatch.GetTimestamp();
+
+        try
         {
-          tc.TxCategoryIdTxt = IdTxt; tc.ModifiedAt = _now; tc.ModifiedBy = Environment.UserName;
+            if (chkTxCatgry.IsChecked == true && chkSingleYr.IsChecked == true)
+            {
+                await _dbx.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
+                _loadedCatgry = _txCatgry;
+            }
+            else if (chkTxCatgry.IsChecked == true)
+            {
+                await _dbx.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004 && r.TxCategoryIdTxt == _txCatgry).LoadAsync();
+                _loadedCatgry = _txCatgry;
+            }
+            else if (chkSingleYr.IsChecked == true)
+            {
+                await _dbx.TxCoreV2s.Where(r => r.TxDate.Year >= _cutOffYr).LoadAsync();
+            }
+            else
+            {
+                await _dbx.TxCoreV2s.Where(r => r.TxDate >= _yrStart2004).LoadAsync();
+                _loadedCatgry = _txCatgry = null;
+            }
+
+            if (dgTxCore.ItemsSource != null)
+            {
+                CollectionViewSource.GetDefaultView(dgTxCore.ItemsSource).Refresh(); //tu:            
+            }
+
+            UpdateTitle(Stopwatch.GetElapsedTime(started));
         }
-      }
+        catch (Exception ex) { ex.Pop(_lgr); }
     }
-
-    await SaveChangesAndClearIfAsync(true);
-
-    _ = tbxSearch.Focus();
-  }
-
-  async Task SaveChangesAndClearIfAsync(bool clear)
-  {
-    var rows = DbSaveMsgBox.TrySaveAsk(_dbx, $"class TxCategoryAssignerVw.assign()");
-    tbxNew.Text = $"{rows} saved.";
-    if (rows > 0)
+    async Task FilterStart(string csvFilterString)
     {
-      await ReLoadTxCore();
+        if (!_loaded) return;
 
-      if (clear)
-      {
-        OnClear1(default!, default!);
-        OnClear2(default!, default!);
-      }
+        var started = Stopwatch.GetTimestamp();
+
+        try
+        {
+            WriteLine($"■■■ filterStart()  [[");
+
+            _bpr.Tick();
+
+            if (string.IsNullOrEmpty(csvFilterString))
+            {
+                FilterTxnsBy2(csvFilterString, _txCatgry);
+
+                var lastSelectedItem = dgTxCore.SelectedItems.Count > 0 ? dgTxCore.SelectedItems[dgTxCore.SelectedItems.Count - 1] : null;
+                if (lastSelectedItem is not null)
+                {
+                    dgTxCore.SelectedItem = lastSelectedItem;
+                    dgTxCore.ScrollIntoView(lastSelectedItem);
+                }
+
+                //_sth.SpeakFAF("Yes");
+            }
+            else
+            {
+                var ta = csvFilterString.Split(['`', '>', '\\', '/']);
+                if (ta.Length > 1)
+                {
+                    if (string.IsNullOrEmpty(ta[0]) && string.IsNullOrEmpty(ta[1])) { _sth.SpeakFAF("Both are empty."); return; }
+
+                    if (string.IsNullOrEmpty(ta[0]))
+                    {
+                        FilterTxnsBy2(ta[1], _txCatgry);
+                    }
+                    else
+                    {
+                        if (!decimal.TryParse(ta[0], out var amt)) { _sth.SpeakFAF("1st must be number."); return; }
+
+                        if (!decimal.TryParse(tbxRange.Text, out var rng)) tbxRange.Text = (rng = 0m).ToString();
+
+                        //_sth.SpeakFAF("Multi.");
+                        FilterTxnsBy4(csvFilterString[(ta[0].Length + 1)..], _txCatgry, amt, rng);
+                    }
+                }
+                else // == 1
+                {
+                    if (ta.Length != 1) _sth.SpeakFAF($"{ta.Length}-part filter in action.");
+
+                    if (decimal.TryParse(csvFilterString, out var amt))
+                    {
+                        if (!decimal.TryParse(tbxRange.Text, out var rng)) tbxRange.Text = (rng = 0m).ToString();
+
+                        FilterTxnsBy4("", _txCatgry, amt, rng);
+                    }
+                    else
+                    {
+                        FilterTxnsBy2(csvFilterString, _txCatgry);
+                    }
+                }
+            }
+
+            _txCoreV2_Root_VwSrc.Source = _txCoreItems;
+
+            if (chkInfer.IsChecked == true)
+            {
+                IEnumerable<int> catIds = _txCoreItems.Select(r => r.TxCategoryIdTxtNavigation.Id).Distinct().Where(r => r != 3); // Debug.WriteLine($"catIds.Count() = {catIds.Count()}");
+                FilterCategoryByIdList(catIds);
+            }
+
+            UpdateTitle(Stopwatch.GetElapsedTime(started));
+        }
+        catch (Exception ex) { ex.Pop(_lgr); }
+        finally { WriteLine($"■■■ filterStart()  ]]"); _bpr.Tick(); await Task.Yield(); }
     }
-    _sth.SpeakFAF(tbxNew.Text);
-  }
+    void FilterTxnsBy2(string csvFilterString, string? txCategoryId, [CallerMemberName] string? cmn = "")
+    {
+        var started = Stopwatch.GetTimestamp();
+        tbkFlt.Text = csvFilterString;
+        tbkAmt.Text = "";
 
-  void OnWindowRestoree(object s, RoutedEventArgs e) { wr.Visibility = Visibility.Collapsed; wm.Visibility = Visibility.Visible; WindowState = WindowState.Normal; }
-  void OnWindowMaximize(object s, RoutedEventArgs e) { wm.Visibility = Visibility.Collapsed; wr.Visibility = Visibility.Visible; WindowState = WindowState.Maximized; }
-  void OnWindowClose(object s, RoutedEventArgs e) { Close(); }
+        _txCoreItems.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
+          (
+            (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(csvFilterString.ToLower())) ||
+            (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(csvFilterString.ToLower())) ||
+            (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(csvFilterString.ToLower()))
+          )
+          &&
+          (
+            _cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr
+          )
+          &&
+          (
+            string.IsNullOrEmpty(txCategoryId) || string.Compare(r.TxCategoryIdTxt, txCategoryId, true) == 0
+          )
+        ).OrderByDescending(r => r.TxDate));
+
+        WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
+    }
+    void FilterTxnsBy4(string csvFilterString, string? txCategoryId, decimal txnAmt, decimal range, [CallerMemberName] string? cmn = "")
+    {
+        var started = Stopwatch.GetTimestamp();
+        tbkFlt.Text = csvFilterString;
+        tbkAmt.Text = $"{txnAmt:N0}";
+
+        _txCoreItems.ClearAddRangeAuto(_dbx.TxCoreV2s.Local.Where(r =>
+          txnAmt - range <= (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) && (chkIsAbs.IsChecked == true ? Math.Abs(r.TxAmount) : r.TxAmount) <= txnAmt + range
+          &&
+          (
+            (!string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(csvFilterString.ToLower())) ||
+            (!string.IsNullOrEmpty(r.MemoPp) && r.MemoPp.ToLower().Contains(csvFilterString.ToLower())) ||
+            (!string.IsNullOrEmpty(r.Notes) && r.Notes.ToLower().Contains(csvFilterString.ToLower()))
+          )
+          &&
+          (
+            _cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr
+          )
+          &&
+          (
+            string.IsNullOrEmpty(txCategoryId) || string.Compare(r.TxCategoryIdTxt, txCategoryId, true) == 0
+          )
+        ).OrderByDescending(r => r.TxDate));
+
+        WriteLine($" === {Stopwatch.GetElapsedTime(started).TotalSeconds,4:N1}s   {cmn}");
+    }
+    void FilterCategoryByIdList(IEnumerable<int> catIds) => UpdateCtgrList(_dbx.TxCategories.Local.Where(r => catIds.Contains(r.Id)));
+    void FilterCategoryByTxtMatch(string namePart/**/  ) => UpdateCtgrList(_dbx.TxCategories.Local.Where(r => r.Name.ToLower().Contains(namePart) || r.IdTxt.ToLower().Contains(namePart)));
+
+    void UpdateCtgrList(IEnumerable<TxCategory> enu)
+    {
+        var started = Stopwatch.GetTimestamp();
+
+        _txCategories.ClearAddRangeAuto(enu.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
+
+        ArgumentNullException.ThrowIfNull(_txCategoryDGrdVwSrc);
+        _txCategoryDGrdVwSrc.Source = _txCategories;
+
+        if (_txCategories.Count == 0)
+        {
+            _txCategories.ClearAddRangeAuto(_dbx.TxCategories.Local.OrderBy(r => r.ExpGroup?.Name).ThenBy(r => r.TlNumber));
+        }
+
+        choiceAbove.IsEnabled = choiceBelow.IsEnabled = btAssign.IsEnabled = false;
+        _choiceAbove = _choiceBelow = "";
+
+        if (_txCategories.Count == 1)
+        {
+            btAssign.IsEnabled = true;
+            _ = _txCategoryDGrdVwSrc.View.MoveCurrentToFirst();
+        }
+        else if (_txCategories.Count == 2)
+        {
+            _choiceAbove = _txCategories.First().IdTxt;
+            _choiceBelow = _txCategories.Last().IdTxt;
+            btAssign.IsEnabled = txCategoryListBox.SelectedItems.Count == 1;// _choiceAbove == _choiceBelow;
+        }
+
+        choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
+        choiceBelow.Content = $"_7 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
+
+        UpdateTitle(Stopwatch.GetElapsedTime(started));
+    }
+
+    static async Task<bool> IsStillTyping(TextBox textbox) { var prev = textbox.Text; await Task.Delay(750); return prev != textbox.Text; }
+    void UpdateTitle(TimeSpan took, [CallerMemberName] string? cmn = "")
+    {
+        WriteLine(Title = $"Ctgry {_loadedCatgry,-12} {_txCoreItems.Count,9:N0} rows    sum {_txCoreItems.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount),9:N0} / {_txCoreItems.Sum(r => r.TxAmount),-9:N0} \t selects {_selectTtl,9:N2} \t {took.TotalSeconds,4:N2}s \t {cmn} \t\t {VersionHelper.CurVerStr}");
+        h0.Text = $"{_txCoreItems.Count,9:N0} rows     ";
+        h1.Text = $"$UnKn/All {_txCoreItems.Where(r => r.TxCategoryIdTxt == "UnKn").Sum(r => r.TxAmount):N0} / {_txCoreItems.Sum(r => r.TxAmount):N0}     ";
+        h2.Text = $"Selects {_selectTtl:N2}     ";
+        h3.Text = $"{VersionHelper.CurVerStr}     ";
+        h4.Text = $"Db: {_dbx.Database.GetDbConnection().Database}     ";
+    }
+
+    async void OnReLoad(object s, RoutedEventArgs e)
+    {
+        switch (DbSaveMsgBox.CheckAskSave(_dbx))
+        {
+            case (int)MsgBoxDbRslt.Yes: break;
+            default: break;
+            case (int)MsgBoxDbRslt.Cancel: return;
+            case (int)MsgBoxDbRslt.No: break;
+        }
+
+        await ReLoadTxCore();
+        OnClear1(s, e);
+    }
+
+    async void OnTextChangedFuz(object s, TextChangedEventArgs e) { if (!await IsStillTyping((TextBox)s)) await FilterStart(tbxSearch.Text); }
+    async void OnTextChangedCtg(object s, TextChangedEventArgs e) { if (!await IsStillTyping((TextBox)s)) FilterCategoryByTxtMatch(((TextBox)s).Text); }
+
+    void OnClear1(object s, RoutedEventArgs e) => tbkFlt.Text = tbxSearch.Text = "";
+    void OnClear2(object s, RoutedEventArgs e) => tSrch2.Text = "";
+
+    void DgTxCtgr_SelChd(object s, SelectionChangedEventArgs e)
+    {
+        btAssign.IsEnabled = e.AddedItems.Count == 1;
+        btAssign.Content = e.AddedItems.Count == 1 ? $"{((TxCategory?)e.AddedItems[0])?.IdTxt}" : "? ? ?";
+    }
+
+    void DgTxCore_SelChd(object s, SelectionChangedEventArgs e)
+    {
+        _selectTtl = 0;
+        if (e.AddedItems.Count < 1)
+        {
+            btnNotePaster.Content = "";
+            btnNotePaster.IsEnabled = false;
+            return;
+        }
+
+        try
+        {
+            var started = Stopwatch.GetTimestamp();
+
+            _choiceAbove = _choiceBelow = "";
+
+            btnNotePaster.IsEnabled = dgTxCore.SelectedItems.Count > 0 && Clipboard.ContainsText() && Clipboard.GetText().Length > 0;
+            btnNotePaster.Content = btnNotePaster.IsEnabled ? $"'{Clipboard.GetText()}'\n_Paste to {dgTxCore.SelectedItems.Count} rows  ▼" : "¦";
+
+            if (dgTxCore.SelectedItems.Count > 0)
+            {
+                var lv = new List<TxCoreV2>();
+                foreach (TxCoreV2 tc in dgTxCore.SelectedItems)
+                {
+                    lv.Add(tc);
+                    _selectTtl += tc.TxAmount;
+                }
+
+                if (dgTxCore.SelectedItems.Count == 1)
+                {
+                    var select = dgTxCore.SelectedItems[0] as TxCoreV2;
+                    ArgumentNullException.ThrowIfNull(select, "#18 ▄▀▄▀▄▀▄▀▄▀▄▀");
+
+                    IOrderedEnumerable<TxCoreV2> dlrAmntMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && Math.Abs(r.TxAmount) == Math.Abs(select.TxAmount)).OrderByDescending(r => r.TxDate);
+                    IOrderedEnumerable<TxCoreV2> detailsMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && !string.IsNullOrEmpty(r.TxDetail) && r.TxDetail.ToLower().Contains(select.TxDetail.ToLower())).OrderByDescending(r => r.TxDate);
+                    IOrderedEnumerable<TxCoreV2> memoStrMatches = _dbx.TxCoreV2s.Local.Where(r => (_cutOffYr == null ? r.TxDate >= _yrStart2004 : r.TxDate.Year >= _cutOffYr) && !string.IsNullOrEmpty(r.MemoPp) && !string.IsNullOrEmpty(select.MemoPp) && r.MemoPp.ToLower().Contains(select.MemoPp.ToLower())).OrderByDescending(r => r.TxDate);
+
+                    //tbxNew.Text = $"{(dlrAmntMatches?.Count() ?? 1) - 1,-5}   ttl$ {dlrAmntMatches?.Sum(r => r.TxAmount) ?? 0m,-8:N0}       TxDtl {(detailsMatches?.Count() ?? 1) - 1,-8}    Mem {(memoStrMatches?.Count() ?? 1) - 1,-8}";
+
+                    btnMatchesByAmount.Content = $"+ {(dlrAmntMatches?.Count() ?? 1) - 1}";
+                    btnMatchesByTxDetl.Content = $"TxDetail  +{(detailsMatches?.Count() ?? 1) - 1}";
+                    btnMatchesByMemoPP.Content = $"MemoPP  +{(memoStrMatches?.Count() ?? 1) - 1}";
+                }
+                else
+                {
+                    TxCoreV2? trg = lv.Where(r => r.TxCategoryIdTxtNavigation.IdTxt != "UnKn")?.FirstOrDefault();
+                    _choiceAbove = _choiceBelow = trg?.TxCategoryIdTxtNavigation.IdTxt ?? "";
+                    btAssign.IsEnabled = txCategoryListBox.SelectedItems.Count == 1;
+                }
+            }
+
+            choiceAbove.Content = $"_1 {_choiceAbove}"; choiceAbove.IsEnabled = _choiceAbove.Length > 0;
+            choiceBelow.Content = $"_7 {_choiceBelow}"; choiceBelow.IsEnabled = _choiceBelow.Length > 0;
+
+            btAssign.IsEnabled = _choiceAbove.Length > 0 && _choiceAbove == _choiceBelow; //todo: assign does not work!!! 2023-01-15
+
+            UpdateTitle(Stopwatch.GetElapsedTime(started));
+        }
+        catch (Exception ex) { ex.Pop(_lgr); }
+    }
+
+    async void OnTxCatgry_Checked(object s, RoutedEventArgs e)      /**/ { _ = cbxTxCatgry.Focus(); await TccTsk(); }
+    async void OnTxCatgry_UnChckd(object s, RoutedEventArgs e)      /**/ { if (!_loaded) return; /**/                                   _txCatgry = null;                         /**/ await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
+    async void OnTxCatgry_Changed(object s, SelectionChangedEventArgs e) => await TccTsk(); async Task TccTsk() { if (!_loaded) return; _txCatgry = (string)cbxTxCatgry.SelectedValue; await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
+
+    async void OnSingleYr_Checked(object s, RoutedEventArgs e)      /**/ { _ = cbxSingleYr?.Focus(); await SycTsk(); }
+    async void OnSingleYr_UnChckd(object s, RoutedEventArgs e)      /**/ { if (!_loaded) return; /**/                                   _cutOffYr = null;                      /**/ await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
+    async void OnSingleYr_Changed(object s, SelectionChangedEventArgs e) => await SycTsk(); async Task SycTsk() { if (!_loaded) return; _cutOffYr = (int)cbxSingleYr.SelectedValue; await ReLoadTxCore(); await FilterStart(tbxSearch.Text); }
+
+    void OnLbxSelChd(object s, SelectionChangedEventArgs e)
+    {
+        if (e.AddedItems.Count < 1) return;
+
+        var started = Stopwatch.GetTimestamp();
+        UpdateTitle(Stopwatch.GetElapsedTime(started));
+
+        Title += $" - {((TxCategory?)txCategoryListBox.SelectedItems[0])?.Name}";
+    }
+    async void OnInfer_Checked(object s, RoutedEventArgs e) => await FilterStart(tbkFlt.Text);
+
+    void OnFindByDlr(object sender, RoutedEventArgs e)
+    {
+        tbxRange.Text = "0.00"; // :only the exact matches are OK here.
+        tbxSearch.Text = $"{Math.Abs((dgTxCore.SelectedItem as TxCoreV2)?.TxAmount ?? 0m):N2}";
+        Clipboard.SetText(tbxSearch.Text);
+    }
+    void OnFindByDtl(object sender, RoutedEventArgs e) => Clipboard.SetText(tbxSearch.Text = (dgTxCore.SelectedItem as TxCoreV2)?.TxDetail ?? "");
+    void OnFindByMem(object sender, RoutedEventArgs e) => Clipboard.SetText(tbxSearch.Text = (dgTxCore.SelectedItem as TxCoreV2)?.MemoPp ?? "");
+
+    void DgTxCtgr_MouseDblClick(object s, MouseButtonEventArgs e) { if (btAssign.IsEnabled) OnAssign0(s, e); }
+    void DgTxCore_MouseDblClick(object s, MouseButtonEventArgs e)
+    {
+        if (e.OriginalSource is System.Windows.Documents.Run run)
+            Clipboard.SetText(tbxSearch.Text = run.Text);
+        else if (((TxCoreV2)((System.Windows.Controls.Primitives.Selector)s).SelectedItem) is not null)
+            Clipboard.SetText(tbxSearch.Text = ((TxCoreV2)((System.Windows.Controls.Primitives.Selector)s).SelectedItem)?.TxDetail);
+        else
+            return;
+
+        _ = tbxSearch.Focus(); // _sth.SpeakFAF("Also, Clipboarded.");
+    }
+
+    //use main menu instead: async void OnManualTxnAdd(object s, RoutedEventArgs e) { _ = new ManualTxnEntry(_lgr, _bpr, false, _dba).ShowDialog(); await ReLoadTxCore(); }
+    async void OnAssign0(object s, RoutedEventArgs e)
+    {
+        if (txCategoryListBox.SelectedItems.Count == 1)
+            await Assign(((TxCategory?)txCategoryListBox.SelectedItems[0])?.IdTxt);
+        else if (_choiceAbove?.Length > 0 && _choiceAbove == _choiceBelow)
+            await Assign(_choiceAbove);
+        //else      _sth.SpeakFAF("Nothing to assign.");
+    }
+    async void OnAssign1(object s, RoutedEventArgs e) => await Assign(_choiceAbove);
+    async void OnAssign2(object s, RoutedEventArgs e) => await Assign(_choiceBelow);
+    async void OnPasteToNote(object s, RoutedEventArgs e) => await PasteToNote(Clipboard.ContainsText() ? Clipboard.GetText() : "");
+    async Task PasteToNote(string? newNoteText)
+    {
+        if (dgTxCore.SelectedItems.Count < 1 || newNoteText is null)
+        {
+            btnNotePaster.Content = "";
+            btnNotePaster.IsEnabled = false;
+            return;
+        }
+
+        foreach (TxCoreV2 tc in dgTxCore.SelectedItems) { tc.Notes = newNoteText; tc.ModifiedAt = _now; tc.ModifiedBy = Environment.UserName; }
+
+        await SaveChangesAndClearIfAsync(false);
+    }
+    async Task Assign(string? IdTxt)
+    {
+        ArgumentNullException.ThrowIfNull(IdTxt, "▄▀▄▀▄▀▄▀▄▀▄▀");
+
+        btAssign.IsEnabled = choiceAbove.IsEnabled = choiceBelow.IsEnabled = false;
+
+        if (dgTxCore.SelectedItems.Count > 0)
+        {
+            foreach (TxCoreV2 tc in dgTxCore.SelectedItems) { tc.TxCategoryIdTxt = IdTxt; tc.ModifiedAt = _now; tc.ModifiedBy = Environment.UserName; }
+        }
+        else if (tbxSearch.Text.Length > 1)
+        {
+            foreach (TxCoreV2 tc in _txCoreItems)
+            {
+                if (tc.TxCategoryIdTxt.Equals("UnKn", StringComparison.OrdinalIgnoreCase)) // if (!tc.TxCategoryIdTxt.Equals(IdTxt, StringComparison.OrdinalIgnoreCase))
+                {
+                    tc.TxCategoryIdTxt = IdTxt; tc.ModifiedAt = _now; tc.ModifiedBy = Environment.UserName;
+                }
+            }
+        }
+
+        await SaveChangesAndClearIfAsync(true);
+
+        _ = tbxSearch.Focus();
+    }
+
+    async Task SaveChangesAndClearIfAsync(bool clear)
+    {
+        var rows = DbSaveMsgBox.TrySaveAsk(_dbx, $"class TxCategoryAssignerVw.assign()");
+        tbxNew.Text = $"{rows} saved.";
+        if (rows > 0)
+        {
+            await ReLoadTxCore();
+
+            if (clear)
+            {
+                OnClear1(default!, default!);
+                OnClear2(default!, default!);
+            }
+        }
+
+        _sth.SpeakFAF(tbxNew.Text);
+    }
+
+    void OnWindowRestoree(object s, RoutedEventArgs e) { wr.Visibility = Visibility.Collapsed; wm.Visibility = Visibility.Visible; WindowState = WindowState.Normal; }
+    void OnWindowMaximize(object s, RoutedEventArgs e) { wm.Visibility = Visibility.Collapsed; wr.Visibility = Visibility.Visible; WindowState = WindowState.Maximized; }
+    void OnWindowClose(object s, RoutedEventArgs e) => Close();
 }
 /*
 declare @ms as int, @ia as money
@@ -908,96 +912,96 @@ GO
 
 public static class DbSaveMsgBox
 {
-  public static int CheckAskSave(DbContext db, int maxRowsToShow = 32, MessageBoxButton btn = MessageBoxButton.YesNoCancel)
-  {
-    var rowsSaved = (int)MsgBoxDbRslt.Unknown;
-  retry:
-    try
+    public static int CheckAskSave(DbContext db, int maxRowsToShow = 32, MessageBoxButton btn = MessageBoxButton.YesNoCancel)
     {
-      //_bpr.Ok();
-
-      if (!db.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted))
-      {
-        rowsSaved = (int)MsgBoxDbRslt.NoChanges;
-      }
-      else
-      {
-        switch (MessageBox.Show(db.GetDbChangesReport(maxRowsToShow), "Save Changes?", btn, MessageBoxImage.Question, MessageBoxResult.Yes))
+        var rowsSaved = (int)MsgBoxDbRslt.Unknown;
+    retry:
+        try
         {
-          case MessageBoxResult.Yes: rowsSaved = TrySaveAsk(db, "Manual Yes"); if (rowsSaved < 0) goto retry; return rowsSaved; // >0;		yes
-          case MessageBoxResult.No: return (int)MsgBoxDbRslt.No;                                                  // -1;		no
-          case MessageBoxResult.Cancel: return (int)MsgBoxDbRslt.Cancel;                                          // -2;		cancel
+            //_bpr.Ok();
+
+            if (!db.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted))
+            {
+                rowsSaved = (int)MsgBoxDbRslt.NoChanges;
+            }
+            else
+            {
+                switch (MessageBox.Show(db.GetDbChangesReport(maxRowsToShow), "Save Changes?", btn, MessageBoxImage.Question, MessageBoxResult.Yes))
+                {
+                    case MessageBoxResult.Yes: rowsSaved = TrySaveAsk(db, "Manual Yes"); if (rowsSaved < 0) goto retry; return rowsSaved; // >0;		yes
+                    case MessageBoxResult.No: return (int)MsgBoxDbRslt.No;                                                  // -1;		no
+                    case MessageBoxResult.Cancel: return (int)MsgBoxDbRslt.Cancel;                                          // -2;		cancel
+                }
+            }
         }
-      }
-    }
-    catch (Exception ex)
-    {
-      _ = ex.Log();
-      if (MessageBox.Show(ex.ToString(), "Exception detected - Retry saving?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
-        goto retry;
-    }
-
-    return rowsSaved;
-  }
-  public static int TrySaveAsk(DbContext db, string note)
-  {
-  retry:
-    try
-    {
-      var sw = Stopwatch.StartNew();
-      var rowsSaved = db.SaveChanges();
-      var rv = $"{rowsSaved,8:N0} rows saved in{sw.Elapsed.TotalSeconds,6:N1}s  <=  {note}";
-      Trace.WriteLine(rv);
-      return rowsSaved;
-    }
-    catch (DbEntityValidationException ex)
-    {
-      var ves = ex.ValidationExceptionToString();
-      Trace.WriteLine(ves);
-      if (Debugger.IsAttached) Debugger.Break();
-      else if (MessageBox.Show(ves, "Exceptions detected - Retry saving?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
-        goto retry;
-    }
-    catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
-    {
-      static string DbUpdateExceptionToString(Microsoft.EntityFrameworkCore.DbUpdateException ex)
-      {
-        var sb = new StringBuilder();
-
-        foreach (var er in ex.Entries)
+        catch (Exception ex)
         {
-          _ = sb.Append($"\r\n:>DbUpdateException:  {ex.InnerMessages()}\t");
+            _ = ex.Log();
+            if (MessageBox.Show(ex.ToString(), "Exception detected - Retry saving?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                goto retry;
         }
 
-        return sb.ToString();
-      }
-
-      var ves = DbUpdateExceptionToString(ex);
-      Trace.WriteLine(ves);
-      if (Debugger.IsAttached) Debugger.Break();
-      else if (MessageBox.Show(ves, "Exceptions detected - Retry saving?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
-        goto retry;
+        return rowsSaved;
     }
-    catch (Exception ex)
+    public static int TrySaveAsk(DbContext db, string note)
     {
-      Trace.WriteLine(ex.InnermostMessage());
-      if (Debugger.IsAttached) Debugger.Break();
-      if (MessageBox.Show(ex.InnermostMessage(), "Exception detected - Retry saving?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
-        goto retry;
-    }
+    retry:
+        try
+        {
+            var sw = Stopwatch.StartNew();
+            var rowsSaved = db.SaveChanges();
+            var rv = $"{rowsSaved,8:N0} rows saved in{sw.Elapsed.TotalSeconds,6:N1}s  <=  {note}";
+            Trace.WriteLine(rv);
+            return rowsSaved;
+        }
+        catch (DbEntityValidationException ex)
+        {
+            var ves = ex.ValidationExceptionToString();
+            Trace.WriteLine(ves);
+            if (Debugger.IsAttached) Debugger.Break();
+            else if (MessageBox.Show(ves, "Exceptions detected - Retry saving?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                goto retry;
+        }
+        catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+        {
+            static string DbUpdateExceptionToString(Microsoft.EntityFrameworkCore.DbUpdateException ex)
+            {
+                var sb = new StringBuilder();
 
-    return -2;
-  }
+                foreach (EntityEntry er in ex.Entries)
+                {
+                    _ = sb.Append($"\r\n:>DbUpdateException:  {ex.InnerMessages()}\t");
+                }
+
+                return sb.ToString();
+            }
+
+            var ves = DbUpdateExceptionToString(ex);
+            Trace.WriteLine(ves);
+            if (Debugger.IsAttached) Debugger.Break();
+            else if (MessageBox.Show(ves, "Exceptions detected - Retry saving?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                goto retry;
+        }
+        catch (Exception ex)
+        {
+            Trace.WriteLine(ex.InnermostMessage());
+            if (Debugger.IsAttached) Debugger.Break();
+            if (MessageBox.Show(ex.InnermostMessage(), "Exception detected - Retry saving?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                goto retry;
+        }
+
+        return -2;
+    }
 }
 
 public enum MsgBoxDbRslt // MsgBoxReverseRslt
 {
-  OK = -MessageBoxResult.OK,         // -1
-  No = -MessageBoxResult.No,         // -7
-  Yes = -MessageBoxResult.Yes,       // -6
-  Cancel = -MessageBoxResult.Cancel, // -2
-  Unknown = -3,
-  NoChanges = -4,
+    OK = -MessageBoxResult.OK,         // -1
+    No = -MessageBoxResult.No,         // -7
+    Yes = -MessageBoxResult.Yes,       // -6
+    Cancel = -MessageBoxResult.Cancel, // -2
+    Unknown = -3,
+    NoChanges = -4,
 }
 //public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  ...2021-10  ...2022-05)
 //{
