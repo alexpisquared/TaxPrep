@@ -12,7 +12,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/Extern-4.8/">
-    <Project Path="../../../C/AAV/AAV.Sys/AAV.Sys.4.8.csproj" Id="568cb356-c28d-4d97-b595-d1dda2b6ed89">
+    <Project Path="../../../C/AAV/AAV.Sys/AAV.Sys.4.8.csproj" Id="60bb75f4-e913-40f9-be60-d5e408f24751">
       <BuildType Solution="BldRls|*" Project="Debug" />
       <Platform Solution="*|Mixed Platforms" Project="x64" />
       <Platform Solution="*|x64" Project="x64" />
@@ -152,7 +152,7 @@
       <Platform Solution="Debug|x64" Project="x64" />
       <Platform Solution="Release|x64" Project="x64" />
     </Project>
-    <Project Path="Db.FinDemo/Db.FinDemo.csproj">
+    <Project Path="Db.FinDemo/Db.FinDemo.csproj" Id="aacde791-4edd-4867-a58e-b09c74ac58a8">
       <BuildType Solution="BldRls|Any CPU" Project="Release" />
       <BuildType Solution="BldRls|ARM" Project="Debug" />
       <BuildType Solution="BldRls|ARM32" Project="Debug" />
@@ -178,7 +178,7 @@
       <Platform Solution="Debug|x64" Project="x64" />
       <Platform Solution="Release|x64" Project="x64" />
     </Project>
-    <Project Path="HistoricalChartSet/HistoricalChartSet.csproj">
+    <Project Path="HistoricalChartSet/HistoricalChartSet.csproj" Id="e77abc2c-e846-4f38-a9cd-5e5cac2e8f6b">
       <BuildType Solution="BldRls|Any CPU" Project="Release" />
       <BuildType Solution="BldRls|ARM" Project="Debug" />
       <BuildType Solution="BldRls|ARM32" Project="Debug" />
@@ -191,7 +191,7 @@
       <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
       <Platform Solution="Debug|Mixed Platforms" Project="x64" />
     </Project>
-    <Project Path="MF.Common/MF.Common.csproj">
+    <Project Path="MF.Common/MF.Common.csproj" Id="35b8f9bd-9792-4c94-b93e-817ba5967caf">
       <BuildType Solution="BldRls|Any CPU" Project="Release" />
       <BuildType Solution="BldRls|ARM" Project="Debug" />
       <BuildType Solution="BldRls|ARM32" Project="Debug" />
@@ -204,7 +204,7 @@
       <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
       <Platform Solution="Debug|Mixed Platforms" Project="x64" />
     </Project>
-    <Project Path="MinFin.DataSet/MinFin.DataSet.csproj">
+    <Project Path="MinFin.DataSet/MinFin.DataSet.csproj" Id="72c469d0-97f8-40a6-82ca-9be92386cdb5">
       <BuildType Solution="BldRls|Any CPU" Project="Release" />
       <BuildType Solution="BldRls|ARM" Project="Debug" />
       <BuildType Solution="BldRls|ARM32" Project="Debug" />
@@ -218,7 +218,7 @@
       <Platform Solution="Debug|Mixed Platforms" Project="x86" />
       <Platform Solution="Release|Mixed Platforms" Project="x86" />
     </Project>
-    <Project Path="MinFin.Report.WinForm/MinFin.Report.WinForm.csproj">
+    <Project Path="MinFin.Report.WinForm/MinFin.Report.WinForm.csproj" Id="bda3eb01-ac41-4726-a64e-5a46f2a9dd38">
       <BuildType Solution="BldRls|Any CPU" Project="Release" />
       <BuildType Solution="BldRls|ARM" Project="Debug" />
       <BuildType Solution="BldRls|ARM32" Project="Debug" />
@@ -237,7 +237,7 @@
       <Platform Solution="Debug|x64" Project="x64" />
       <Platform Solution="Release|x64" Project="x64" />
     </Project>
-    <Project Path="MinFin.Review.DS/MinFin.Review.DS.csproj">
+    <Project Path="MinFin.Review.DS/MinFin.Review.DS.csproj" Id="c7b3c9e3-ed92-41d7-a33b-5c1edd2a43d4">
       <BuildType Solution="BldRls|Any CPU" Project="Release" />
       <BuildType Solution="BldRls|ARM" Project="Debug" />
       <BuildType Solution="BldRls|ARM32" Project="Debug" />
@@ -254,7 +254,7 @@
       <Platform Solution="Debug|x64" Project="x64" />
       <Platform Solution="Release|x64" Project="x64" />
     </Project>
-    <Project Path="MSMoneyDbLoader/MSMoneyDbLoader.csproj">
+    <Project Path="MSMoneyDbLoader/MSMoneyDbLoader.csproj" Id="042f0526-4523-44dd-8d3b-e16e2a4ce9b4">
       <BuildType Solution="BldRls|Any CPU" Project="Release" />
       <BuildType Solution="BldRls|ARM" Project="Debug" />
       <BuildType Solution="BldRls|ARM32" Project="Debug" />
@@ -266,7 +266,7 @@
       <Platform Solution="*|x86" Project="x86" />
       <Platform Solution="BldRls|Mixed Platforms" Project="x64" />
     </Project>
-    <Project Path="MSMoneyFormatAdapter/MSMoneyFormatAdapter.csproj">
+    <Project Path="MSMoneyFormatAdapter/MSMoneyFormatAdapter.csproj" Id="3fcf93af-c3dc-44ca-88d7-668fb8aac49a">
       <BuildType Solution="BldRls|Any CPU" Project="Release" />
       <BuildType Solution="BldRls|ARM" Project="Debug" />
       <BuildType Solution="BldRls|ARM32" Project="Debug" />
@@ -321,7 +321,10 @@
       <Platform Solution="Release|x64" Project="x64" />
     </Project>
   </Folder>
-  <Project Path="MF.TxCategoryAssigner/MinFin4.csproj">
+  <Project Path="../../AAV.Shared/Src/NetLts/ArcLib/ArcLib.csproj">
+    <BuildType Solution="BldRls|*" Project="Debug" />
+  </Project>
+  <Project Path="MF.TxCategoryAssigner/MinFin4.csproj" Id="a2eaf607-4d0f-4972-bf97-2c706ca2dd81">
     <BuildDependency Project="MSMoneyFormatAdapter/MSMoneyFormatAdapter.csproj" />
     <BuildType Solution="BldRls|Any CPU" Project="Release" />
     <BuildType Solution="BldRls|ARM" Project="Debug" />
