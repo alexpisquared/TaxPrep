@@ -1006,6 +1006,7 @@ public partial class FinDemoContext : DbContext
             entity.Property(e => e.Exp2022).HasColumnType("money");
             entity.Property(e => e.Exp2023).HasColumnType("money");
             entity.Property(e => e.Exp2024).HasColumnType("money");
+            entity.Property(e => e.Exp2025).HasColumnType("money");
             entity.Property(e => e.ExpenseGroupId)
                 .HasMaxLength(50)
                 .IsUnicode(false);
