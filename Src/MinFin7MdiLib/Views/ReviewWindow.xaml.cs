@@ -84,4 +84,9 @@ To fix this issue, you can:
   void OnWindowRestoree(object s, RoutedEventArgs e) { wr.Visibility = Visibility.Collapsed; wm.Visibility = Visibility.Visible; WindowState = WindowState.Normal; }
   void OnWindowMaximize(object s, RoutedEventArgs e) { wm.Visibility = Visibility.Collapsed; wr.Visibility = Visibility.Visible; WindowState = WindowState.Maximized; }
   void OnWindowClose(object s, RoutedEventArgs e) { Close(); }
+
+    private void OnWindowMiniBase(object sender, RoutedEventArgs e)
+    {
+
+    }
 }

@@ -6,7 +6,7 @@
                 xmlns:mdl="clr-namespace:Db.FinDemo7.Models;assembly=Db.FinDemo7" 
                 Title="ReviewWindow" Height="250" Width="1800" Loaded="OnLoaded" Background="#102">
   <WindowChrome.WindowChrome>
-    <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />
+    <WindowChrome CaptionHeight="0" ResizeBorderThickness="8" />
   </WindowChrome.WindowChrome>
   <lnk:WindowBase.Resources>
     <ResourceDictionary>
@@ -15,10 +15,9 @@
         <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Base.xaml" />
         <ResourceDictionary Source="/WpfUserControlLib;component/Base/ComboBox.Base.xaml" />
         <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Anime.xaml" />
-        <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Dark.Google.xaml" />
         <ResourceDictionary Source="/WpfUserControlLib;component/Base/ScrollBar.Base.xaml" />
-        <!--
-        -->
+        <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Dark.Google.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Anime/SmartOpacityToggleAnimStyle.xaml" />
       </ResourceDictionary.MergedDictionaries>
 
       <lcl:WeekDayToBkColorConverter x:Key="WeekDayToBkColorConverter" />
@@ -179,11 +178,11 @@
 
     <GridSplitter Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" />
 
-    <StackPanel x:Name="WindowControlPanel" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="-6" Style="{StaticResource SmartOpacityToggleAnimStyle}" Grid.ColumnSpan="8" Grid.RowSpan="3">
-      <Button	Margin="2" Content="_-"                          FontSize="26" Height="26" Padding="2 -0" Width="26" Foreground="#aaa" BorderThickness="0" ToolTip="Minimize Window"   Click="OnWindowMiniBase"                               />
-      <Button	Margin="2" Content="_+" FontFamily="Wingdings 2" FontSize="16" Height="26" Padding="0 -1" Width="26" Foreground="#aaa" BorderThickness="0" ToolTip="Restore Window"    Click="OnWindowRestoree" x:Name="wr" Visibility="Collapsed" />
-      <Button	Margin="2" Content="_£" FontFamily="Wingdings 2" FontSize="16" Height="26" Padding="0 -1" Width="26" Foreground="#aaa" BorderThickness="0" ToolTip="Maximize Window"   Click="OnWindowMaximize" x:Name="wm"                   />
-      <Button	Margin="2" Content="r"  FontFamily="Webdings"    FontSize="18" Height="26" Padding="0 -1" Width="26" Foreground="#e00" BorderThickness="0" ToolTip="Close Application" Click="OnWindowClose"    x:Name="btnExit"   />
+    <StackPanel x:Name="WindowControlPanel" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="-2"   Background="#400" Grid.ColumnSpan="8" Grid.RowSpan="3">
+      <Button	Margin="5" Content="_-"                          FontSize="26" Height="26" Padding="2 -0" Width="26" Foreground="#adf" Background="#300" BorderThickness="1" ToolTip="Minimize Window"   Click="OnWindowMiniBase"                               />
+      <Button	Margin="5" Content="_+" FontFamily="Wingdings 2" FontSize="16" Height="26" Padding="0 -1" Width="26" Foreground="#adf" Background="#300" BorderThickness="1" ToolTip="Restore Window"    Click="OnWindowRestoree" x:Name="wr" Visibility="Collapsed" />
+			<Button	Margin="5" Content="_£" FontFamily="Wingdings 2" FontSize="16" Height="26" Padding="0 -1" Width="26" Foreground="#adf" Background="#300" BorderThickness="1" ToolTip="Maximize Window"   Click="OnWindowMaximize" x:Name="wm"                   />
+			<Button	Margin="5" Content="r"  FontFamily="Webdings"    FontSize="18" Height="26" Padding="0 -1" Width="26" Foreground="#e00" Background="#300" BorderThickness="1" ToolTip="Close Window"      Click="OnWindowClose"    Style="{StaticResource BtnBase}" />
     </StackPanel>
 
   </Grid>
