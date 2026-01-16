@@ -65,7 +65,7 @@
   </lnk:WindowBase.Resources>
   <Border Style="{StaticResource BorderStyle_Aav0}">
     <Grid>
-      <Grid x:Name="ZommablePanel" >
+      <Grid x:Name="ZommablePanel">
         <Grid.Resources>
           <Style TargetType="{x:Type Border}">
             <Setter Property="CornerRadius" Value="5"/>
