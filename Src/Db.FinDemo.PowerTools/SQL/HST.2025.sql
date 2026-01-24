@@ -9,20 +9,20 @@ select @q0 = CONVERT(DATETIME, '2025-01-01 00:00:00', 102),
 	   , @a = 0 -- 85*7.5*10 -- move 2nd to 1st quarter
 	   , @d = 0 -- 85*7.5*2  -- move 3rd to 4th quarter
 
-SELECT *																								FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q0) AND (TxDate < @q1) ORDER BY TxDate 
-SELECT -isnull(SUM(TxAmount),0)+@a	as [Revenue 1/4], (-isnull(SUM(TxAmount),0)+@a)*.088 - 300	as HST	FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q0) AND (TxDate < @q1)                 -- +300 for the first quarter only!!!
+--SELECT *																								FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q0) AND (TxDate < @q1) ORDER BY TxDate 
+--SELECT -isnull(SUM(TxAmount),0)+@a	as [Revenue 1/4], (-isnull(SUM(TxAmount),0)+@a)*.088 - 300	as HST	FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q0) AND (TxDate < @q1)                 -- +300 for the first quarter only!!!
 
-SELECT *																								FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q1) AND (TxDate < @q2) ORDER BY TxDate 
-SELECT -isnull(SUM(TxAmount),0)-@a	as [Revenue 2/4], (-isnull(SUM(TxAmount),0)-@a)*.088		as HST	FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q1) AND (TxDate < @q2) 
+--SELECT *																								FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q1) AND (TxDate < @q2) ORDER BY TxDate 
+--SELECT -isnull(SUM(TxAmount),0)-@a	as [Revenue 2/4], (-isnull(SUM(TxAmount),0)-@a)*.088		as HST	FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q1) AND (TxDate < @q2) 
 
-SELECT *																								FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q2) AND (TxDate < @q3) ORDER BY TxDate 
-SELECT -isnull(SUM(TxAmount),0)-@d	as [Revenue 3/4], (-isnull(SUM(TxAmount),0)-@d)*.088		as HST	FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q2) AND (TxDate < @q3) 
+--SELECT *																								FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q2) AND (TxDate < @q3) ORDER BY TxDate 
+--SELECT -isnull(SUM(TxAmount),0)-@d	as [Revenue 3/4], (-isnull(SUM(TxAmount),0)-@d)*.088		as HST	FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q2) AND (TxDate < @q3) 
 
-SELECT *					   															                FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q3) AND (TxDate < @q4) ORDER BY TxDate 
-SELECT -isnull(SUM(TxAmount),0)+@d	as [Revenue 4/4], (-isnull(SUM(TxAmount),0)+@d)*.088		as HST	FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q3) AND (TxDate < @q4) 
+SELECT *					   															                FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q3) AND (TxDate < @q4) AND Id <> 18321 ORDER BY TxDate 
+SELECT -isnull(SUM(TxAmount),0)-230.64	as [Revenue 4/4], (-isnull(SUM(TxAmount),0)-230.64)*.088 		as HST	FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q3) AND (TxDate < @q4) AND Id <> 18321 -- +230.64 for mistaken tax refund
 
 SELECT -SUM(TxAmount) as [■ ■ Anual Revenue 101], FORMAT(ROUND(SUM(TxAmount)*-.088, 2), '0.##')	as [HST NetFile 105], 300 as [HST NetFile 108], FORMAT(ROUND(SUM(TxAmount)*-.088 - 300, 2), '0.##') as [HST 110], SUM(TxAmount) *-.088 - 300 as UnRounded
-													                                               FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q0) AND (TxDate < @q4) 
+													                                               FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q0) AND (TxDate < @q4)              AND Id <> 18321 AND Id <> 16832 -- carbon and tax refunds
 --SELECT *                FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q0) AND (TxDate < @q4) and TxDetail  = 'IRESS MKT TECH   BPY' ORDER BY TxDate 
 --SELECT SUM(TxAmount) [IT] FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q0) AND (TxDate < @q4) and TxDetail  = 'IRESS MKT TECH   BPY' 
 --SELECT *                FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q0) AND (TxDate < @q4) and TxDetail != 'IRESS MKT TECH   BPY' and TxDetail != @abr ORDER BY TxDate 
