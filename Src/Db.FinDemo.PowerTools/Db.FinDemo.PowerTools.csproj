@@ -1,12 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
-
   <ItemGroup>
     <Content Include="SQL\AutoAssigner.POC.sql" />
     <Content Include="SQL\Copy from TxCore to TxCoreV2.sql" />
@@ -33,9 +31,7 @@
     <Content Include="SQL\Vw_TxCore.sql" />
     <Content Include="SQL\Vw_TxMoneySrc_LastTx.sql" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.3" />
   </ItemGroup>
-
 </Project>
