@@ -15,3 +15,5 @@ SELECT -isnull(SUM(TxAmount)/4,0)	as [Revenue 4/4], (-isnull(SUM(TxAmount)/4,0))
 SELECT -SUM(TxAmount) as [Anual Revenue 101], FORMAT(ROUND(SUM(TxAmount)*-.088, 2), '0.##')	as 
   [HST NetFile 105],300 as [HST NetFile 108], FORMAT(ROUND(SUM(TxAmount)*-.088-300, 2), '0.##') 
   as [HST 110],  SUM(TxAmount) *-.088 - 300 as UnRounded 		                                    FROM TxCoreV2 WHERE (TxMoneySrcId = 3) AND (TxAmount < 0) AND TxDetail != @abr AND (TxDate >= @q0) AND (TxDate < @q4)              AND Id <> 18321 AND Id <> 16832 -- carbon and tax refunds
+
+use FinDemo
