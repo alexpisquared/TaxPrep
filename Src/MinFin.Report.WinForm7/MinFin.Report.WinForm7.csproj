@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net11.0-windows8.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -25,9 +25,9 @@
     <EmbeddedResource Include="Report3_Unified.rdlc" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.ReportViewer.Common" Version="10.0.40219.1" />
-    <PackageReference Include="Microsoft.ReportViewer.WinForms" Version="10.0.40219.1" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.9.1" />
+    <PackageReference Include="Microsoft.ReportViewer.Common" />
+    <PackageReference Include="Microsoft.ReportViewer.WinForms" />
+    <PackageReference Include="System.Data.SqlClient" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="findemoDataSet.Designer.cs">
